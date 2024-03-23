@@ -2,13 +2,12 @@ package Classes.Level;
 
 import Classes.Lazer.Lazer;
 import Classes.Token.Orientation;
+import Classes.Token.OrientedToken;
 import Classes.Token.Token;
 import Classes.Utils.Coordinate;
 import Interfaces.Runnable;
 
 import java.util.ArrayList;
-
-import static Classes.Level.LevelInput.*;
 
 public class Level implements Runnable {
 
@@ -46,20 +45,6 @@ public class Level implements Runnable {
      * State of the level
      */
     private LevelState levelState;
-
-
-    /**
-     * Default constructor
-     */
-    public Level() {
-        this.board = new Board();
-        this.solutionBoard = new Board();
-        this.tokens = new ArrayList<Token>();
-        this.lazer = new Lazer();
-        this.levelChecker = new LevelChecker();
-        this.levelName = "Level 1";
-        this.levelState = LevelState.STARTING;
-    }
 
     /**
      * Parameterized constructor
@@ -113,15 +98,25 @@ public class Level implements Runnable {
     public void run() {
         System.out.println("Running level" + levelName);
         while (levelState != LevelState.FINISHED) {
-            LevelPrinter.printLevel(this);
-            LevelPrinter.printBoardAndLazer(board, lazer);
-            LevelPrinter.printTokens(tokens);
             switch (levelState) {
-                case STARTING -> start();
-                case NEED_USER_INPUT -> needUserInput();
-                case CHECKING_SOLUTION -> checkSolution();
+                case STARTING:
+                    start();
+                    break;
+                case NEED_USER_INPUT:
+                    LevelPrinter.printLevel(this);
+                    LevelPrinter.printBoardAndLazer(board, lazer);
+                    LevelPrinter.printTokens(tokens);
+                    needUserInput();
+                    break;
+                case CHECKING_SOLUTION:
+                    checkSolution();
+                    break;
             }
         }
+        System.out.println("Here is the solution");
+        LevelPrinter.printLevel(this);
+        LevelPrinter.printBoardAndLazer(board, lazer);
+        LevelPrinter.printTokens(tokens);
         stop();
     }
 
@@ -152,29 +147,36 @@ public class Level implements Runnable {
         boolean isTokenIndexValid = false;
         int tokenIndex = -1;
         while (!isTokenIndexValid) {
-            tokenIndex = selectToken();
+            tokenIndex = LevelInput.selectToken();
             isTokenIndexValid = levelChecker.checkTokenSelection(tokenIndex);
         }
+        Token token = tokens.get(tokenIndex);
 
         // Select a coordinate
         boolean isPositionValid = false;
         Coordinate coordinate = new Coordinate(-1, -1);
         while (!isPositionValid) {
-            coordinate = getNewPosition();
+            coordinate = LevelInput.getNewPosition();
             isPositionValid = levelChecker.checkNewPosition(coordinate);
         }
 
         // Select the orientation
-        boolean isOrientationValid = false;
         Orientation orientation = null;
-        while (!isOrientationValid) {
-            orientation = selectOrientation();
+        if (token instanceof OrientedToken) {
+            boolean isOrientationValid = false;
+            int orientation_int = -1;
+            while (!isOrientationValid) {
+                orientation_int = LevelInput.selectOrientation();
+                isOrientationValid = levelChecker.checkOrientation(orientation_int);
+            }
+            orientation = Orientation.values()[orientation_int];
         }
 
         // Affect the token to the new position
-        Token token = tokens.get(tokenIndex);
-        token.setCoordinate(coordinate);
-        token.setOrientation(orientation);
+        token.setCoordinate(coordinate); // Or board.setTokenCoordinate(token, coordinate);
+        if (token instanceof OrientedToken) {
+            token.setOrientation(orientation);
+        }
         token.setIsPlaced(true);
 
         levelState = LevelState.CHECKING_SOLUTION;

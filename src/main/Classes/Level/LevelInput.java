@@ -1,6 +1,5 @@
 package Classes.Level;
 
-import Classes.Token.Orientation;
 import Classes.Utils.Coordinate;
 
 import java.util.Scanner;
@@ -61,17 +60,16 @@ public class LevelInput {
      *
      * @return Orientation - Orientation selected
      */
-    public static Orientation selectOrientation() {
-        Orientation result = null;
+    public static int selectOrientation() {
+        int result = -1;
 
-        while (result == null) {
+        while (result < 0) {
             System.out.println("\nYou need to select an orientation (UP=0, DOWN=1, LEFT=2, RIGHT=3)");
 
             // Get the user input
             Scanner scanner = new Scanner(System.in);
             try {
-                int orientation = scanner.nextInt();
-                result = Orientation.values()[orientation];
+                result = scanner.nextInt();
             } catch (Exception e) {
                 System.out.println("Invalid input");
             }

@@ -1,5 +1,6 @@
 package Classes.Level;
 
+import Classes.Token.Orientation;
 import Classes.Token.Token;
 import Classes.Utils.Coordinate;
 
@@ -9,13 +10,6 @@ public class LevelChecker {
      * Level object
      */
     private final Level level;
-
-    /**
-     * Default constructor
-     */
-    public LevelChecker() {
-        this.level = new Level();
-    }
 
     /**
      * Parameterized constructor
@@ -38,7 +32,7 @@ public class LevelChecker {
         boolean isMovable = selectedToken.isMovable();
         if (token < 0) {
             return false;
-        } else if (token >= level.getTokens().size()) {
+        } else if (token >= nbTokens) {
             return false;
         } else return isMovable;
     }
@@ -69,5 +63,15 @@ public class LevelChecker {
         Board solutionBoard = level.getSolutionBoard();
         Board currentBoard = level.getBoard();
         return solutionBoard.equals(currentBoard);
+    }
+
+    /**
+     * Check if the orientation selected is valid
+     *
+     * @param orientation int - Orientation selected
+     * @return boolean - True if the orientation is valid, false otherwise
+     */
+    public Boolean checkOrientation(int orientation) {
+        return orientation >= 0 && orientation < Orientation.values().length;
     }
 }
