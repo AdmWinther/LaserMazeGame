@@ -18,12 +18,13 @@ public class LazerGun extends OrientedToken {
     }
 
     /**
-     * Constructor for LazerGun. Sets movable to false.
+     * Constructor for LazerGun.
      *
+     * @param movable     whether the token is movable
      * @param orientation the orientation of the token
      */
-    public LazerGun(Orientation orientation) {
-        super(false, orientation);
+    public LazerGun(boolean movable, Orientation orientation) {
+        super(movable, orientation);
     }
 
 

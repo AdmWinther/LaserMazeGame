@@ -19,10 +19,11 @@ public class Receiver extends OrientedToken {
     /**
      * Constructor for Receiver. Sets movable to false.
      *
+     * @param movable     whether the token is movable
      * @param orientation the orientation of the token
      */
-    public Receiver(Orientation orientation) {
-        super(false, orientation);
+    public Receiver(boolean movable, Orientation orientation) {
+        super(movable, orientation);
     }
 
     @Override
