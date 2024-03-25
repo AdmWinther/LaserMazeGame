@@ -15,9 +15,6 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class DataReader {
-
-    /* TODO : change the place of final static variable inside a global class */
-
     /**
      * Reads a JSON file and returns a JSONObject
      * @param path the path to the JSON file
