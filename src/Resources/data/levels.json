@@ -3,7 +3,7 @@
     {
       "id": "0",
       "name": "Level 1",
-      "starting_board": {
+      "startingBoard": {
         "size": 3,
         "tiles": [
           {
@@ -27,7 +27,7 @@
           }
         ]
       },
-      "solution_board": {
+      "solutionBoard": {
         "size": 3,
         "tiles": [
           {
@@ -78,7 +78,7 @@
     {
       "id": "1",
       "name": "Level 2",
-      "starting_board": {
+      "startingBoard": {
         "size": 3,
         "tiles": [
           {
@@ -102,7 +102,7 @@
           }
         ]
       },
-      "solution_board": {
+      "solutionBoard": {
         "size": 3,
         "tiles": [
           {
