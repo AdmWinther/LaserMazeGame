@@ -2,9 +2,9 @@ package Classes.Utils;
 
 import Classes.Level.Board;
 import Classes.Level.LevelID;
-import Classes.Token.Orientation;
-import Classes.Token.Token;
-import Classes.Token.TokenID;
+import Classes.Token.*;
+import Resources.constants.FilePaths;
+import Resources.constants.JsonTokens;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -17,18 +17,6 @@ import java.util.*;
 public class DataReader {
 
     /* TODO : change the place of final static variable inside a global class */
-    private final static String LEVELSDATAPATH = "src/resources/data/levels.json";
-    private final static String LEVELSIDSDATAPATH = "src/resources/data/levelsIDs.json";
-
-    private final static String ID = "id";
-    private final static String NAME = "name";
-    private final static String LEVELS = "levels";
-    private final static String STARTING_BOARD = "startingBoard";
-    private final static String SOLUTION_BOARD = "solutionBoard";
-    private final static String TYPE = "type";
-    private final static String ISMOVABLE = "isMovable";
-
-    private final static String LEVELSIDS = "levelsIDs";
 
     /**
      * Reads a JSON file and returns a JSONObject
@@ -52,11 +40,11 @@ public class DataReader {
      * @throws Exception if the ID is not found
      */
     private static JSONObject findLevelByID(LevelID id) throws Exception {
-        JSONArray jsonLevels = Objects.requireNonNull(json(LEVELSDATAPATH)).getJSONArray(LEVELS);
+        JSONArray jsonLevels = Objects.requireNonNull(json(FilePaths.LEVELSDATAPATH)).getJSONArray(JsonTokens.LEVELS);
 
         for (int i = 0; i < jsonLevels.length(); i++) {
             JSONObject level = jsonLevels.getJSONObject(i);
-            if (level.get(ID).equals(id.value())) {
+            if (level.get(JsonTokens.ID).equals(id.value())) {
                 return level;
             }
         }
@@ -69,11 +57,23 @@ public class DataReader {
      * @return the Token object
      */
     private static Token createToken(JSONObject token) {
-        TokenID id = new TokenID(token.getString(ID));
-        String type = token.getString(TYPE);
+        TokenID id = new TokenID(token.getString(JsonTokens.ID));
+        String type = token.getString(JsonTokens.TYPE);
         Orientation orientation = Orientation.valueOf(token.getString("orientation"));
         boolean isMovable = token.getBoolean("isMovable");
-        /* TODO Create the Token Object */
+        switch (type) {
+            case JsonTokens.LASER_GUN_TOKEN:
+                /* TODO Create Laser Gun */
+            case JsonTokens.RECEIVER_TOKEN:
+                /* TODO Create Receiver */
+            case JsonTokens.DOUBLE_SIDED_MIRROR_TOKEN:
+                /* TODO Create Double Sided Mirror */
+            case JsonTokens.ONE_SIDED_MIRROR_TOKEN:
+                /* TODO Create One Sided Mirror */
+            case JsonTokens.BLOCK_TOKEN:
+                /* TODO Create Block */
+            default:
+        }
         return null;
     }
 
@@ -83,7 +83,7 @@ public class DataReader {
      * @return a list of LevelIDs
      */
     public static List<LevelID> extractLevelIDs(String path) {
-        JSONArray jsonIDs = Objects.requireNonNull(json(LEVELSIDSDATAPATH)).getJSONArray(LEVELSIDS);
+        JSONArray jsonIDs = Objects.requireNonNull(json(FilePaths.LEVELSIDSDATAPATH)).getJSONArray(JsonTokens.LEVELS_IDS);
         List<LevelID> levelIDS = new ArrayList<>();
 
         for (int i = 0; i < jsonIDs.length(); i++) levelIDS.add(new LevelID(jsonIDs.getString(i)));
@@ -100,7 +100,7 @@ public class DataReader {
     /* TODO replace Exception by a custom one we create. */
     public static String readLevelIDName(LevelID id) throws Exception {
         JSONObject level = findLevelByID(id);
-        return level.getString(NAME);
+        return level.getString(JsonTokens.NAME);
     }
 
     /**
@@ -125,7 +125,7 @@ public class DataReader {
      */
     public static Board readLevelIDBoard(LevelID id) throws Exception {
         JSONObject level = findLevelByID(id);
-        JSONObject board = level.getJSONObject(STARTING_BOARD);
+        JSONObject board = level.getJSONObject(JsonTokens.STARTING_BOARD);
         /* TODO */
         return null;
     }

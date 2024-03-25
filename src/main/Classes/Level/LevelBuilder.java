@@ -18,6 +18,7 @@ public class LevelBuilder implements Buildable<Level> {
     @Override
     public Level build() {
         try {
+            String name = DataReader.readLevelIDName(id);
             Board board = DataReader.readLevelIDBoard(id);
             Set<Token> tokens = DataReader.readLevelIDTokens(id);
             return new Level(board, tokens, id);
