@@ -17,6 +17,15 @@ public class Block extends Token {
         super(false);
     }
 
+    /**
+     * Constructor for Block.
+     *
+     * @param movable whether the token is movable
+     */
+    public Block(boolean movable) {
+        super(movable);
+    }
+
     @Override
     public Set<Orientation> propagateLazer(Orientation from) {
         return Collections.emptySet();
