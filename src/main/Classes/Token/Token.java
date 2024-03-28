@@ -10,6 +10,8 @@ public abstract class Token implements LazerPropagator {
 
     /**
      * Default constructor for Token. Sets movable to true.
+     *
+     * @author Nathan Gromb
      */
     public Token() {
         this.movable = true;
@@ -19,6 +21,7 @@ public abstract class Token implements LazerPropagator {
      * Constructor for Token.
      *
      * @param movable whether the token is movable
+     * @author Nathan Gromb
      */
     public Token(boolean movable) {
         this.movable = movable;
@@ -28,6 +31,7 @@ public abstract class Token implements LazerPropagator {
      * Returns whether the token is movable.
      *
      * @return whether the token is movable
+     * @author Nathan Gromb
      */
     public boolean isMovable() {
         return movable;
@@ -37,6 +41,7 @@ public abstract class Token implements LazerPropagator {
      * Sets the movable property of the token.
      *
      * @param movable whether the token is movable
+     * @author Nathan Gromb
      */
     public void setMovable(boolean movable) {
         this.movable = movable;

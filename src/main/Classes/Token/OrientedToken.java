@@ -10,6 +10,8 @@ public abstract class OrientedToken extends Token implements Orientable {
 
     /**
      * Default constructor for OrientedToken. Sets movable to true and orientation to UP.
+     *
+     * @author Nathan Gromb
      */
     public OrientedToken() {
         super();
@@ -21,17 +23,30 @@ public abstract class OrientedToken extends Token implements Orientable {
      *
      * @param movable     whether the token is movable
      * @param orientation the orientation of the token
+     * @author Nathan Gromb
      */
     public OrientedToken(boolean movable, Orientation orientation) {
         super(movable);
         this.orientation = orientation;
     }
 
+    /**
+     * Get the orientation of the token.
+     *
+     * @return the orientation of the token
+     * @author Nathan Gromb
+     */
     @Override
     public Orientation getOrientation() {
         return orientation;
     }
 
+    /**
+     * Set the orientation of the token.
+     *
+     * @param orientation the orientation of the token
+     * @author Nathan Gromb
+     */
     @Override
     public void setOrientation(Orientation orientation) {
         this.orientation = orientation;

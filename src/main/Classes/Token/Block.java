@@ -12,6 +12,8 @@ public class Block extends Token {
 
     /**
      * Default constructor for Block. Sets movable to false.
+     *
+     * @author Nathan Gromb
      */
     public Block() {
         super(false);
@@ -21,6 +23,7 @@ public class Block extends Token {
      * Constructor for Block.
      *
      * @param movable whether the token is movable
+     * @author Nathan Gromb
      */
     public Block(boolean movable) {
         super(movable);
