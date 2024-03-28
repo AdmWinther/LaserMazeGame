@@ -5,23 +5,23 @@
       "name": "Level 1",
       "startingBoard": {
         "size": 3,
-        "tiles": [
+        "tokens": [
           {
-            "token": null,
+            "type": "LaserGun",
+            "id": 2,
+            "orientation": "RIGHT",
+            "isMovable": false,
             "coordinate": {
               "x": 0,
-              "y": 0
+              "y": 1
             }
           },
           {
-            "token": {
-              "type": "LazerGun",
-              "id": 0,
-              "orientation": "RIGHT",
-              "isMovable": false
-            },
+            "type": "Receiver",
+            "id": 3,
+            "isMovable": true,
             "coordinate": {
-              "x": 0,
+              "x": 2,
               "y": 1
             }
           }
@@ -29,33 +29,23 @@
       },
       "solutionBoard": {
         "size": 3,
-        "tiles": [
+        "tokens": [
           {
-            "coordinate": {
-              "x": 0,
-              "y": 0
-            }
-          },
-          {
-            "token": {
-              "type": "LazerGun",
-              "id": 0,
-              "orientation": "RIGHT",
-              "isMovable": false
-            },
+            "type": "LaserGun",
+            "id": 2,
+            "orientation": "RIGHT",
+            "isMovable": false,
             "coordinate": {
               "x": 0,
               "y": 1
             }
           },
           {
-            "token": {
-              "type": "Block",
-              "id": 1,
-              "isMovable": true
-            },
+            "type": "Receiver",
+            "id": 3,
+            "isMovable": true,
             "coordinate": {
-              "x": 1,
+              "x": 2,
               "y": 1
             }
           }
@@ -63,7 +53,7 @@
       },
       "tokens": [
         {
-          "type": "LazerGun",
+          "type": "LaserGun",
           "id": 0,
           "orientation": "RIGHT",
           "isMovable": false
@@ -80,23 +70,23 @@
       "name": "Level 2",
       "startingBoard": {
         "size": 3,
-        "tiles": [
+        "tokens": [
           {
-            "token": null,
+            "type": "LaserGun",
+            "id": 2,
+            "orientation": "RIGHT",
+            "isMovable": false,
             "coordinate": {
               "x": 0,
-              "y": 0
+              "y": 1
             }
           },
           {
-            "token": {
-              "type": "LazerGun",
-              "id": 0,
-              "orientation": "RIGHT",
-              "isMovable": false
-            },
+            "type": "Receiver",
+            "id": 3,
+            "isMovable": true,
             "coordinate": {
-              "x": 0,
+              "x": 2,
               "y": 1
             }
           }
@@ -104,33 +94,23 @@
       },
       "solutionBoard": {
         "size": 3,
-        "tiles": [
+        "tokens": [
           {
-            "coordinate": {
-              "x": 0,
-              "y": 0
-            }
-          },
-          {
-            "token": {
-              "type": "LazerGun",
-              "id": 0,
-              "orientation": "RIGHT",
-              "isMovable": false
-            },
+            "type": "LaserGun",
+            "id": 2,
+            "orientation": "RIGHT",
+            "isMovable": false,
             "coordinate": {
               "x": 0,
               "y": 1
             }
           },
           {
-            "token": {
-              "type": "Block",
-              "id": 1,
-              "isMovable": true
-            },
+            "type": "Receiver",
+            "id": 3,
+            "isMovable": true,
             "coordinate": {
-              "x": 1,
+              "x": 2,
               "y": 1
             }
           }
@@ -138,7 +118,7 @@
       },
       "tokens": [
         {
-          "type": "LazerGun",
+          "type": "LaserGun",
           "id": 0,
           "orientation": "RIGHT",
           "isMovable": false
