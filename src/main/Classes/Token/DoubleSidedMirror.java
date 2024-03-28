@@ -1,5 +1,7 @@
 package Classes.Token;
 
+import Classes.Utils.Coordinate;
+
 import java.util.Set;
 
 /**
@@ -43,5 +45,35 @@ public class DoubleSidedMirror extends OrientedToken {
                         default -> Set.of(Orientation.RIGHT);
                     };
         };
+    }
+
+    @Override
+    public Orientation getOrientation() {
+        return super.getOrientation();
+    }
+
+    @Override
+    public void setOrientation(Orientation orientation) {
+        super.setOrientation(orientation);
+    }
+
+    @Override
+    public boolean isMovable() {
+        return super.isMovable();
+    }
+
+    @Override
+    public void setMovable(boolean movable) {
+        super.setMovable(movable);
+    }
+
+    @Override
+    public void setCoordinate(Coordinate coordinate) {
+
+    }
+
+    @Override
+    public void setIsPlaced(Boolean isPlaced) {
+
     }
 }

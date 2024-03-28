@@ -1,5 +1,7 @@
 package Classes.Token;
 
+import Classes.Utils.Coordinate;
+
 import java.util.Collections;
 import java.util.Set;
 
@@ -29,5 +31,30 @@ public class Block extends Token {
     @Override
     public Set<Orientation> propagateLazer(Orientation from) {
         return Collections.emptySet();
+    }
+
+    @Override
+    public boolean isMovable() {
+        return super.isMovable();
+    }
+
+    @Override
+    public void setMovable(boolean movable) {
+        super.setMovable(movable);
+    }
+
+    @Override
+    public void setCoordinate(Coordinate coordinate) {
+
+    }
+
+    @Override
+    public void setOrientation(Orientation orientation) {
+
+    }
+
+    @Override
+    public void setIsPlaced(Boolean isPlaced) {
+
     }
 }

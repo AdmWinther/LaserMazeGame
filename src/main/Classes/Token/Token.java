@@ -1,10 +1,10 @@
 package Classes.Token;
+
+import Classes.Utils.Coordinate;
 import Interfaces.LazerPropagator;
 
-/**
- * Token is an abstract class that represents a token in the game.
- */
 public abstract class Token implements LazerPropagator {
+
     private boolean movable;
 
     /**
@@ -40,4 +40,10 @@ public abstract class Token implements LazerPropagator {
     public void setMovable(boolean movable) {
         this.movable = movable;
     }
+
+    public abstract void setCoordinate(Coordinate coordinate);
+
+    public abstract void setOrientation(Orientation orientation);
+
+    public abstract void setIsPlaced(Boolean isPlaced);
 }

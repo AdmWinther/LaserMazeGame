@@ -1,6 +1,7 @@
 package Classes.Utils;
 
 import Classes.Level.Board;
+import Classes.Level.Level;
 import Classes.Level.LevelID;
 import Classes.Token.*;
 import Resources.constants.FilePaths;
@@ -76,6 +77,29 @@ public class DataReader {
         return null;
     }
 
+    private static Set<Pair<Token, Coordinate>> createPlacedTokens(JSONObject jsonBoard){
+        Set<Pair<Token, Coordinate>> placedTokens = new HashSet<>();
+        JSONArray jsonTokens = jsonBoard.getJSONArray("tokens");
+        for (int i = 0; i < jsonTokens.length(); i++) {
+            JSONObject jsonToken = jsonTokens.getJSONObject(i);
+            Token token = createToken(jsonToken);
+
+            JSONObject coordinate = jsonToken.getJSONObject("coordinate");
+            int x = coordinate.getInt("x");
+            int y = coordinate.getInt("y");
+
+            Pair<Token, Coordinate> placedToken = new Pair<>(token, new Coordinate(x, y));
+            placedTokens.add(placedToken);
+        }
+        return placedTokens;
+    }
+
+    private static Board createBoard(LevelID id, String boardType) throws FileNotFoundException, NullPointerException {
+        JSONObject level = findLevelByID(id);
+        JSONObject board = level.getJSONObject(boardType);
+        return new Board(createPlacedTokens(board));
+    }
+
     /**
      * Extracts the LevelIDs from the game data files
      * @param path the path to the corresponding JSON file
@@ -124,24 +148,19 @@ public class DataReader {
      * @throws NullPointerException if the ID is not found
      * @throws FileNotFoundException if the LevelID is not found in the game data
      */
-    public static Board readLevelIDBoard(LevelID id) throws FileNotFoundException, NullPointerException {
-        JSONObject level = findLevelByID(id);
-        JSONObject board = level.getJSONObject(JsonTokens.STARTING_BOARD);
-        Set<Pair<Token, Coordinate>> placedTokens = new HashSet<>();
-        JSONArray jsonTokens = board.getJSONArray("tokens");
-        for (int i = 0; i < jsonTokens.length(); i++) {
-            JSONObject jsonToken = jsonTokens.getJSONObject(i);
-            Token token = createToken(jsonToken);
+    public static Board readLevelIDStartingBoard(LevelID id) throws FileNotFoundException, NullPointerException {
+        return createBoard(id, JsonTokens.STARTING_BOARD);
+    }
 
-            JSONObject coordinate = jsonToken.getJSONObject("coordinate");
-            int x = coordinate.getInt("x");
-            int y = coordinate.getInt("y");
-
-            Pair<Token, Coordinate> placedToken = new Pair<>(token, new Coordinate(x, y));
-            placedTokens.add(placedToken);
-        }
-
-        return new Board(placedTokens);
+    /**
+     * Reads the solution board of a level given its ID
+     * @param id the ID of the level
+     * @return the solution board of the level
+     * @throws FileNotFoundException if the LevelID is not found in the game data
+     * @throws NullPointerException if the LevelID is not found in the game data
+     */
+    public static Board readLevelIDSolutionBoard(LevelID id) throws FileNotFoundException, NullPointerException {
+        return createBoard(id, JsonTokens.SOLUTION_BOARD);
     }
 
 }
