@@ -7,7 +7,8 @@ import Classes.Token.Token;
 import Classes.Utils.Coordinate;
 import Interfaces.Runnable;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 public class Level implements Runnable {
 
@@ -24,23 +25,19 @@ public class Level implements Runnable {
     /**
      * ArrayList of Token objects
      */
-    private final ArrayList<Token> tokens;
-
-    /**
-     * Lazer object
-     */
-    private final Lazer lazer;
-
+    private final List<Token> tokens;
     /**
      * LevelChecker object
      */
     private final LevelChecker levelChecker;
-
     /**
      * Name of the level
      */
     private final String levelName;
-
+    /**
+     * Lazer object
+     */
+    private Lazer lazer;
     /**
      * State of the level
      */
@@ -53,8 +50,9 @@ public class Level implements Runnable {
      * @param SolutionBoard Board - Solution board
      * @param token         ArrayList - ArrayList of Token objects
      * @param levelName     String - Name of the level
+     * @author Léonard Amsler - s231715
      */
-    public Level(Board board, Board SolutionBoard, ArrayList<Token> token, String levelName) {
+    public Level(Board board, Board SolutionBoard, List<Token> token, String levelName) {
         this.board = board;
         this.solutionBoard = SolutionBoard;
         this.tokens = token;
@@ -68,8 +66,9 @@ public class Level implements Runnable {
      * Getter for tokens
      *
      * @return ArrayList - ArrayList of Token objects
+     * @author Léonard Amsler - s231715
      */
-    public ArrayList<Token> getTokens() {
+    public List<Token> getTokens() {
         return tokens;
     }
 
@@ -77,6 +76,7 @@ public class Level implements Runnable {
      * Getter for board
      *
      * @return Board - Board object
+     * @author Léonard Amsler - s231715
      */
     public Board getBoard() {
         return board;
@@ -86,6 +86,7 @@ public class Level implements Runnable {
      * Getter for solutionBoard
      *
      * @return Board - Solution board
+     * @author Léonard Amsler - s231715
      */
     public Board getSolutionBoard() {
         return solutionBoard;
@@ -93,35 +94,36 @@ public class Level implements Runnable {
 
     /**
      * Run method
+     *
+     * @author Léonard Amsler - s231715
      */
     @Override
     public void run() {
         System.out.println("Running level" + levelName);
         while (levelState != LevelState.FINISHED) {
             switch (levelState) {
-                case STARTING:
-                    start();
-                    break;
-                case NEED_USER_INPUT:
+                case STARTING -> start();
+                case NEED_USER_INPUT -> {
                     LevelPrinter.printLevel(this);
+                    setLazer(generateLazer());
                     LevelPrinter.printBoardAndLazer(board, lazer);
-                    LevelPrinter.printTokens(tokens);
+                    LevelPrinter.printTokens(new HashSet<>(tokens));
                     needUserInput();
-                    break;
-                case CHECKING_SOLUTION:
-                    checkSolution();
-                    break;
+                }
+                case CHECKING_SOLUTION -> checkSolution();
             }
         }
         System.out.println("Here is the solution");
         LevelPrinter.printLevel(this);
         LevelPrinter.printBoardAndLazer(board, lazer);
-        LevelPrinter.printTokens(tokens);
+        LevelPrinter.printTokens(new HashSet<>(tokens));
         stop();
     }
 
     /**
      * Stop method
+     *
+     * @author Léonard Amsler - s231715
      */
     @Override
     public void stop() {
@@ -131,6 +133,8 @@ public class Level implements Runnable {
 
     /**
      * Start method
+     *
+     * @author Léonard Amsler - s231715
      */
     public void start() {
         System.out.println("Starting level " + levelName);
@@ -139,6 +143,8 @@ public class Level implements Runnable {
 
     /**
      * Need user input method
+     *
+     * @author Léonard Amsler - s231715
      */
     private void needUserInput() {
         System.out.println("Need user input");
@@ -173,7 +179,7 @@ public class Level implements Runnable {
         }
 
         // Affect the token to the new position
-        token.setCoordinate(coordinate); // Or board.setTokenCoordinate(token, coordinate);
+        board.setTokenCoordinate(token, coordinate);
         if (token instanceof OrientedToken) {
             token.setOrientation(orientation);
         }
@@ -184,6 +190,8 @@ public class Level implements Runnable {
 
     /**
      * Check solution method
+     *
+     * @author Léonard Amsler - s231715
      */
     private void checkSolution() {
         System.out.println("Checking solution");
@@ -197,5 +205,25 @@ public class Level implements Runnable {
         }
     }
 
+    /**
+     * Generate lazer method
+     *
+     * @return Lazer - Lazer object
+     * @author Léonard Amsler - s231715
+     */
+    public Lazer generateLazer() {
+        return board.generateLazer();
+    }
+
+    /**
+     * Setter for the lazer
+     *
+     * @param lazer Lazer - Lazer object
+     * @return void
+     * @autor Léonard Amsler - s231715
+     */
+    public void setLazer(Lazer lazer) {
+        this.lazer = lazer;
+    }
 
 }

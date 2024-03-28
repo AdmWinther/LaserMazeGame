@@ -3,7 +3,7 @@ package Classes.Level;
 import Classes.Lazer.Lazer;
 import Classes.Token.Token;
 
-import java.util.ArrayList;
+import java.util.Set;
 
 public class LevelPrinter {
 
@@ -15,7 +15,7 @@ public class LevelPrinter {
         System.out.println("Printing board and lazer");
     }
 
-    public static void printTokens(ArrayList<Token> tokens) {
+    public static void printTokens(Set<Token> tokens) {
         System.out.println("Printing tokens");
     }
 
