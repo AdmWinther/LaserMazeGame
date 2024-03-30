@@ -32,7 +32,7 @@ public final class Block extends Token {
     }
 
     /**
-     * Returns whether the block is equal to another object.
+     * Returns whether the block is equal to another object (not strictly, i.e. they have the same function).
      *
      * @param o the object to compare to
      * @return whether the block is equal to the object
@@ -40,6 +40,18 @@ public final class Block extends Token {
      */
     @Override
     public boolean equals(Object o) {
+        return o instanceof Block;
+    }
+
+    /**
+     * Returns whether the block is equal to another object.
+     *
+     * @param o the object to compare to
+     * @return whether the block is equal to the object
+     * @author Nathan Gromb
+     */
+    @Override
+    public boolean strictlyEquals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Block)) return false;
         Block block = (Block) o;

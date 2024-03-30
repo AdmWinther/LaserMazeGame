@@ -53,6 +53,21 @@ public class BlockTest {
     }
 
     @Test
+    public void testBlockStrictlyEquals() {
+        Token block = new Block(0, false);
+        Token block2 = new Block(0, false);
+        Token block3 = new Block(1, false);
+        Token block4 = new Block(0, true);
+        Token block5 = new Block(0, false);
+        block5.setMovable(true);
+
+        assertTrue(block.strictlyEquals(block2));
+        assertFalse(block.strictlyEquals(block3));
+        assertFalse(block.strictlyEquals(block4));
+        assertFalse(block.strictlyEquals(block5));
+    }
+
+    @Test
     public void testBlockEquals() {
         Token block = new Block(0, false);
         Token block2 = new Block(0, false);
@@ -62,8 +77,8 @@ public class BlockTest {
         block5.setMovable(true);
 
         assertTrue(block.equals(block2));
-        assertFalse(block.equals(block3));
-        assertFalse(block.equals(block4));
-        assertFalse(block.equals(block5));
+        assertTrue(block.equals(block3));
+        assertTrue(block.equals(block4));
+        assertTrue(block.equals(block5));
     }
 }

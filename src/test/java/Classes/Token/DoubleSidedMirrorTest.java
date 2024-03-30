@@ -110,16 +110,32 @@ public class DoubleSidedMirrorTest {
     }
 
     @Test
-    public void testDoubleSidedMirrorEquals() {
+    public void testDoubleSidedMirrorStrictlyEquals() {
         Token doubleSidedMirror = new DoubleSidedMirror(0, false, Orientation.UP);
         Token doubleSidedMirror2 = new DoubleSidedMirror(0, false, Orientation.UP);
         Token doubleSidedMirror3 = new DoubleSidedMirror(1, false, Orientation.UP);
         Token doubleSidedMirror4 = new DoubleSidedMirror(0, true, Orientation.UP);
         Token doubleSidedMirror5 = new DoubleSidedMirror(0, false, Orientation.DOWN);
 
+        assertTrue(doubleSidedMirror.strictlyEquals(doubleSidedMirror2));
+        assertFalse(doubleSidedMirror.strictlyEquals(doubleSidedMirror3));
+        assertFalse(doubleSidedMirror.strictlyEquals(doubleSidedMirror4));
+        assertFalse(doubleSidedMirror.strictlyEquals(doubleSidedMirror5));
+    }
+
+    @Test
+    public void testDoubleSidedMirrorEquals() {
+        Token doubleSidedMirror = new DoubleSidedMirror(0, false, Orientation.UP);
+        Token doubleSidedMirror2 = new DoubleSidedMirror(0, false, Orientation.UP);
+        Token doubleSidedMirror3 = new DoubleSidedMirror(1, false, Orientation.UP);
+        Token doubleSidedMirror4 = new DoubleSidedMirror(0, true, Orientation.UP);
+        Token doubleSidedMirror5 = new DoubleSidedMirror(0, false, Orientation.DOWN);
+        Token doubleSidedMirror6 = new DoubleSidedMirror(0, false, Orientation.LEFT);
+
         assertTrue(doubleSidedMirror.equals(doubleSidedMirror2));
-        assertFalse(doubleSidedMirror.equals(doubleSidedMirror3));
-        assertFalse(doubleSidedMirror.equals(doubleSidedMirror4));
-        assertFalse(doubleSidedMirror.equals(doubleSidedMirror5));
+        assertTrue(doubleSidedMirror.equals(doubleSidedMirror3));
+        assertTrue(doubleSidedMirror.equals(doubleSidedMirror4));
+        assertTrue(doubleSidedMirror.equals(doubleSidedMirror5));
+        assertFalse(doubleSidedMirror.equals(doubleSidedMirror6));
     }
 }

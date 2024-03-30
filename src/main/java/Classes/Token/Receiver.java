@@ -32,7 +32,7 @@ public final class Receiver extends OrientedToken {
     }
 
     /**
-     * Returns whether the receiver is equal to another object.
+     * Returns whether the receiver is equal to another object (not strictly, i.e. they have the same function).
      *
      * @param o the object to compare to
      * @return whether the receiver is equal to the object
@@ -40,6 +40,20 @@ public final class Receiver extends OrientedToken {
      */
     @Override
     public boolean equals(Object o) {
+        if (!(o instanceof Receiver)) return false;
+        Receiver receiver = (Receiver) o;
+
+        return getOrientation() == receiver.getOrientation();
+    }
+
+    /**
+     * Returns whether the receiver is equal to another object.
+     *
+     * @param o the object to compare to
+     * @return whether the receiver is equal to the object
+     */
+    @Override
+    public boolean strictlyEquals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Receiver)) return false;
         Receiver receiver = (Receiver) o;

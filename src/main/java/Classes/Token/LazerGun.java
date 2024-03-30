@@ -33,7 +33,7 @@ public final class LazerGun extends OrientedToken {
     }
 
     /**
-     * Returns whether the lazer gun is equal to another object.
+     * Returns whether the lazer gun is equal to another object (not strictly, i.e. they have the same function).
      *
      * @param o the object to compare to
      * @return whether the lazer gun is equal to the object
@@ -41,6 +41,21 @@ public final class LazerGun extends OrientedToken {
      */
     @Override
     public boolean equals(Object o) {
+        if (!(o instanceof LazerGun)) return false;
+        LazerGun lazerGun = (LazerGun) o;
+
+        return getOrientation() == lazerGun.getOrientation();
+    }
+
+    /**
+     * Returns whether the lazer gun is equal to another object.
+     *
+     * @param o the object to compare to
+     * @return whether the lazer gun is equal to the object
+     * @author Nathan Gromb
+     */
+    @Override
+    public boolean strictlyEquals(Object o) {
         if (this == o) return true;
         if (!(o instanceof LazerGun)) return false;
         LazerGun lazerGun = (LazerGun) o;

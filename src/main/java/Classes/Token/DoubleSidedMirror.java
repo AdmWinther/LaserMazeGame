@@ -31,7 +31,7 @@ public final class DoubleSidedMirror extends OrientedToken {
     }
 
     /**
-     * Returns whether the double-sided mirror is equal to another object.
+     * Returns whether the double-sided mirror is equal to another object (not strictly, i.e. they have the same function).
      *
      * @param o the object to compare to
      * @return whether the double-sided mirror is equal to the object
@@ -39,6 +39,24 @@ public final class DoubleSidedMirror extends OrientedToken {
      */
     @Override
     public boolean equals(Object o) {
+        if (!(o instanceof DoubleSidedMirror)) return false;
+        OrientedToken doubleSidedMirror = (DoubleSidedMirror) o;
+
+        return switch (doubleSidedMirror.getOrientation()) {
+            case UP, DOWN -> getOrientation() == Orientation.UP || getOrientation() == Orientation.DOWN;
+            default -> getOrientation() == Orientation.LEFT || getOrientation() == Orientation.RIGHT;
+        };
+    }
+
+    /**
+     * Returns whether the double-sided mirror is equal to another object.
+     *
+     * @param o the object to compare to
+     * @return whether the double-sided mirror is equal to the object
+     * @author Nathan Gromb
+     */
+    @Override
+    public boolean strictlyEquals(Object o) {
         if (this == o) return true;
         if (!(o instanceof DoubleSidedMirror)) return false;
         DoubleSidedMirror doubleSidedMirror = (DoubleSidedMirror) o;

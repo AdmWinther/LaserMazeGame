@@ -84,6 +84,20 @@ public class LazerGunTest {
     }
 
     @Test
+    public void testLazerGunStrictlyEquals() {
+        OrientedToken lazergun = new LazerGun(0, false, Orientation.UP);
+        OrientedToken lazergun2 = new LazerGun(0, false, Orientation.UP);
+        OrientedToken lazergun3 = new LazerGun(1, false, Orientation.UP);
+        OrientedToken lazergun4 = new LazerGun(0, true, Orientation.UP);
+        OrientedToken lazergun5 = new LazerGun(0, false, Orientation.DOWN);
+
+        assertTrue(lazergun.strictlyEquals(lazergun2));
+        assertFalse(lazergun.strictlyEquals(lazergun3));
+        assertFalse(lazergun.strictlyEquals(lazergun4));
+        assertFalse(lazergun.strictlyEquals(lazergun5));
+    }
+
+    @Test
     public void testLazerGunEquals() {
         OrientedToken lazergun = new LazerGun(0, false, Orientation.UP);
         OrientedToken lazergun2 = new LazerGun(0, false, Orientation.UP);
@@ -92,8 +106,8 @@ public class LazerGunTest {
         OrientedToken lazergun5 = new LazerGun(0, false, Orientation.DOWN);
 
         assertTrue(lazergun.equals(lazergun2));
-        assertFalse(lazergun.equals(lazergun3));
-        assertFalse(lazergun.equals(lazergun4));
+        assertTrue(lazergun.equals(lazergun3));
+        assertTrue(lazergun.equals(lazergun4));
         assertFalse(lazergun.equals(lazergun5));
     }
 }

@@ -20,10 +20,19 @@ public abstract class Token implements LazerPropagator {
         if (id < 0) {
             throw new IllegalArgumentException("Token id must be non-negative.");
         }
-        
+
         this.id = id;
         this.movable = movable;
     }
+
+    /**
+     * Returns whether the token is equal to another object.
+     *
+     * @param o the object to compare to
+     * @return whether the token is equal to the object
+     * @author Nathan Gromb
+     */
+    public abstract boolean strictlyEquals(Object o);
 
     /**
      * Returns whether the token is movable.

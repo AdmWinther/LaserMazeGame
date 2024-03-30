@@ -85,16 +85,31 @@ public class ReceiverTest {
     }
 
     @Test
+    public void testReceiverStrictlyEquals() {
+        Token receiver = new Receiver(0, false, Orientation.UP);
+        Token receiver2 = new Receiver(0, false, Orientation.UP);
+        Token receiver3 = new Receiver(1, false, Orientation.UP);
+        Token receiver4 = new Receiver(0, true, Orientation.UP);
+        Token receiver5 = new Receiver(0, false, Orientation.DOWN);
+
+        assertTrue(receiver.strictlyEquals(receiver2));
+        assertFalse(receiver.strictlyEquals(receiver3));
+        assertFalse(receiver.strictlyEquals(receiver4));
+        assertFalse(receiver.strictlyEquals(receiver5));
+    }
+
+    @Test
     public void testReceiverEquals() {
         Token receiver = new Receiver(0, false, Orientation.UP);
         Token receiver2 = new Receiver(0, false, Orientation.UP);
         Token receiver3 = new Receiver(1, false, Orientation.UP);
         Token receiver4 = new Receiver(0, true, Orientation.UP);
         Token receiver5 = new Receiver(0, false, Orientation.DOWN);
-        
+
         assertTrue(receiver.equals(receiver2));
-        assertFalse(receiver.equals(receiver3));
-        assertFalse(receiver.equals(receiver4));
+        assertTrue(receiver.equals(receiver3));
+        assertTrue(receiver.equals(receiver4));
         assertFalse(receiver.equals(receiver5));
     }
+
 }
