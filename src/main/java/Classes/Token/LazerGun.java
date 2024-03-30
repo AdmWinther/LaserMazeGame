@@ -11,23 +11,14 @@ import java.util.Set;
 public class LazerGun extends OrientedToken {
 
     /**
-     * Default constructor for LazerGun. Sets movable to false and orientation to UP.
-     *
-     * @author Nathan Gromb
-     */
-    public LazerGun() {
-        super(false, Orientation.UP);
-    }
-
-    /**
      * Constructor for LazerGun.
      *
      * @param movable     whether the token is movable
      * @param orientation the orientation of the token
      * @author Nathan Gromb
      */
-    public LazerGun(boolean movable, Orientation orientation) {
-        super(movable, orientation);
+    public LazerGun(int id, boolean movable, Orientation orientation) {
+        super(id, movable, orientation);
     }
 
     /**

@@ -6,16 +6,9 @@ import Interfaces.LazerPropagator;
  * Token is an abstract class that represents a token in the game.
  */
 public abstract class Token implements LazerPropagator {
-    private boolean movable;
 
-    /**
-     * Default constructor for Token. Sets movable to true.
-     *
-     * @author Nathan Gromb
-     */
-    public Token() {
-        this.movable = true;
-    }
+    private final int id;
+    private boolean movable;
 
     /**
      * Constructor for Token.
@@ -23,7 +16,12 @@ public abstract class Token implements LazerPropagator {
      * @param movable whether the token is movable
      * @author Nathan Gromb
      */
-    public Token(boolean movable) {
+    public Token(int id, boolean movable) {
+        if (id < 0) {
+            throw new IllegalArgumentException("Token id must be non-negative.");
+        }
+        
+        this.id = id;
         this.movable = movable;
     }
 
@@ -45,5 +43,15 @@ public abstract class Token implements LazerPropagator {
      */
     public void setMovable(boolean movable) {
         this.movable = movable;
+    }
+
+    /**
+     * Returns the id of the token.
+     *
+     * @return the id of the token
+     * @author Nathan Gromb
+     */
+    public int id() {
+        return id;
     }
 }

@@ -6,17 +6,8 @@ import Interfaces.Orientable;
  * OrientedToken is an abstract class that represents a token in the game that has an orientation.
  */
 public abstract class OrientedToken extends Token implements Orientable {
-    private Orientation orientation;
 
-    /**
-     * Default constructor for OrientedToken. Sets movable to true and orientation to UP.
-     *
-     * @author Nathan Gromb
-     */
-    public OrientedToken() {
-        super();
-        this.orientation = Orientation.UP;
-    }
+    private Orientation orientation;
 
     /**
      * Constructor for OrientedToken.
@@ -25,8 +16,8 @@ public abstract class OrientedToken extends Token implements Orientable {
      * @param orientation the orientation of the token
      * @author Nathan Gromb
      */
-    public OrientedToken(boolean movable, Orientation orientation) {
-        super(movable);
+    public OrientedToken(int id, boolean movable, Orientation orientation) {
+        super(id, movable);
 
         if (orientation == null) {
             throw new IllegalArgumentException("Orientation cannot be null");

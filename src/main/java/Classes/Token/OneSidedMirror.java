@@ -9,23 +9,14 @@ import java.util.Set;
 public class OneSidedMirror extends OrientedToken {
 
     /**
-     * Default constructor for OneSidedMirror. Sets movable to true and orientation to UP.
-     *
-     * @author Nathan Gromb
-     */
-    public OneSidedMirror() {
-        super();
-    }
-
-    /**
      * Constructor for OneSidedMirror.
      *
      * @param movable     whether the token is movable
      * @param orientation the orientation of the token
      * @author Nathan Gromb
      */
-    public OneSidedMirror(boolean movable, Orientation orientation) {
-        super(movable, orientation);
+    public OneSidedMirror(int id, boolean movable, Orientation orientation) {
+        super(id, movable, orientation);
     }
 
     /**

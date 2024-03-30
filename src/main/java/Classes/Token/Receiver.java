@@ -10,23 +10,14 @@ import java.util.Set;
 public class Receiver extends OrientedToken {
 
     /**
-     * Default constructor for Receiver. Sets movable to false and orientation to UP.
-     *
-     * @author Nathan Gromb
-     */
-    public Receiver() {
-        super(false, Orientation.UP);
-    }
-
-    /**
-     * Constructor for Receiver. Sets movable to false.
+     * Constructor for Receiver.
      *
      * @param movable     whether the token is movable
      * @param orientation the orientation of the token
      * @author Nathan Gromb
      */
-    public Receiver(boolean movable, Orientation orientation) {
-        super(movable, orientation);
+    public Receiver(int id, boolean movable, Orientation orientation) {
+        super(id, movable, orientation);
     }
 
     /**

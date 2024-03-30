@@ -11,22 +11,13 @@ import java.util.Set;
 public class Block extends Token {
 
     /**
-     * Default constructor for Block. Sets movable to false.
-     *
-     * @author Nathan Gromb
-     */
-    public Block() {
-        super(false);
-    }
-
-    /**
      * Constructor for Block.
      *
      * @param movable whether the token is movable
      * @author Nathan Gromb
      */
-    public Block(boolean movable) {
-        super(movable);
+    public Block(int id, boolean movable) {
+        super(id, movable);
     }
 
     @Override
