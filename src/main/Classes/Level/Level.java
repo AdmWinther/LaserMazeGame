@@ -216,6 +216,16 @@ public class Level implements Runnable {
     }
 
     /**
+     * Getter for lazer
+     *
+     * @return Lazer - Lazer object
+     * @author Léonard Amsler - s231715
+     */
+    public Lazer getLazer() {
+        return lazer;
+    }
+
+    /**
      * Setter for lazer
      *
      * @param lazer Lazer - Lazer object
@@ -224,5 +234,4 @@ public class Level implements Runnable {
     public void setLazer(Lazer lazer) {
         this.lazer = lazer;
     }
-
 }
