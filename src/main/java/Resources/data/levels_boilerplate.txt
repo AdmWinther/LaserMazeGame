@@ -13,10 +13,10 @@
                   | "OneSidedMirror"
                   | "DoubleSidedMirror"
                   | "Block",
-            "orientation": "RIGHT"
-                         | "LEFT"
-                         | "UP"
-                         | "DOWN",
+            ("orientation"): "RIGHT"
+                           | "LEFT"
+                           | "UP"
+                           | "DOWN",
             "isMovable": [boolean]
             "coordinate": {
               "x": [int],
@@ -35,10 +35,10 @@
                   | "OneSidedMirror"
                   | "DoubleSidedMirror"
                   | "Block",
-            "orientation": "RIGHT"
-                         | "LEFT"
-                         | "UP"
-                         | "DOWN",
+            ("orientation"): "RIGHT"
+                           | "LEFT"
+                           | "UP"
+                           | "DOWN",
             "isMovable": [boolean]
             "coordinate": {
               "x": [int],
@@ -55,10 +55,10 @@
                 | "OneSidedMirror"
                 | "DoubleSidedMirror"
                 | "Block",
-          "orientation": "RIGHT"
-                       | "LEFT"
-                       | "UP"
-                       | "DOWN",
+          ("orientation"): "RIGHT"
+                         | "LEFT"
+                         | "UP"
+                         | "DOWN",
           "isMovable": [boolean]
         }
       ]
