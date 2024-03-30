@@ -1,4 +1,4 @@
-package java.Classes.Lazer;
+package Classes.Lazer;
 public class Lazer {
     
 }

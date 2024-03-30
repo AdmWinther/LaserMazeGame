@@ -1,4 +1,4 @@
-package java.Classes.Game;
+package Classes.Game;
 
 public class GameData {
     

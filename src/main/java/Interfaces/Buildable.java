@@ -1,4 +1,4 @@
-package java.Interfaces;
+package Interfaces;
 
 /**
  * A simple interface for classes that build objects

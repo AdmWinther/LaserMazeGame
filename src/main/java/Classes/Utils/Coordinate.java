@@ -1,4 +1,4 @@
-package java.Classes.Utils;
+package Classes.Utils;
 
 public record Coordinate(int x, int y) {
 }

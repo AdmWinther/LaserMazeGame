@@ -1,6 +1,7 @@
-package java.Classes.Token;
+package Classes.Token;
 
-import java.Classes.Utils.Coordinate;
+
+import Classes.Utils.Coordinate;
 
 import java.util.Collections;
 import java.util.Set;

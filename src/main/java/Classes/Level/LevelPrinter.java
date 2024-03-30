@@ -1,7 +1,7 @@
-package java.Classes.Level;
+package Classes.Level;
 
-import java.Classes.Lazer.Lazer;
-import java.Classes.Token.Token;
+import Classes.Lazer.Lazer;
+import Classes.Token.Token;
 
 import java.util.List;
 

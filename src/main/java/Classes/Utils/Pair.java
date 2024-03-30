@@ -1,4 +1,4 @@
-package java.Classes.Utils;
+package Classes.Utils;
 
 /**
  * A simple pair of two objects

@@ -1,11 +1,11 @@
-package java.Classes.Utils;
+package Classes.Utils;
 
-import java.Classes.Level.Board;
-import java.Classes.Level.LevelID;
+import Resources.constants.FilePaths;
+import Resources.constants.JsonTokens;
 
-import java.Classes.Token.*;
-import java.Resources.constants.FilePaths;
-import java.Resources.constants.JsonTokens;
+import Classes.Level.Board;
+import Classes.Level.LevelID;
+import Classes.Token.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

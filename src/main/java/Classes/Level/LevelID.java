@@ -1,4 +1,4 @@
-package java.Classes.Level;
+package Classes.Level;
 
 /**
  * LevelID class that stores a String value

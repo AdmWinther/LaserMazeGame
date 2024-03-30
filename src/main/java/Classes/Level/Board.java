@@ -1,8 +1,8 @@
-package java.Classes.Level;
+package Classes.Level;
 
-import java.Classes.Token.Token;
-import java.Classes.Utils.Coordinate;
-import java.Classes.Utils.Pair;
+import Classes.Token.Token;
+import Classes.Utils.Coordinate;
+import Classes.Utils.Pair;
 
 import java.util.Set;
 

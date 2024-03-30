@@ -1,6 +1,6 @@
-package java.Classes.Token;
+package Classes.Token;
 
-import java.Classes.Utils.Coordinate;
+import Classes.Utils.Coordinate;
 
 import java.util.Collections;
 import java.util.Set;
@@ -28,10 +28,7 @@ public class Receiver extends OrientedToken  {
         super(movable, orientation);
     }
 
-    @Override
-    public Set<Orientation> propagateLazer(Orientation from) {
-        return Collections.emptySet();
-    }
+
 
     @Override
     public Orientation getOrientation() {
@@ -61,5 +58,10 @@ public class Receiver extends OrientedToken  {
     @Override
     public void setIsPlaced(Boolean isPlaced) {
 
+    }
+
+    @Override
+    public Set<Orientation> propagateLazer(Orientation from) {
+        return null;
     }
 }

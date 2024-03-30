@@ -1,7 +1,8 @@
-package java.Classes.Token;
+package Classes.Token;
 
-import java.Classes.Utils.Coordinate;
-import java.Interfaces.LazerPropagator;
+
+import Classes.Utils.Coordinate;
+import Interfaces.LazerPropagator;
 
 public abstract class Token implements LazerPropagator {
 

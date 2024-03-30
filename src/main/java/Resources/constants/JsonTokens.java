@@ -1,4 +1,4 @@
-package java.Resources.constants;
+package Resources.constants;
 
 /**
  * Constants for JSON tokens

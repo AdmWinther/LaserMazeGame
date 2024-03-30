@@ -1,7 +1,8 @@
-package java.Classes.Level;
-import java.Classes.Token.Token;
-import java.Classes.Utils.DataReader;
-import java.Interfaces.Buildable;
+package Classes.Level;
+
+import Classes.Token.Token;
+import Classes.Utils.DataReader;
+import Interfaces.Buildable;
 
 import java.util.List;
 
