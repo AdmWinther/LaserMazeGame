@@ -10,6 +10,7 @@ public class LevelInput {
      * Select a token
      *
      * @return int - Token selected
+     * @author Léonard Amsler - s231715
      */
     public static int selectToken() {
         int result = -1;
@@ -34,6 +35,7 @@ public class LevelInput {
      * Select a coordinate
      *
      * @return Coordinate - Coordinate selected
+     * @author Léonard Amsler - s231715
      */
     public static Coordinate getNewPosition() {
         Coordinate result = new Coordinate(-1, -1);
@@ -59,6 +61,7 @@ public class LevelInput {
      * Select an orientation
      *
      * @return Orientation - Orientation selected
+     * @author Léonard Amsler - s231715
      */
     public static int selectOrientation() {
         int result = -1;

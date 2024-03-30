@@ -47,14 +47,14 @@ public class Level implements Runnable {
      * Parameterized constructor
      *
      * @param board         Board - Board object
-     * @param SolutionBoard Board - Solution board
+     * @param solutionBoard Board - Solution board
      * @param token         ArrayList - ArrayList of Token objects
      * @param levelName     String - Name of the level
      * @author Léonard Amsler - s231715
      */
-    public Level(Board board, Board SolutionBoard, List<Token> token, String levelName) {
+    public Level(Board board, Board solutionBoard, List<Token> token, String levelName) {
         this.board = board;
-        this.solutionBoard = SolutionBoard;
+        this.solutionBoard = solutionBoard;
         this.tokens = token;
         this.lazer = new Lazer();
         this.levelChecker = new LevelChecker(this);
@@ -104,8 +104,8 @@ public class Level implements Runnable {
             switch (levelState) {
                 case STARTING -> start();
                 case NEED_USER_INPUT -> {
-                    LevelPrinter.printLevel(this);
                     setLazer(generateLazer());
+                    LevelPrinter.printLevel(this);
                     LevelPrinter.printBoardAndLazer(board, lazer);
                     LevelPrinter.printTokens(new HashSet<>(tokens));
                     needUserInput();
@@ -166,7 +166,7 @@ public class Level implements Runnable {
             isPositionValid = levelChecker.checkNewPosition(coordinate);
         }
 
-        // Select the orientation
+        // Select the orientation, if the token is orientable
         Orientation orientation = null;
         if (token instanceof OrientedToken) {
             boolean isOrientationValid = false;
@@ -216,11 +216,10 @@ public class Level implements Runnable {
     }
 
     /**
-     * Setter for the lazer
+     * Setter for lazer
      *
      * @param lazer Lazer - Lazer object
-     * @return void
-     * @autor Léonard Amsler - s231715
+     * @author Léonard Amsler - s231715
      */
     public void setLazer(Lazer lazer) {
         this.lazer = lazer;

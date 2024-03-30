@@ -15,6 +15,7 @@ public class LevelChecker {
      * Parameterized constructor
      *
      * @param level Level - Level object
+     * @author Léonard Amsler - s231715
      */
     public LevelChecker(Level level) {
         this.level = level;
@@ -25,6 +26,7 @@ public class LevelChecker {
      *
      * @param token int - Token selected
      * @return boolean - True if the token is valid, false otherwise
+     * @author Léonard Amsler - s231715
      */
     public boolean checkTokenSelection(int token) {
         int nbTokens = level.getTokens().size();
@@ -40,9 +42,9 @@ public class LevelChecker {
     /**
      * Check if the coordinate selected is valid
      *
-     * @param x int - X coordinate
-     * @param y int - Y coordinate
+     * @param coordinate Coordinate - Coordinate selected
      * @return boolean - True if the coordinate is valid, false otherwise
+     * @author Léonard Amsler - s231715
      */
     public boolean checkNewPosition(Coordinate coordinate) {
         int x = coordinate.getX();
@@ -58,6 +60,8 @@ public class LevelChecker {
 
     /**
      * Check if the provided solution is correct
+     *
+     * @author Léonard Amsler - s231715
      */
     public Boolean checkSolution() {
         Board solutionBoard = level.getSolutionBoard();
@@ -70,6 +74,7 @@ public class LevelChecker {
      *
      * @param orientation int - Orientation selected
      * @return boolean - True if the orientation is valid, false otherwise
+     * @author Léonard Amsler - s231715
      */
     public Boolean checkOrientation(int orientation) {
         return orientation >= 0 && orientation < Orientation.values().length;
