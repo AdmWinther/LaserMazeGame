@@ -1,0 +1,54 @@
+package java.Classes.Token;
+
+import java.Classes.Utils.Coordinate;
+import java.Interfaces.LazerPropagator;
+import java.util.Set;
+
+public abstract class Token implements LazerPropagator {
+
+    private boolean movable;
+
+    /**
+     * Default constructor for Token. Sets movable to true.
+     */
+    public Token() {
+        this.movable = true;
+    }
+
+    /**
+     * Constructor for Token.
+     *
+     * @param movable whether the token is movable
+     */
+    public Token(boolean movable) {
+        this.movable = movable;
+    }
+
+    /**
+     * Returns whether the token is movable.
+     *
+     * @return whether the token is movable
+     */
+    public boolean isMovable() {
+        return movable;
+    }
+
+    /**
+     * Sets the movable property of the token.
+     *
+     * @param movable whether the token is movable
+     */
+    public void setMovable(boolean movable) {
+        this.movable = movable;
+    }
+
+    public abstract void setCoordinate(Coordinate coordinate);
+
+    public abstract void setIsPlaced(Boolean isPlaced);
+
+    public Orientation getOrientation() {
+        return null;
+    }
+
+    public abstract Set<Orientation> propagateLazer(Orientation orientation);
+}
