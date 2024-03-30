@@ -61,7 +61,7 @@ public class Receiver extends OrientedToken  {
     }
 
     @Override
-    public Set<Orientation> propagateLazer(Orientation from) {
+    public Set<Orientation> propagateLaser(Orientation from) {
         return null;
     }
 }

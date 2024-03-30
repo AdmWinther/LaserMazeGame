@@ -53,27 +53,27 @@ public class DoubleSidedMirrorTest {
     @Test
     public void testDoubleSidedMirrorPropagateLaser() {
         DoubleSidedMirror doubleSidedMirror1 = new DoubleSidedMirror(false, Orientation.UP);
-        assertEquals(Set.of(Orientation.RIGHT), doubleSidedMirror1.propagateLazer(Orientation.DOWN));
-        assertEquals(Set.of(Orientation.DOWN), doubleSidedMirror1.propagateLazer(Orientation.RIGHT));
-        assertEquals(Set.of(Orientation.LEFT), doubleSidedMirror1.propagateLazer(Orientation.UP));
-        assertEquals(Set.of(Orientation.UP), doubleSidedMirror1.propagateLazer(Orientation.LEFT));
+        assertEquals(Set.of(Orientation.RIGHT), doubleSidedMirror1.propagateLaser(Orientation.DOWN));
+        assertEquals(Set.of(Orientation.DOWN), doubleSidedMirror1.propagateLaser(Orientation.RIGHT));
+        assertEquals(Set.of(Orientation.LEFT), doubleSidedMirror1.propagateLaser(Orientation.UP));
+        assertEquals(Set.of(Orientation.UP), doubleSidedMirror1.propagateLaser(Orientation.LEFT));
 
         DoubleSidedMirror doubleSidedMirror2 = new DoubleSidedMirror(false, Orientation.RIGHT);
-        assertEquals(Set.of(Orientation.LEFT), doubleSidedMirror2.propagateLazer(Orientation.DOWN));
-        assertEquals(Set.of(Orientation.DOWN), doubleSidedMirror2.propagateLazer(Orientation.LEFT));
-        assertEquals(Set.of(Orientation.UP), doubleSidedMirror2.propagateLazer(Orientation.RIGHT));
-        assertEquals(Set.of(Orientation.RIGHT), doubleSidedMirror2.propagateLazer(Orientation.UP));
+        assertEquals(Set.of(Orientation.LEFT), doubleSidedMirror2.propagateLaser(Orientation.DOWN));
+        assertEquals(Set.of(Orientation.DOWN), doubleSidedMirror2.propagateLaser(Orientation.LEFT));
+        assertEquals(Set.of(Orientation.UP), doubleSidedMirror2.propagateLaser(Orientation.RIGHT));
+        assertEquals(Set.of(Orientation.RIGHT), doubleSidedMirror2.propagateLaser(Orientation.UP));
 
         DoubleSidedMirror doubleSidedMirror3 = new DoubleSidedMirror(false, Orientation.DOWN);
-        assertEquals(Set.of(Orientation.LEFT), doubleSidedMirror3.propagateLazer(Orientation.UP));
-        assertEquals(Set.of(Orientation.UP), doubleSidedMirror3.propagateLazer(Orientation.LEFT));
-        assertEquals(Set.of(Orientation.DOWN), doubleSidedMirror3.propagateLazer(Orientation.RIGHT));
-        assertEquals(Set.of(Orientation.RIGHT), doubleSidedMirror3.propagateLazer(Orientation.DOWN));
+        assertEquals(Set.of(Orientation.LEFT), doubleSidedMirror3.propagateLaser(Orientation.UP));
+        assertEquals(Set.of(Orientation.UP), doubleSidedMirror3.propagateLaser(Orientation.LEFT));
+        assertEquals(Set.of(Orientation.DOWN), doubleSidedMirror3.propagateLaser(Orientation.RIGHT));
+        assertEquals(Set.of(Orientation.RIGHT), doubleSidedMirror3.propagateLaser(Orientation.DOWN));
 
         DoubleSidedMirror doubleSidedMirror4 = new DoubleSidedMirror(false, Orientation.LEFT);
-        assertEquals(Set.of(Orientation.UP), doubleSidedMirror4.propagateLazer(Orientation.RIGHT));
-        assertEquals(Set.of(Orientation.DOWN), doubleSidedMirror4.propagateLazer(Orientation.LEFT));
-        assertEquals(Set.of(Orientation.RIGHT), doubleSidedMirror4.propagateLazer(Orientation.UP));
-        assertEquals(Set.of(Orientation.LEFT), doubleSidedMirror4.propagateLazer(Orientation.DOWN));
+        assertEquals(Set.of(Orientation.UP), doubleSidedMirror4.propagateLaser(Orientation.RIGHT));
+        assertEquals(Set.of(Orientation.DOWN), doubleSidedMirror4.propagateLaser(Orientation.LEFT));
+        assertEquals(Set.of(Orientation.RIGHT), doubleSidedMirror4.propagateLaser(Orientation.UP));
+        assertEquals(Set.of(Orientation.LEFT), doubleSidedMirror4.propagateLaser(Orientation.DOWN));
     }
 }

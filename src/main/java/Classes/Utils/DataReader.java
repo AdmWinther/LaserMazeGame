@@ -77,7 +77,7 @@ public class DataReader {
 
         switch (type) {
             case JsonTokens.VAL_TYPE_LASER_GUN:
-                return new LazerGun(isMovable, orientation);
+                return new LaserGun(isMovable, orientation);
             case JsonTokens.VAL_TYPE_RECEIVER:
                 return new Receiver(isMovable, orientation);
             case JsonTokens.VAL_DOUBLE_SIDED_MIRROR:
@@ -126,7 +126,8 @@ public class DataReader {
         JSONObject level = findLevelByID(id);
         requireFileFound(level, id.value());
         JSONObject board = level.getJSONObject(boardType);
-        return new Board(createPlacedTokens(board));
+        int size = board.getInt(JsonTokens.ATTR_SIZE);
+        return new Board(size, size, createPlacedTokens(board));
     }
 
     /**
@@ -142,11 +143,6 @@ public class DataReader {
         for (int i = 0; i < jsonIDs.length(); i++) levelIDS.add(new LevelID(jsonIDs.getString(i)));
 
         return levelIDS;
-    }
-
-    public static void main(String[] args) {
-        List<LevelID> jsonIDs = DataReader.extractLevelIDs(FilePaths.LEVELS_IDS_DATA_PATH);
-        System.out.println(jsonIDs);
     }
 
     /**

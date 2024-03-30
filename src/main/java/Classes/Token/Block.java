@@ -30,7 +30,7 @@ public class Block extends Token {
     }
 
     @Override
-    public Set<Orientation> propagateLazer(Orientation from) {
+    public Set<Orientation> propagateLaser(Orientation from) {
         return Collections.emptySet();
     }
 

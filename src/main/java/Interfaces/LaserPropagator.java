@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  * LazerPropagator is an interface that represents an object that can propagate a lazer.
  */
-public interface LazerPropagator {
+public interface LaserPropagator {
 
     /**
      * Get the orientations the lazer will be going to.
@@ -16,5 +16,5 @@ public interface LazerPropagator {
      * @param from The orientation the lazer is coming from.
      * @return The orientations the lazer will be going to.
      */
-    Set<Orientation> propagateLazer(Orientation from);
+    Set<Orientation> propagateLaser(Orientation from);
 }

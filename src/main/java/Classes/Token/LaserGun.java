@@ -10,12 +10,12 @@ import java.util.Set;
  * It is the source of the lazer.
  * A receiver can never be moved.
  */
-public class LazerGun extends OrientedToken {
+public class LaserGun extends OrientedToken {
 
     /**
      * Default constructor for LazerGun. Sets movable to false and orientation to UP.
      */
-    public LazerGun() {
+    public LaserGun() {
         super(false, Orientation.UP);
     }
 
@@ -25,13 +25,13 @@ public class LazerGun extends OrientedToken {
      * @param movable     whether the token is movable
      * @param orientation the orientation of the token
      */
-    public LazerGun(boolean movable, Orientation orientation) {
+    public LaserGun(boolean movable, Orientation orientation) {
         super(movable, orientation);
     }
 
 
     @Override
-    public Set<Orientation> propagateLazer(Orientation from) {
+    public Set<Orientation> propagateLaser(Orientation from) {
         return Collections.emptySet();
     }
 

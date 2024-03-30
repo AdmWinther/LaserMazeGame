@@ -2,9 +2,9 @@ package Classes.Token;
 
 
 import Classes.Utils.Coordinate;
-import Interfaces.LazerPropagator;
+import Interfaces.LaserPropagator;
 
-public abstract class Token implements LazerPropagator {
+public abstract class Token implements LaserPropagator {
 
     private boolean movable;
 

@@ -11,6 +11,7 @@ public final class JsonTokens {
     public final static String ATTR_NAME = "name";
     public final static String ATTR_STARTING_BOARD = "startingBoard";
     public final static String ATTR_SOLUTION_BOARD = "solutionBoard";
+    public final static String ATTR_SIZE = "size";
     public final static String ATTR_TOKENS = "tokens";
     public final static String ATTR_TYPE = "type";
     public final static String ATTR_ORIENTATION = "orientation";

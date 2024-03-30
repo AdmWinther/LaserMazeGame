@@ -11,13 +11,6 @@ public class LevelChecker {
     private final Level level;
 
     /**
-     * Default constructor
-     */
-    public LevelChecker() {
-        this.level = new Level();
-    }
-
-    /**
      * Parameterized constructor
      *
      * @param level Level - Level object
@@ -53,9 +46,9 @@ public class LevelChecker {
         int y = coordinate.y();
         if (x < 0 || y < 0) {
             return false;
-        } else if (x >= level.getBoard().getWidth()) {
+        } else if (x >= level.getBoard().getWIDTH()) {
             return false;
-        } else if (y >= level.getBoard().getHeight()) {
+        } else if (y >= level.getBoard().getHEIGHT()) {
             return false;
         } else return true;
     }

@@ -46,9 +46,9 @@ public class ReceiverTest {
     public void testBlockPropagateLaser() {
         Receiver receiver = new Receiver();
 
-        assertEquals(Collections.emptySet(), receiver.propagateLazer(Orientation.UP));
-        assertEquals(Collections.emptySet(), receiver.propagateLazer(Orientation.RIGHT));
-        assertEquals(Collections.emptySet(), receiver.propagateLazer(Orientation.DOWN));
-        assertEquals(Collections.emptySet(), receiver.propagateLazer(Orientation.LEFT));
+        assertEquals(Collections.emptySet(), receiver.propagateLaser(Orientation.UP));
+        assertEquals(Collections.emptySet(), receiver.propagateLaser(Orientation.RIGHT));
+        assertEquals(Collections.emptySet(), receiver.propagateLaser(Orientation.DOWN));
+        assertEquals(Collections.emptySet(), receiver.propagateLaser(Orientation.LEFT));
     }
 }

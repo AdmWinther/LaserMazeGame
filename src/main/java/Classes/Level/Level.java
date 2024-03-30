@@ -50,15 +50,6 @@ public class Level implements Runnable {
     /**
      * Default constructor
      */
-    public Level() {
-        this.board = new Board();
-        this.solutionBoard = new Board();
-        this.tokens = new ArrayList<Token>();
-        this.lazer = new Lazer();
-        this.levelChecker = new LevelChecker();
-        this.levelName = "Level 1";
-        this.levelState = LevelState.STARTING;
-    }
 
     /**
      * Parameterized constructor

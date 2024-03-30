@@ -8,7 +8,7 @@ import java.util.Collections;
 public class LazerGunTest {
     @Test
     public void testReceiveInitialState() {
-        OrientedToken lazergun = new LazerGun();
+        OrientedToken lazergun = new LaserGun();
 
         assertEquals(Orientation.UP, lazergun.getOrientation());
         assertFalse(lazergun.isMovable());
@@ -16,26 +16,26 @@ public class LazerGunTest {
 
     @Test
     public void testLazerGunInitialStateWithParameters() {
-        OrientedToken lazergun1 = new LazerGun(false, Orientation.RIGHT);
+        OrientedToken lazergun1 = new LaserGun(false, Orientation.RIGHT);
         assertEquals(Orientation.RIGHT, lazergun1.getOrientation());
         assertFalse(lazergun1.isMovable());
 
-        OrientedToken lazergun2 = new LazerGun(false, Orientation.DOWN);
+        OrientedToken lazergun2 = new LaserGun(false, Orientation.DOWN);
         assertEquals(Orientation.DOWN, lazergun2.getOrientation());
         assertFalse(lazergun2.isMovable());
 
-        OrientedToken lazergun3 = new LazerGun(false, Orientation.LEFT);
+        OrientedToken lazergun3 = new LaserGun(false, Orientation.LEFT);
         assertEquals(Orientation.LEFT, lazergun3.getOrientation());
         assertFalse(lazergun3.isMovable());
 
-        OrientedToken lazergun4 = new LazerGun(false, Orientation.UP);
+        OrientedToken lazergun4 = new LaserGun(false, Orientation.UP);
         assertEquals(Orientation.UP, lazergun4.getOrientation());
         assertFalse(lazergun4.isMovable());
     }
 
     @Test
     public void testLazerGunAfterSetMovable() {
-        OrientedToken lazergun = new LazerGun();
+        OrientedToken lazergun = new LaserGun();
         lazergun.setMovable(true);
 
         assertEquals(Orientation.UP, lazergun.getOrientation());
@@ -44,11 +44,11 @@ public class LazerGunTest {
 
     @Test
     public void testBlockPropagateLaser() {
-        LazerGun lazergun = new LazerGun();
+        LaserGun lazergun = new LaserGun();
 
-        assertEquals(Collections.emptySet(), lazergun.propagateLazer(Orientation.UP));
-        assertEquals(Collections.emptySet(), lazergun.propagateLazer(Orientation.RIGHT));
-        assertEquals(Collections.emptySet(), lazergun.propagateLazer(Orientation.DOWN));
-        assertEquals(Collections.emptySet(), lazergun.propagateLazer(Orientation.LEFT));
+        assertEquals(Collections.emptySet(), lazergun.propagateLaser(Orientation.UP));
+        assertEquals(Collections.emptySet(), lazergun.propagateLaser(Orientation.RIGHT));
+        assertEquals(Collections.emptySet(), lazergun.propagateLaser(Orientation.DOWN));
+        assertEquals(Collections.emptySet(), lazergun.propagateLaser(Orientation.LEFT));
     }
 }
