@@ -15,6 +15,13 @@ public class Board {
 
     public Set<Tile> tiles;
 
+    public Board(Set<Pair<Token, Coordinate>> placedTokens) {
+    }
+
+    public Board() {
+
+    }
+
     public int getWidth() {
         return 0;
     }
@@ -61,7 +68,7 @@ public class Board {
 
             Tile currentTile = null;
             for (Tile tile : tiles) {
-                if (tile.coordinate.equals(currentCoordinate)) {
+                if (tile.getCoordinate().equals(currentCoordinate)) {
                     currentTile = tile;
                     break;
                 }
@@ -74,8 +81,8 @@ public class Board {
             Set<Orientation> outOrientations = currentTile.propagateLazer(currentOrientation);
 
             for (Orientation outOrientation : outOrientations) {
-                int x = currentCoordinate.getX();
-                int y = currentCoordinate.getY();
+                int x = currentCoordinate.x();
+                int y = currentCoordinate.y();
                 switch (outOrientation) {
                     case UP -> y--;
                     case DOWN -> y++;

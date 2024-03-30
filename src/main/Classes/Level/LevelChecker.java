@@ -47,8 +47,8 @@ public class LevelChecker {
      * @author Léonard Amsler - s231715
      */
     public boolean checkNewPosition(Coordinate coordinate) {
-        int x = coordinate.getX();
-        int y = coordinate.getY();
+        int x = coordinate.x();
+        int y = coordinate.y();
         if (x < 0 || y < 0) {
             return false;
         } else if (x >= level.getBoard().getWidth()) {

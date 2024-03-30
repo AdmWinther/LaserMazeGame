@@ -1,0 +1,134 @@
+{
+  "levels": [
+    {
+      "id": "0",
+      "name": "Level 1",
+      "startingBoard": {
+        "size": 3,
+        "tokens": [
+          {
+            "type": "LaserGun",
+            "id": 2,
+            "orientation": "RIGHT",
+            "isMovable": false,
+            "coordinate": {
+              "x": 0,
+              "y": 1
+            }
+          },
+          {
+            "type": "Receiver",
+            "id": 3,
+            "isMovable": true,
+            "coordinate": {
+              "x": 2,
+              "y": 1
+            }
+          }
+        ]
+      },
+      "solutionBoard": {
+        "size": 3,
+        "tokens": [
+          {
+            "type": "LaserGun",
+            "id": 2,
+            "orientation": "RIGHT",
+            "isMovable": false,
+            "coordinate": {
+              "x": 0,
+              "y": 1
+            }
+          },
+          {
+            "type": "Receiver",
+            "id": 3,
+            "isMovable": true,
+            "coordinate": {
+              "x": 2,
+              "y": 1
+            }
+          }
+        ]
+      },
+      "tokens": [
+        {
+          "type": "LaserGun",
+          "id": 0,
+          "orientation": "RIGHT",
+          "isMovable": false
+        },
+        {
+          "type": "Block",
+          "id": 1,
+          "isMovable": true
+        }
+      ]
+    },
+    {
+      "id": "1",
+      "name": "Level 2",
+      "startingBoard": {
+        "size": 3,
+        "tokens": [
+          {
+            "type": "LaserGun",
+            "id": 2,
+            "orientation": "RIGHT",
+            "isMovable": false,
+            "coordinate": {
+              "x": 0,
+              "y": 1
+            }
+          },
+          {
+            "type": "Receiver",
+            "id": 3,
+            "isMovable": true,
+            "coordinate": {
+              "x": 2,
+              "y": 1
+            }
+          }
+        ]
+      },
+      "solutionBoard": {
+        "size": 3,
+        "tokens": [
+          {
+            "type": "LaserGun",
+            "id": 2,
+            "orientation": "RIGHT",
+            "isMovable": false,
+            "coordinate": {
+              "x": 0,
+              "y": 1
+            }
+          },
+          {
+            "type": "Receiver",
+            "id": 3,
+            "isMovable": true,
+            "coordinate": {
+              "x": 2,
+              "y": 1
+            }
+          }
+        ]
+      },
+      "tokens": [
+        {
+          "type": "LaserGun",
+          "id": 0,
+          "orientation": "RIGHT",
+          "isMovable": false
+        },
+        {
+          "type": "Block",
+          "id": 1,
+          "isMovable": true
+        }
+      ]
+    }
+  ]
+}

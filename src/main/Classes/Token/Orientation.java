@@ -1,5 +1,4 @@
 package Classes.Token;
-
 public enum Orientation {
     /**
      * Up orientation

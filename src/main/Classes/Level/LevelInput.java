@@ -40,7 +40,7 @@ public class LevelInput {
     public static Coordinate getNewPosition() {
         Coordinate result = new Coordinate(-1, -1);
 
-        while (result.getX() < 0 || result.getY() < 0) {
+        while (result.x() < 0 || result.y() < 0) {
             System.out.println("\nYou need to select a coordinate (Ex: 0 0)");
 
             // Get the user input

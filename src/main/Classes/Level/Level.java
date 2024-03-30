@@ -181,7 +181,7 @@ public class Level implements Runnable {
         // Affect the token to the new position
         board.setTokenCoordinate(token, coordinate);
         if (token instanceof OrientedToken) {
-            token.setOrientation(orientation);
+            ((OrientedToken) token).setOrientation(orientation);
         }
         token.setIsPlaced(true);
 
@@ -234,4 +234,5 @@ public class Level implements Runnable {
     public void setLazer(Lazer lazer) {
         this.lazer = lazer;
     }
+
 }
