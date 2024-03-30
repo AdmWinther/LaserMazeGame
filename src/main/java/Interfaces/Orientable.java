@@ -1,6 +1,6 @@
-package java.Interfaces;
+package Interfaces;
 
-import java.Classes.Token.Orientation;
+import Classes.Token.Orientation;
 
 public interface Orientable {
 

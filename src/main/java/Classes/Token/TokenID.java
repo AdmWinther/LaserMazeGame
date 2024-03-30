@@ -1,4 +1,4 @@
-package java.Classes.Token;
+package Classes.Token;
 
 public record TokenID(String value) {
 }

@@ -1,8 +1,9 @@
-package java.Classes.Level;
+package Classes.Level;
 
-import java.Classes.Token.Orientation;
-import java.Classes.Token.Token;
-import java.Classes.Utils.Coordinate;
+import Classes.Token.Orientation;
+import Classes.Token.Token;
+import Classes.Utils.Coordinate;
+
 import java.util.Set;
 
 public class Tile {

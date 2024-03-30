@@ -1,12 +1,13 @@
-package java.Classes.Level;
+package Classes.Level;
 
-import java.Classes.Lazer.Lazer;
-import java.Classes.Lazer.LazerFragment;
-import java.Classes.Token.LazerGun;
-import java.Classes.Token.Orientation;
-import java.Classes.Token.Token;
-import java.Classes.Utils.Coordinate;
-import java.Classes.Utils.Pair;
+import Classes.Lazer.Lazer;
+import Classes.Lazer.LazerFragment;
+import Classes.Token.LazerGun;
+import Classes.Token.Orientation;
+import Classes.Token.Token;
+import Classes.Utils.Coordinate;
+import Classes.Utils.Pair;
+
 import java.util.ArrayList;
 import java.util.Set;
 

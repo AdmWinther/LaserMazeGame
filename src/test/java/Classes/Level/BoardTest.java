@@ -1,4 +1,4 @@
-package java.Classes.Level;
+package Classes.Level;
 
 public class BoardTest {
 

@@ -1,4 +1,4 @@
-package java.Resources.constants;
+package Resources.constants;
 
 public final class FilePaths {
     public final static String LEVELSDATAPATH = "src/resources/data/levels.json";

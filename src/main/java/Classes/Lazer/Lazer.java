@@ -1,4 +1,6 @@
-package java.Classes.Lazer;
+package Classes.Lazer;
+
+import Classes.Lazer.LazerFragment;
 
 public class Lazer {
 

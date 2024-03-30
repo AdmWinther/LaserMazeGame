@@ -1,4 +1,4 @@
-package java.Resources.constants;
+package Resources.constants;
 
 public final class JsonTokens {
     public final static String ID = "id";

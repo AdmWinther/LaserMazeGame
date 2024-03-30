@@ -1,6 +1,6 @@
-package java.Classes.Lazer;
+package Classes.Lazer;
 
-import java.Classes.Utils.Coordinate;
+import Classes.Utils.Coordinate;
 
 public record LazerFragment(Coordinate from, Coordinate to) {
 }

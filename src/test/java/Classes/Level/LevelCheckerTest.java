@@ -1,8 +1,8 @@
-package java.Classes.Level;
+package Classes.Level;
 
+import Classes.Utils.Coordinate;
 import org.junit.Test;
 
-import java.Classes.Utils.Coordinate;
 import java.util.ArrayList;
 import java.util.Random;
 

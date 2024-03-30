@@ -1,10 +1,10 @@
-package java.Classes.Level;
+package Classes.Level;
 
+import Classes.Lazer.Lazer;
+import Classes.Token.Block;
+import Classes.Token.Token;
 import org.junit.Test;
 
-import java.Classes.Lazer.Lazer;
-import java.Classes.Token.Block;
-import java.Classes.Token.Token;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,6 +1,7 @@
-package java.Classes.Level;
+package Classes.Level;
 
-import java.Classes.Utils.Coordinate;
+import Classes.Utils.Coordinate;
+
 import java.util.Scanner;
 
 public class LevelInput {

@@ -1,6 +1,6 @@
-package java.Classes.Token;
+package Classes.Token;
 
-import java.Interfaces.Orientable;
+import Interfaces.Orientable;
 
 /**
  * OrientedToken is an abstract class that represents a token in the game that has an orientation.

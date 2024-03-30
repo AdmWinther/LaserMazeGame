@@ -1,4 +1,4 @@
-package java.Interfaces;
+package Interfaces;
 
 public interface Runnable {
 

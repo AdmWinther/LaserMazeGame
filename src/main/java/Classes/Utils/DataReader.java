@@ -1,13 +1,13 @@
-package java.Classes.Utils;
+package Classes.Utils;
 
+import Classes.Level.Board;
+import Classes.Level.LevelID;
+import Classes.Token.*;
+import Resources.constants.FilePaths;
+import Resources.constants.JsonTokens;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.Classes.Level.Board;
-import java.Classes.Level.LevelID;
-import java.Classes.Token.*;
-import java.Resources.constants.FilePaths;
-import java.Resources.constants.JsonTokens;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;

@@ -1,11 +1,12 @@
-package java.Classes.Level;
+package Classes.Level;
 
-import java.Classes.Lazer.Lazer;
-import java.Classes.Token.Orientation;
-import java.Classes.Token.OrientedToken;
-import java.Classes.Token.Token;
-import java.Classes.Utils.Coordinate;
-import java.Interfaces.Runnable;
+import Classes.Lazer.Lazer;
+import Classes.Token.Orientation;
+import Classes.Token.OrientedToken;
+import Classes.Token.Token;
+import Classes.Utils.Coordinate;
+import Interfaces.Runnable;
+
 import java.util.HashSet;
 import java.util.List;
 
