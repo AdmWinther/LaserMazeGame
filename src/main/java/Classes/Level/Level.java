@@ -105,18 +105,18 @@ public class Level implements Runnable {
                 case STARTING -> start();
                 case NEED_USER_INPUT -> {
                     setLazer(generateLazer());
-                    LevelPrinter.printLevel(this);
-                    LevelPrinter.printBoardAndLazer(board, lazer);
-                    LevelPrinter.printTokens(new HashSet<>(tokens));
+                    LevelPrinter.print(this);
+                    LevelPrinter.print(board, lazer);
+                    LevelPrinter.print(new HashSet<>(tokens));
                     needUserInput();
                 }
                 case CHECKING_SOLUTION -> checkSolution();
             }
         }
         System.out.println("Here is the solution");
-        LevelPrinter.printLevel(this);
-        LevelPrinter.printBoardAndLazer(board, lazer);
-        LevelPrinter.printTokens(new HashSet<>(tokens));
+        LevelPrinter.print(this);
+        LevelPrinter.print(board, lazer);
+        LevelPrinter.print(new HashSet<>(tokens));
         stop();
     }
 

@@ -7,15 +7,15 @@ import java.util.Set;
 
 public class LevelPrinter {
 
-    public static void printLevel(Level level) {
+    public static void print(Level level) {
         System.out.println("Printing level");
     }
 
-    public static void printBoardAndLazer(Board board, Lazer lazer) {
+    public static void print(Board board, Lazer lazer) {
         System.out.println("Printing board and lazer");
     }
 
-    public static void printTokens(Set<Token> tokens) {
+    public static void print(Set<Token> tokens) {
         System.out.println("Printing tokens");
     }
 
