@@ -1,5 +1,10 @@
 package Classes.Game;
 
-public class GameTest {
+import junit.framework.TestCase;
+
+public class GameTest extends TestCase {
+    public void testMain(){
+        Game game = new Game();
+    }
     
 }
