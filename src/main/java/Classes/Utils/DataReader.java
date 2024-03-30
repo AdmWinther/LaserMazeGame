@@ -50,7 +50,7 @@ public class DataReader {
      * @author Hugo Demule
      */
     private static JSONObject findLevelByID(LevelID id) throws NullPointerException {
-        JSONArray jsonLevels = Objects.requireNonNull(json(FilePaths.LEVELSDATAPATH)).getJSONArray(JsonTokens.ATTR_LEVELS);
+        JSONArray jsonLevels = Objects.requireNonNull(json(FilePaths.LEVELS_DATA_PATH)).getJSONArray(JsonTokens.ATTR_LEVELS);
 
         for (int i = 0; i < jsonLevels.length(); i++) {
             JSONObject level = jsonLevels.getJSONObject(i);
@@ -70,8 +70,11 @@ public class DataReader {
     private static Token createToken(JSONObject jsonToken) {
         TokenID id = new TokenID(jsonToken.getString(JsonTokens.ATTR_ID));
         String type = jsonToken.getString(JsonTokens.ATTR_TYPE);
-        Orientation orientation = Orientation.valueOf(jsonToken.getString(JsonTokens.ATTR_ORIENTATION));
         boolean isMovable = jsonToken.getBoolean(JsonTokens.ATTR_IS_MOVABLE);
+        Orientation orientation = jsonToken.has(JsonTokens.ATTR_ORIENTATION)
+                ? Orientation.valueOf(jsonToken.getString(JsonTokens.ATTR_ORIENTATION))
+                : null;
+
         switch (type) {
             case JsonTokens.VAL_TYPE_LASER_GUN:
                 return new LazerGun(isMovable, orientation);
@@ -129,15 +132,21 @@ public class DataReader {
     /**
      * Extracts the LevelIDs from the game data files
      * @return a list of LevelIDs
+     * @throws NullPointerException if the path to the JSON file does not exist
      * @author Hugo Demule
      */
-    public static List<LevelID> extractLevelIDs() {
-        JSONArray jsonIDs = Objects.requireNonNull(json(FilePaths.LEVELSIDSDATAPATH)).getJSONArray(JsonTokens.ATTR_LEVELS_IDS);
+    public static List<LevelID> extractLevelIDs(String path) throws NullPointerException {
+        JSONArray jsonIDs = Objects.requireNonNull(json(path)).getJSONArray(JsonTokens.ATTR_LEVELS_IDS);
         List<LevelID> levelIDS = new ArrayList<>();
 
         for (int i = 0; i < jsonIDs.length(); i++) levelIDS.add(new LevelID(jsonIDs.getString(i)));
 
         return levelIDS;
+    }
+
+    public static void main(String[] args) {
+        List<LevelID> jsonIDs = DataReader.extractLevelIDs(FilePaths.LEVELS_IDS_DATA_PATH);
+        System.out.println(jsonIDs);
     }
 
     /**
@@ -165,7 +174,10 @@ public class DataReader {
         requireFileFound(level, id.value());
         List<Token> tokens = new ArrayList<>();
         JSONArray jsonTokens = level.getJSONArray(JsonTokens.ATTR_TOKENS);
-        for (int i = 0; i < jsonTokens.length(); i++) tokens.add(createToken(jsonTokens.getJSONObject(i)));
+        for (int i = 0; i < jsonTokens.length(); i++){
+            Token token = createToken(jsonTokens.getJSONObject(i));
+            tokens.add(token);
+        }
         return tokens;
     }
 

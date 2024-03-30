@@ -1,8 +1,5 @@
-package java.Classes.Token;
+package Classes.Token;
 
-import java.Classes.Token.Block;
-import java.Classes.Token.Orientation;
-import java.Classes.Token.Token;
 import java.util.Collections;
 
 import org.junit.Test;

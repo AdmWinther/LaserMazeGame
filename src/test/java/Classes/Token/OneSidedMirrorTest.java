@@ -1,11 +1,8 @@
-package java.Classes.Token;
+package Classes.Token;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import java.Classes.Token.OneSidedMirror;
-import java.Classes.Token.Orientation;
-import java.Classes.Token.OrientedToken;
 import java.util.Collections;
 import java.util.Set;
 
