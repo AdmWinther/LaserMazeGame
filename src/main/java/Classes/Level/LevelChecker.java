@@ -30,13 +30,15 @@ public class LevelChecker {
      */
     public boolean checkTokenSelection(int token) {
         int nbTokens = level.getTokens().size();
-        Token selectedToken = level.getTokens().get(token);
-        boolean isMovable = selectedToken.isMovable();
+
         if (token < 0) {
             return false;
         } else if (token >= nbTokens) {
             return false;
-        } else return isMovable;
+        } else {
+            Token selectedToken = level.getTokens().get(token);
+            return selectedToken.isMovable();
+        }
     }
 
     /**

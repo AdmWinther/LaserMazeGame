@@ -1,4 +1,4 @@
-package java.Classes.Token;
+package Classes.Token;
 
 import org.junit.Assert;
 import org.junit.Test;
