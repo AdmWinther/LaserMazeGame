@@ -102,4 +102,24 @@ public class OneSidedMirrorTest {
         OrientedToken oneSidedMirror = new OneSidedMirror(0, false, Orientation.UP);
         assertEquals(0, oneSidedMirror.id());
     }
+
+    @Test
+    public void testOneSidedMirrorToString() {
+        OrientedToken oneSidedMirror = new OneSidedMirror(0, false, Orientation.UP);
+        assertEquals("OneSidedMirror, id: 0, movable: false, orientation: UP", oneSidedMirror.toString());
+    }
+
+    @Test
+    public void testOneSidedMirrorEquals() {
+        OrientedToken oneSidedMirror = new OneSidedMirror(0, false, Orientation.UP);
+        OrientedToken oneSidedMirror2 = new OneSidedMirror(0, false, Orientation.UP);
+        OrientedToken oneSidedMirror3 = new OneSidedMirror(1, false, Orientation.UP);
+        OrientedToken oneSidedMirror4 = new OneSidedMirror(0, true, Orientation.UP);
+        OrientedToken oneSidedMirror5 = new OneSidedMirror(0, false, Orientation.DOWN);
+
+        assertTrue(oneSidedMirror.equals(oneSidedMirror2));
+        assertFalse(oneSidedMirror.equals(oneSidedMirror3));
+        assertFalse(oneSidedMirror.equals(oneSidedMirror4));
+        assertFalse(oneSidedMirror.equals(oneSidedMirror5));
+    }
 }

@@ -102,4 +102,24 @@ public class DoubleSidedMirrorTest {
         Token doubleSidedMirror = new DoubleSidedMirror(0, false, Orientation.UP);
         assertEquals(0, doubleSidedMirror.id());
     }
+
+    @Test
+    public void testDoubleSidedMirrorToString() {
+        Token doubleSidedMirror = new DoubleSidedMirror(0, false, Orientation.UP);
+        assertEquals("DoubleSidedMirror, id: 0, movable: false, orientation: UP", doubleSidedMirror.toString());
+    }
+
+    @Test
+    public void testDoubleSidedMirrorEquals() {
+        Token doubleSidedMirror = new DoubleSidedMirror(0, false, Orientation.UP);
+        Token doubleSidedMirror2 = new DoubleSidedMirror(0, false, Orientation.UP);
+        Token doubleSidedMirror3 = new DoubleSidedMirror(1, false, Orientation.UP);
+        Token doubleSidedMirror4 = new DoubleSidedMirror(0, true, Orientation.UP);
+        Token doubleSidedMirror5 = new DoubleSidedMirror(0, false, Orientation.DOWN);
+
+        assertTrue(doubleSidedMirror.equals(doubleSidedMirror2));
+        assertFalse(doubleSidedMirror.equals(doubleSidedMirror3));
+        assertFalse(doubleSidedMirror.equals(doubleSidedMirror4));
+        assertFalse(doubleSidedMirror.equals(doubleSidedMirror5));
+    }
 }

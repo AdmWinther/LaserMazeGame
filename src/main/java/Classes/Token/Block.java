@@ -21,6 +21,26 @@ public class Block extends Token {
     }
 
     @Override
+    public String toString() {
+        return "Block, id: %d, movable: %b".formatted(id(), isMovable());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Block)) return false;
+        Block block = (Block) o;
+        return id() == block.id() && isMovable() == block.isMovable();
+    }
+
+    /**
+     * Propagate the lazer.
+     *
+     * @param from the orientation the lazer is coming from
+     * @return the orientations the lazer is going to
+     * @author Nathan Gromb
+     */
+    @Override
     public Set<Orientation> propagateLazer(Orientation from) {
         if (from == null) {
             throw new IllegalArgumentException("Orientation cannot be null");

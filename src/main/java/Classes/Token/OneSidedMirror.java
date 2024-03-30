@@ -19,6 +19,20 @@ public class OneSidedMirror extends OrientedToken {
         super(id, movable, orientation);
     }
 
+    @Override
+    public String toString() {
+        return "OneSidedMirror, id: %d, movable: %b, orientation: %s".formatted(id(), isMovable(), getOrientation());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof OneSidedMirror)) return false;
+        OneSidedMirror oneSidedMirror = (OneSidedMirror) o;
+        return id() == oneSidedMirror.id() && isMovable() == oneSidedMirror.isMovable()
+                && getOrientation() == oneSidedMirror.getOrientation();
+    }
+
     /**
      * Propagate the lazer.
      *

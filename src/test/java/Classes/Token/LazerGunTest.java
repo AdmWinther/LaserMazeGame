@@ -76,4 +76,24 @@ public class LazerGunTest {
         OrientedToken lazergun = new LazerGun(0, false, Orientation.UP);
         assertEquals(0, lazergun.id());
     }
+
+    @Test
+    public void testLazerGunToString() {
+        OrientedToken lazergun = new LazerGun(0, false, Orientation.UP);
+        assertEquals("LazerGun, id: 0, movable: false, orientation: UP", lazergun.toString());
+    }
+
+    @Test
+    public void testLazerGunEquals() {
+        OrientedToken lazergun = new LazerGun(0, false, Orientation.UP);
+        OrientedToken lazergun2 = new LazerGun(0, false, Orientation.UP);
+        OrientedToken lazergun3 = new LazerGun(1, false, Orientation.UP);
+        OrientedToken lazergun4 = new LazerGun(0, true, Orientation.UP);
+        OrientedToken lazergun5 = new LazerGun(0, false, Orientation.DOWN);
+
+        assertTrue(lazergun.equals(lazergun2));
+        assertFalse(lazergun.equals(lazergun3));
+        assertFalse(lazergun.equals(lazergun4));
+        assertFalse(lazergun.equals(lazergun5));
+    }
 }

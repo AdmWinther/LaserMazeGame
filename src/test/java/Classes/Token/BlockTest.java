@@ -45,4 +45,25 @@ public class BlockTest {
         Token block = new Block(0, false);
         assertEquals(0, block.id());
     }
+
+    @Test
+    public void testBlockToString() {
+        Token block = new Block(0, false);
+        assertEquals("Block, id: 0, movable: false", block.toString());
+    }
+
+    @Test
+    public void testBlockEquals() {
+        Token block = new Block(0, false);
+        Token block2 = new Block(0, false);
+        Token block3 = new Block(1, false);
+        Token block4 = new Block(0, true);
+        Token block5 = new Block(0, false);
+        block5.setMovable(true);
+
+        assertTrue(block.equals(block2));
+        assertFalse(block.equals(block3));
+        assertFalse(block.equals(block4));
+        assertFalse(block.equals(block5));
+    }
 }

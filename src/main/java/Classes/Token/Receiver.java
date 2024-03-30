@@ -20,6 +20,20 @@ public class Receiver extends OrientedToken {
         super(id, movable, orientation);
     }
 
+    @Override
+    public String toString() {
+        return "Receiver, id: %d, movable: %b, orientation: %s".formatted(id(), isMovable(), getOrientation());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Receiver)) return false;
+        Receiver receiver = (Receiver) o;
+        return id() == receiver.id() && isMovable() == receiver.isMovable()
+                && getOrientation() == receiver.getOrientation();
+    }
+
     /**
      * Propagate the lazer.
      *

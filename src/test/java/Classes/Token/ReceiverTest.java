@@ -77,4 +77,24 @@ public class ReceiverTest {
         Token receiver = new Receiver(0, false, Orientation.UP);
         assertEquals(0, receiver.id());
     }
+
+    @Test
+    public void testReceiverToString() {
+        Token receiver = new Receiver(0, false, Orientation.UP);
+        assertEquals("Receiver, id: 0, movable: false, orientation: UP", receiver.toString());
+    }
+
+    @Test
+    public void testReceiverEquals() {
+        Token receiver = new Receiver(0, false, Orientation.UP);
+        Token receiver2 = new Receiver(0, false, Orientation.UP);
+        Token receiver3 = new Receiver(1, false, Orientation.UP);
+        Token receiver4 = new Receiver(0, true, Orientation.UP);
+        Token receiver5 = new Receiver(0, false, Orientation.DOWN);
+        
+        assertTrue(receiver.equals(receiver2));
+        assertFalse(receiver.equals(receiver3));
+        assertFalse(receiver.equals(receiver4));
+        assertFalse(receiver.equals(receiver5));
+    }
 }

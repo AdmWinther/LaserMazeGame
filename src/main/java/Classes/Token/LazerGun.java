@@ -21,6 +21,20 @@ public class LazerGun extends OrientedToken {
         super(id, movable, orientation);
     }
 
+    @Override
+    public String toString() {
+        return "LazerGun, id: %d, movable: %b, orientation: %s".formatted(id(), isMovable(), getOrientation());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof LazerGun)) return false;
+        LazerGun lazerGun = (LazerGun) o;
+        return id() == lazerGun.id() && isMovable() == lazerGun.isMovable()
+                && getOrientation() == lazerGun.getOrientation();
+    }
+
     /**
      * Propagate the lazer.
      *

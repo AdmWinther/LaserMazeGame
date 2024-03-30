@@ -19,6 +19,20 @@ public class DoubleSidedMirror extends OrientedToken {
         super(id, movable, orientation);
     }
 
+    @Override
+    public String toString() {
+        return "DoubleSidedMirror, id: %d, movable: %b, orientation: %s".formatted(id(), isMovable(), getOrientation());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof DoubleSidedMirror)) return false;
+        DoubleSidedMirror doubleSidedMirror = (DoubleSidedMirror) o;
+        return id() == doubleSidedMirror.id() && isMovable() == doubleSidedMirror.isMovable()
+                && getOrientation() == doubleSidedMirror.getOrientation();
+    }
+
     /**
      * Propagate the lazer.
      *
