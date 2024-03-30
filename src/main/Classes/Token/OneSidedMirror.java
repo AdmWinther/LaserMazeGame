@@ -37,6 +37,10 @@ public class OneSidedMirror extends OrientedToken {
      */
     @Override
     public Set<Orientation> propagateLazer(Orientation from) {
+        if (from == null) {
+            throw new IllegalArgumentException("Orientation cannot be null");
+        }
+
         return switch (getOrientation()) {
             case UP -> // UP corresponds to /, with the mirror on the upper side
                     switch (from) {

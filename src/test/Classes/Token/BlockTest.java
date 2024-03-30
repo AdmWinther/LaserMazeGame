@@ -31,4 +31,11 @@ public class BlockTest  {
         assertEquals(Collections.emptySet(), block.propagateLazer(Orientation.DOWN));
         assertEquals(Collections.emptySet(), block.propagateLazer(Orientation.LEFT));
     }
+
+    @Test
+    public void testBlockPropagateLaserWithNullOrientation() {
+        Block block = new Block();
+
+        assertThrows(IllegalArgumentException.class, () -> block.propagateLazer(null));
+    }
 }

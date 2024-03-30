@@ -27,6 +27,11 @@ public abstract class OrientedToken extends Token implements Orientable {
      */
     public OrientedToken(boolean movable, Orientation orientation) {
         super(movable);
+
+        if (orientation == null) {
+            throw new IllegalArgumentException("Orientation cannot be null");
+        }
+
         this.orientation = orientation;
     }
 
@@ -49,6 +54,10 @@ public abstract class OrientedToken extends Token implements Orientable {
      */
     @Override
     public void setOrientation(Orientation orientation) {
+        if (orientation == null) {
+            throw new IllegalArgumentException("Orientation cannot be null");
+        }
+
         this.orientation = orientation;
     }
 }

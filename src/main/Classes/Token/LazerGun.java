@@ -39,6 +39,10 @@ public class LazerGun extends OrientedToken {
      */
     @Override
     public Set<Orientation> propagateLazer(Orientation from) {
+        if (from == null) {
+            throw new IllegalArgumentException("Orientation cannot be null");
+        }
+
         return Collections.emptySet();
     }
 }

@@ -43,12 +43,30 @@ public class LazerGunTest {
     }
 
     @Test
-    public void testBlockPropagateLaser() {
+    public void testLazerGunPropagateLaser() {
         LazerGun lazergun = new LazerGun();
 
         assertEquals(Collections.emptySet(), lazergun.propagateLazer(Orientation.UP));
         assertEquals(Collections.emptySet(), lazergun.propagateLazer(Orientation.RIGHT));
         assertEquals(Collections.emptySet(), lazergun.propagateLazer(Orientation.DOWN));
         assertEquals(Collections.emptySet(), lazergun.propagateLazer(Orientation.LEFT));
+    }
+
+    @Test
+    public void testLazerGunPropagateLaserWithNullOrientation() {
+        LazerGun lazergun = new LazerGun();
+
+        assertThrows(IllegalArgumentException.class, () -> lazergun.propagateLazer(null));
+    }
+
+    @Test
+    public void testLazerGunInitialStateWithNullOrientation() {
+        assertThrows(IllegalArgumentException.class, () -> new LazerGun(false, null));
+    }
+
+    @Test
+    public void testLazerGunSetOrientationWithNullOrientation() {
+        OrientedToken lazergun = new LazerGun();
+        assertThrows(IllegalArgumentException.class, () -> lazergun.setOrientation(null));
     }
 }

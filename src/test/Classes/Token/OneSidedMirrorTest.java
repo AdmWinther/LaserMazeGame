@@ -76,4 +76,23 @@ public class OneSidedMirrorTest {
         assertEquals(Set.of(Orientation.DOWN), oneSidedMirror4.propagateLazer(Orientation.LEFT));
         assertEquals(Set.of(Orientation.LEFT), oneSidedMirror4.propagateLazer(Orientation.DOWN));
     }
+
+    @Test
+    public void testOneSidedMirrorPropagateLaserWithNullOrientation() {
+        OneSidedMirror oneSidedMirror = new OneSidedMirror();
+
+        assertThrows(IllegalArgumentException.class, () -> oneSidedMirror.propagateLazer(null));
+    }
+
+    @Test
+    public void testOneSidedMirrorInitialStateWithNullOrientation() {
+        assertThrows(IllegalArgumentException.class, () -> new OneSidedMirror(false, null));
+    }
+
+    @Test
+    public void testOneSidedMirrorSetOrientationWithNullOrientation() {
+        OneSidedMirror oneSidedMirror = new OneSidedMirror();
+
+        assertThrows(IllegalArgumentException.class, () -> oneSidedMirror.setOrientation(null));
+    }
 }

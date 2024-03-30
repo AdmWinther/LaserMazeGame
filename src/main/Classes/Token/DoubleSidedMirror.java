@@ -37,6 +37,10 @@ public class DoubleSidedMirror extends OrientedToken {
      */
     @Override
     public Set<Orientation> propagateLazer(Orientation from) {
+        if (from == null) {
+            throw new IllegalArgumentException("Orientation cannot be null");
+        }
+
         return switch (getOrientation()) {
             case UP, DOWN -> // UP and DOWN are the same are the same and correspond to /
                     switch (from) {

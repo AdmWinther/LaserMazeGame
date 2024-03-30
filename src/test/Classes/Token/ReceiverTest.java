@@ -51,4 +51,23 @@ public class ReceiverTest {
         assertEquals(Collections.emptySet(), receiver.propagateLazer(Orientation.DOWN));
         assertEquals(Collections.emptySet(), receiver.propagateLazer(Orientation.LEFT));
     }
+
+    @Test
+    public void testReceiverPropagateLaserWithNullOrientation() {
+        Receiver receiver = new Receiver();
+
+        assertThrows(IllegalArgumentException.class, () -> receiver.propagateLazer(null));
+    }
+
+    @Test
+    public void testReceiverInitialStateWithNullOrientation() {
+        assertThrows(IllegalArgumentException.class, () -> new Receiver(false, null));
+    }
+
+    @Test
+    public void testReceiverSetOrientationWithNullOrientation() {
+        Receiver receiver = new Receiver();
+
+        assertThrows(IllegalArgumentException.class, () -> receiver.setOrientation(null));
+    }
 }

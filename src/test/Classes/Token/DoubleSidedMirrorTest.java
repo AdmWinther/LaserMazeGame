@@ -76,4 +76,23 @@ public class DoubleSidedMirrorTest {
         assertEquals(Set.of(Orientation.RIGHT), doubleSidedMirror4.propagateLazer(Orientation.UP));
         assertEquals(Set.of(Orientation.LEFT), doubleSidedMirror4.propagateLazer(Orientation.DOWN));
     }
+
+    @Test
+    public void testDoubleSidedMirrorPropagateLaserWithNullOrientation() {
+        DoubleSidedMirror doubleSidedMirror = new DoubleSidedMirror();
+
+        assertThrows(IllegalArgumentException.class, () -> doubleSidedMirror.propagateLazer(null));
+    }
+
+    @Test
+    public void testDoubleSidedMirrorInitialStateWithNullOrientation() {
+        assertThrows(IllegalArgumentException.class, () -> new DoubleSidedMirror(true, null));
+    }
+
+    @Test
+    public void testDoubleSidedMirrorSetOrientationWithNullOrientation() {
+        DoubleSidedMirror doubleSidedMirror = new DoubleSidedMirror();
+
+        assertThrows(IllegalArgumentException.class, () -> doubleSidedMirror.setOrientation(null));
+    }
 }
