@@ -6,7 +6,7 @@ import java.util.Set;
  * DoubleSidedMirror is a class that represents a double-sided mirror token in the game.
  * The orientations UP and DOWN are the same, and the orientations LEFT and RIGHT are the same.
  */
-public class DoubleSidedMirror extends OrientedToken {
+public final class DoubleSidedMirror extends OrientedToken {
 
     /**
      * Constructor for DoubleSidedMirror.
@@ -19,11 +19,24 @@ public class DoubleSidedMirror extends OrientedToken {
         super(id, movable, orientation);
     }
 
+    /**
+     * Returns a string representation of the double-sided mirror.
+     *
+     * @return a string representation of the double-sided mirror
+     * @author Nathan Gromb
+     */
     @Override
     public String toString() {
         return "DoubleSidedMirror, id: %d, movable: %b, orientation: %s".formatted(id(), isMovable(), getOrientation());
     }
 
+    /**
+     * Returns whether the double-sided mirror is equal to another object.
+     *
+     * @param o the object to compare to
+     * @return whether the double-sided mirror is equal to the object
+     * @author Nathan Gromb
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

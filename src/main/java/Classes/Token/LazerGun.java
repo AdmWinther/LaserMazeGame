@@ -8,7 +8,7 @@ import java.util.Set;
  * It is the source of the lazer.
  * A receiver can never be moved.
  */
-public class LazerGun extends OrientedToken {
+public final class LazerGun extends OrientedToken {
 
     /**
      * Constructor for LazerGun.
@@ -21,11 +21,24 @@ public class LazerGun extends OrientedToken {
         super(id, movable, orientation);
     }
 
+    /**
+     * Returns a string representation of the lazer gun.
+     *
+     * @return a string representation of the lazer gun
+     * @author Nathan Gromb
+     */
     @Override
     public String toString() {
         return "LazerGun, id: %d, movable: %b, orientation: %s".formatted(id(), isMovable(), getOrientation());
     }
 
+    /**
+     * Returns whether the lazer gun is equal to another object.
+     *
+     * @param o the object to compare to
+     * @return whether the lazer gun is equal to the object
+     * @author Nathan Gromb
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

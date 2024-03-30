@@ -8,7 +8,7 @@ import java.util.Set;
  * It blocks any lazer that hits it.
  * A block can never be moved.
  */
-public class Block extends Token {
+public final class Block extends Token {
 
     /**
      * Constructor for Block.
@@ -20,11 +20,24 @@ public class Block extends Token {
         super(id, movable);
     }
 
+    /**
+     * Returns a string representation of the block.
+     *
+     * @return a string representation of the block
+     * @author Nathan Gromb
+     */
     @Override
     public String toString() {
         return "Block, id: %d, movable: %b".formatted(id(), isMovable());
     }
 
+    /**
+     * Returns whether the block is equal to another object.
+     *
+     * @param o the object to compare to
+     * @return whether the block is equal to the object
+     * @author Nathan Gromb
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -7,7 +7,7 @@ import java.util.Set;
  * Receiver is a class that represents an objective in the game.
  * A receiver can never be moved.
  */
-public class Receiver extends OrientedToken {
+public final class Receiver extends OrientedToken {
 
     /**
      * Constructor for Receiver.
@@ -20,11 +20,24 @@ public class Receiver extends OrientedToken {
         super(id, movable, orientation);
     }
 
+    /**
+     * Returns a string representation of the receiver.
+     *
+     * @return a string representation of the receiver
+     * @author Nathan Gromb
+     */
     @Override
     public String toString() {
         return "Receiver, id: %d, movable: %b, orientation: %s".formatted(id(), isMovable(), getOrientation());
     }
 
+    /**
+     * Returns whether the receiver is equal to another object.
+     *
+     * @param o the object to compare to
+     * @return whether the receiver is equal to the object
+     * @author Nathan Gromb
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

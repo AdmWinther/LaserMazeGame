@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * OneSidedMirror is a class that represents a one-sided mirror token in the game.
  */
-public class OneSidedMirror extends OrientedToken {
+public final class OneSidedMirror extends OrientedToken {
 
     /**
      * Constructor for OneSidedMirror.
@@ -19,11 +19,24 @@ public class OneSidedMirror extends OrientedToken {
         super(id, movable, orientation);
     }
 
+    /**
+     * Returns a string representation of the one-sided mirror.
+     *
+     * @return a string representation of the one-sided mirror
+     * @author Nathan Gromb
+     */
     @Override
     public String toString() {
         return "OneSidedMirror, id: %d, movable: %b, orientation: %s".formatted(id(), isMovable(), getOrientation());
     }
 
+    /**
+     * Returns whether the one-sided mirror is equal to another object.
+     *
+     * @param o the object to compare to
+     * @return whether the one-sided mirror is equal to the object
+     * @author Nathan Gromb
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
