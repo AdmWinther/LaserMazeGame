@@ -8,7 +8,7 @@ import Classes.Utils.Coordinate;
 import Interfaces.Runnable;
 
 import java.util.HashSet;
-import java.util.List;
+import java.util.Set;
 
 public class Level implements Runnable {
 
@@ -25,7 +25,7 @@ public class Level implements Runnable {
     /**
      * ArrayList of Token objects
      */
-    private final List<Token> tokens;
+    private final Set<Token> tokens;
     /**
      * LevelChecker object
      */
@@ -52,7 +52,7 @@ public class Level implements Runnable {
      * @param levelName     String - Name of the level
      * @author Léonard Amsler - s231715
      */
-    public Level(Board board, Board solutionBoard, List<Token> token, String levelName) {
+    public Level(Board board, Board solutionBoard, Set<Token> token, String levelName) {
         this.board = board;
         this.solutionBoard = solutionBoard;
         this.tokens = token;
@@ -68,7 +68,7 @@ public class Level implements Runnable {
      * @return ArrayList - ArrayList of Token objects
      * @author Léonard Amsler - s231715
      */
-    public List<Token> getTokens() {
+    public Set<Token> getTokens() {
         return tokens;
     }
 
@@ -104,7 +104,7 @@ public class Level implements Runnable {
             switch (levelState) {
                 case STARTING -> start();
                 case NEED_USER_INPUT -> {
-                    setLazer(generateLazer());
+                    this.lazer = generateLazer();
                     LevelPrinter.print(this);
                     LevelPrinter.print(board, lazer);
                     LevelPrinter.print(new HashSet<>(tokens));
@@ -136,7 +136,7 @@ public class Level implements Runnable {
      *
      * @author Léonard Amsler - s231715
      */
-    public void start() {
+    private void start() {
         System.out.println("Starting level " + levelName);
         levelState = LevelState.NEED_USER_INPUT;
     }
@@ -156,7 +156,14 @@ public class Level implements Runnable {
             tokenIndex = LevelInput.selectToken();
             isTokenIndexValid = levelChecker.checkTokenSelection(tokenIndex);
         }
-        Token token = tokens.get(tokenIndex);
+        int finalTokenIndex = tokenIndex;
+        Token token = tokens.stream().filter(t -> t.id() == finalTokenIndex).findFirst().orElse(null);
+
+        if (token == null) {
+            System.out.println("Token not found");
+            return;
+        }
+
 
         // Select a coordinate
         boolean isPositionValid = false;
@@ -183,7 +190,6 @@ public class Level implements Runnable {
         if (token instanceof OrientedToken) {
             ((OrientedToken) token).setOrientation(orientation);
         }
-        token.setIsPlaced(true);
 
         levelState = LevelState.CHECKING_SOLUTION;
     }
@@ -211,28 +217,8 @@ public class Level implements Runnable {
      * @return Lazer - Lazer object
      * @author Léonard Amsler - s231715
      */
-    public Lazer generateLazer() {
+    private Lazer generateLazer() {
         return board.generateLazer();
-    }
-
-    /**
-     * Getter for lazer
-     *
-     * @return Lazer - Lazer object
-     * @author Léonard Amsler - s231715
-     */
-    public Lazer getLazer() {
-        return lazer;
-    }
-
-    /**
-     * Setter for lazer
-     *
-     * @param lazer Lazer - Lazer object
-     * @author Léonard Amsler - s231715
-     */
-    public void setLazer(Lazer lazer) {
-        this.lazer = lazer;
     }
 
 }

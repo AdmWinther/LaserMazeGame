@@ -9,7 +9,7 @@ public class LevelInput {
     /**
      * Select a token
      *
-     * @return int - Token selected
+     * @return int - Token Index selected
      * @author Léonard Amsler - s231715
      */
     public static int selectToken() {
@@ -28,7 +28,6 @@ public class LevelInput {
         }
 
         return result;
-
     }
 
     /**

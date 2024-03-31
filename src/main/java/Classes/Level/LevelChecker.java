@@ -24,21 +24,27 @@ public class LevelChecker {
     /**
      * Check if the token selected is valid
      *
-     * @param token int - Token selected
+     * @param tokenIndex int - Token selected
      * @return boolean - True if the token is valid, false otherwise
      * @author Léonard Amsler - s231715
      */
-    public boolean checkTokenSelection(int token) {
+    public boolean checkTokenSelection(int tokenIndex) {
         int nbTokens = level.getTokens().size();
 
-        if (token < 0) {
+        if (tokenIndex < 0) {
             return false;
-        } else if (token >= nbTokens) {
+        }
+        if (tokenIndex >= nbTokens) {
+            return false;
+        }
+
+        Token selectedToken = level.getTokens().stream().filter(t -> t.id() == tokenIndex).findFirst().orElse(null);
+        if (selectedToken == null) {
             return false;
         } else {
-            Token selectedToken = level.getTokens().get(token);
             return selectedToken.isMovable();
         }
+
     }
 
     /**
@@ -74,11 +80,11 @@ public class LevelChecker {
     /**
      * Check if the orientation selected is valid
      *
-     * @param orientation int - Orientation selected
+     * @param orientationIndex int - Orientation selected
      * @return boolean - True if the orientation is valid, false otherwise
      * @author Léonard Amsler - s231715
      */
-    public Boolean checkOrientation(int orientation) {
-        return orientation >= 0 && orientation < Orientation.values().length;
+    public Boolean checkOrientation(int orientationIndex) {
+        return orientationIndex >= 0 && orientationIndex < Orientation.values().length;
     }
 }

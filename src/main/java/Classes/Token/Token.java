@@ -45,11 +45,13 @@ public abstract class Token implements LazerPropagator {
 
     public abstract void setCoordinate(Coordinate coordinate);
 
-    public abstract void setIsPlaced(Boolean isPlaced);
-
     public Orientation getOrientation() {
         return null;
     }
 
     public abstract Set<Orientation> propagateLazer(Orientation orientation);
+
+    public int id() {
+        return 0;
+    }
 }

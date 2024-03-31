@@ -1,12 +1,11 @@
 package Classes.Level;
 
-import Classes.Lazer.Lazer;
 import Classes.Token.Block;
 import Classes.Token.Token;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 
@@ -14,7 +13,7 @@ public class LevelTest {
 
     @Test
     public void testGetTokens() {
-        List<Token> tokens = new ArrayList<>();
+        Set<Token> tokens = new HashSet<>();
         tokens.add(new Block());
         Level level = new Level(new Board(), new Board(), tokens, "Test Level");
         assertEquals(tokens, level.getTokens());
@@ -23,30 +22,14 @@ public class LevelTest {
     @Test
     public void testGetBoard() {
         Board board = new Board();
-        Level level = new Level(board, new Board(), new ArrayList<>(), "Test Level");
+        Level level = new Level(board, new Board(), new HashSet<>(), "Test Level");
         assertEquals(board, level.getBoard());
     }
 
     @Test
     public void testGetSolutionBoard() {
         Board solutionBoard = new Board();
-        Level level = new Level(new Board(), solutionBoard, new ArrayList<>(), "Test Level");
+        Level level = new Level(new Board(), solutionBoard, new HashSet<>(), "Test Level");
         assertEquals(solutionBoard, level.getSolutionBoard());
-    }
-
-    @Test
-    public void testSetLazer() {
-        Lazer lazer = new Lazer();
-        Level level = new Level(new Board(), new Board(), new ArrayList<>(), "Test Level");
-        level.setLazer(lazer);
-        assertEquals(lazer, level.getLazer());
-    }
-
-    @Test
-    public void testGetLazer() {
-        Lazer lazer = new Lazer();
-        Level level = new Level(new Board(), new Board(), new ArrayList<>(), "Test Level");
-        level.setLazer(lazer);
-        assertEquals(lazer, level.getLazer());
     }
 }
