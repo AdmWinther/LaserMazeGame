@@ -1,21 +1,14 @@
-<<<<<<< HEAD
-package java.Classes.Utils;
-
-public class DataReaderTest {
-
-=======
 package Classes.Utils;
 
 import Classes.Level.LevelID;
-import Classes.Token.Block;
-import Classes.Token.OneSidedMirror;
-import Classes.Token.Orientation;
-import Classes.Token.Token;
+import Classes.Token.*;
 import Resources.constants.FilePaths;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.Assert.*;
 
@@ -58,24 +51,18 @@ public class DataReaderTest {
     }
 
     @Test
-    public void testTokensOfALevel(){
+    public void testTokensOfALevel() {
         try {
             LevelID levelID = DataReader.extractLevelIDs(LEVELS_IDS_DATA_PATH).get(0);
-            List<Token> tokens = DataReader.readLevelIDTokens(levelID);
-            List<Token> checkList = new ArrayList<>(List.of(
-                    new OneSidedMirror(true, Orientation.RIGHT),
-                    new Block(true)
+            Set<Token> tokens = DataReader.readLevelIDTokens(levelID);
+            Set<Token> checkList = new HashSet<>(List.of(
+                    new OneSidedMirror(new TokenID("OSM - 1"), true, Orientation.RIGHT),
+                    new Block(new TokenID("Block - 1"), true)
             ));
-            //assertEquals(tokens, checkList); // Should work if equals is redefined in Token
-            assertEquals(tokens.get(0).getClass(), checkList.get(0).getClass());
-            assertEquals(tokens.get(1).getClass(), checkList.get(1).getClass());
-            assertEquals(tokens.get(0).isMovable(), checkList.get(0).isMovable());
-            assertEquals(tokens.get(1).isMovable(), checkList.get(1).isMovable());
+            assertEquals(tokens.size(), checkList.size());
+            assertTrue(tokens.containsAll(checkList));
         } catch (Exception e) {
             fail("Exception thrown");
         }
     }
-
-
->>>>>>> origin/LevelBuilder
 }

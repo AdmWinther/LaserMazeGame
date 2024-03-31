@@ -1,35 +1,76 @@
 package Classes.Token;
 
-
-import Classes.Utils.Coordinate;
-
 import java.util.Collections;
 import java.util.Set;
 
 /**
  * OneSidedMirror is a class that represents a one-sided mirror token in the game.
  */
-public class OneSidedMirror extends OrientedToken {
-
-    /**
-     * Default constructor for OneSidedMirror. Sets movable to true and orientation to UP.
-     */
-    public OneSidedMirror() {
-        super();
-    }
+public final class OneSidedMirror extends OrientedToken {
 
     /**
      * Constructor for OneSidedMirror.
      *
      * @param movable     whether the token is movable
      * @param orientation the orientation of the token
+     * @author Nathan Gromb
      */
-    public OneSidedMirror(boolean movable, Orientation orientation) {
-        super(movable, orientation);
+    public OneSidedMirror(TokenID id, boolean movable, Orientation orientation) {
+        super(id, movable, orientation);
     }
 
+    /**
+     * Returns a string representation of the one-sided mirror.
+     *
+     * @return a string representation of the one-sided mirror
+     * @author Nathan Gromb
+     */
+    @Override
+    public String toString() {
+        return "OneSidedMirror, id: " + id() + " movable: %b, orientation: %s".formatted(isMovable(), getOrientation());
+    }
+
+    /**
+     * Returns whether the one-sided mirror is equal to another object (not strictly, i.e. they have the same function).
+     *
+     * @param o the object to compare to
+     * @return whether the one-sided mirror is equal to the object
+     * @author Nathan Gromb
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof OneSidedMirror oneSidedMirror)) return false;
+
+        return getOrientation() == oneSidedMirror.getOrientation();
+    }
+
+    /**
+     * Returns whether the one-sided mirror is equal to another object.
+     *
+     * @param o the object to compare to
+     * @return whether the one-sided mirror is equal to the object
+     * @author Nathan Gromb
+     */
+    @Override
+    public boolean strictlyEquals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof OneSidedMirror oneSidedMirror)) return false;
+        return id() == oneSidedMirror.id() && isMovable() == oneSidedMirror.isMovable()
+                && getOrientation() == oneSidedMirror.getOrientation();
+    }
+
+    /**
+     * Propagate the lazer.
+     *
+     * @param from the orientation the lazer is coming from
+     * @return the orientations the lazer is going to
+     * @author Nathan Gromb
+     */
     @Override
     public Set<Orientation> propagateLaser(Orientation from) {
+        if (from == null) {
+            throw new IllegalArgumentException("Orientation cannot be null");
+        }
         return switch (getOrientation()) {
             case UP -> // UP corresponds to /, with the mirror on the upper side
                     switch (from) {
@@ -56,35 +97,5 @@ public class OneSidedMirror extends OrientedToken {
                         default -> Collections.emptySet();
                     };
         };
-    }
-
-    @Override
-    public Orientation getOrientation() {
-        return super.getOrientation();
-    }
-
-    @Override
-    public void setOrientation(Orientation orientation) {
-        super.setOrientation(orientation);
-    }
-
-    @Override
-    public boolean isMovable() {
-        return super.isMovable();
-    }
-
-    @Override
-    public void setMovable(boolean movable) {
-        super.setMovable(movable);
-    }
-
-    @Override
-    public void setCoordinate(Coordinate coordinate) {
-
-    }
-
-    @Override
-    public void setIsPlaced(Boolean isPlaced) {
-
     }
 }

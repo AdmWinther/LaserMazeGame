@@ -1,34 +1,40 @@
 package Classes.Token;
 
-import Classes.Utils.Coordinate;
 import Interfaces.LaserPropagator;
 
-import java.util.Set;
-
+/**
+ * Token is an abstract class that represents a token in the game.
+ */
 public abstract class Token implements LaserPropagator {
 
+    private final TokenID id;
     private boolean movable;
-
-    /**
-     * Default constructor for Token. Sets movable to true.
-     */
-    public Token() {
-        this.movable = true;
-    }
 
     /**
      * Constructor for Token.
      *
      * @param movable whether the token is movable
+     * @author Nathan Gromb
      */
-    public Token(boolean movable) {
+    public Token(TokenID id, boolean movable) {
+        this.id = id;
         this.movable = movable;
     }
+
+    /**
+     * Returns whether the token is equal to another object.
+     *
+     * @param o the object to compare to
+     * @return whether the token is equal to the object
+     * @author Nathan Gromb
+     */
+    public abstract boolean strictlyEquals(Object o);
 
     /**
      * Returns whether the token is movable.
      *
      * @return whether the token is movable
+     * @author Nathan Gromb
      */
     public boolean isMovable() {
         return movable;
@@ -38,20 +44,19 @@ public abstract class Token implements LaserPropagator {
      * Sets the movable property of the token.
      *
      * @param movable whether the token is movable
+     * @author Nathan Gromb
      */
     public void setMovable(boolean movable) {
         this.movable = movable;
     }
 
-    public abstract void setCoordinate(Coordinate coordinate);
-
-    public Orientation getOrientation() {
-        return null;
-    }
-
-    public abstract Set<Orientation> propagateLazer(Orientation orientation);
-
-    public int id() {
-        return 0;
+    /**
+     * Returns the id of the token.
+     *
+     * @return the id of the token
+     * @author Nathan Gromb
+     */
+    public TokenID id() {
+        return id;
     }
 }

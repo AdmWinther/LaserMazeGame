@@ -1,67 +1,73 @@
 package Classes.Token;
 
-import Classes.Utils.Coordinate;
-
 import java.util.Collections;
 import java.util.Set;
 
-/**
- * Receiver is a class that represents an objective in the game.
- * A receiver can never be moved.
- */
-public class Receiver extends OrientedToken {
+public final class Receiver extends OrientedToken {
 
     /**
-     * Default constructor for Receiver. Sets movable to false and orientation to UP.
-     */
-    public Receiver() {
-        super(false, Orientation.UP);
-    }
-
-    /**
-     * Constructor for Receiver. Sets movable to false.
+     * Constructor for Receiver.
      *
      * @param movable     whether the token is movable
      * @param orientation the orientation of the token
+     * @author Nathan Gromb
      */
-    public Receiver(boolean movable, Orientation orientation) {
-        super(movable, orientation);
+    public Receiver(TokenID id, boolean movable, Orientation orientation) {
+        super(id, movable, orientation);
     }
 
-
-
+    /**
+     * Returns a string representation of the receiver.
+     *
+     * @return a string representation of the receiver
+     * @author Nathan Gromb
+     */
     @Override
-    public Orientation getOrientation() {
-        return super.getOrientation();
+    public String toString() {
+        return "Receiver, id: " + id() + " movable: %b, orientation: %s".formatted(isMovable(), getOrientation());
     }
 
+    /**
+     * Returns whether the receiver is equal to another object (not strictly, i.e. they have the same function).
+     *
+     * @param o the object to compare to
+     * @return whether the receiver is equal to the object
+     * @author Nathan Gromb
+     */
     @Override
-    public void setOrientation(Orientation orientation) {
-        super.setOrientation(orientation);
+    public boolean equals(Object o) {
+        if (!(o instanceof Receiver receiver)) return false;
+
+        return getOrientation() == receiver.getOrientation();
     }
 
+    /**
+     * Returns whether the receiver is equal to another object.
+     *
+     * @param o the object to compare to
+     * @return whether the receiver is equal to the object
+     */
     @Override
-    public boolean isMovable() {
-        return super.isMovable();
+    public boolean strictlyEquals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Receiver receiver)) return false;
+        return id() == receiver.id() && isMovable() == receiver.isMovable()
+                && getOrientation() == receiver.getOrientation();
     }
 
-    @Override
-    public void setMovable(boolean movable) {
-        super.setMovable(movable);
-    }
-
-    @Override
-    public void setCoordinate(Coordinate coordinate) {
-
-    }
-
-    @Override
-    public void setIsPlaced(Boolean isPlaced) {
-
-    }
-
+    /**
+     * Propagate the lazer.
+     *
+     * @param from the orientation the lazer is coming from
+     * @return the orientations the lazer is going to
+     * @author Nathan Gromb
+     */
     @Override
     public Set<Orientation> propagateLaser(Orientation from) {
-        return null;
+        if (from == null) {
+            throw new IllegalArgumentException("Orientation cannot be null");
+        }
+
+        return Collections.emptySet();
     }
 }

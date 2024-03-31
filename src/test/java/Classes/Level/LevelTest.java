@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 package Classes.Level;
 
 import Classes.Token.Block;
@@ -39,4 +40,10 @@ package java.Classes.Level;
 public class LevelTest {
     
 >>>>>>> origin/LevelBuilder
+=======
+package Classes.Level;
+
+public class LevelTest {
+    
+>>>>>>> origin/Tokens
 }

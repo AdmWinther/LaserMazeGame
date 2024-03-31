@@ -81,15 +81,15 @@ public class DataReader {
 
         switch (type) {
             case JsonTokens.VAL_TYPE_LASER_GUN:
-                return new LaserGun(isMovable, orientation);
+                return new LaserGun(id, isMovable, orientation);
             case JsonTokens.VAL_TYPE_RECEIVER:
-                return new Receiver(isMovable, orientation);
+                return new Receiver(id, isMovable, orientation);
             case JsonTokens.VAL_DOUBLE_SIDED_MIRROR:
-                return new DoubleSidedMirror(isMovable, orientation);
+                return new DoubleSidedMirror(id, isMovable, orientation);
             case JsonTokens.VAL_TYPE_ONE_SIDED_MIRROR:
-                return new OneSidedMirror(isMovable, orientation);
+                return new OneSidedMirror(id, isMovable, orientation);
             case JsonTokens.VAL_TYPE_BLOCK:
-                return new Block(isMovable);
+                return new Block(id, isMovable);
             default:
         }
         return null;
@@ -178,10 +178,10 @@ public class DataReader {
      * @throws FileNotFoundException if the LevelID is not found in the game data
      * @author Hugo Demule
      */
-    public static List<Token> readLevelIDTokens(LevelID id) throws FileNotFoundException {
+    public static Set<Token> readLevelIDTokens(LevelID id) throws FileNotFoundException {
         JSONObject level = findLevelByID(id);
         requireFileFound(level, id.value());
-        List<Token> tokens = new ArrayList<>();
+        Set<Token> tokens = new HashSet<>();
         JSONArray jsonTokens = level.getJSONArray(JsonTokens.ATTR_TOKENS);
         for (int i = 0; i < jsonTokens.length(); i++) {
             Token token = createToken(jsonTokens.getJSONObject(i));
@@ -213,5 +213,4 @@ public class DataReader {
     public static Board readLevelIDSolutionBoard(LevelID id) throws FileNotFoundException {
         return createBoard(id, JsonTokens.ATTR_SOLUTION_BOARD);
     }
-
 }

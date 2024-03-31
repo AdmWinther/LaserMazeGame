@@ -4,5 +4,5 @@ public class Lazer {
 
     public void addLazerFragment(LazerFragment lazerFragment) {
     }
-    
+
 }

@@ -1,10 +1,10 @@
-<<<<<<< HEAD
 package Classes.Level;
 
+import Classes.Token.TokenID;
 import Classes.Utils.Coordinate;
 import org.junit.Test;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
 
 import static org.junit.Assert.assertFalse;
@@ -14,16 +14,16 @@ public class LevelCheckerTest {
 
     @Test
     public void testCheckTokenSelection() {
-        Level level1 = new Level(new Board(), new Board(), new ArrayList<>(), "Test Level");
+        Level level1 = new Level(new Board(0, 0), new Board(0, 0), new HashSet<>(), "Test Level");
         LevelChecker levelChecker1 = new LevelChecker(level1);
-        assertFalse(levelChecker1.checkTokenSelection(-1));
-        assertFalse(levelChecker1.checkTokenSelection(0));
-        assertFalse(levelChecker1.checkTokenSelection(1));
+        assertFalse(levelChecker1.checkTokenSelection(new TokenID("0")));
+        assertFalse(levelChecker1.checkTokenSelection(new TokenID("1")));
+        assertFalse(levelChecker1.checkTokenSelection(new TokenID("2")));
     }
 
     @Test
     public void testCheckNewPosition() {
-        Level level = new Level(new Board(), new Board(), new ArrayList<>(), "Test Level");
+        Level level = new Level(new Board(0, 0), new Board(0, 0), new HashSet<>(), "Test Level");
         LevelChecker levelChecker = new LevelChecker(level);
         assertFalse(levelChecker.checkNewPosition(new Coordinate(-1, -1)));
         assertFalse(levelChecker.checkNewPosition(new Coordinate(0, 0)));
@@ -32,14 +32,14 @@ public class LevelCheckerTest {
 
     @Test
     public void testCheckSolution() {
-        Level level = new Level(new Board(), new Board(), new ArrayList<>(), "Test Level");
+        Level level = new Level(new Board(0, 0), new Board(0, 0), new HashSet<>(), "Test Level");
         LevelChecker levelChecker = new LevelChecker(level);
         assertFalse(levelChecker.checkSolution());
     }
 
     @Test
     public void testCheckOrientation() {
-        Level level = new Level(new Board(), new Board(), new ArrayList<>(), "Test Level");
+        Level level = new Level(new Board(0, 0), new Board(0, 0), new HashSet<>(), "Test Level");
         LevelChecker levelChecker = new LevelChecker(level);
         assertTrue(levelChecker.checkOrientation(0));
         assertTrue(levelChecker.checkOrientation(1));
@@ -49,11 +49,4 @@ public class LevelCheckerTest {
         int randomInt = new Random().nextInt(100) + 4;
         assertFalse(levelChecker.checkOrientation(randomInt));
     }
-
-=======
-package java.Classes.Level;
-
-public class LevelCheckerTest {
-    
->>>>>>> origin/LevelBuilder
 }

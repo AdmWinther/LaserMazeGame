@@ -4,7 +4,7 @@ import Classes.Token.Token;
 import Classes.Utils.DataReader;
 import Interfaces.Buildable;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * A class that builds a Level from their ID
@@ -48,7 +48,7 @@ public class LevelBuilder implements Buildable<Level> {
             String name = DataReader.readLevelIDName(id);
             Board startingBoard = DataReader.readLevelIDStartingBoard(id);
             Board solutionBoard = DataReader.readLevelIDSolutionBoard(id);
-            List<Token> tokens = DataReader.readLevelIDTokens(id);
+            Set<Token> tokens = DataReader.readLevelIDTokens(id);
             return new Level(startingBoard, solutionBoard, tokens, name);
         } catch (Exception e) {
             e.printStackTrace();

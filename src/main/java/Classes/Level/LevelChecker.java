@@ -2,6 +2,7 @@ package Classes.Level;
 
 import Classes.Token.Orientation;
 import Classes.Token.Token;
+import Classes.Token.TokenID;
 import Classes.Utils.Coordinate;
 
 public class LevelChecker {
@@ -24,19 +25,11 @@ public class LevelChecker {
     /**
      * Check if the token selected is valid
      *
-     * @param tokenIndex int - Token selected
+     * @param tokenIndex TokenID - Token selected
      * @return boolean - True if the token is valid, false otherwise
      * @author Léonard Amsler - s231715
      */
-    public boolean checkTokenSelection(int tokenIndex) {
-        int nbTokens = level.getTokens().size();
-
-        if (tokenIndex < 0) {
-            return false;
-        }
-        if (tokenIndex >= nbTokens) {
-            return false;
-        }
+    public boolean checkTokenSelection(TokenID tokenIndex) {
 
         Token selectedToken = level.getTokens().stream().filter(t -> t.id() == tokenIndex).findFirst().orElse(null);
         if (selectedToken == null) {

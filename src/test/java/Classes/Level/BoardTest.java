@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 package Classes.Level;
 =======
 package java.Classes.Level;
@@ -6,4 +7,10 @@ package java.Classes.Level;
 
 public class BoardTest {
 
+=======
+package Classes.Level;
+
+public class BoardTest {
+    
+>>>>>>> origin/Tokens
 }

@@ -1,5 +1,6 @@
 package Classes.Level;
 
+import Classes.Token.TokenID;
 import Classes.Utils.Coordinate;
 
 import java.util.Scanner;
@@ -9,19 +10,20 @@ public class LevelInput {
     /**
      * Select a token
      *
-     * @return int - Token Index selected
+     * @return TokenID - Token Index selected
      * @author Léonard Amsler - s231715
      */
-    public static int selectToken() {
-        int result = -1;
+    public static TokenID selectToken() {
+        TokenID result = TokenID.EMPTY;
 
-        while (result < 0) {
-            System.out.println("\nYou need to select a token (0-n)");
+        while (result.equals(TokenID.EMPTY)) {
+            System.out.println("\nYou need to select a token");
 
             // Get the user input
             Scanner scanner = new Scanner(System.in);
             try {
-                result = scanner.nextInt();
+                String result_string = scanner.next();
+                result = new TokenID(result_string);
             } catch (Exception e) {
                 System.out.println("Invalid input");
             }
@@ -79,5 +81,4 @@ public class LevelInput {
 
         return result;
     }
-
 }

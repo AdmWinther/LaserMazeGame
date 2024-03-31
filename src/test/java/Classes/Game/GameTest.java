@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package java.Classes.Game;
 
 public class GameTest {
@@ -6,4 +7,10 @@ public class GameTest {
 =======
     
 >>>>>>> origin/LevelBuilder
+=======
+package Classes.Game;
+
+public class GameTest {
+    
+>>>>>>> origin/Tokens
 }

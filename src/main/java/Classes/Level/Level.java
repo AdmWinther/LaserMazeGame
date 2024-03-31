@@ -4,6 +4,7 @@ import Classes.Lazer.Lazer;
 import Classes.Token.Orientation;
 import Classes.Token.OrientedToken;
 import Classes.Token.Token;
+import Classes.Token.TokenID;
 import Classes.Utils.Coordinate;
 import Interfaces.Runnable;
 
@@ -151,13 +152,13 @@ public class Level implements Runnable {
 
         // Select a token
         boolean isTokenIndexValid = false;
-        int tokenIndex = -1;
+        TokenID tokenID = null;
         while (!isTokenIndexValid) {
-            tokenIndex = LevelInput.selectToken();
-            isTokenIndexValid = levelChecker.checkTokenSelection(tokenIndex);
+            tokenID = LevelInput.selectToken();
+            isTokenIndexValid = levelChecker.checkTokenSelection(tokenID);
         }
-        int finalTokenIndex = tokenIndex;
-        Token token = tokens.stream().filter(t -> t.id() == finalTokenIndex).findFirst().orElse(null);
+        TokenID finalTokenID = tokenID;
+        Token token = tokens.stream().filter(t -> t.id() == finalTokenID).findFirst().orElse(null);
 
         if (token == null) {
             System.out.println("Token not found");
@@ -220,5 +221,4 @@ public class Level implements Runnable {
     private Lazer generateLazer() {
         return board.generateLazer();
     }
-
 }

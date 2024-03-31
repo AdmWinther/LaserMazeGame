@@ -1,4 +1,4 @@
-package java.Classes.Token;
+package Classes.Token;
 
 public abstract class TokenTest {
 

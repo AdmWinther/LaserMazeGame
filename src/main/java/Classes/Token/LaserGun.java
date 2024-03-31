@@ -1,7 +1,5 @@
 package Classes.Token;
 
-import Classes.Utils.Coordinate;
-
 import java.util.Collections;
 import java.util.Set;
 
@@ -10,57 +8,72 @@ import java.util.Set;
  * It is the source of the lazer.
  * A receiver can never be moved.
  */
-public class LaserGun extends OrientedToken {
-
-    /**
-     * Default constructor for LazerGun. Sets movable to false and orientation to UP.
-     */
-    public LaserGun() {
-        super(false, Orientation.UP);
-    }
+public final class LaserGun extends OrientedToken {
 
     /**
      * Constructor for LazerGun.
      *
      * @param movable     whether the token is movable
      * @param orientation the orientation of the token
+     * @author Nathan Gromb
      */
-    public LaserGun(boolean movable, Orientation orientation) {
-        super(movable, orientation);
+    public LaserGun(TokenID id, boolean movable, Orientation orientation) {
+        super(id, movable, orientation);
     }
 
+    /**
+     * Returns a string representation of the lazer gun.
+     *
+     * @return a string representation of the lazer gun
+     * @author Nathan Gromb
+     */
+    @Override
+    public String toString() {
+        return "LazerGun, id:" + id() + " movable: %b, orientation: %s".formatted(isMovable(), getOrientation());
+    }
+
+    /**
+     * Returns whether the lazer gun is equal to another object (not strictly, i.e. they have the same function).
+     *
+     * @param o the object to compare to
+     * @return whether the lazer gun is equal to the object
+     * @author Nathan Gromb
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof LaserGun lazerGun)) return false;
+
+        return getOrientation() == lazerGun.getOrientation();
+    }
+
+    /**
+     * Returns whether the lazer gun is equal to another object.
+     *
+     * @param o the object to compare to
+     * @return whether the lazer gun is equal to the object
+     * @author Nathan Gromb
+     */
+    @Override
+    public boolean strictlyEquals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof LaserGun lazerGun)) return false;
+        return id() == lazerGun.id() && isMovable() == lazerGun.isMovable()
+                && getOrientation() == lazerGun.getOrientation();
+    }
+
+    /**
+     * Propagate the lazer.
+     *
+     * @param from the orientation the lazer is coming from
+     * @return the orientations the lazer is going to
+     * @author Nathan Gromb
+     */
     @Override
     public Set<Orientation> propagateLaser(Orientation from) {
+        if (from == null) {
+            throw new IllegalArgumentException("Orientation cannot be null");
+        }
+
         return Collections.emptySet();
-    }
-
-    @Override
-    public Orientation getOrientation() {
-        return super.getOrientation();
-    }
-
-    @Override
-    public void setOrientation(Orientation orientation) {
-        super.setOrientation(orientation);
-    }
-
-    @Override
-    public Set<Orientation> propagateLazer(Orientation orientation) {
-        return null;
-    }
-
-    @Override
-    public boolean isMovable() {
-        return super.isMovable();
-    }
-
-    @Override
-    public void setMovable(boolean movable) {
-        super.setMovable(movable);
-    }
-
-    @Override
-    public void setCoordinate(Coordinate coordinate) {
-
     }
 }

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package java.Classes.Lazer;
 
 public class LazerTest {
@@ -6,4 +7,10 @@ public class LazerTest {
 =======
     
 >>>>>>> origin/LevelBuilder
+=======
+package Classes.Lazer;
+
+public class LazerTest {
+    
+>>>>>>> origin/Tokens
 }
