@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package Classes.Level;
 
 import Classes.Token.Block;
@@ -32,4 +33,10 @@ public class LevelTest {
         Level level = new Level(new Board(), solutionBoard, new HashSet<>(), "Test Level");
         assertEquals(solutionBoard, level.getSolutionBoard());
     }
+=======
+package java.Classes.Level;
+
+public class LevelTest {
+    
+>>>>>>> origin/LevelBuilder
 }

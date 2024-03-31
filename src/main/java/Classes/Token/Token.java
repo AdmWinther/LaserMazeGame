@@ -1,11 +1,11 @@
 package Classes.Token;
 
 import Classes.Utils.Coordinate;
-import Interfaces.LazerPropagator;
+import Interfaces.LaserPropagator;
 
 import java.util.Set;
 
-public abstract class Token implements LazerPropagator {
+public abstract class Token implements LaserPropagator {
 
     private boolean movable;
 

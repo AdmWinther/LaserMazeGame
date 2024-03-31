@@ -1,7 +1,9 @@
 package Classes.Token;
 
+
 import Classes.Utils.Coordinate;
 
+import java.util.Collections;
 import java.util.Set;
 
 /**
@@ -28,6 +30,11 @@ public class Block extends Token {
     }
 
     @Override
+    public Set<Orientation> propagateLaser(Orientation from) {
+        return Collections.emptySet();
+    }
+
+    @Override
     public boolean isMovable() {
         return super.isMovable();
     }
@@ -39,12 +46,6 @@ public class Block extends Token {
 
     @Override
     public void setCoordinate(Coordinate coordinate) {
-
-    }
-
-    @Override
-    public void setIsPlaced(Boolean isPlaced) {
-
     }
 
     @Override

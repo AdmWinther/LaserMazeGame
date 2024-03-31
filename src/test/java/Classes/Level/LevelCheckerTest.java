@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package Classes.Level;
 
 import Classes.Utils.Coordinate;
@@ -49,4 +50,10 @@ public class LevelCheckerTest {
         assertFalse(levelChecker.checkOrientation(randomInt));
     }
 
+=======
+package java.Classes.Level;
+
+public class LevelCheckerTest {
+    
+>>>>>>> origin/LevelBuilder
 }

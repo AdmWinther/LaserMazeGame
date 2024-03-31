@@ -1,5 +1,6 @@
 package Interfaces;
 
+
 import Classes.Token.Orientation;
 
 public interface Orientable {

@@ -28,7 +28,7 @@ public class DoubleSidedMirror extends OrientedToken {
     }
 
     @Override
-    public Set<Orientation> propagateLazer(Orientation from) {
+    public Set<Orientation> propagateLaser(Orientation from) {
         return switch (getOrientation()) {
             case UP, DOWN -> // UP and DOWN are the same are the same and correspond to /
                     switch (from) {

@@ -1,5 +1,6 @@
 package Classes.Token;
 
+
 import Classes.Utils.Coordinate;
 
 import java.util.Collections;
@@ -28,7 +29,7 @@ public class OneSidedMirror extends OrientedToken {
     }
 
     @Override
-    public Set<Orientation> propagateLazer(Orientation from) {
+    public Set<Orientation> propagateLaser(Orientation from) {
         return switch (getOrientation()) {
             case UP -> // UP corresponds to /, with the mirror on the upper side
                     switch (from) {

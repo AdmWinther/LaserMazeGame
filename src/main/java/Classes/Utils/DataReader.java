@@ -32,6 +32,13 @@ public class DataReader {
         return null;
     }
 
+    /**
+     * Throws a FileNotFoundException if the JSON object is null
+     *
+     * @param json    the JSONObject to check
+     * @param idValue the value of the LevelID
+     * @throws FileNotFoundException if the JSON object is null.
+     */
     private static void requireFileFound(JSONObject json, String idValue) throws FileNotFoundException {
         if (json == null)
             throw new FileNotFoundException("LevelID of value \"" + idValue + "\" was not found in game data.");
@@ -46,11 +53,11 @@ public class DataReader {
      * @author Hugo Demule
      */
     private static JSONObject findLevelByID(LevelID id) throws NullPointerException {
-        JSONArray jsonLevels = Objects.requireNonNull(json(FilePaths.LEVELSDATAPATH)).getJSONArray(JsonTokens.LEVELS);
+        JSONArray jsonLevels = Objects.requireNonNull(json(FilePaths.LEVELS_DATA_PATH)).getJSONArray(JsonTokens.ATTR_LEVELS);
 
         for (int i = 0; i < jsonLevels.length(); i++) {
             JSONObject level = jsonLevels.getJSONObject(i);
-            if (level.get(JsonTokens.ID).equals(id.value())) {
+            if (level.get(JsonTokens.ATTR_ID).equals(id.value())) {
                 return level;
             }
         }
@@ -65,20 +72,23 @@ public class DataReader {
      * @author Hugo Demule
      */
     private static Token createToken(JSONObject jsonToken) {
-        TokenID id = new TokenID(jsonToken.getString(JsonTokens.ID));
-        String type = jsonToken.getString(JsonTokens.TYPE);
-        Orientation orientation = Orientation.valueOf(jsonToken.getString("orientation"));
-        boolean isMovable = jsonToken.getBoolean("isMovable");
+        TokenID id = new TokenID(jsonToken.getString(JsonTokens.ATTR_ID));
+        String type = jsonToken.getString(JsonTokens.ATTR_TYPE);
+        boolean isMovable = jsonToken.getBoolean(JsonTokens.ATTR_IS_MOVABLE);
+        Orientation orientation = jsonToken.has(JsonTokens.ATTR_ORIENTATION)
+                ? Orientation.valueOf(jsonToken.getString(JsonTokens.ATTR_ORIENTATION))
+                : null;
+
         switch (type) {
-            case JsonTokens.LASER_GUN_TOKEN:
-                return new LazerGun(isMovable, orientation);
-            case JsonTokens.RECEIVER_TOKEN:
+            case JsonTokens.VAL_TYPE_LASER_GUN:
+                return new LaserGun(isMovable, orientation);
+            case JsonTokens.VAL_TYPE_RECEIVER:
                 return new Receiver(isMovable, orientation);
-            case JsonTokens.DOUBLE_SIDED_MIRROR_TOKEN:
+            case JsonTokens.VAL_DOUBLE_SIDED_MIRROR:
                 return new DoubleSidedMirror(isMovable, orientation);
-            case JsonTokens.ONE_SIDED_MIRROR_TOKEN:
+            case JsonTokens.VAL_TYPE_ONE_SIDED_MIRROR:
                 return new OneSidedMirror(isMovable, orientation);
-            case JsonTokens.BLOCK_TOKEN:
+            case JsonTokens.VAL_TYPE_BLOCK:
                 return new Block(isMovable);
             default:
         }
@@ -94,14 +104,14 @@ public class DataReader {
      */
     private static Set<Pair<Token, Coordinate>> createPlacedTokens(JSONObject jsonBoard) {
         Set<Pair<Token, Coordinate>> placedTokens = new HashSet<>();
-        JSONArray jsonTokens = jsonBoard.getJSONArray("tokens");
+        JSONArray jsonTokens = jsonBoard.getJSONArray(JsonTokens.ATTR_TOKENS);
         for (int i = 0; i < jsonTokens.length(); i++) {
             JSONObject jsonToken = jsonTokens.getJSONObject(i);
             Token token = createToken(jsonToken);
 
-            JSONObject coordinate = jsonToken.getJSONObject("coordinate");
-            int x = coordinate.getInt("x");
-            int y = coordinate.getInt("y");
+            JSONObject coordinate = jsonToken.getJSONObject(JsonTokens.ATTR_COORDINATE);
+            int x = coordinate.getInt(JsonTokens.ATTR_X);
+            int y = coordinate.getInt(JsonTokens.ATTR_Y);
 
             Pair<Token, Coordinate> placedToken = new Pair<>(token, new Coordinate(x, y));
             placedTokens.add(placedToken);
@@ -122,18 +132,23 @@ public class DataReader {
         JSONObject level = findLevelByID(id);
         requireFileFound(level, id.value());
         JSONObject board = level.getJSONObject(boardType);
-        return new Board(createPlacedTokens(board));
+        int size = board.getInt(JsonTokens.ATTR_SIZE);
+        return new Board(size, size, createPlacedTokens(board));
     }
 
     /**
      * Extracts the LevelIDs from the game data files
+     * <<<<<<< HEAD
      *
      * @param path the path to the corresponding JSON file
+     *             =======
+     *             >>>>>>> origin/LevelBuilder
      * @return a list of LevelIDs
+     * @throws NullPointerException if the path to the JSON file does not exist
      * @author Hugo Demule
      */
-    public static List<LevelID> extractLevelIDs(String path) {
-        JSONArray jsonIDs = Objects.requireNonNull(json(FilePaths.LEVELSIDSDATAPATH)).getJSONArray(JsonTokens.LEVELS_IDS);
+    public static List<LevelID> extractLevelIDs(String path) throws NullPointerException {
+        JSONArray jsonIDs = Objects.requireNonNull(json(path)).getJSONArray(JsonTokens.ATTR_LEVELS_IDS);
         List<LevelID> levelIDS = new ArrayList<>();
 
         for (int i = 0; i < jsonIDs.length(); i++) levelIDS.add(new LevelID(jsonIDs.getString(i)));
@@ -152,7 +167,7 @@ public class DataReader {
     public static String readLevelIDName(LevelID id) throws FileNotFoundException {
         JSONObject level = findLevelByID(id);
         requireFileFound(level, id.value());
-        return level.getString(JsonTokens.NAME);
+        return level.getString(JsonTokens.ATTR_NAME);
     }
 
     /**
@@ -167,8 +182,11 @@ public class DataReader {
         JSONObject level = findLevelByID(id);
         requireFileFound(level, id.value());
         List<Token> tokens = new ArrayList<>();
-        JSONArray jsonTokens = level.getJSONArray("tokens");
-        jsonTokens.forEach(jsonToken -> tokens.add(createToken((JSONObject) jsonToken)));
+        JSONArray jsonTokens = level.getJSONArray(JsonTokens.ATTR_TOKENS);
+        for (int i = 0; i < jsonTokens.length(); i++) {
+            Token token = createToken(jsonTokens.getJSONObject(i));
+            tokens.add(token);
+        }
         return tokens;
     }
 
@@ -180,8 +198,8 @@ public class DataReader {
      * @throws FileNotFoundException if the LevelID is not found in the game data
      * @author Hugo Demule
      */
-    public static Board readLevelIDStartingBoard(LevelID id) throws FileNotFoundException, NullPointerException {
-        return createBoard(id, JsonTokens.STARTING_BOARD);
+    public static Board readLevelIDStartingBoard(LevelID id) throws FileNotFoundException {
+        return createBoard(id, JsonTokens.ATTR_STARTING_BOARD);
     }
 
     /**
@@ -192,8 +210,8 @@ public class DataReader {
      * @throws FileNotFoundException if the LevelID is not found in the game data
      * @author Hugo Demule
      */
-    public static Board readLevelIDSolutionBoard(LevelID id) throws FileNotFoundException, NullPointerException {
-        return createBoard(id, JsonTokens.SOLUTION_BOARD);
+    public static Board readLevelIDSolutionBoard(LevelID id) throws FileNotFoundException {
+        return createBoard(id, JsonTokens.ATTR_SOLUTION_BOARD);
     }
 
 }
