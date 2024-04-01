@@ -31,16 +31,10 @@ public class LevelChecker {
      */
     public boolean checkTokenSelection(TokenID tokenID) {
 
-
-        System.out.println("\nTokens in level: \n");
-        for (Token token : level.getTokens()) {
-            System.out.println("    Token: " + token.id());
-        }
-
         Token selectedToken = level.getTokens().stream().filter(t -> t.id().equals(tokenID)).findFirst().orElse(null);
 
         System.out.println("\nSelected token: " + selectedToken);
-        
+
         if (selectedToken == null) {
             return false;
         } else {

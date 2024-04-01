@@ -233,6 +233,14 @@ public class Board {
      * @author Léonard AMSLER - s231715
      */
     public void setTokenCoordinate(Token token, Coordinate coordinate) {
+        // Remove the token from the previous position
+        for (Tile t : tiles) {
+            if (t.getToken() != null && t.getToken().equals(token)) {
+                t.setToken(null);
+            }
+        }
+
+        // Set the token to the new position
         for (Tile t : tiles) {
             if (t.getCoordinate().equals(coordinate)) {
                 t.setToken(token);
