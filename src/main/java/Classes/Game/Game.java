@@ -8,18 +8,13 @@ import java.util.Scanner;
 
 public class Game implements Runnable {
     private Player player;
-    final String LevelDataPath = "./src/test/java/Game/gameData.txt";
-    //todo: move the path to a configuration file rather than hard code the path.
 
     private ArrayList<LevelID> levelData;
-    public void main(String[] args) {
-
-    }
 
     @Override
     public void run() {
         System.out.println("This is the main menu.");
-        levelData = DataReader.extractLevelIDs(LevelDataPath);
+        levelData = DataReader.extractLevelIDs(GameData.getLEVELIDSPATH());
     }
 
     public void stop() {
