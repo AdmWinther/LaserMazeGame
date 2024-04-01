@@ -63,4 +63,11 @@ public abstract class Token implements LaserPropagator {
     public String toBoardString() {
         return id.toString();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Token token)) return false;
+        return movable == token.movable;
+    }
 }

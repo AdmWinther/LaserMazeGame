@@ -25,13 +25,22 @@ public class LevelChecker {
     /**
      * Check if the token selected is valid
      *
-     * @param tokenIndex TokenID - Token selected
+     * @param tokenID TokenID - Token selected
      * @return boolean - True if the token is valid, false otherwise
      * @author Léonard Amsler - s231715
      */
-    public boolean checkTokenSelection(TokenID tokenIndex) {
+    public boolean checkTokenSelection(TokenID tokenID) {
 
-        Token selectedToken = level.getTokens().stream().filter(t -> t.id() == tokenIndex).findFirst().orElse(null);
+
+        System.out.println("\nTokens in level: \n");
+        for (Token token : level.getTokens()) {
+            System.out.println("    Token: " + token.id());
+        }
+
+        Token selectedToken = level.getTokens().stream().filter(t -> t.id().equals(tokenID)).findFirst().orElse(null);
+
+        System.out.println("\nSelected token: " + selectedToken);
+        
         if (selectedToken == null) {
             return false;
         } else {

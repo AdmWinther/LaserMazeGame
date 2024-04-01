@@ -210,8 +210,13 @@ public class Board {
                 Tile thisTile = this.tileAt(coor);
                 Tile thatTile = other.tileAt(coor);
                 if (thisTile != null && thatTile != null) {
-                    if (!thisTile.getToken().equals(thatTile.getToken())) {
+                    if (thisTile.hasToken() != thatTile.hasToken()) {
                         return false;
+                    }
+                    if (thisTile.hasToken() && thatTile.hasToken()) {
+                        if (!thisTile.getToken().equals(thatTile.getToken())) {
+                            return false;
+                        }
                     }
                 } else return false; //considering that a null tile and an empty tile is the same?
 
@@ -250,7 +255,9 @@ public class Board {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("|");
-        sb.append("-".repeat(Math.max(0, WIDTH)));
+        String repeat = "-".repeat(20).repeat(Math.max(0, WIDTH));
+        sb.append(repeat);
+        sb.append("-".repeat(WIDTH - 1));
         sb.append("|\n");
         for (int y = 0; y < HEIGHT; y++) {
             for (int x = 0; x < WIDTH; x++) {
@@ -258,16 +265,23 @@ public class Board {
                 Coordinate coordinate = new Coordinate(x, y);
                 Tile tile = tileAt(coordinate);
                 if (tile.hasToken()) {
-                    sb.append(tile.getToken().toBoardString());
+                    String toAdd = tile.getToken().toBoardString();
+                    int size = toAdd.length();
+                    int left = (20 - size) / 2;
+                    int right = 20 - size - left;
+                    sb.append(" ".repeat(left));
+                    sb.append(toAdd);
+                    sb.append(" ".repeat(right));
                 } else {
-                    sb.append(" ");
+                    sb.append(" ".repeat(20));
                 }
             }
             sb.append("|");
             sb.append("\n");
         }
         sb.append("|");
-        sb.append("-".repeat(Math.max(0, WIDTH)));
+        sb.append(repeat);
+        sb.append("-".repeat(WIDTH - 1));
         sb.append("|\n");
         return sb.toString();
     }

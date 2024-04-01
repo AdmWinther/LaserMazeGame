@@ -19,11 +19,11 @@
           {
             "type": "Receiver",
             "id": "receiver-0",
-            "orientation": "RIGHT",
+            "orientation": "UP",
             "isMovable": false,
             "coordinate": {
               "x": 2,
-              "y": 1
+              "y": 2
             }
           }
         ]
@@ -44,7 +44,17 @@
           {
             "type": "Receiver",
             "id": "receiver-0",
-            "orientation": "RIGHT",
+            "orientation": "UP",
+            "isMovable": false,
+            "coordinate": {
+              "x": 2,
+              "y": 2
+            }
+          },
+          {
+            "type": "OneSidedMirror",
+            "id": "one-sided-mirror-0",
+            "orientation": "DOWN",
             "isMovable": true,
             "coordinate": {
               "x": 2,
@@ -55,14 +65,29 @@
       },
       "tokens": [
         {
+          "type": "LaserGun",
+          "id": "laser-gun-0",
+          "orientation": "RIGHT",
+          "isMovable": false,
+          "coordinate": {
+            "x": 0,
+            "y": 1
+          }
+        },
+        {
+          "type": "Receiver",
+          "id": "receiver-0",
+          "orientation": "UP",
+          "isMovable": false,
+          "coordinate": {
+            "x": 2,
+            "y": 2
+          }
+        },
+        {
           "type": "OneSidedMirror",
           "id": "one-sided-mirror-0",
           "orientation": "RIGHT",
-          "isMovable": true
-        },
-        {
-          "type": "Block",
-          "id": "block-0",
           "isMovable": true
         }
       ]
@@ -86,6 +111,7 @@
           {
             "type": "Receiver",
             "id": "receiver-0",
+            "orientation": "RIGHT",
             "isMovable": true,
             "coordinate": {
               "x": 2,
@@ -111,6 +137,7 @@
             "type": "Receiver",
             "id": "receiver-0",
             "isMovable": true,
+            "orientation": "LEFT",
             "coordinate": {
               "x": 2,
               "y": 1

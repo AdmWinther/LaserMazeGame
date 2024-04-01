@@ -164,10 +164,12 @@ public class Level implements Runnable {
         TokenID tokenID = null;
         while (!isTokenIndexValid) {
             tokenID = LevelInput.selectToken();
+            System.out.println("Token selected: " + tokenID);
             isTokenIndexValid = levelChecker.checkTokenSelection(tokenID);
+            System.out.println("Token is valid: " + isTokenIndexValid);
         }
         TokenID finalTokenID = tokenID;
-        Token token = tokens.stream().filter(t -> t.id() == finalTokenID).findFirst().orElse(null);
+        Token token = tokens.stream().filter(t -> t.id().equals(finalTokenID)).findFirst().orElse(null);
 
         if (token == null) {
             System.out.println("Token not found");

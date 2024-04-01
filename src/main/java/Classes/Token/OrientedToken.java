@@ -57,4 +57,18 @@ public abstract class OrientedToken extends Token implements Orientable {
     public String toBoardString() {
         return id().toString() + " " + orientation.toString();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        OrientedToken that = (OrientedToken) o;
+
+        return super.equals(o) && orientation == that.orientation;
+    }
 }
