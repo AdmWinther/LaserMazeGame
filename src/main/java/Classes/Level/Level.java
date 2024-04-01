@@ -1,6 +1,6 @@
 package Classes.Level;
 
-import Classes.Lazer.Lazer;
+import Classes.Lazer.Laser;
 import Classes.Token.Orientation;
 import Classes.Token.OrientedToken;
 import Classes.Token.Token;
@@ -38,7 +38,7 @@ public class Level implements Runnable {
     /**
      * Lazer object
      */
-    private Lazer lazer;
+    private Laser lazer;
     /**
      * State of the level
      */
@@ -57,10 +57,20 @@ public class Level implements Runnable {
         this.board = board;
         this.solutionBoard = solutionBoard;
         this.tokens = token;
-        this.lazer = new Lazer();
+        this.lazer = new Laser();
         this.levelChecker = new LevelChecker(this);
         this.levelName = levelName;
         this.levelState = LevelState.STARTING;
+    }
+
+    /**
+     * Getter for levelName
+     *
+     * @return String - Name of the level
+     * @author Léonard Amsler - s231715
+     */
+    public String getLevelName() {
+        return levelName;
     }
 
     /**
@@ -100,7 +110,7 @@ public class Level implements Runnable {
      */
     @Override
     public void run() {
-        System.out.println("Running level" + levelName);
+        System.out.println("Running level " + levelName);
         while (levelState != LevelState.FINISHED) {
             switch (levelState) {
                 case STARTING -> start();
@@ -138,7 +148,6 @@ public class Level implements Runnable {
      * @author Léonard Amsler - s231715
      */
     private void start() {
-        System.out.println("Starting level " + levelName);
         levelState = LevelState.NEED_USER_INPUT;
     }
 
@@ -148,7 +157,7 @@ public class Level implements Runnable {
      * @author Léonard Amsler - s231715
      */
     private void needUserInput() {
-        System.out.println("Need user input");
+        System.out.println("\nNeed user input");
 
         // Select a token
         boolean isTokenIndexValid = false;
@@ -218,7 +227,7 @@ public class Level implements Runnable {
      * @return Lazer - Lazer object
      * @author Léonard Amsler - s231715
      */
-    private Lazer generateLazer() {
+    private Laser generateLazer() {
         return board.generateLazer();
     }
 }

@@ -1,9 +1,8 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
 package Classes.Level;
 
 import Classes.Token.Block;
 import Classes.Token.Token;
+import Classes.Token.TokenID;
 import org.junit.Test;
 
 import java.util.HashSet;
@@ -16,34 +15,22 @@ public class LevelTest {
     @Test
     public void testGetTokens() {
         Set<Token> tokens = new HashSet<>();
-        tokens.add(new Block());
-        Level level = new Level(new Board(), new Board(), tokens, "Test Level");
+        tokens.add(new Block(new TokenID("Block"), false));
+        Level level = new Level(new Board(0, 0), new Board(0, 0), tokens, "Test Level");
         assertEquals(tokens, level.getTokens());
     }
 
     @Test
     public void testGetBoard() {
-        Board board = new Board();
-        Level level = new Level(board, new Board(), new HashSet<>(), "Test Level");
+        Board board = new Board(0, 0);
+        Level level = new Level(board, new Board(0, 0), new HashSet<>(), "Test Level");
         assertEquals(board, level.getBoard());
     }
 
     @Test
     public void testGetSolutionBoard() {
-        Board solutionBoard = new Board();
-        Level level = new Level(new Board(), solutionBoard, new HashSet<>(), "Test Level");
+        Board solutionBoard = new Board(0, 0);
+        Level level = new Level(new Board(0, 0), solutionBoard, new HashSet<>(), "Test Level");
         assertEquals(solutionBoard, level.getSolutionBoard());
     }
-=======
-package java.Classes.Level;
-
-public class LevelTest {
-    
->>>>>>> origin/LevelBuilder
-=======
-package Classes.Level;
-
-public class LevelTest {
-    
->>>>>>> origin/Tokens
 }

@@ -1,7 +1,7 @@
 package Classes.Level;
 
-import Classes.Lazer.Lazer;
-import Classes.Lazer.LazerFragment;
+import Classes.Lazer.Laser;
+import Classes.Lazer.LaserFragment;
 import Classes.Token.LaserGun;
 import Classes.Token.Orientation;
 import Classes.Token.Token;
@@ -61,11 +61,19 @@ public class Board {
      * @return Board - The initialized board
      */
     private ArrayList<Tile> createTiles(Set<Pair<Token, Coordinate>> tokens) {
-        ArrayList<Tile> tiles = new ArrayList<Tile>();
+        ArrayList<Tile> tiles = new ArrayList<>();
         //need to isolate the tokens and the coordinates for each pair, (using lambda notation??)
         for (int x = 0; x < WIDTH; x++) {
             for (int y = 0; y < HEIGHT; y++) {
-                tiles.add(new Tile(null, new Coordinate(x, y)));
+                Coordinate coordinate = new Coordinate(x, y);
+                Token token = null;
+                for (Pair<Token, Coordinate> pair : tokens) {
+                    if (pair.second().equals(coordinate)) {
+                        token = pair.first();
+                        break;
+                    }
+                }
+                tiles.add(new Tile(token, coordinate));
             }
         }
         return tiles;
@@ -97,8 +105,8 @@ public class Board {
      * @return Lazer - Lazer object
      * @author Léonard AMSLER - s231715
      */
-    public Lazer generateLazer() {
-        Lazer lazer = new Lazer();
+    public Laser generateLazer() {
+        Laser lazer = new Laser();
         ArrayList<Pair<Coordinate, Orientation>> toCheckCoordinates = new ArrayList<>();
 
         for (Tile tile : tiles) {
@@ -140,8 +148,8 @@ public class Board {
                     case RIGHT -> x++;
                 }
                 Coordinate outCoordinate = new Coordinate(x, y);
-                LazerFragment lazerFragment = new LazerFragment(currentCoordinate, outCoordinate);
-                lazer.addLazerFragment(lazerFragment);
+                LaserFragment lazerFragment = new LaserFragment(currentCoordinate, outCoordinate);
+                lazer.addLaserFragment(lazerFragment);
                 toCheckCoordinates.add(new Pair<>(outCoordinate, outOrientation));
             }
         }
@@ -157,7 +165,10 @@ public class Board {
      */
     Coordinate getTokenCoordinate(Token token) {
         for (Tile t : tiles) {
-            if (t.getToken().equals(token)) {
+            if (t.getToken() == null) {
+                continue;
+            }
+            if (t.getToken().strictlyEquals(token)) {
                 return t.getCoordinate();
             }
         }
@@ -222,5 +233,42 @@ public class Board {
                 t.setToken(token);
             }
         }
+    }
+
+    @Override
+    /**
+     * Returns a string representation of the board
+     *
+     * |-----------|
+     * | | | | | | |
+     * |0| | |1| | |
+     * |-----------|
+     *
+     * @return String - the string representation of the board
+     * @author Léonard AMSLER - s231715
+     */
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("|");
+        sb.append("-".repeat(Math.max(0, WIDTH)));
+        sb.append("|\n");
+        for (int y = 0; y < HEIGHT; y++) {
+            for (int x = 0; x < WIDTH; x++) {
+                sb.append("|");
+                Coordinate coordinate = new Coordinate(x, y);
+                Tile tile = tileAt(coordinate);
+                if (tile.hasToken()) {
+                    sb.append(tile.getToken().toBoardString());
+                } else {
+                    sb.append(" ");
+                }
+            }
+            sb.append("|");
+            sb.append("\n");
+        }
+        sb.append("|");
+        sb.append("-".repeat(Math.max(0, WIDTH)));
+        sb.append("|\n");
+        return sb.toString();
     }
 }

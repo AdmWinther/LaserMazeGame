@@ -59,4 +59,8 @@ public abstract class Token implements LaserPropagator {
     public TokenID id() {
         return id;
     }
+
+    public String toBoardString() {
+        return id.toString();
+    }
 }

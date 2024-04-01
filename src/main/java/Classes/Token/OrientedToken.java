@@ -52,4 +52,9 @@ public abstract class OrientedToken extends Token implements Orientable {
 
         this.orientation = orientation;
     }
+
+    @Override
+    public String toBoardString() {
+        return id().toString() + " " + orientation.toString();
+    }
 }

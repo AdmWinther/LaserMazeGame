@@ -4,21 +4,31 @@ public enum Orientation {
     /**
      * Up orientation
      */
-    UP,
+    UP("U"),
 
     /**
      * Down orientation
      */
-    DOWN,
+    DOWN("D"),
 
     /**
      * Left orientation
      */
-    LEFT,
+    LEFT("L"),
 
     /**
      * Right orientation
      */
-    RIGHT,
+    RIGHT("R");
 
+    private final String value;
+
+    Orientation(String value) {
+        this.value = value;
+    }
+
+    @Override
+    public String toString() {
+        return value;
+    }
 }

@@ -19,6 +19,7 @@
           {
             "type": "Receiver",
             "id": "receiver-0",
+            "orientation": "LEFT",
             "isMovable": false,
             "coordinate": {
               "x": 2,
@@ -43,6 +44,7 @@
           {
             "type": "Receiver",
             "id": "receiver-0",
+            "orientation": "LEFT",
             "isMovable": true,
             "coordinate": {
               "x": 2,
