@@ -1,0 +1,66 @@
+*As user I need to see the main menu, when I run the app to have the possebility to work with different options like game difficaulty, loading the last game, see the high score, etc.
+
+*As user I need to have the possebility to choose the game difficaulty level in the main menu.
+
+*As user I need to have the possebility to continue from the level which I stopped last time to avoid repeating the currently solved mazes.
+
+*As user I need to see the laser track, in order to assess if I am getting close to solve the problem or not
+
+*As user I need to have the possebility to save my current status before I close the game, to continue from here next time.
+
+*As user I need to have the possebility to go to the main menu from the game to change the settings or game level or load game
+
+*As user I need to have the possebility to click a button and one of the cells that is part of the solution be higlighed to help me figure out the solution
+
+*As user I need to have the possebility to click a button and it highlights the cells in green if I have placed the right token on it.
+
+*As user I need to have a button to click in order to shoot the laser and see if my solution is right
+
+*As user I need to have the possebility to place my tokens on the board
+
+*As MasterMind I need to give the user one stars when a maze is solved correctly.
+
+*As MasterMind I take 3 stars from the user, each time that (s)he use the hint.
+
+*As MasterMind I refuse to let the user to go use the hint if user does not have enough stars
+
+*As MasterMind I will charge the user one stars each time that the user shoots the laser to test the solution
+
+*As MasterMind I refuse the user to continue if user does not have any stars.
+
+*As MasterMind I will give the user 3 stars at the begining of the game.
+
+*As MasterMind, I need to fix some tokens on the board (the tokens that are part of the puzzle design must be fixed)
+
+*As MasterMind, I need to know the solution for each maze
+
+*As MasterMind I need to know the design of each puzzle (the initial location of the tokens)
+
+*As MasterMind I need each maze to have only one solution.
+
+*As MasterMind I need each maze to at least have one laser gun, one target and one user token, in order to have the minimum of puzzle.
+
+*As user I need the option "New Game" in the main menu to start a new game.
+
+*As MasterMind, I need to ask the name of the user, at the begining of each "New Game" series in order to have a file name to save the progress of each user.
+
+*As user I need to protect my save by a password to avoid others using loading my records without my consent.
+
+*As user I need to have the possebility to set no password for my savings.
+
+*As user I want the game to refuse loading my record, if wrong password is given.
+
+*As user, I prefer to have the possebility to change the background of my game.
+
+*As user, I prefer to load my picture or Avatar.
+
+*As user, I like to hear sound effect when laser hit tokens to get me excited.
+
+*As user, I need to have the option to silent the sound effect cause maybe I want to play it in silent mode
+
+*As user I need to remove my tokens after I placed them on the board, cause maybe I have placed my token in a wrong cell
+
+*As MasterMind, I need the user to have the possebility to only place one token in each cell
+
+*As user, I need to have a means to rotate my tokens.
+

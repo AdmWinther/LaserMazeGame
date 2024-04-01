@@ -1,6 +1,6 @@
 package Interfaces;
 
 public interface Runnable {
-    void run();
-    void stop();
+    public void run();
+    public void stop();
 }

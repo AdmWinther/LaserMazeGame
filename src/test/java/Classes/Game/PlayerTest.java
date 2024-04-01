@@ -21,7 +21,7 @@ public class PlayerTest extends TestCase {
         assertEquals(name, "John");
     }
 
-    public void testSetName(){
+    public void testSetNameAndGetName(){
         this.myPlayer = new Player();
         myPlayer.setName("Jack");
         assertEquals(myPlayer.getName(), "Jack");
