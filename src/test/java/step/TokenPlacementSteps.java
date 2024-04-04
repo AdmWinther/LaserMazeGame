@@ -1,15 +1,13 @@
-package java.step;
+package step;
 
+import Classes.Block;
+import Classes.Board;
+import Classes.Level;
 import Classes.Token;
 import Classes.Utils.Coordinate;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
-
-import Classes.Board;
-import Classes.Block;
-import Classes.Level;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
