@@ -1,6 +1,7 @@
 package Classes;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 public class Level {
@@ -23,7 +24,7 @@ public class Level {
      */
     public Level(Board board) {
         this.board = board;
-        this.tokens = Collections.emptySet();
+        this.tokens = new HashSet<>();
     }
 
     /**
