@@ -1,7 +1,6 @@
 package Classes.Utils;
 
 import Classes.Level.LevelID;
-import Classes.Token.*;
 import Resources.constants.FilePaths;
 import org.junit.Test;
 
