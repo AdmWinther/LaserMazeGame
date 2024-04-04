@@ -74,26 +74,26 @@ public final class OneSidedMirror extends OrientedToken {
         return switch (getOrientation()) {
             case UP -> // UP corresponds to /, with the mirror on the upper side
                     switch (from) {
-                        case UP -> Set.of(Orientation.LEFT);
-                        case LEFT -> Set.of(Orientation.UP);
+                        case Orientation.UP -> Set.of(Orientation.LEFT);
+                        case Orientation.LEFT -> Set.of(Orientation.UP);
                         default -> Collections.emptySet();
                     };
             case DOWN -> // DOWN corresponds to / with the mirror on the lower side
                     switch (from) {
-                        case DOWN -> Set.of(Orientation.RIGHT);
-                        case RIGHT -> Set.of(Orientation.DOWN);
+                        case Orientation.DOWN -> Set.of(Orientation.RIGHT);
+                        case Orientation.RIGHT -> Set.of(Orientation.DOWN);
                         default -> Collections.emptySet();
                     };
             case LEFT -> // LEFT corresponds to \, with the mirror on the left side
                     switch (from) {
-                        case DOWN -> Set.of(Orientation.LEFT);
-                        case LEFT -> Set.of(Orientation.DOWN);
+                        case Orientation.DOWN -> Set.of(Orientation.LEFT);
+                        case Orientation.LEFT -> Set.of(Orientation.DOWN);
                         default -> Collections.emptySet();
                     };
             default -> // RIGHT corresponds to \, with the mirror on the right side
                     switch (from) {
-                        case UP -> Set.of(Orientation.RIGHT);
-                        case RIGHT -> Set.of(Orientation.UP);
+                        case Orientation.UP -> Set.of(Orientation.RIGHT);
+                        case Orientation.RIGHT -> Set.of(Orientation.UP);
                         default -> Collections.emptySet();
                     };
         };
