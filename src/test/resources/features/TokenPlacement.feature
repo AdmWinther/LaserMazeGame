@@ -1,9 +1,10 @@
 Feature: Placing a token
 
   Scenario: Successful placement
-    Given I have a level that contains a board
+    Given I have a level that contains an empty board
     When I try to place a token at position (2, 2)
     Then A token should be placed at position (2, 2)
+    And The board should reflect the change
 
 
 #  Scenario: Token is not movable
