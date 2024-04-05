@@ -54,7 +54,7 @@ public class SolutionCheckSteps {
     public void andTheSolutionCheckerShouldReturn(String arg0) {
         boolean expected = Boolean.parseBoolean(arg0);
 
-        assertEquals(expected, result); // Use assertEquals
+        assertEquals(expected, result);
     }
 
     @And("there is a block in the way of the laser")

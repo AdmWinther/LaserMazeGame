@@ -10,7 +10,7 @@ import java.util.Set;
 public class Level {
     private final Board board;
     private final Set<Token> tokens;
-    private final Laser laser;
+    private Laser laser;
 
     /**
      * Parameterized constructor
@@ -43,6 +43,10 @@ public class Level {
 
     public Set<Token> getTokens() {
         return tokens;
+    }
+
+    public Laser getLaser() {
+        return laser;
     }
 
     public Laser generateLaser() {

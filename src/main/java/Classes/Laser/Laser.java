@@ -1,7 +1,5 @@
 package Classes.Laser;
 
-import Classes.Laser.LaserFragment;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,5 +9,13 @@ public class Laser {
 
     public Laser() {
         fragments = new HashSet<>();
+    }
+
+    public void addFragment(LaserFragment fragment) {
+        fragments.add(fragment);
+    }
+
+    public Set<LaserFragment> getFragments() {
+        return fragments;
     }
 }
