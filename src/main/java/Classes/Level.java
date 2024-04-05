@@ -1,20 +1,16 @@
 package Classes;
 
-import java.util.Collections;
+import Classes.Laser.Laser;
+import Classes.Token.Token;
+import Classes.Utils.Coordinate;
+
 import java.util.HashSet;
 import java.util.Set;
 
 public class Level {
-
-    /**
-     * Board object
-     */
     private final Board board;
-
-    /**
-     * ArrayList of Token objects
-     */
     private final Set<Token> tokens;
+    private final Laser laser;
 
     /**
      * Parameterized constructor
@@ -41,7 +37,16 @@ public class Level {
         return tokens.add(token);
     }
 
+    public boolean placeToken(Token token, Coordinate position) {
+        return board.placeToken(token, position);
+    }
+
     public Set<Token> getTokens() {
         return tokens;
+    }
+
+    public Laser generateLaser() {
+        laser = board.generateLaser();
+        return laser;
     }
 }

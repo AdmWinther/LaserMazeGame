@@ -1,9 +1,11 @@
-package Classes;
+package Classes.Token;
+
+import Interfaces.LaserPropagator;
 
 /**
  * Token is an abstract class that represents a token in the game.
  */
-public abstract class Token {
+public abstract class Token implements LaserPropagator {
 
     private boolean movable;
 

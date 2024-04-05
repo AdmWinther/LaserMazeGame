@@ -1,6 +1,6 @@
 package Classes;
 
-import Classes.Token;
+import Classes.Token.Token;
 import Classes.Utils.Coordinate;
 
 public class Board {
