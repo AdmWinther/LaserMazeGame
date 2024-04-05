@@ -7,7 +7,7 @@ public class Board {
     private final int height;
     private final int width;
 
-    private Token[][] board;
+    private final Token[][] board;
 
     public Board(int height, int width) {
         this.height = height;
@@ -21,7 +21,6 @@ public class Board {
             board[position.y()][position.x()] = token;
             return true;
         }
-
         return false;
     }
 
@@ -29,7 +28,27 @@ public class Board {
         return coordinate.x() >= 0 && coordinate.x() < width && coordinate.y() >= 0 && coordinate.y() < height;
     }
 
+    /**
+     * extracts
+     * @param coordinate
+     * @return
+     */
+    public Token tokenAt(Coordinate coordinate){
+        if (coordinate.x() >= width || coordinate.y() >= height) {
+            return null;
+        }
+        return board[coordinate.x()][coordinate.y()];
+    }
+
     public boolean isPositionEmpty(Coordinate position) {
         return board[position.x()][position.y()] == null;
+    }
+
+    public int getHeight(){
+        return this.height;
+    }
+
+    public int getWidth(){
+        return this.width;
     }
 }

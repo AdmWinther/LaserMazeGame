@@ -1,5 +1,7 @@
 package Classes;
 
+import Classes.Utils.Coordinate;
+
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -37,8 +39,19 @@ public class Level {
         return board;
     }
 
-    public boolean addToken(Token token) {
-        return tokens.add(token);
+    public void addToken(Token token) {
+        tokens.add(token);
+    }
+
+    /**
+     * Places a token on the board by calling "placeToken" of Board class.
+     * @param token the token to place
+     * @param coordinate the coordinate at which the token will be placed
+     * @return true if the token has been placed successfully, otherwise false
+     */
+    public boolean placeToken(Token token, Coordinate coordinate) {
+        if (tokens.contains(token)) return board.placeToken(token, coordinate);
+        else return false;
     }
 
     public Set<Token> getTokens() {
