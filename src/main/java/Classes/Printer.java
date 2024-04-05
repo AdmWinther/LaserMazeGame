@@ -2,6 +2,8 @@ package Classes;
 
 import Classes.Utils.Coordinate;
 
+import java.util.Objects;
+
 public class Printer {
     private int width;
     private int height;
@@ -34,16 +36,16 @@ public class Printer {
     private StringBuilder drawBoardGrid(Level level) {
         StringBuilder grid = new StringBuilder();
         for (int i = 0; i < this.height; i++) {
-            grid.append(" ").append(i+1).append("|");
+            grid.append(" ").append(i).append("|");
             for (int j = 0; j < this.width; j++) {
                 Token token = level.getBoard().tokenAt(new Coordinate(i,j));
                 if(token == null){
                     grid.append(" ".repeat(3));
-                } else {
-                    grid.append("0".repeat(3));
+                } else if (token instanceof Block){
+                    grid.append("B".repeat(3));
                 }
             }
-            grid.append("|").append(i+1);
+            grid.append("|").append(i);
             grid.append("\n");
         }
         return grid;
@@ -53,7 +55,7 @@ public class Printer {
         StringBuilder firstLine = new StringBuilder();
         firstLine.append(" ".repeat(3));
         for (int i = 0; i < width; i++) {
-            firstLine.append(" ").append(i+1).append(" ");
+            firstLine.append(" ").append(i).append(" ");
         }
         firstLine.append("\n");
         return firstLine;

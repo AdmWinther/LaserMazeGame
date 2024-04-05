@@ -1,8 +1,8 @@
 package step;
 
-import Classes.Board;
-import Classes.Level;
-import Classes.Printer;
+import Classes.*;
+import Classes.Utils.Coordinate;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -14,7 +14,7 @@ public class PrinterSteps {
     Level level;
     String printed;
 
-    @Given("I have a board that contains a board {int} by {int}")
+    @Given("I have an empty board that contains a board {int} by {int}")
     public void iHaveABoardThatContainsABoardBy(int arg0, int arg1) {
         board = new Board(arg0,arg1);
         level = new Level(board);
@@ -26,19 +26,46 @@ public class PrinterSteps {
         this.printed = printer.draw(level);
     }
 
-    @Then("the Printer prints the board on the screen")
+    @Then("the Printer prints the empty board")
     public void thePrinterPrintsTheBoardOnTheScreen() {
-        String expected = "    1  2  3  4  5  6  7 \n" +
-                "   _____________________\n" +
-                " 1|                     |1\n" +
-                " 2|                     |2\n" +
-                " 3|                     |3\n" +
-                " 4|                     |4\n" +
-                " 5|                     |5\n" +
-                " 6|                     |6\n" +
-                " 7|                     |7\n" +
-                "   _____________________\n" +
-                "    1  2  3  4  5  6  7 \n";
+        String expected = """
+                    0  1  2  3  4  5  6\s
+                   _____________________
+                 0|                     |0
+                 1|                     |1
+                 2|                     |2
+                 3|                     |3
+                 4|                     |4
+                 5|                     |5
+                 6|                     |6
+                   _____________________
+                    0  1  2  3  4  5  6\s
+                """;
+        assertEquals(this.printed,expected);
+    }
+
+    @And("a block token is placed on the cell {int} and {int}")
+    public void aBlockTokenIsPlacedOnTheCellAnd(int arg0, int arg1) {
+        Token movableToken = new Block(true);
+        level.addToken(movableToken);
+        level.placeToken(movableToken, new Coordinate(arg0, arg1));
+    }
+
+    @Then("the Printer prints the board with a block token on the cell {int} and {int}")
+    public void thePrinterPrintsTheBoardWithABlockTokenOnTheCellAnd(int arg0, int arg1) {
+        String expected = """
+                    0  1  2  3  4  5  6\s
+                   _____________________
+                 0|                     |0
+                 1|                     |1
+                 2|                     |2
+                 3|         BBB         |3
+                 4|                     |4
+                 5|                     |5
+                 6|                     |6
+                   _____________________
+                    0  1  2  3  4  5  6\s
+                """;
         //System.out.println(expected);
         //System.out.println(this.printed);
         assertEquals(this.printed,expected);
