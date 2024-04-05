@@ -63,6 +63,7 @@ public class Board {
         LaserFragment nextFragment = new LaserFragment(laserGunPosition, dest);
 
         List<LaserFragment> toExtend = new ArrayList<>();
+        laser.addFragment(nextFragment);
         toExtend.add(nextFragment);
 
         while (!toExtend.isEmpty()) {
@@ -70,7 +71,7 @@ public class Board {
 
             for (LaserFragment fragment : toExtend) {
                 if (!isPositionEmpty(fragment.to())) { // Case 1: The fragment to extend collides with a token
-                    Token token = tokens[fragment.to().y()][fragment.to().x()];
+                    Token token = tokens[fragment.to().x()][fragment.to().y()];
 
                     // Create a new fragment for each orientation the laser propagates to
                     for (Orientation orientation : token.propagateLaser(fragment.getOrientation())) {
@@ -81,8 +82,10 @@ public class Board {
                         }
 
                         nextFragment = new LaserFragment(fragment.to(), dest);
-                        laser.addFragment(nextFragment);
-                        nextToExtend.add(nextFragment);
+                        if (!laser.containsFragment(nextFragment)) {
+                            nextToExtend.add(nextFragment);
+                            laser.addFragment(nextFragment);
+                        }
                     }
                 } else { // Case 2: The fragment to extend does not collide with a token
                     dest = fragment.to().add(getOrientationOffset(fragment.getOrientation()));
@@ -92,8 +95,10 @@ public class Board {
                     }
 
                     nextFragment = new LaserFragment(fragment.to(), dest);
-                    laser.addFragment(nextFragment);
-                    nextToExtend.add(nextFragment);
+                    if (!laser.containsFragment(nextFragment)) {
+                        nextToExtend.add(nextFragment);
+                        laser.addFragment(nextFragment);
+                    }
                 }
             }
 

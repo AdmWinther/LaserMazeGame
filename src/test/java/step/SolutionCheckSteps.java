@@ -36,7 +36,7 @@ public class SolutionCheckSteps {
         level.addToken(target);
 
         level.placeToken(laserGun, new Coordinate(0, 0));
-        level.placeToken(target, new Coordinate(0, 4));
+        level.placeToken(target, new Coordinate(4, 0));
 
     }
 

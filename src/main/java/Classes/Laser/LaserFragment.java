@@ -32,13 +32,13 @@ public class LaserFragment {
 
     public Orientation getOrientation() {
         if (from.x() == to.x() && from.y() == to.y() - 1) {
-            return Orientation.UP;
-        } else if (from.x() == to.x() && from.y() == to.y() + 1) {
             return Orientation.DOWN;
+        } else if (from.x() == to.x() && from.y() == to.y() + 1) {
+            return Orientation.UP;
         } else if (from.x() == to.x() - 1 && from.y() == to.y()) {
-            return Orientation.LEFT;
-        } else {
             return Orientation.RIGHT;
+        } else {
+            return Orientation.LEFT;
         }
     }
 }
