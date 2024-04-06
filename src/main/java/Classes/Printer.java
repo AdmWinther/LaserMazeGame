@@ -2,8 +2,6 @@ package Classes;
 
 import Classes.Utils.Coordinate;
 
-import java.util.Objects;
-
 public class Printer {
     private int width;
     private int height;
@@ -38,11 +36,15 @@ public class Printer {
         for (int i = 0; i < this.height; i++) {
             grid.append(" ").append(i).append("|");
             for (int j = 0; j < this.width; j++) {
-                Token token = level.getBoard().tokenAt(new Coordinate(i,j));
-                if(token == null){
+                if(level.getBoard().isPositionEmpty(new Coordinate(i, j))){
                     grid.append(" ".repeat(3));
-                } else if (token instanceof Block){
-                    grid.append("B".repeat(3));
+                } else {
+                    int tokenIndex = level.getBoard().IndexOfTokenAt(new Coordinate(i,j));
+                    Token token = level.getTokenByIndex(tokenIndex);
+
+                    if(token instanceof Block){
+                        grid.append("B".repeat(3));
+                    }
                 }
             }
             grid.append("|").append(i);

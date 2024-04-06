@@ -7,6 +7,6 @@ Feature: Having a printer
 
   Scenario: printing a board and a block token
     Given I have an empty board that contains a board 7 by 7
-    And a block token is placed on the cell 3 and 3
+    And a block token is placed on the cell 2 and 4
     When level call printer draw and pass the level to it
-    Then the Printer prints the board with a block token on the cell 3 and 3
+    Then the Printer prints the board with a block token on the cell 2 and 4

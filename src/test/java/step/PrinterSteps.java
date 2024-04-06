@@ -47,8 +47,7 @@ public class PrinterSteps {
     @And("a block token is placed on the cell {int} and {int}")
     public void aBlockTokenIsPlacedOnTheCellAnd(int arg0, int arg1) {
         Token movableToken = new Block(true);
-        level.addToken(movableToken);
-        level.placeToken(movableToken, new Coordinate(arg0, arg1));
+        level.addAndPlaceToken(movableToken, new Coordinate(arg0,arg1));
     }
 
     @Then("the Printer prints the board with a block token on the cell {int} and {int}")
@@ -59,8 +58,8 @@ public class PrinterSteps {
                  0|                     |0
                  1|                     |1
                  2|                     |2
-                 3|         BBB         |3
-                 4|                     |4
+                 3|                     |3
+                 4|      BBB            |4
                  5|                     |5
                  6|                     |6
                    _____________________
