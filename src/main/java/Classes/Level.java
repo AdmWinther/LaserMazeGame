@@ -1,8 +1,8 @@
 package Classes;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import Classes.Utils.Coordinate;
+
+import java.util.*;
 
 public class Level {
 
@@ -14,7 +14,7 @@ public class Level {
     /**
      * ArrayList of Token objects
      */
-    private final Set<Token> tokens;
+    private final ArrayList<Token> tokens;
 
     /**
      * Parameterized constructor
@@ -24,7 +24,7 @@ public class Level {
      */
     public Level(Board board) {
         this.board = board;
-        this.tokens = new HashSet<>();
+        this.tokens = new ArrayList<>();
     }
 
     /**
@@ -37,11 +37,55 @@ public class Level {
         return board;
     }
 
-    public boolean addToken(Token token) {
-        return tokens.add(token);
+    public void addToken(Token token) {
+        tokens.add(token);
     }
 
-    public Set<Token> getTokens() {
+    public boolean addAndPlaceToken(Token token, Coordinate coordinate) {
+        if(this.board.isCoordinateInBoard(coordinate)){
+            if (board.isPositionEmpty(coordinate)) {
+                tokens.add(token);
+                board.placeToken(this.tokens.size()-1, coordinate);
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Places a token on the board by calling "placeToken" of Board class.
+     * @param index, the index of the token to be placed
+     * @param coordinate the coordinate at which the token will be placed
+     * @return true if the token has been placed successfully, otherwise false
+     */
+    public boolean placeToken(int index, Coordinate coordinate) {
+        if (board.IndexOfTokenAt(coordinate) == -1) return board.placeToken(index, coordinate);
+        else return false;
+    }
+
+    public ArrayList<Token> getTokens() {
         return tokens;
+    }
+
+    public Token getTokenByIndex(int tokenIndex) {
+        return tokens.get(tokenIndex);
+    }
+
+    public boolean moveTokenFromTo(Coordinate fromCoordinate, Coordinate toCoordinate1) {
+        if(board.isCoordinateInBoard(fromCoordinate) && board.isCoordinateInBoard(toCoordinate1)){
+            if(!board.isPositionEmpty(fromCoordinate)){
+                if(board.isPositionEmpty(toCoordinate1)){
+                    int tokenIndex = board.IndexOfTokenAt(fromCoordinate);
+                    if(tokens.get(tokenIndex).isMovable()){
+                        board.placeToken(tokenIndex, toCoordinate1);
+                        board.removeTokenFromBoard(fromCoordinate);
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }
