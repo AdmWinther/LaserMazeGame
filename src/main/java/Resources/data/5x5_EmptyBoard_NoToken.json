@@ -1,0 +1,13 @@
+{
+  "levels": [
+    {
+      "id": "level0",
+      "name": "5x5EmptyBoard_NoToken",
+      "board": {
+        "size": 5,
+        "tokens": []
+      },
+      "tokens": []
+    }
+  ]
+}

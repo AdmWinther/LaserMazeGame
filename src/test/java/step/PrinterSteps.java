@@ -1,6 +1,11 @@
 package step;
 
-import Classes.Tokens.*;
+<<<<<<< HEAD
+=======
+import Classes.*;
+import Classes.Tokens.Block;
+import Classes.Tokens.Token;
+>>>>>>> origin/dataRetrievalTests
 import Classes.Utils.Coordinate;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -47,7 +52,12 @@ public class PrinterSteps {
     @And("a block token is placed on the cell {int} and {int}")
     public void aBlockTokenIsPlacedOnTheCellAnd(int arg0, int arg1) {
         Token movableToken = new Block(true);
+<<<<<<< HEAD
         level.addAndPlaceToken(movableToken, new Coordinate(arg0, arg1));
+=======
+        level.addToken(movableToken);
+        level.placeToken(movableToken, new Coordinate(arg0,arg1));
+>>>>>>> origin/dataRetrievalTests
     }
 
     @Then("the Printer prints the board with a block token on the cell {int} and {int}")
