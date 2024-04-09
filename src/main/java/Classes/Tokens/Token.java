@@ -1,4 +1,4 @@
-package Classes;
+package Classes.Tokens;
 
 /**
  * Token is an abstract class that represents a token in the game.

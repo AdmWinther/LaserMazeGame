@@ -1,5 +1,7 @@
 package Classes;
 
+import Classes.Tokens.Block;
+import Classes.Tokens.Token;
 import Classes.Utils.Coordinate;
 
 public class Printer {
@@ -39,8 +41,7 @@ public class Printer {
                 if(level.getBoard().isPositionEmpty(new Coordinate(i, j))){
                     grid.append(" ".repeat(3));
                 } else {
-                    int tokenIndex = level.getBoard().IndexOfTokenAt(new Coordinate(i,j));
-                    Token token = level.getTokenByIndex(tokenIndex);
+                    Token token = level.getTokenOnBoardAt(new Coordinate(i,j));
 
                     if(token instanceof Block){
                         grid.append("B".repeat(3));

@@ -1,5 +1,6 @@
 package Classes;
 
+import Classes.Tokens.Token;
 import Classes.Utils.Coordinate;
 
 import java.util.*;
@@ -41,27 +42,17 @@ public class Level {
         tokens.add(token);
     }
 
-    public boolean addAndPlaceToken(Token token, Coordinate coordinate) {
-        if(this.board.isCoordinateInBoard(coordinate)){
-            if (board.isPositionEmpty(coordinate)) {
-                tokens.add(token);
-                board.placeToken(this.tokens.size()-1, coordinate);
-                return true;
-            } else {
-                return false;
-            }
-        }
-        return false;
-    }
-
     /**
      * Places a token on the board by calling "placeToken" of Board class.
-     * @param index, the index of the token to be placed
+     * @param token, the token to be placed
      * @param coordinate the coordinate at which the token will be placed
      * @return true if the token has been placed successfully, otherwise false
      */
-    public boolean placeToken(int index, Coordinate coordinate) {
-        if (board.IndexOfTokenAt(coordinate) == -1) return board.placeToken(index, coordinate);
+    public boolean placeToken(Token token, Coordinate coordinate) {
+        if (tokens.contains(token)) {
+            tokens.remove(token);
+            return board.placeToken(token, coordinate);
+        }
         else return false;
     }
 
@@ -69,23 +60,24 @@ public class Level {
         return tokens;
     }
 
-    public Token getTokenByIndex(int tokenIndex) {
-        return tokens.get(tokenIndex);
+    public Token getTokenOnBoardAt(Coordinate position) {
+        return board.getTokenAt(position);
     }
 
     public boolean moveTokenFromTo(Coordinate fromCoordinate, Coordinate toCoordinate1) {
-        if(board.isCoordinateInBoard(fromCoordinate) && board.isCoordinateInBoard(toCoordinate1)){
-            if(!board.isPositionEmpty(fromCoordinate)){
-                if(board.isPositionEmpty(toCoordinate1)){
-                    int tokenIndex = board.IndexOfTokenAt(fromCoordinate);
-                    if(tokens.get(tokenIndex).isMovable()){
-                        board.placeToken(tokenIndex, toCoordinate1);
-                        board.removeTokenFromBoard(fromCoordinate);
-                        return true;
-                    }
-                }
-            }
+
+        if (!board.isCoordinateInBoard(fromCoordinate)
+                || !board.isCoordinateInBoard(toCoordinate1)
+                || board.isPositionEmpty(fromCoordinate)
+                || !board.isPositionEmpty(toCoordinate1)) {
+            return false;
         }
+
+        Token token = board.getTokenAt(fromCoordinate);
+        if (token.isMovable()) {
+            return board.removeToken(fromCoordinate) && board.placeToken(token, toCoordinate1);
+        }
+
         return false;
     }
 }
