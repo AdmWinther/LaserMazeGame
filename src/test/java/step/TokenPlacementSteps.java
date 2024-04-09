@@ -43,7 +43,7 @@ public class TokenPlacementSteps {
     }
 
     @And("An unmovable token is placed at \\({int}, {int})")
-    public void Anunmovabletokenisplacedat(int x, int y) {
+    public void anUnmovableTokenIsPlacedAt(int x, int y) {
         Coordinate coordinate = new Coordinate(x, y);
         unmovableToken = new Block(false);
         actionResult = level.addAndPlaceToken(unmovableToken, coordinate);
