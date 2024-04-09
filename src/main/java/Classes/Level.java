@@ -15,7 +15,7 @@ public class Level {
     /**
      * ArrayList of Token objects
      */
-    private final ArrayList<Token> tokens;
+    private final List<Token> tokens;
 
     /**
      * Parameterized constructor
@@ -26,6 +26,11 @@ public class Level {
     public Level(Board board) {
         this.board = board;
         this.tokens = new ArrayList<>();
+    }
+
+    public Level(Board board, List<Token> tokens) {
+        this.board = board;
+        this.tokens = tokens;
     }
 
     /**
@@ -56,7 +61,7 @@ public class Level {
         else return false;
     }
 
-    public ArrayList<Token> getTokens() {
+    public List<Token> getTokens() {
         return tokens;
     }
 

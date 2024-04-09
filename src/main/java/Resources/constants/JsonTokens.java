@@ -10,9 +10,10 @@ public final class JsonTokens {
     public final static String ATTR_LEVELS = "levels";
     public final static String ATTR_ID = "id";
     public final static String ATTR_NAME = "name";
-    public final static String ATTR_STARTING_BOARD = "startingBoard";
-    public final static String ATTR_SOLUTION_BOARD = "solutionBoard";
+    public final static String ATTR_BOARD = "board";
     public final static String ATTR_SIZE = "size";
+    public final static String ATTR_WIDTH_X = "widthX";
+    public final static String ATTR_HEIGHT_Y = "heightY";
     public final static String ATTR_TOKENS = "tokens";
     public final static String ATTR_TYPE = "type";
     public final static String ATTR_ORIENTATION = "orientation";

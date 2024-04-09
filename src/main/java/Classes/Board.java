@@ -8,11 +8,11 @@ public class Board {
 
     private final Token[][] board;
 
-    public Board(int height, int width) {
-        this.height = height;
-        this.width = width;
+    public Board(int widthX, int heightY) {
+        this.width = widthX;
+        this.height = heightY;
 
-        board = new Token[height][width];
+        board = new Token[widthX][heightY];
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width ; j++) {
                 board[i][j] = null;
@@ -22,7 +22,7 @@ public class Board {
 
     public boolean placeToken(Token token, Coordinate position) {
         if (isCoordinateInBoard(position) && isPositionEmpty(position)) {
-            board[position.y()][position.x()] = token;
+            board[position.x()][position.y()] = token;
             return true;
         }
         return false;
@@ -30,7 +30,7 @@ public class Board {
 
     public boolean removeToken(Coordinate position) {
         if (isCoordinateInBoard(position)) {
-            board[position.y()][position.x()] = null;
+            board[position.x()][position.y()] = null;
             return true;
         }
         return false;

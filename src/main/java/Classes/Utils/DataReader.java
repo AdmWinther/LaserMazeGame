@@ -124,18 +124,20 @@ public class DataReader {
      * Creates a board from a JSONObject
      *
      * @param id        the ID of the level
-     * @param boardType the type of the board (starting or solution)
      * @return the board object
      * @throws FileNotFoundException if the LevelID is not found in the game data
      * @author Hugo Demule
      */
-    private static Board createBoard(LevelID id, String boardType) throws FileNotFoundException {
+    private static Board createBoard(LevelID id) throws FileNotFoundException {
         JSONObject level = findLevelByID(id);
         requireFileFound(level, id.value());
-        JSONObject jsonBoard = level.getJSONObject(boardType);
-        int size = jsonBoard.getInt(JsonTokens.ATTR_SIZE);
+        JSONObject jsonBoard = level.getJSONObject(JsonTokens.ATTR_BOARD);
+        JSONObject size = jsonBoard.getJSONObject(JsonTokens.ATTR_SIZE);
+        int width = size.getInt(JsonTokens.ATTR_WIDTH_X);
+        int height = size.getInt(JsonTokens.ATTR_HEIGHT_Y);
+
         Set<Pair<Token, Coordinate>> placedTokens = createPlacedTokens(jsonBoard);
-        Board board = new Board(size, size);
+        Board board = new Board(width, height);
         for (Pair<Token, Coordinate> placedToken : placedTokens) {
             board.placeToken(placedToken.first(), placedToken.second());
         }
@@ -204,20 +206,8 @@ public class DataReader {
      * @throws FileNotFoundException if the LevelID is not found in the game data
      * @author Hugo Demule
      */
-    public static Board readLevelIDStartingBoard(LevelID id) throws FileNotFoundException {
-        return createBoard(id, JsonTokens.ATTR_STARTING_BOARD);
-    }
-
-    /**
-     * Reads the solution board of a level given its ID
-     *
-     * @param id the ID of the level
-     * @return the solution board of the level
-     * @throws FileNotFoundException if the LevelID is not found in the game data
-     * @author Hugo Demule
-     */
-    public static Board readLevelIDSolutionBoard(LevelID id) throws FileNotFoundException {
-        return createBoard(id, JsonTokens.ATTR_SOLUTION_BOARD);
+    public static Board readLevelIDBoard(LevelID id) throws FileNotFoundException {
+        return createBoard(id);
     }
 }
 
