@@ -4,7 +4,11 @@
       "id": [String],
       "name": [String],
       "board": {
-        "size": [int],
+        "size": {
+            "widthX": [int],
+            "heightY": [int]
+        }
+        },
         "tokens": [
           {
             "id": [String],
