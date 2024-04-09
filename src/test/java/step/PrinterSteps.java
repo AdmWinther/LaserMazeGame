@@ -1,6 +1,6 @@
 package step;
 
-import Classes.*;
+import Classes.Tokens.*;
 import Classes.Utils.Coordinate;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -16,7 +16,7 @@ public class PrinterSteps {
 
     @Given("I have an empty board that contains a board {int} by {int}")
     public void iHaveABoardThatContainsABoardBy(int arg0, int arg1) {
-        board = new Board(arg0,arg1);
+        board = new Board(arg0, arg1);
         level = new Level(board);
     }
 
@@ -41,13 +41,13 @@ public class PrinterSteps {
                    _____________________
                     0  1  2  3  4  5  6\s
                 """;
-        assertEquals(this.printed,expected);
+        assertEquals(this.printed, expected);
     }
 
     @And("a block token is placed on the cell {int} and {int}")
     public void aBlockTokenIsPlacedOnTheCellAnd(int arg0, int arg1) {
         Token movableToken = new Block(true);
-        level.addAndPlaceToken(movableToken, new Coordinate(arg0,arg1));
+        level.addAndPlaceToken(movableToken, new Coordinate(arg0, arg1));
     }
 
     @Then("the Printer prints the board with a block token on the cell {int} and {int}")
@@ -67,6 +67,6 @@ public class PrinterSteps {
                 """;
         //System.out.println(expected);
         //System.out.println(this.printed);
-        assertEquals(this.printed,expected);
+        assertEquals(this.printed, expected);
     }
 }

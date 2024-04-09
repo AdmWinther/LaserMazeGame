@@ -1,9 +1,9 @@
 package step;
 
-import Classes.Block;
-import Classes.Board;
-import Classes.Level;
-import Classes.Token;
+import Classes.Tokens.Block;
+import Classes.Tokens.Board;
+import Classes.Tokens.Level;
+import Classes.Tokens.Token;
 import Classes.Utils.Coordinate;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;

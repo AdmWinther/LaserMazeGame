@@ -1,4 +1,4 @@
-package Classes;
+package Classes.Tokens;
 
 import Classes.Utils.Coordinate;
 
@@ -6,7 +6,7 @@ public class Printer {
     private int width;
     private int height;
 
-    public String draw(Level level){
+    public String draw(Level level) {
         this.height = level.getBoard().getHeight();
         this.width = level.getBoard().getWidth();
 
@@ -28,7 +28,7 @@ public class Printer {
         boardPrint.append(this.columnNumberLine(width));
 
         System.out.println(boardPrint);
-        return(boardPrint.toString());
+        return (boardPrint.toString());
     }
 
     private StringBuilder drawBoardGrid(Level level) {
@@ -36,13 +36,13 @@ public class Printer {
         for (int i = 0; i < this.height; i++) {
             grid.append(" ").append(i).append("|");
             for (int j = 0; j < this.width; j++) {
-                if(level.getBoard().isPositionEmpty(new Coordinate(i, j))){
+                if (level.getBoard().isPositionEmpty(new Coordinate(i, j))) {
                     grid.append(" ".repeat(3));
                 } else {
-                    int tokenIndex = level.getBoard().IndexOfTokenAt(new Coordinate(i,j));
+                    int tokenIndex = level.getBoard().IndexOfTokenAt(new Coordinate(i, j));
                     Token token = level.getTokenByIndex(tokenIndex);
 
-                    if(token instanceof Block){
+                    if (token instanceof Block) {
                         grid.append("B".repeat(3));
                     }
                 }
@@ -53,7 +53,7 @@ public class Printer {
         return grid;
     }
 
-    private StringBuilder columnNumberLine(int width){
+    private StringBuilder columnNumberLine(int width) {
         StringBuilder firstLine = new StringBuilder();
         firstLine.append(" ".repeat(3));
         for (int i = 0; i < width; i++) {
@@ -63,10 +63,10 @@ public class Printer {
         return firstLine;
     }
 
-    private StringBuilder addLine(int width){
+    private StringBuilder addLine(int width) {
         StringBuilder line = new StringBuilder();
         line.append(" ".repeat(3));
-        line.append("_".repeat((width)*3));
+        line.append("_".repeat((width) * 3));
         line.append("\n");
         return line;
 

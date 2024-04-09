@@ -1,4 +1,4 @@
-package Classes;
+package Classes.Tokens;
 
 /**
  * Block is a class that represents a block token in the game.

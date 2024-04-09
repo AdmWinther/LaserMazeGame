@@ -1,4 +1,4 @@
-package Classes;
+package Classes.Tokens;
 
 import Classes.Utils.Coordinate;
 
@@ -14,7 +14,7 @@ public class Board {
 
         board = new int[height][width];
         for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width ; j++) {
+            for (int j = 0; j < width; j++) {
                 board[i][j] = -1;
             }
         }
@@ -38,7 +38,7 @@ public class Board {
      * @param coordinate
      * @return
      */
-    public int IndexOfTokenAt(Coordinate coordinate){
+    public int IndexOfTokenAt(Coordinate coordinate) {
         if (coordinate.x() >= width || coordinate.y() >= height) {
             return -1;
         }
@@ -49,11 +49,11 @@ public class Board {
         return board[position.x()][position.y()] == -1;
     }
 
-    public int getHeight(){
+    public int getHeight() {
         return this.height;
     }
 
-    public int getWidth(){
+    public int getWidth() {
         return this.width;
     }
 

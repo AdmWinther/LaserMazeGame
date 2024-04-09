@@ -1,8 +1,8 @@
-package Classes;
+package Classes.Tokens;
 
 import Classes.Utils.Coordinate;
 
-import java.util.*;
+import java.util.ArrayList;
 
 public class Level {
 
@@ -42,10 +42,10 @@ public class Level {
     }
 
     public boolean addAndPlaceToken(Token token, Coordinate coordinate) {
-        if(this.board.isCoordinateInBoard(coordinate)){
+        if (this.board.isCoordinateInBoard(coordinate)) {
             if (board.isPositionEmpty(coordinate)) {
                 tokens.add(token);
-                board.placeToken(this.tokens.size()-1, coordinate);
+                board.placeToken(this.tokens.size() - 1, coordinate);
                 return true;
             } else {
                 return false;
@@ -56,7 +56,8 @@ public class Level {
 
     /**
      * Places a token on the board by calling "placeToken" of Board class.
-     * @param index, the index of the token to be placed
+     *
+     * @param index,     the index of the token to be placed
      * @param coordinate the coordinate at which the token will be placed
      * @return true if the token has been placed successfully, otherwise false
      */
@@ -74,11 +75,11 @@ public class Level {
     }
 
     public boolean moveTokenFromTo(Coordinate fromCoordinate, Coordinate toCoordinate1) {
-        if(board.isCoordinateInBoard(fromCoordinate) && board.isCoordinateInBoard(toCoordinate1)){
-            if(!board.isPositionEmpty(fromCoordinate)){
-                if(board.isPositionEmpty(toCoordinate1)){
+        if (board.isCoordinateInBoard(fromCoordinate) && board.isCoordinateInBoard(toCoordinate1)) {
+            if (!board.isPositionEmpty(fromCoordinate)) {
+                if (board.isPositionEmpty(toCoordinate1)) {
                     int tokenIndex = board.IndexOfTokenAt(fromCoordinate);
-                    if(tokens.get(tokenIndex).isMovable()){
+                    if (tokens.get(tokenIndex).isMovable()) {
                         board.placeToken(tokenIndex, toCoordinate1);
                         board.removeTokenFromBoard(fromCoordinate);
                         return true;
