@@ -1,8 +1,5 @@
 package Classes;
 
-import Classes.Board;
-import Classes.Level;
-import Classes.LevelID;
 import Classes.Tokens.Token;
 import Classes.Utils.DataReader;
 import Interfaces.Builder;
@@ -49,8 +46,8 @@ public class LevelBuilder implements Builder<Level> {
     public Level build() {
         try {
             String name = DataReader.readLevelIDName(id); // Useless for now
-            Board board = DataReader.readLevelIDBoard(id);
-            Set<Token> tokens = DataReader.readLevelIDTokens(id);
+            Board board = DataReader.readLevelIDPlacedTokens(id);
+            Set<Token> tokens = DataReader.readLevelIDUnplacedTokens(id);
             return new Level(board, tokens.stream().toList());
         } catch (Exception e) {
             e.printStackTrace();

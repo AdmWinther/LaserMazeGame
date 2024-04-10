@@ -1,6 +1,5 @@
 package Classes.Utils;
 
-import Classes.Board;
 import Classes.LevelID;
 import Classes.Orientation;
 import Classes.Tokens.*;
@@ -103,8 +102,8 @@ public class DataReader {
      * @return the set of placed tokens
      * @author Hugo Demule
      */
-    private static Set<Pair<Token, Coordinate>> createPlacedTokens(JSONObject jsonBoard) {
-        Set<Pair<Token, Coordinate>> placedTokens = new HashSet<>();
+    private static Token[][] createPlacedTokens(JSONObject jsonBoard) {
+        Token[][] placedTokens;
         JSONArray jsonTokens = jsonBoard.getJSONArray(JsonTokens.ATTR_TOKENS);
         for (int i = 0; i < jsonTokens.length(); i++) {
             JSONObject jsonToken = jsonTokens.getJSONObject(i);
@@ -120,29 +119,7 @@ public class DataReader {
         return placedTokens;
     }
 
-    /**
-     * Creates a board from a JSONObject
-     *
-     * @param id        the ID of the level
-     * @return the board object
-     * @throws FileNotFoundException if the LevelID is not found in the game data
-     * @author Hugo Demule
-     */
-    private static Board createBoard(LevelID id) throws FileNotFoundException {
-        JSONObject level = findLevelByID(id);
-        requireFileFound(level, id.value());
-        JSONObject jsonBoard = level.getJSONObject(JsonTokens.ATTR_BOARD);
-        JSONObject size = jsonBoard.getJSONObject(JsonTokens.ATTR_SIZE);
-        int width = size.getInt(JsonTokens.ATTR_WIDTH_X);
-        int height = size.getInt(JsonTokens.ATTR_HEIGHT_Y);
 
-        Set<Pair<Token, Coordinate>> placedTokens = createPlacedTokens(jsonBoard);
-        Board board = new Board(width, height);
-        for (Pair<Token, Coordinate> placedToken : placedTokens) {
-            board.placeToken(placedToken.first(), placedToken.second());
-        }
-        return board;
-    }
 
     /**
      * Extracts the LevelIDs from the game data files
@@ -186,7 +163,7 @@ public class DataReader {
      * @throws FileNotFoundException if the LevelID is not found in the game data
      * @author Hugo Demule
      */
-    public static Set<Token> readLevelIDTokens(LevelID id) throws FileNotFoundException {
+    public static Set<Token> readLevelIDUnplacedTokens(LevelID id) throws FileNotFoundException {
         JSONObject level = findLevelByID(id);
         requireFileFound(level, id.value());
         Set<Token> tokens = new HashSet<>();
@@ -206,8 +183,18 @@ public class DataReader {
      * @throws FileNotFoundException if the LevelID is not found in the game data
      * @author Hugo Demule
      */
-    public static Board readLevelIDBoard(LevelID id) throws FileNotFoundException {
-        return createBoard(id);
+    public static Token[][] readLevelIDPlacedTokens(LevelID id) throws FileNotFoundException {
+        JSONObject level = findLevelByID(id);
+        requireFileFound(level, id.value());
+
+        JSONObject jsonBoard = level.getJSONObject(JsonTokens.ATTR_BOARD);
+        JSONObject size = jsonBoard.getJSONObject(JsonTokens.ATTR_SIZE);
+        int width = size.getInt(JsonTokens.ATTR_WIDTH_X);
+        int height = size.getInt(JsonTokens.ATTR_HEIGHT_Y);
+
+        Token[][] placedTokens = createPlacedTokens(jsonBoard);
+
+        return placedTokens;
     }
 }
 

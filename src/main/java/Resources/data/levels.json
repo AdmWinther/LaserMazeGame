@@ -3,52 +3,26 @@
     {
       "id": "level_5x5_EmptyBoard_NoTokenToPlace",
       "name": "5x5_EmptyBoard_NoToken",
-      "board": {
-        "size": {
-          "widthX": 5,
-          "heightY": 5
-        },
-        "tokens": []
+      "boardSize": {
+        "widthX": 5,
+        "heightY": 5
       },
-      "tokens": []
-    },
-    {
-      "id": "level_10x10_2TokensOnBoard_1TokenToPlace",
-      "name": "10x10_2TokensOnBoard_1Token",
-      "board": {
-        "size": {
-          "widthX": 10,
-          "heightY": 10
-        },
-        "tokens": [
-          {
-            "id": "LaserGun_0",
-            "type": "LaserGun",
-            "orientation": "LEFT",
-            "isMovable": false,
-            "coordinate": {
-              "x": 2,
-              "y": 3
-            }
-          },
-          {
-            "id": "Receiver_0",
-            "type": "Receiver",
-            "orientation": "UP",
-            "isMovable": false,
-            "coordinate": {
-              "x": 5,
-              "y": 6
-            }
-          }
-        ]
-      },
-      "tokens": [
+      "placedTokens": [
         {
-          "id": "DoubleSidedMirror_0",
-          "type": "DoubleSidedMirror",
-          "orientation": "UP",
-          "isMovable": true
+          "id": "LaserGun_0",
+          "type": "LaserGun",
+          "orientation": "LEFT",
+          "position": {
+            "x": 5,
+            "y": 5
+          }
+        }
+      ],
+      "unplacedTokens": [
+        {
+          "id": "Mirror_0",
+          "type": "Mirror",
+          "orientation": "UP"
         }
       ]
     }

@@ -9,8 +9,8 @@ public class Printer {
     private int height;
 
     public String draw(Level level){
-        this.height = level.getBoard().getHeight();
-        this.width = level.getBoard().getWidth();
+        this.height = level.tokenManager().getHeightY();
+        this.width = level.tokenManager().getWidthX();
 
         //initializing the boardPrint
         StringBuilder boardPrint = new StringBuilder();
@@ -38,10 +38,10 @@ public class Printer {
         for (int i = 0; i < this.height; i++) {
             grid.append(" ").append(i).append("|");
             for (int j = 0; j < this.width; j++) {
-                if(level.getBoard().isPositionEmpty(new Coordinate(i, j))){
+                if(level.tokenManager().isEmpty(new Coordinate(i, j))){
                     grid.append(" ".repeat(3));
                 } else {
-                    Token token = level.getTokenOnBoardAt(new Coordinate(i,j));
+                    Token token = level.tokenManager().getTokenAt(new Coordinate(i, j));
 
                     if(token instanceof Block){
                         grid.append("B".repeat(3));

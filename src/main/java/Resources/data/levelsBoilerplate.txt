@@ -3,33 +3,11 @@
     {
       "id": [String],
       "name": [String],
-      "board": {
-        "size": {
-            "widthX": [int],
-            "heightY": [int]
-        }
-        },
-        "tokens": [
-          {
-            "id": [String],
-            "type": "Receiver"
-                  | "LaserGun"
-                  | "OneSidedMirror"
-                  | "DoubleSidedMirror"
-                  | "Block",
-            ("orientation"): "RIGHT"
-                           | "LEFT"
-                           | "UP"
-                           | "DOWN",
-            "isMovable": [boolean]
-            "coordinate": {
-              "x": [int],
-              "y": [int]
-            }
-          }
-        ]
+      "boardSize": {
+        "widthX": [int],
+        "heightY": [int]
       },
-      "tokens": [
+      "placedTokens": [
         {
           "id": [String],
           "type": "Receiver"
@@ -41,7 +19,24 @@
                          | "LEFT"
                          | "UP"
                          | "DOWN",
-          "isMovable": [boolean]
+          "position": {
+            "x": [int],
+            "y": [int]
+          }
+        }
+      ],
+      "unplacedTokens": [
+        {
+          "id": [String],
+          "type": "Receiver"
+                | "LaserGun"
+                | "OneSidedMirror"
+                | "DoubleSidedMirror"
+                | "Block",
+          ("orientation"): "RIGHT"
+                         | "LEFT"
+                         | "UP"
+                         | "DOWN"
         }
       ]
     }

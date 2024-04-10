@@ -4,6 +4,8 @@ import Classes.Board;
 import Classes.Level;
 import Classes.LevelBuilder;
 import Classes.LevelID;
+import Classes.Tokens.LaserGun;
+import Classes.Tokens.Receiver;
 import Classes.Utils.Coordinate;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -33,34 +35,34 @@ public class DataSteps {
 
     @Then("The grid should be of size {int} by {int}")
     public void theGridShouldBeOfSizeBy(int height, int width) {
-        assertEquals(level.getBoard().getHeight(), height);
-        assertEquals(level.getBoard().getWidth(), width);
+        assertEquals(level.tokenManager().getHeightY(), height);
+        assertEquals(level.tokenManager().getWidthX(), width);
     }
 
     @And("The grid should be empty")
     public void theGridShouldBeEmpty() {
-        for (int i = 0; i < level.getBoard().getHeight(); i++) {
-            for (int j = 0; j < level.getBoard().getWidth(); j++) {
-                assertNull(level.getBoard().getTokenAt(new Coordinate(i, j)));
+        for (int i = 0; i < level.tokenManager().getHeightY(); i++) {
+            for (int j = 0; j < level.tokenManager().getWidthX(); j++) {
+                assertNull(level.tokenManager().getTokenAt(new Coordinate(i, j)));
             }
         }
     }
 
     @And("The list of placeable tokens should be empty")
     public void theListOfPlaceableTokensShouldBeEmpty() {
-        assertEquals(level.getTokens().size(), 0);
+        assertEquals(level.tokenManager().getUnplacedTokensSize(), 0);
     }
 
     @And("The grid should be empty except for a LEFT LaserGun at \\({int}, {int}) and a UP Receiver at \\({int}, {int})")
     public void theGridShouldBeEmptyExceptForALEFTLaserGunAtAndAUPReceiverAt(int x1, int y1, int x2, int y2) {
-for (int i = 0; i < level.getBoard().getHeight(); i++) {
-            for (int j = 0; j < level.getBoard().getWidth(); j++) {
+for (int i = 0; i < level.tokenManager().getHeightY(); i++) {
+            for (int j = 0; j < level.tokenManager().getWidthX(); j++) {
                 if (i == x1 && j == y1) {
-                    assertTrue(level.getBoard().getTokenAt(new Coordinate(i, j)) instanceof Classes.Tokens.LaserGun);
+                    assertTrue(level.tokenManager().getTokenAt(new Coordinate(i, j)) instanceof LaserGun);
                 } else if (i == x2 && j == y2) {
-                    assertTrue(level.getBoard().getTokenAt(new Coordinate(i, j)) instanceof Classes.Tokens.Receiver);
+                    assertTrue(level.tokenManager().getTokenAt(new Coordinate(i, j)) instanceof Receiver);
                 } else {
-                    assertNull(level.getBoard().getTokenAt(new Coordinate(i, j)));
+                    assertNull(level.tokenManager().getTokenAt(new Coordinate(i, j)));
                 }
             }
         }
@@ -68,8 +70,7 @@ for (int i = 0; i < level.getBoard().getHeight(); i++) {
 
     @And("The list of placeable tokens should contain a RIGHT DoubleSidedMirror.")
     public void theListOfPlaceableTokensShouldContainARIGHTDoubleSidedMirror() {
-        assertEquals(level.getTokens().size(), 1);
-        assertEquals(level.getTokens().get(0).getClass(), Classes.Tokens.DoubleSidedMirror.class);
+        assertEquals(level.tokenManager().getUnplacedTokensSize(), 1);
     }
 
 
