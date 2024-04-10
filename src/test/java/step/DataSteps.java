@@ -1,6 +1,5 @@
 package step;
 
-import Classes.Board;
 import Classes.Level;
 import Classes.LevelBuilder;
 import Classes.LevelID;

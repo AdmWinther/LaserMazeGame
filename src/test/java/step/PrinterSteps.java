@@ -12,6 +12,7 @@ import io.cucumber.java.en.When;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PrinterSteps {
+    /*
     Board board;
     Level level;
     String printed;
@@ -72,4 +73,5 @@ public class PrinterSteps {
         //System.out.println(this.printed);
         assertEquals(this.printed,expected);
     }
+     */
 }

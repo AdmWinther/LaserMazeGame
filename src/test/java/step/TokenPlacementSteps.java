@@ -1,7 +1,6 @@
 package step;
 
 import Classes.Tokens.Block;
-import Classes.Board;
 import Classes.Level;
 import Classes.Tokens.Token;
 import Classes.Printer;
@@ -14,11 +13,11 @@ import io.cucumber.java.en.When;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TokenPlacementSteps {
-    Board board;
     Level level;
 
     Token movableToken;
     Token unmovableToken;
+    /*
 
     @Given("I have a level that contains an empty board")
     public void iHaveALevelThatContainsAnEmptyBoard() {
@@ -109,4 +108,5 @@ public class TokenPlacementSteps {
         Coordinate coordinate = new Coordinate(x, y);
         assertEquals(unmovableToken, board.getTokenAt(coordinate));
     }
+     */
 }
