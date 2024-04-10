@@ -73,6 +73,7 @@ public class DataReader {
      */
     private static Token createToken(JSONObject jsonToken) {
         TokenID id = new TokenID(jsonToken.getString(JsonTokens.ATTR_ID)); // Useless for now
+        /*
         String type = jsonToken.getString(JsonTokens.ATTR_TYPE);
         boolean isMovable = jsonToken.getBoolean(JsonTokens.ATTR_IS_MOVABLE);
         Orientation orientation = jsonToken.has(JsonTokens.ATTR_ORIENTATION)
@@ -92,6 +93,7 @@ public class DataReader {
                 return new Block(isMovable);
             default:
         }
+         */
         return null;
     }
 
@@ -104,6 +106,7 @@ public class DataReader {
      */
     private static Token[][] createPlacedTokens(JSONObject jsonBoard) {
         Token[][] placedTokens;
+        /*
         JSONArray jsonTokens = jsonBoard.getJSONArray(JsonTokens.ATTR_TOKENS);
         for (int i = 0; i < jsonTokens.length(); i++) {
             JSONObject jsonToken = jsonTokens.getJSONObject(i);
@@ -116,7 +119,9 @@ public class DataReader {
             Pair<Token, Coordinate> placedToken = new Pair<>(token, new Coordinate(x, y));
             placedTokens.add(placedToken);
         }
-        return placedTokens;
+
+         */
+        return new Token[0][0];
     }
 
 
@@ -167,11 +172,13 @@ public class DataReader {
         JSONObject level = findLevelByID(id);
         requireFileFound(level, id.value());
         Set<Token> tokens = new HashSet<>();
+        /*
         JSONArray jsonTokens = level.getJSONArray(JsonTokens.ATTR_TOKENS);
         for (int i = 0; i < jsonTokens.length(); i++) {
             Token token = createToken(jsonTokens.getJSONObject(i));
             tokens.add(token);
         }
+         */
         return tokens;
     }
 
@@ -187,14 +194,16 @@ public class DataReader {
         JSONObject level = findLevelByID(id);
         requireFileFound(level, id.value());
 
+        /*
         JSONObject jsonBoard = level.getJSONObject(JsonTokens.ATTR_BOARD);
         JSONObject size = jsonBoard.getJSONObject(JsonTokens.ATTR_SIZE);
         int width = size.getInt(JsonTokens.ATTR_WIDTH_X);
         int height = size.getInt(JsonTokens.ATTR_HEIGHT_Y);
 
         Token[][] placedTokens = createPlacedTokens(jsonBoard);
+        */
 
-        return placedTokens;
+        return new Token[0][0];
     }
 }
 

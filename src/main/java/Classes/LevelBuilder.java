@@ -46,9 +46,9 @@ public class LevelBuilder implements Builder<Level> {
     public Level build() {
         try {
             String name = DataReader.readLevelIDName(id); // Useless for now
-            Board board = DataReader.readLevelIDPlacedTokens(id);
-            Set<Token> tokens = DataReader.readLevelIDUnplacedTokens(id);
-            return new Level(board, tokens.stream().toList());
+            Token[][] placedTokens = DataReader.readLevelIDPlacedTokens(id);
+            Set<Token> unplacedTokens = DataReader.readLevelIDUnplacedTokens(id);
+            return new Level(placedTokens, unplacedTokens);
         } catch (Exception e) {
             e.printStackTrace();
         }
