@@ -7,6 +7,7 @@ import Classes.Utils.Coordinate;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.geom.Rectangle2D;
 
 public class MouseHandler implements MouseListener {
 
@@ -76,6 +77,12 @@ public class MouseHandler implements MouseListener {
                 if (selectedToken != null) {
                     Coordinate from = new Coordinate((startX - widthOffset) / tileSize, (startY - heightOffset) / tileSize);
                     level.moveTokenFromTo(from, coordinate);
+                }
+            } else {
+                Rectangle2D bin = gamePanel.objectsManager.getPlacedObjects().get("bin");
+                if (bin.contains(endX, endY)) {
+                    Coordinate from = new Coordinate((startX - widthOffset) / tileSize, (startY - heightOffset) / tileSize);
+                    level.getBoard().removeToken(from);
                 }
             }
         }

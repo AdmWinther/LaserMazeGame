@@ -3,6 +3,7 @@ package Classes.Game;
 import Classes.Handlers.MouseHandler;
 import Classes.Level;
 import Classes.Tokens.TokenManager;
+import Classes.UIObjects.ObjectsManager;
 import Classes.UITile.TileManager;
 
 import javax.swing.*;
@@ -16,12 +17,14 @@ public class GamePanel extends JPanel implements Runnable {
     final int originalTileSize = 16;
     final int scale = 3;
     public final int tileSize = originalTileSize * scale; // 48
-    final int screenWidth = maxCol * tileSize; // 720
-    final int screenHeight = maxRow * tileSize; // 480
+    public final int screenWidth = maxCol * tileSize; // 720
+    public final int screenHeight = maxRow * tileSize; // 480
     // Performance settings
     final int fps = 60;
     final int frameTime = 1000 / fps; // 16
     public Level level;
+    // Object manager
+    public ObjectsManager objectsManager;
     int widthOffset; // 240
     int heightOffset; // 120
     // Game thread
@@ -47,6 +50,7 @@ public class GamePanel extends JPanel implements Runnable {
         tileManager = new TileManager(this);
         tokenManager = new TokenManager(level, this);
         mouseHandler = new MouseHandler(this, level, widthOffset, heightOffset);
+        objectsManager = new ObjectsManager(this);
 
         addMouseListener(mouseHandler);
 
@@ -104,6 +108,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         tileManager.draw(g2d);
         tokenManager.draw(g2d, widthOffset, heightOffset);
+        objectsManager.draw(g2d);
 
         g2d.dispose();
     }

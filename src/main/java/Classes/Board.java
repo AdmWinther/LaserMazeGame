@@ -31,7 +31,14 @@ public class Board {
 
     public boolean removeToken(Coordinate position) {
         if (isCoordinateInBoard(position)) {
-            board[position.x()][position.y()] = null;
+            Token token = board[position.x()][position.y()];
+            if (token == null) {
+                return false;
+            } else if (!token.isMovable()) {
+                return false;
+            } else {
+                board[position.x()][position.y()] = null;
+            }
             return true;
         }
         return false;
