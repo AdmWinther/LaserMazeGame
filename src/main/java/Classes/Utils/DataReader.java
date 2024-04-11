@@ -96,24 +96,22 @@ public class DataReader {
         return null;
     }
 
-    private static Set<Token> createUnplacedTokens(JSONObject jsonUnplacedTokens) {
+    private static Set<Token> createUnplacedTokens(JSONArray jsonArrayUnplacedTokens) {
         //TokenID id = new TokenID(jsonToken.getString(JsonConsts.ATTR_ID)); // Useless for now
 
         Set<Token> unplacedTokens = new HashSet<>();
-        JSONArray jsonTokensArray = jsonUnplacedTokens.getJSONArray(JsonConsts.ATTR_UNPLACED_TOKENS);
-        if(!jsonTokensArray.isEmpty()){
-            for (int i = 0; i < jsonTokensArray.length(); i++) {
-                JSONObject jsonToken = jsonTokensArray.getJSONObject(i);
+        if(!jsonArrayUnplacedTokens.isEmpty()){
+            for (int i = 0; i < jsonArrayUnplacedTokens.length(); i++) {
+                JSONObject jsonToken = jsonArrayUnplacedTokens.getJSONObject(i);
                 Token token = createToken(jsonToken, true);
                 unplacedTokens.add(token);
             }
-            return unplacedTokens;
         }
-        return null;
+        return unplacedTokens;
     }
 
 
-    /**
+        /**
      * Creates a set of placed tokens from a JSONObject
      *
      * @param jsonPlacedTokens the JSONObject of the PlacedTokens
@@ -122,10 +120,9 @@ public class DataReader {
      * @return the two dimension array of tokens
      * @author Hugo Demule
      */
-    private static Token[][] createPlacedTokens(JSONObject jsonPlacedTokens, int widthX, int heightY) {
-        JSONArray jsonTokensArray = jsonPlacedTokens.getJSONArray(JsonConsts.ATTR_PLACED_TOKENS);
+    private static Token[][] createPlacedTokens(JSONArray jsonTokensArray, int widthX, int heightY) {
+        Token[][] placedTokens = new Token[widthX][heightY];
         if(!jsonTokensArray.isEmpty()){
-            Token[][] placedTokens = new Token[widthX][heightY];
             for (int i = 0; i < jsonTokensArray.length(); i++) {
                 JSONObject jsonToken = jsonTokensArray.getJSONObject(i);
                 Token token = createToken(jsonToken, false);
@@ -138,7 +135,7 @@ public class DataReader {
             }
         }
 
-        return new Token[0][0];
+        return placedTokens;
     }
 
 
@@ -186,10 +183,13 @@ public class DataReader {
      * @author Hugo Demule
      */
     public static Set<Token> readLevelIDUnplacedTokens(LevelID id) throws FileNotFoundException {
+        //getting the JSON for level using the level ID
         JSONObject jsonLevel = findLevelByID(id);
         requireFileFound(jsonLevel, id.value());
-        JSONObject jsonUnplacedTokens = jsonLevel.getJSONObject(JsonConsts.ATTR_UNPLACED_TOKENS);
-        return createUnplacedTokens(jsonUnplacedTokens);
+
+        //Make a JSONArray of unplaced tokens.
+        JSONArray jsonArrayUnplacedTokens = jsonLevel.getJSONArray(JsonConsts.ATTR_UNPLACED_TOKENS);
+        return createUnplacedTokens(jsonArrayUnplacedTokens);
     }
 
     /**
@@ -201,13 +201,23 @@ public class DataReader {
      * @author Hugo Demule
      */
     public static Token[][] readLevelIDPlacedTokens(LevelID id) throws FileNotFoundException {
+
+        //getting the JSON for level using the level ID
         JSONObject jsonLevel = findLevelByID(id);
+
+        //Check if the level is empty, it means that it could not find the level.
         requireFileFound(jsonLevel, id.value());
-        JSONObject jsonPlacedTokens = jsonLevel.getJSONObject(JsonConsts.ATTR_PLACED_TOKENS);
+
+        //Make a JSONArray of the placed tokens
+        JSONArray jsonArrayPlacedTokens = jsonLevel.getJSONArray(JsonConsts.ATTR_PLACED_TOKENS);
+
+        //getting the board size, width and height.
         JSONObject jsonBoardSize = jsonLevel.getJSONObject(JsonConsts.ATTR_BOARD_SIZE);
         int widthX = jsonBoardSize.getInt(JsonConsts.ATTR_WIDTH_X);
         int heightY = jsonBoardSize.getInt(JsonConsts.ATTR_HEIGHT_Y);
-        return createPlacedTokens(jsonPlacedTokens, widthX, heightY);
+
+        //generate the 2D array of Tokens, named as PlacedTokens
+        return createPlacedTokens(jsonArrayPlacedTokens, widthX, heightY);
     }
 }
 

@@ -18,7 +18,7 @@ public class DataSteps {
 
     @Given("I have a level stored with a five-by-five grid, empty, with no token")
     public void iHaveALevelStoredWithAFiveByFiveGridEmptyWithNoToken() {
-        levelID = new LevelID("level_5x5_veryEmptyBoard_absoluteNoToken");
+        levelID = new LevelID("5x5_EmptyBoard_NoToken");
     }
 
     @Given("I have a level stored with a ten-by-ten grid, with a LEFT LaserGun at \\(two, three) and a UP Receiver at \\(five, six), with a RIGHT DoubleSidedMirror to place.")
