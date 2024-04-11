@@ -1,7 +1,7 @@
 {
   "levels": [
     {
-      "id": "level_5x5_EmptyBoard_NoTokenToPlace",
+      "id": "level_5x5_veryEmptyBoard_absoluteNoToken",
       "name": "5x5_EmptyBoard_NoToken",
       "boardSize": {
         "widthX": 5,
@@ -9,20 +9,46 @@
       },
       "placedTokens": [
         {
-          "id": "LaserGun_0",
+          "id": "LaserGun_92",
           "type": "LaserGun",
           "orientation": "LEFT",
           "position": {
-            "x": 5,
-            "y": 5
+            "x": 3,
+            "y": 4
           }
         }
       ],
       "unplacedTokens": [
         {
-          "id": "Mirror_0",
+          "id": "Mirror_21",
           "type": "Mirror",
           "orientation": "UP"
+        }
+      ]
+    },
+    {
+      "id": "level_5x5_oneTokenOnBoard_OneTokenToPlace",
+      "name": "5x5_OneTokenOnBoard_OneToken",
+      "boardSize": {
+        "widthX": 5,
+        "heightY": 5
+      },
+      "placedTokens": [
+        {
+          "id": "LaserGun_56",
+          "type": "LaserGun",
+          "orientation": "RIGHT",
+          "position": {
+            "x": 2,
+            "y": 3
+          }
+        }
+      ],
+      "unplacedTokens": [
+        {
+          "id": "Block_12",
+          "type": "BLOCK",
+          "orientation": "DOWN"
         }
       ]
     }

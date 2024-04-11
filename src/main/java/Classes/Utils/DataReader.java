@@ -4,7 +4,7 @@ import Classes.LevelID;
 import Classes.Orientation;
 import Classes.Tokens.*;
 import Resources.constants.FilePaths;
-import Resources.constants.JsonTokens;
+import Resources.constants.JsonConsts;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -53,11 +53,11 @@ public class DataReader {
      * @author Hugo Demule
      */
     private static JSONObject findLevelByID(LevelID id) throws NullPointerException {
-        JSONArray jsonLevels = Objects.requireNonNull(json(FilePaths.LEVELS_DATA_PATH)).getJSONArray(JsonTokens.ATTR_LEVELS);
+        JSONArray jsonLevels = Objects.requireNonNull(json(FilePaths.LEVELS_DATA_PATH)).getJSONArray(JsonConsts.ATTR_LEVELS);
 
         for (int i = 0; i < jsonLevels.length(); i++) {
             JSONObject level = jsonLevels.getJSONObject(i);
-            if (level.get(JsonTokens.ATTR_ID).equals(id.value())) {
+            if (level.get(JsonConsts.ATTR_ID).equals(id.value())) {
                 return level;
             }
         }
@@ -71,56 +71,73 @@ public class DataReader {
      * @return the Token object
      * @author Hugo Demule
      */
-    private static Token createToken(JSONObject jsonToken) {
-        TokenID id = new TokenID(jsonToken.getString(JsonTokens.ATTR_ID)); // Useless for now
-        /*
-        String type = jsonToken.getString(JsonTokens.ATTR_TYPE);
-        boolean isMovable = jsonToken.getBoolean(JsonTokens.ATTR_IS_MOVABLE);
-        Orientation orientation = jsonToken.has(JsonTokens.ATTR_ORIENTATION)
-                ? Orientation.valueOf(jsonToken.getString(JsonTokens.ATTR_ORIENTATION))
+    private static Token createToken(JSONObject jsonToken, boolean isMovable) {
+        TokenID id = new TokenID(jsonToken.getString(JsonConsts.ATTR_ID)); // Useless for now
+
+        String type = jsonToken.getString(JsonConsts.ATTR_TOKEN_TYPE);
+        Orientation orientation = jsonToken.has(JsonConsts.ATTR_ORIENTATION)
+                ? Orientation.valueOf(jsonToken.getString(JsonConsts.ATTR_ORIENTATION))
                 : null;
 
         switch (type) {
-            case JsonTokens.VAL_TYPE_LASER_GUN:
+            case JsonConsts.VAL_TYPE_LASER_GUN:
                 return new LaserGun(isMovable, orientation);
-            case JsonTokens.VAL_TYPE_RECEIVER:
+            case JsonConsts.VAL_TYPE_RECEIVER:
                 return new Receiver(isMovable, orientation);
-            case JsonTokens.VAL_DOUBLE_SIDED_MIRROR:
+            case JsonConsts.VAL_DOUBLE_SIDED_MIRROR:
                 return new DoubleSidedMirror(isMovable, orientation);
-            case JsonTokens.VAL_TYPE_ONE_SIDED_MIRROR:
+            case JsonConsts.VAL_TYPE_ONE_SIDED_MIRROR:
                 return new OneSidedMirror(isMovable, orientation);
-            case JsonTokens.VAL_TYPE_BLOCK:
+            case JsonConsts.VAL_TYPE_BLOCK:
                 return new Block(isMovable);
             default:
         }
-         */
+
         return null;
     }
+
+    private static Set<Token> createUnplacedTokens(JSONObject jsonUnplacedTokens) {
+        //TokenID id = new TokenID(jsonToken.getString(JsonConsts.ATTR_ID)); // Useless for now
+
+        Set<Token> unplacedTokens = new HashSet<>();
+        JSONArray jsonTokensArray = jsonUnplacedTokens.getJSONArray(JsonConsts.ATTR_UNPLACED_TOKENS);
+        if(!jsonTokensArray.isEmpty()){
+            for (int i = 0; i < jsonTokensArray.length(); i++) {
+                JSONObject jsonToken = jsonTokensArray.getJSONObject(i);
+                Token token = createToken(jsonToken, true);
+                unplacedTokens.add(token);
+            }
+            return unplacedTokens;
+        }
+        return null;
+    }
+
 
     /**
      * Creates a set of placed tokens from a JSONObject
      *
-     * @param jsonBoard the JSONObject of the board
-     * @return the set of placed tokens
+     * @param jsonPlacedTokens the JSONObject of the PlacedTokens
+     * @param widthX the Board width in X direction
+     * @param heightY the Board width in Y direction
+     * @return the two dimension array of tokens
      * @author Hugo Demule
      */
-    private static Token[][] createPlacedTokens(JSONObject jsonBoard) {
-        Token[][] placedTokens;
-        /*
-        JSONArray jsonTokens = jsonBoard.getJSONArray(JsonTokens.ATTR_TOKENS);
-        for (int i = 0; i < jsonTokens.length(); i++) {
-            JSONObject jsonToken = jsonTokens.getJSONObject(i);
-            Token token = createToken(jsonToken);
+    private static Token[][] createPlacedTokens(JSONObject jsonPlacedTokens, int widthX, int heightY) {
+        JSONArray jsonTokensArray = jsonPlacedTokens.getJSONArray(JsonConsts.ATTR_PLACED_TOKENS);
+        if(!jsonTokensArray.isEmpty()){
+            Token[][] placedTokens = new Token[widthX][heightY];
+            for (int i = 0; i < jsonTokensArray.length(); i++) {
+                JSONObject jsonToken = jsonTokensArray.getJSONObject(i);
+                Token token = createToken(jsonToken, false);
 
-            JSONObject coordinate = jsonToken.getJSONObject(JsonTokens.ATTR_COORDINATE);
-            int x = coordinate.getInt(JsonTokens.ATTR_X);
-            int y = coordinate.getInt(JsonTokens.ATTR_Y);
-
-            Pair<Token, Coordinate> placedToken = new Pair<>(token, new Coordinate(x, y));
-            placedTokens.add(placedToken);
+                JSONObject coordinate   = jsonToken.getJSONObject(JsonConsts.ATTR_POSITION);
+                int x = coordinate.getInt(JsonConsts.ATTR_X);
+                int y = coordinate.getInt(JsonConsts.ATTR_Y);
+                //todo: Make sure x and y are on the board
+                placedTokens[x][y] = token;
+            }
         }
 
-         */
         return new Token[0][0];
     }
 
@@ -138,7 +155,7 @@ public class DataReader {
      * @author Hugo Demule
      */
     public static List<LevelID> extractLevelIDs(String path) throws NullPointerException {
-        JSONArray jsonIDs = Objects.requireNonNull(json(path)).getJSONArray(JsonTokens.ATTR_LEVELS_IDS);
+        JSONArray jsonIDs = Objects.requireNonNull(json(path)).getJSONArray(JsonConsts.ATTR_LEVELS_IDS);
         List<LevelID> levelIDS = new ArrayList<>();
 
         for (int i = 0; i < jsonIDs.length(); i++) levelIDS.add(new LevelID(jsonIDs.getString(i)));
@@ -157,7 +174,7 @@ public class DataReader {
     public static String readLevelIDName(LevelID id) throws FileNotFoundException {
         JSONObject level = findLevelByID(id);
         requireFileFound(level, id.value());
-        return level.getString(JsonTokens.ATTR_NAME);
+        return level.getString(JsonConsts.ATTR_NAME);
     }
 
     /**
@@ -169,17 +186,10 @@ public class DataReader {
      * @author Hugo Demule
      */
     public static Set<Token> readLevelIDUnplacedTokens(LevelID id) throws FileNotFoundException {
-        JSONObject level = findLevelByID(id);
-        requireFileFound(level, id.value());
-        Set<Token> tokens = new HashSet<>();
-        /*
-        JSONArray jsonTokens = level.getJSONArray(JsonTokens.ATTR_TOKENS);
-        for (int i = 0; i < jsonTokens.length(); i++) {
-            Token token = createToken(jsonTokens.getJSONObject(i));
-            tokens.add(token);
-        }
-         */
-        return tokens;
+        JSONObject jsonLevel = findLevelByID(id);
+        requireFileFound(jsonLevel, id.value());
+        JSONObject jsonUnplacedTokens = jsonLevel.getJSONObject(JsonConsts.ATTR_UNPLACED_TOKENS);
+        return createUnplacedTokens(jsonUnplacedTokens);
     }
 
     /**
@@ -191,19 +201,13 @@ public class DataReader {
      * @author Hugo Demule
      */
     public static Token[][] readLevelIDPlacedTokens(LevelID id) throws FileNotFoundException {
-        JSONObject level = findLevelByID(id);
-        requireFileFound(level, id.value());
-
-        /*
-        JSONObject jsonBoard = level.getJSONObject(JsonTokens.ATTR_BOARD);
-        JSONObject size = jsonBoard.getJSONObject(JsonTokens.ATTR_SIZE);
-        int width = size.getInt(JsonTokens.ATTR_WIDTH_X);
-        int height = size.getInt(JsonTokens.ATTR_HEIGHT_Y);
-
-        Token[][] placedTokens = createPlacedTokens(jsonBoard);
-        */
-
-        return new Token[0][0];
+        JSONObject jsonLevel = findLevelByID(id);
+        requireFileFound(jsonLevel, id.value());
+        JSONObject jsonPlacedTokens = jsonLevel.getJSONObject(JsonConsts.ATTR_PLACED_TOKENS);
+        JSONObject jsonBoardSize = jsonLevel.getJSONObject(JsonConsts.ATTR_BOARD_SIZE);
+        int widthX = jsonBoardSize.getInt(JsonConsts.ATTR_WIDTH_X);
+        int heightY = jsonBoardSize.getInt(JsonConsts.ATTR_HEIGHT_Y);
+        return createPlacedTokens(jsonPlacedTokens, widthX, heightY);
     }
 }
 

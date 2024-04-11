@@ -5,7 +5,7 @@ package Resources.constants;
  *
  * @author Hugo Demule
  */
-public final class JsonTokens {
+public final class JsonConsts {
     /* JSON Attributes */
     public final static String ATTR_LEVELS = "levels";
     public final static String ATTR_ID = "id";
