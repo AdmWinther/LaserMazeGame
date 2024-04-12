@@ -1,8 +1,11 @@
-package Classes;
+package Classes.Token;
+
+import Classes.Token.Token;
+import Classes.Utils.Orientation;
 
 /**
  * Block is a class that represents a block token in the game.
- * It blocks any lazer that hits it.
+ * It blocks any laser that hits it.
  * A block can never be moved.
  */
 public final class Block extends Token {
@@ -15,5 +18,10 @@ public final class Block extends Token {
      */
     public Block(boolean movable) {
         super(movable);
+    }
+
+    @Override
+    public Orientation propagateLaser(Orientation orientation) {
+        return null;
     }
 }

@@ -1,13 +1,15 @@
-package step;
+package java.step;
 
-import Classes.Block;
+import Classes.Token.Block;
 import Classes.Board;
 import Classes.Level;
-import Classes.Token;
+import Classes.Token.Token;
+import Classes.Token.Block;
 import Classes.Utils.Coordinate;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -34,4 +36,5 @@ public class TokenPlacementSteps {
     public void tokenShouldBePlacedAtPosition(int x, int y) {
         assertFalse(board.isPositionEmpty(new Coordinate(x, y)));
     }
+
 }

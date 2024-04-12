@@ -1,6 +1,7 @@
 package Classes;
 
-import java.util.Collections;
+import Classes.Token.Token;
+
 import java.util.HashSet;
 import java.util.Set;
 
