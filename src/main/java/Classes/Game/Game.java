@@ -1,15 +1,12 @@
 package Classes.Game;
 
-import Classes.Board;
 import Classes.Level;
 import Classes.Orientation;
-import Classes.Tokens.LaserGun;
-import Classes.Tokens.OneSidedMirror;
-import Classes.Tokens.Receiver;
-import Classes.Tokens.Token;
-import Classes.Utils.Coordinate;
+import Classes.Tokens.*;
 
 import javax.swing.*;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Game {
 
@@ -23,19 +20,31 @@ public class Game {
         frame.setLocationRelativeTo(null);
         frame.setTitle("Laser Maze");
 
-        Level level = new Level(new Board(4, 9));
+        int width = 9;
+        int height = 4;
 
+        // Placed tokens
         Token beamer = new LaserGun(false, Orientation.UP);
-        OneSidedMirror mirror = new OneSidedMirror(true, Orientation.UP);
         Receiver receiver = new Receiver(false, Orientation.UP);
+        Block block = new Block(false);
 
-        level.addToken(beamer);
-        level.addToken(mirror);
-        level.addToken(receiver);
+        Token[][] placedTokens;
+        placedTokens = new Token[width][height];
+        placedTokens[0][2] = beamer;
+        placedTokens[8][0] = receiver;
+        placedTokens[7][0] = block;
 
-        level.placeToken(beamer, new Coordinate(0, 2));
-        level.placeToken(mirror, new Coordinate(1, 1));
-        level.placeToken(receiver, new Coordinate(2, 0));
+        // Unplaced tokens
+        OneSidedMirror mirror = new OneSidedMirror(true, Orientation.RIGHT);
+        DoubleSidedMirror doubleMirror = new DoubleSidedMirror(true, Orientation.LEFT);
+
+        Set<Token> unplacedTokens;
+        unplacedTokens = new HashSet<>();
+        unplacedTokens.add(doubleMirror);
+        unplacedTokens.add(mirror);
+
+
+        Level level = new Level(placedTokens, unplacedTokens);
 
         gamePanel = new GamePanel(level);
 

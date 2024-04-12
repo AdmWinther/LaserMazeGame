@@ -37,6 +37,10 @@ public class TileManager {
                 String[] tokens = line.split(" ");
                 for (String token : tokens) {
                     int tileNum = Integer.parseInt(token);
+                    if (tileNum == 2) {
+                        // Randomize the background tile from 2 to 5
+                        tileNum = (int) (Math.random() * 4) + 2;
+                    }
                     tileMapNum[row][col] = tileNum;
                     col++;
                 }
@@ -63,8 +67,20 @@ public class TileManager {
             tiles[1].isSolid = true;
 
             tiles[2] = new Tile();
-            tiles[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tiles/boardTile.png")));
+            tiles[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tiles/boardTile1.png")));
             tiles[2].isSolid = false;
+
+            tiles[3] = new Tile();
+            tiles[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tiles/boardTile2.png")));
+            tiles[3].isSolid = false;
+
+            tiles[4] = new Tile();
+            tiles[4].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tiles/boardTile3.png")));
+            tiles[4].isSolid = false;
+
+            tiles[5] = new Tile();
+            tiles[5].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tiles/boardTile4.png")));
+            tiles[5].isSolid = false;
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -25,14 +25,14 @@ public class GamePanel extends JPanel implements Runnable {
     public Level level;
     // Object manager
     public ObjectsManager objectsManager;
+    // Token manager
+    public TokenManager tokenManager;
     int widthOffset; // 240
     int heightOffset; // 120
     // Game thread
     Thread gameThread;
     // Tile manager
     TileManager tileManager;
-    // Token manager
-    TokenManager tokenManager;
     // Mouse handler
     MouseHandler mouseHandler;
 
@@ -44,8 +44,16 @@ public class GamePanel extends JPanel implements Runnable {
         setBackground(Color.BLACK);
         setDoubleBuffered(true);
 
-        widthOffset = (this.screenWidth - level.getBoard().getWidth() * tileSize) / 2;
-        heightOffset = (this.screenHeight - level.getBoard().getHeight() * tileSize) / 2;
+        System.out.println("Dimension: " + level.tokenManager().getWidthX() + "x" + level.tokenManager().getHeightY());
+
+        widthOffset = (this.screenWidth - level.tokenManager().getWidthX() * tileSize) / 2;
+        heightOffset = (this.screenHeight - level.tokenManager().getHeightY() * tileSize) / 2;
+
+        System.out.println("Screen Width: " + screenWidth);
+        System.out.println("Screen Height: " + screenHeight);
+        System.out.println("Tile Size: " + tileSize);
+        System.out.println("Width Offset: " + widthOffset);
+        System.out.println("Height Offset: " + heightOffset);
 
         tileManager = new TileManager(this);
         tokenManager = new TokenManager(level, this);

@@ -27,6 +27,9 @@ public class ObjectsManager {
         try {
             objects[0] = new Object();
             objects[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Objects/bin.png")));
+
+            objects[1] = new Object();
+            objects[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Objects/reset.png")));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -37,18 +40,29 @@ public class ObjectsManager {
     }
 
     public void setPlacedObjects() {
-        // Place a token on right side, in the middle of the screen
         int width = gamePanel.screenWidth;
         int height = gamePanel.screenHeight;
-        int rightPadding = gamePanel.tileSize;
+        double rightPadding = gamePanel.tileSize * 1.5;
         int tileSize = gamePanel.tileSize;
-        placeObject("bin", width - rightPadding, height / 2 - tileSize / 2);
+
+        // Place bin on the right side of the screen
+        placeObject("bin", (int) (width - rightPadding), height / 2 - tileSize / 2);
+
+        rightPadding = gamePanel.tileSize;
+        // Place reset button on the top right corner of the screen
+        placeObject("reset", (int) (width - rightPadding), 0);
     }
 
     public void draw(Graphics2D g2d) {
         for (Map.Entry<String, Rectangle2D> entry : placedObjects.entrySet()) {
             Rectangle2D rectangle = entry.getValue();
-            g2d.drawImage(objects[0].image, rectangle.getBounds().x, rectangle.getBounds().y, (int) rectangle.getWidth(), (int) rectangle.getHeight(), null);
+            String objectName = entry.getKey();
+            switch (objectName) {
+                case "bin" ->
+                        g2d.drawImage(objects[0].image, rectangle.getBounds().x, rectangle.getBounds().y, (int) rectangle.getWidth(), (int) rectangle.getHeight(), null);
+                case "reset" ->
+                        g2d.drawImage(objects[1].image, rectangle.getBounds().x, rectangle.getBounds().y, (int) rectangle.getWidth(), (int) rectangle.getHeight(), null);
+            }
         }
     }
 

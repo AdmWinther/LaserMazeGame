@@ -1,0 +1,30 @@
+{
+  "levels": [
+    {
+      "id": "level_5x5_EmptyBoard_NoTokenToPlace",
+      "name": "5x5_EmptyBoard_NoToken",
+      "boardSize": {
+        "widthX": 5,
+        "heightY": 5
+      },
+      "placedTokens": [
+        {
+          "id": "LaserGun_0",
+          "type": "LaserGun",
+          "orientation": "LEFT",
+          "position": {
+            "x": 5,
+            "y": 5
+          }
+        }
+      ],
+      "unplacedTokens": [
+        {
+          "id": "Mirror_0",
+          "type": "Mirror",
+          "orientation": "UP"
+        }
+      ]
+    }
+  ]
+}

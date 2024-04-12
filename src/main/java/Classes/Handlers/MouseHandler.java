@@ -21,6 +21,7 @@ public class MouseHandler implements MouseListener {
     private int endX;
     private int endY;
     private Token selectedToken = null;
+    private boolean isSelectedPlaced = false;
 
 
     public MouseHandler(GamePanel gamePanel, Level level, int widthOffset, int heightOffset) {
@@ -32,7 +33,12 @@ public class MouseHandler implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        // Check if we have clicked on the reset button
+        Rectangle2D reset = gamePanel.objectsManager.getPlacedObjects().get("reset");
+        if (reset.contains(e.getX(), e.getY())) {
+            level.tokenManager().resetLevel();
+            System.out.println("Reset tokens");
+        }
     }
 
     @Override
@@ -45,11 +51,24 @@ public class MouseHandler implements MouseListener {
             int x_coordinate = (startX - widthOffset) / tileSize;
             int y_coordinate = (startY - heightOffset) / tileSize;
 
-            if (x_coordinate >= 0 && x_coordinate < level.getBoard().getWidth() && y_coordinate >= 0 && y_coordinate < level.getBoard().getHeight()) {
+            int maxWidth = level.tokenManager().getWidthX();
+            int maxHeight = level.tokenManager().getHeightY();
+
+            if (x_coordinate >= 0 && x_coordinate < maxWidth && y_coordinate >= 0 && y_coordinate < maxHeight) {
                 Coordinate coordinate = new Coordinate(x_coordinate, y_coordinate);
-                selectedToken = level.getBoard().getTokenAt(coordinate);
+                Token token = level.tokenManager().getTokenAt(coordinate);
+                if (token != null && token.isMovable()) {
+                    selectedToken = level.tokenManager().getTokenAt(coordinate);
+                    isSelectedPlaced = true;
+                    System.out.println("Selected Token: " + selectedToken);
+                }
             } else {
-                selectedToken = null;
+                Token token = gamePanel.tokenManager.getUnplacedTokenAt(startX, startY);
+                if (token != null) {
+                    selectedToken = token;
+                    isSelectedPlaced = false;
+                    System.out.println("Selected Token: " + selectedToken);
+                }
             }
         }
     }
@@ -72,19 +91,30 @@ public class MouseHandler implements MouseListener {
             x_coordinate /= tileSize;
             y_coordinate /= tileSize;
 
-            if (x_coordinate < level.getBoard().getWidth() && y_coordinate < level.getBoard().getHeight()) {
+            int maxWidth = level.tokenManager().getWidthX();
+            int maxHeight = level.tokenManager().getHeightY();
+
+            if (x_coordinate < maxWidth && y_coordinate < maxHeight) {
                 Coordinate coordinate = new Coordinate((int) x_coordinate, (int) y_coordinate);
                 if (selectedToken != null) {
                     Coordinate from = new Coordinate((startX - widthOffset) / tileSize, (startY - heightOffset) / tileSize);
-                    level.moveTokenFromTo(from, coordinate);
+                    if (isSelectedPlaced) {
+                        level.tokenManager().moveToken(from, coordinate);
+                        System.out.println("Moved Token: " + selectedToken + " from " + from + " to " + coordinate);
+
+                    } else {
+                        level.tokenManager().transferTokenToPlacedTokens(selectedToken, coordinate);
+                        System.out.println("Placed Token: " + selectedToken + " at " + coordinate);
+                    }
                 }
             } else {
                 Rectangle2D bin = gamePanel.objectsManager.getPlacedObjects().get("bin");
                 if (bin.contains(endX, endY)) {
-                    Coordinate from = new Coordinate((startX - widthOffset) / tileSize, (startY - heightOffset) / tileSize);
-                    level.getBoard().removeToken(from);
+                    level.tokenManager().transferTokenToUnplacedTokens(selectedToken);
+                    System.out.println("Token moved to unplaced tokens");
                 }
             }
+            selectedToken = null;
         }
     }
 

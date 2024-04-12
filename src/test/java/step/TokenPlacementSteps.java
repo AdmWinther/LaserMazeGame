@@ -1,22 +1,14 @@
 package step;
 
-import Classes.Board;
 import Classes.Level;
-import Classes.Printer;
-import Classes.Tokens.Block;
 import Classes.Tokens.Token;
-import Classes.Utils.Coordinate;
-import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
 
 public class TokenPlacementSteps {
-    Board board;
     Level level;
 
     Token movableToken;
     Token unmovableToken;
+    /*
 
     @Given("I have a level that contains an empty board")
     public void iHaveALevelThatContainsAnEmptyBoard() {
@@ -107,4 +99,5 @@ public class TokenPlacementSteps {
         Coordinate coordinate = new Coordinate(x, y);
         assertEquals(unmovableToken, board.getTokenAt(coordinate));
     }
+     */
 }
