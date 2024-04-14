@@ -50,5 +50,5 @@ public abstract class Token {
         return this.orientation;
     }
 
-    public abstract Set<Orientation> propagateLaser(Orientation incommingLaserOrientation);
+    public abstract Set<Orientation> propagateLaser(Orientation incomingLaserOrientation);
 }

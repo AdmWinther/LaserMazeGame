@@ -114,7 +114,7 @@ public class DataReader {
         /**
      * Creates a set of placed tokens from a JSONObject
      *
-     * @param jsonPlacedTokens the JSONObject of the PlacedTokens
+     * @param jsonTokensArray the JSONArray of the tokens
      * @param widthX the Board width in X direction
      * @param heightY the Board width in Y direction
      * @return the two dimension array of tokens

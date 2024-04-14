@@ -23,7 +23,7 @@ public final class Block extends Token {
     }
 
     @Override
-    public Set<Orientation> propagateLaser(Orientation incommingLaserOrientation) {
+    public Set<Orientation> propagateLaser(Orientation incomingLaserOrientation) {
         Set<Orientation> propagation =  new HashSet<Orientation>();
         propagation.add(null);
         return propagation;

@@ -13,8 +13,7 @@ public class LaserGun extends Token {
         this.setOrientation(orientation);
     }
 
-    public LaserFragment generateFirstLaserFragmetn(Coordinate laserGunPosition) {
-        Coordinate lasrFragmentTo = laserGunPosition;
+    public LaserFragment generateFirstLaserFragment(Coordinate laserGunPosition) {
         switch (getOrientation()){
             case UP -> {
                 return new LaserFragment(laserGunPosition, new Coordinate(laserGunPosition.x(), laserGunPosition.y()+1));
@@ -33,7 +32,7 @@ public class LaserGun extends Token {
     }
 
     @Override
-    public Set<Orientation> propagateLaser(Orientation incommingLaserOrientation) {
+    public Set<Orientation> propagateLaser(Orientation incomingLaserOrientation) {
         return new HashSet<Orientation>();
     }
 }

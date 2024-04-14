@@ -16,21 +16,21 @@ public class DoubleSidedMirror extends Token {
     The position \\ is considered right and down
     */
     @Override
-    public Set<Orientation> propagateLaser(Orientation incommingLaserDirection) {
+    public Set<Orientation> propagateLaser(Orientation incomingLaserOrientation) {
 
         Set<Orientation> propagatedLaser = new HashSet<Orientation>();
         if(this.getOrientation() == Orientation.LEFT || this.getOrientation() == Orientation.UP){
             // doubleSidedMirror is in the position //
-            if(incommingLaserDirection == Orientation.UP) propagatedLaser.add(Orientation.RIGHT);
-            if(incommingLaserDirection == Orientation.DOWN) propagatedLaser.add(Orientation.LEFT);
-            if(incommingLaserDirection == Orientation.LEFT) propagatedLaser.add(Orientation.DOWN);
-            if(incommingLaserDirection == Orientation.RIGHT) propagatedLaser.add(Orientation.UP);
+            if(incomingLaserOrientation == Orientation.UP) propagatedLaser.add(Orientation.RIGHT);
+            if(incomingLaserOrientation == Orientation.DOWN) propagatedLaser.add(Orientation.LEFT);
+            if(incomingLaserOrientation == Orientation.LEFT) propagatedLaser.add(Orientation.DOWN);
+            if(incomingLaserOrientation == Orientation.RIGHT) propagatedLaser.add(Orientation.UP);
         } else {
             // doubleSidedMirror is in the position \\
-            if(incommingLaserDirection == Orientation.UP) propagatedLaser.add(Orientation.LEFT);
-            if(incommingLaserDirection == Orientation.DOWN) propagatedLaser.add(Orientation.RIGHT);
-            if(incommingLaserDirection == Orientation.LEFT) propagatedLaser.add(Orientation.UP);
-            if(incommingLaserDirection == Orientation.RIGHT) propagatedLaser.add(Orientation.DOWN);
+            if(incomingLaserOrientation == Orientation.UP) propagatedLaser.add(Orientation.LEFT);
+            if(incomingLaserOrientation == Orientation.DOWN) propagatedLaser.add(Orientation.RIGHT);
+            if(incomingLaserOrientation == Orientation.LEFT) propagatedLaser.add(Orientation.UP);
+            if(incomingLaserOrientation == Orientation.RIGHT) propagatedLaser.add(Orientation.DOWN);
         }
         return propagatedLaser;
     }

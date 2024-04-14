@@ -11,7 +11,7 @@ public class Receiver extends Token {
     }
 
     @Override
-    public Set<Orientation> propagateLaser(Orientation incommingLaserOrientation) {
+    public Set<Orientation> propagateLaser(Orientation incomingLaserOrientation) {
         return new HashSet<Orientation>();
     }
 }
