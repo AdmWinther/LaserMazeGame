@@ -1,16 +1,15 @@
-package Classes.Tokens;
+package Classes.Token;
 
 import Classes.Laser.LaserFragment;
-import Classes.Orientation;
+import Classes.Utils.Orientation;
 import Classes.Utils.Coordinate;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class LaserGun extends Token {
+public class LaserGun extends OrientedToken {
     public LaserGun(boolean isMovable, Orientation orientation) {
-        super(isMovable);
-        this.setOrientation(orientation);
+        super(isMovable, orientation);
     }
 
     public LaserFragment generateFirstLaserFragment(Coordinate laserGunPosition) {

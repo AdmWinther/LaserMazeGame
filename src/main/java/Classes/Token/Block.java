@@ -1,8 +1,8 @@
-package Classes.Tokens;
+package Classes.Token;
 
-import Classes.Orientation;
+import Classes.Utils.Orientation;
 
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.Set;
 
 /**
@@ -23,9 +23,7 @@ public final class Block extends Token {
     }
 
     @Override
-    public Set<Orientation> propagateLaser(Orientation incomingLaserOrientation) {
-        Set<Orientation> propagation =  new HashSet<Orientation>();
-        propagation.add(null);
-        return propagation;
+    public Set<Orientation> propagateLaser(Orientation orientation) {
+        return Collections.emptySet();
     }
 }

@@ -1,8 +1,7 @@
 package Classes.Utils;
 
 import Classes.LevelID;
-import Classes.Orientation;
-import Classes.Tokens.*;
+import Classes.Token.*;
 import Resources.constants.FilePaths;
 import Resources.constants.JsonConsts;
 import org.json.JSONArray;
@@ -83,7 +82,7 @@ public class DataReader {
             case JsonConsts.VAL_TYPE_LASER_GUN:
                 return new LaserGun(isMovable, orientation);
             case JsonConsts.VAL_TYPE_RECEIVER:
-                return new Receiver(isMovable, orientation);
+                return new Target(isMovable, orientation);
             case JsonConsts.VAL_DOUBLE_SIDED_MIRROR:
                 return new DoubleSidedMirror(isMovable, orientation);
             case JsonConsts.VAL_TYPE_ONE_SIDED_MIRROR:

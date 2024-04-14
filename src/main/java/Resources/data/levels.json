@@ -48,7 +48,7 @@
       ]
     },
     {
-      "id": "5x5_LaseGun@(2,3)_Right",
+      "id": "5x5_LaseGun@(1,4)_Right",
       "name": "level_5x5_BoardWithLaserGun@(1,4)_NoTokenTobePlaced",
       "boardSize": {
         "widthX": 5,

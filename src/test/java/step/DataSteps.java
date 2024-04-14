@@ -3,15 +3,18 @@ package step;
 import Classes.Level;
 import Classes.LevelBuilder;
 import Classes.LevelID;
-import Classes.Orientation;
-import Classes.Tokens.LaserGun;
-import Classes.Tokens.OneSidedMirror;
-import Classes.Tokens.Receiver;
+import Classes.Token.OrientedToken;
+import Classes.Token.Target;
+import Classes.Utils.Orientation;
+import Classes.Token.LaserGun;
+import Classes.Token.OneSidedMirror;
 import Classes.Utils.Coordinate;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class DataSteps {
@@ -68,7 +71,7 @@ public class DataSteps {
                 if (i == x1 && j == y1) {
                     assertInstanceOf(LaserGun.class, level.tokenManager().getTokenAt(new Coordinate(i, j)));
                 } else if (i == x2 && j == y2) {
-                    assertInstanceOf(Receiver.class, level.tokenManager().getTokenAt(new Coordinate(i, j)));
+                    assertInstanceOf(Target.class, level.tokenManager().getTokenAt(new Coordinate(i, j)));
                 } else {
                     assertNull(level.tokenManager().getTokenAt(new Coordinate(i, j)));
                 }
@@ -88,10 +91,10 @@ public class DataSteps {
             for (int j = 0; j < level.tokenManager().getWidthX(); j++) {
                 if (i == x1 && j == y1) {
                     assertInstanceOf(LaserGun.class, level.tokenManager().getTokenAt(new Coordinate(i, j)));
-                    assertEquals(level.tokenManager().getTokenAt(new Coordinate(i, j)).getOrientation(), Orientation.RIGHT);
+                    assertEquals(((OrientedToken)level.tokenManager().getTokenAt(new Coordinate(i, j))).getOrientation(), Orientation.RIGHT);
                 } else if (i == x2 && j == y2) {
                     assertInstanceOf(OneSidedMirror.class, level.tokenManager().getTokenAt(new Coordinate(i, j)));
-                    assertEquals(level.tokenManager().getTokenAt(new Coordinate(i, j)).getOrientation(), Orientation.UP);
+                    assertEquals(((OrientedToken)level.tokenManager().getTokenAt(new Coordinate(i, j))).getOrientation(), Orientation.UP);
                 } else {
                     assertNull(level.tokenManager().getTokenAt(new Coordinate(i, j)));
                 }

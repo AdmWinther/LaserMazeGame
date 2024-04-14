@@ -1,21 +1,22 @@
 package Classes.Laser;
 
-import Classes.Orientation;
-import Classes.TokenManager;
-import Classes.Tokens.*;
+import Classes.Token.LaserGun;
+import Classes.Token.Token;
+import Classes.Utils.Orientation;
+import Classes.Token.TokenManager;
 import Classes.Utils.Coordinate;
 
 import java.util.Set;
 
 
-public class LaserGenerator {
+public class LaserManager {
 
     private Orientation laserTipOrientation;
     private Coordinate laserTipCoordinate;
     private boolean laserContinue = false;
     private final TokenManager tokenManager;
 
-    public LaserGenerator(TokenManager tokenManager) {
+    public LaserManager(TokenManager tokenManager) {
         this.tokenManager = tokenManager;
         this.laserContinue = false;
     }
@@ -79,18 +80,18 @@ public class LaserGenerator {
     private LaserFragment generateTokenLaserPropagation(){
         Token tokenInCell = tokenManager.getTokenAt(laserTipCoordinate);
         Set<Orientation> propagatedLaser = tokenInCell.propagateLaser(laserTipOrientation);
-        for (Orientation propagatedlaserOrientation : propagatedLaser){
-            if(propagatedlaserOrientation == null){
+        for (Orientation propagatedLaserOrientation : propagatedLaser){
+            if(propagatedLaserOrientation == null){
                 laserContinue = false;
                 return null;
             } else {
-                Coordinate laserFragmentTo = oneCellInDirectionOfOrientation(laserTipCoordinate ,propagatedlaserOrientation);
+                Coordinate laserFragmentTo = oneCellInDirectionOfOrientation(laserTipCoordinate ,propagatedLaserOrientation);
                 if(laserFragmentTo != null){
                     if(isCoordinateOnTheBoard(laserFragmentTo)){    //Check if laser is not shooting out of the board.
                         this.laserContinue = true;
                         LaserFragment generatedLaserFragment = new LaserFragment(this.laserTipCoordinate, laserFragmentTo);
                         this.laserTipCoordinate = laserFragmentTo;
-                        this.laserTipOrientation = propagatedlaserOrientation;
+                        this.laserTipOrientation = propagatedLaserOrientation;
                         return generatedLaserFragment;
                     }
                 }

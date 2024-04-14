@@ -1,15 +1,14 @@
 package Classes;
 
-import Classes.Laser.Laser;
-import Classes.Laser.LaserFragment;
-import Classes.Laser.LaserGenerator;
-import Classes.Tokens.Token;
+import Classes.Laser.LaserManager;
+import Classes.Token.Token;
+import Classes.Token.TokenManager;
 
 import java.util.*;
 
 public class Level {
     private final TokenManager tokenManager;
-    private final LaserGenerator laserGenerator;
+    private final LaserManager laserManager;
 
 
     /**
@@ -19,13 +18,14 @@ public class Level {
      */
     public Level(Token[][] placedTokens, Set<Token> unplacedTokens) {
         tokenManager = new TokenManager(placedTokens, unplacedTokens);
-        laserGenerator = new LaserGenerator(tokenManager);
+        laserManager = new LaserManager(tokenManager);
     }
     public TokenManager tokenManager() {
         return tokenManager;
     }
 
-    public Laser generateLaser() {
-        return laserGenerator.generateLaser();
+    public LaserManager laserManager() {
+        return laserManager;
     }
+
 }

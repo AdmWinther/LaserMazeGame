@@ -1,4 +1,4 @@
-package Classes;
+package Classes.Utils;
 
 public enum Orientation {
     /**

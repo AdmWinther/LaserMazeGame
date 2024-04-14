@@ -1,8 +1,6 @@
 package step;
 
 import Classes.*;
-import Classes.Tokens.Block;
-import Classes.Tokens.Token;
 import Classes.Utils.Coordinate;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;

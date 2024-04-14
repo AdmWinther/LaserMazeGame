@@ -1,7 +1,7 @@
 package Classes;
 
-import Classes.Tokens.Block;
-import Classes.Tokens.Token;
+import Classes.Token.Block;
+import Classes.Token.Token;
 import Classes.Utils.Coordinate;
 
 public class Printer {

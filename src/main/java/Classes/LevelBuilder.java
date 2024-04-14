@@ -1,6 +1,6 @@
 package Classes;
 
-import Classes.Tokens.Token;
+import Classes.Token.Token;
 import Classes.Utils.DataReader;
 import Interfaces.Builder;
 

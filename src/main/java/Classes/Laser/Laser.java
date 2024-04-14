@@ -3,19 +3,29 @@ package Classes.Laser;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Laser {
-    private final ArrayList<LaserFragment> fragments;
+    private final List<LaserFragment> fragments;
 
-    public Laser(){
-        this.fragments = new ArrayList<LaserFragment>();
+    public Laser() {
+        fragments = new ArrayList<>();
     }
 
-    public void addFragment(LaserFragment laserFragment) {
-        if(laserFragment != null) fragments.add(laserFragment);
+    public void addFragment(LaserFragment fragment) {
+        fragments.add(fragment);
     }
 
-    public List<LaserFragment> getFragments(){
+    public List<LaserFragment> getFragments() {
         return fragments;
     }
 
+    public boolean containsFragment(LaserFragment fragment) {
+        for (LaserFragment f : fragments) {
+            if (f.from().equals(fragment.from()) && f.to().equals(fragment.to())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

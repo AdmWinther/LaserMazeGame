@@ -1,7 +1,7 @@
-package Classes;
+package Classes.Token;
 
-import Classes.Tokens.LaserGun;
-import Classes.Tokens.Token;
+import Classes.Token.LaserGun;
+import Classes.Token.Token;
 import Classes.Utils.Coordinate;
 
 import java.util.Set;
@@ -140,16 +140,25 @@ public class TokenManager {
         return this.placedTokens;
     }
 
-    public Coordinate findLaserGunPosition() {
+
+    private Coordinate findTypePosition(Class<? extends Token> type) {
         for (int x = 0; x < placedTokens.length; x++) {
             for (int y = 0; y < placedTokens[0].length; y++) {
-                if (placedTokens[x][y] instanceof LaserGun) {
+                if (placedTokens[x][y] != null && placedTokens[x][y].getClass() == type) {
                     return new Coordinate(x, y);
                 }
             }
         }
 
         return null;
+    }
+
+    public Coordinate findLaserGunPosition() {
+        return findTypePosition(LaserGun.class);
+    }
+
+    public Coordinate findTargetPosition() {
+        return findTypePosition(Target.class);
     }
 
     public LaserGun getLaserGun() {

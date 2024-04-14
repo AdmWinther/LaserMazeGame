@@ -1,14 +1,13 @@
-package Classes.Tokens;
+package Classes.Token;
 
-import Classes.Orientation;
+import Classes.Utils.Orientation;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class OneSidedMirror extends Token {
+public class OneSidedMirror extends OrientedToken {
     public OneSidedMirror(boolean isMovable, Orientation orientation) {
-        super(isMovable);
-        this.setOrientation(orientation);
+        super(isMovable, orientation);
     }
     /*
     Situation /. is considered UP

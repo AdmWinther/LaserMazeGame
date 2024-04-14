@@ -25,7 +25,7 @@ public class LaserSteps {
 
     @When("I run generateLaser")
     public void iRungenerateFirstLaserFragment() {
-        laser = level.generateLaser();
+        laser = level.laserManager().generateLaser();
     }
 
     @Then("{int} LaserFragment must be generated")
