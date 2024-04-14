@@ -1,5 +1,10 @@
 package Classes.Tokens;
 
+import Classes.Orientation;
+
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Block is a class that represents a block token in the game.
  * It blocks any lazer that hits it.
@@ -15,5 +20,12 @@ public final class Block extends Token {
      */
     public Block(boolean movable) {
         super(movable);
+    }
+
+    @Override
+    public Set<Orientation> propagateLaser(Orientation incommingLaserOrientation) {
+        Set<Orientation> propagation =  new HashSet<Orientation>();
+        propagation.add(null);
+        return propagation;
     }
 }

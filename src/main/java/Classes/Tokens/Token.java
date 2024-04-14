@@ -1,11 +1,16 @@
 package Classes.Tokens;
 
+import Classes.Orientation;
+
+import java.util.Set;
+
 /**
  * Token is an abstract class that represents a token in the game.
  */
 public abstract class Token {
 
     private boolean movable;
+    private Orientation orientation;
 
     /**
      * Constructor for Token.
@@ -36,4 +41,14 @@ public abstract class Token {
     public void setMovable(boolean movable) {
         this.movable = movable;
     }
+
+    public void setOrientation(Orientation orientation) {
+        this.orientation = orientation;
+    }
+
+    public Orientation getOrientation() {
+        return this.orientation;
+    }
+
+    public abstract Set<Orientation> propagateLaser(Orientation incommingLaserOrientation);
 }

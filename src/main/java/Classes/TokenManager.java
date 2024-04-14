@@ -1,5 +1,6 @@
 package Classes;
 
+import Classes.Tokens.LaserGun;
 import Classes.Tokens.Token;
 import Classes.Utils.Coordinate;
 
@@ -133,5 +134,26 @@ public class TokenManager {
 
     public int getUnplacedTokensSize(){
         return unplacedTokens.size();
+    }
+
+    public Token[][] getPlacedTokens() {
+        return this.placedTokens;
+    }
+
+    public Coordinate findLaserGunPosition() {
+        for (int x = 0; x < placedTokens.length; x++) {
+            for (int y = 0; y < placedTokens[0].length; y++) {
+                if (placedTokens[x][y] instanceof LaserGun) {
+                    return new Coordinate(x, y);
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public LaserGun getLaserGun() {
+        Coordinate laserGunPosition = findLaserGunPosition();
+        return (LaserGun) this.placedTokens[laserGunPosition.x()][laserGunPosition.y()];
     }
 }

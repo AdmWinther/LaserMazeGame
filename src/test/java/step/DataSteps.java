@@ -3,7 +3,9 @@ package step;
 import Classes.Level;
 import Classes.LevelBuilder;
 import Classes.LevelID;
+import Classes.Orientation;
 import Classes.Tokens.LaserGun;
+import Classes.Tokens.OneSidedMirror;
 import Classes.Tokens.Receiver;
 import Classes.Utils.Coordinate;
 import io.cucumber.java.en.And;
@@ -19,6 +21,13 @@ public class DataSteps {
     @Given("I have a level stored with a five-by-five grid, empty, with no token")
     public void iHaveALevelStoredWithAFiveByFiveGridEmptyWithNoToken() {
         levelID = new LevelID("5x5_EmptyBoard_NoToken");
+    }
+
+    @Given("I have the level with ID {string}")
+    public void iHaveTheLevelWithID(String arg0) {
+        levelID = new LevelID(arg0);
+        LevelBuilder levelBuilder = new LevelBuilder(levelID);
+        level = levelBuilder.build();
     }
 
     @Given("I have a level stored with a ten-by-ten grid, with a LEFT LaserGun at \\(two, three) and a UP Receiver at \\(five, six), with a RIGHT DoubleSidedMirror to place.")
@@ -54,12 +63,12 @@ public class DataSteps {
 
     @And("The grid should be empty except for a LEFT LaserGun at \\({int}, {int}) and a UP Receiver at \\({int}, {int})")
     public void theGridShouldBeEmptyExceptForALEFTLaserGunAtAndAUPReceiverAt(int x1, int y1, int x2, int y2) {
-for (int i = 0; i < level.tokenManager().getHeightY(); i++) {
+        for (int i = 0; i < level.tokenManager().getHeightY(); i++) {
             for (int j = 0; j < level.tokenManager().getWidthX(); j++) {
                 if (i == x1 && j == y1) {
-                    assertTrue(level.tokenManager().getTokenAt(new Coordinate(i, j)) instanceof LaserGun);
+                    assertInstanceOf(LaserGun.class, level.tokenManager().getTokenAt(new Coordinate(i, j)));
                 } else if (i == x2 && j == y2) {
-                    assertTrue(level.tokenManager().getTokenAt(new Coordinate(i, j)) instanceof Receiver);
+                    assertInstanceOf(Receiver.class, level.tokenManager().getTokenAt(new Coordinate(i, j)));
                 } else {
                     assertNull(level.tokenManager().getTokenAt(new Coordinate(i, j)));
                 }
@@ -73,4 +82,20 @@ for (int i = 0; i < level.tokenManager().getHeightY(); i++) {
     }
 
 
+    @And("The grid should be empty except for a RIGHT LaserGun at \\({int}, {int}) and a UP OneSidedMirror at \\({int}, {int})")
+    public void theGridShouldBeEmptyExceptForARIGHTLaserGunAtAndAUPOneSidedMirrorAt(int x1, int y1, int x2, int y2) {
+        for (int i = 0; i < level.tokenManager().getHeightY(); i++) {
+            for (int j = 0; j < level.tokenManager().getWidthX(); j++) {
+                if (i == x1 && j == y1) {
+                    assertInstanceOf(LaserGun.class, level.tokenManager().getTokenAt(new Coordinate(i, j)));
+                    assertEquals(level.tokenManager().getTokenAt(new Coordinate(i, j)).getOrientation(), Orientation.RIGHT);
+                } else if (i == x2 && j == y2) {
+                    assertInstanceOf(OneSidedMirror.class, level.tokenManager().getTokenAt(new Coordinate(i, j)));
+                    assertEquals(level.tokenManager().getTokenAt(new Coordinate(i, j)).getOrientation(), Orientation.UP);
+                } else {
+                    assertNull(level.tokenManager().getTokenAt(new Coordinate(i, j)));
+                }
+            }
+        }
+    }
 }

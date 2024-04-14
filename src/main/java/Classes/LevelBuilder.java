@@ -45,7 +45,7 @@ public class LevelBuilder implements Builder<Level> {
     @Override
     public Level build() {
         try {
-            String name = DataReader.readLevelIDName(id); // Useless for now
+            String name = DataReader.getLevelNameUsingLevelID(id); // Useless for now
             Token[][] placedTokens = DataReader.readLevelIDPlacedTokens(id);
             Set<Token> unplacedTokens = DataReader.readLevelIDUnplacedTokens(id);
             return new Level(placedTokens, unplacedTokens);

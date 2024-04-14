@@ -168,7 +168,7 @@ public class DataReader {
      * @throws FileNotFoundException if the LevelID is not found in the game data
      * @author Hugo Demule
      */
-    public static String readLevelIDName(LevelID id) throws FileNotFoundException {
+    public static String getLevelNameUsingLevelID(LevelID id) throws FileNotFoundException {
         JSONObject level = findLevelByID(id);
         requireFileFound(level, id.value());
         return level.getString(JsonConsts.ATTR_NAME);

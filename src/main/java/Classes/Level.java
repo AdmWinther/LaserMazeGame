@@ -1,14 +1,16 @@
 package Classes;
 
-import Classes.Tokens.Block;
+import Classes.Laser.Laser;
+import Classes.Laser.LaserFragment;
+import Classes.Laser.LaserGenerator;
 import Classes.Tokens.Token;
-import Classes.Utils.Coordinate;
 
 import java.util.*;
 
 public class Level {
-
     private final TokenManager tokenManager;
+    private final LaserGenerator laserGenerator;
+
 
     /**
      * Constructor for Level class
@@ -17,13 +19,13 @@ public class Level {
      */
     public Level(Token[][] placedTokens, Set<Token> unplacedTokens) {
         tokenManager = new TokenManager(placedTokens, unplacedTokens);
+        laserGenerator = new LaserGenerator(tokenManager);
     }
     public TokenManager tokenManager() {
         return tokenManager;
     }
 
-    public void test(){
-
-
+    public Laser generateLaser() {
+        return laserGenerator.generateLaser();
     }
 }
