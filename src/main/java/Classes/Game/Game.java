@@ -43,7 +43,6 @@ public class Game {
         unplacedTokens.add(doubleMirror);
         unplacedTokens.add(mirror);
 
-
         Level level = new Level(placedTokens, unplacedTokens);
 
         gamePanel = new GamePanel(level);
