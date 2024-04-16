@@ -1,0 +1,31 @@
+{
+    "unplacedTokens": [{
+        "orientation": "UP",
+        "tokenId": "OneSidedMirror_51228289",
+        "type": "OneSidedMirror"
+    }],
+    "boardSize": {
+        "widthX": 5,
+        "heightY": 5
+    },
+    "name": "OK",
+    "placedTokens": [
+        {
+            "tokenId": "Block_284720968",
+            "position": {
+                "x": 0,
+                "y": 0
+            },
+            "type": "Block"
+        },
+        {
+            "orientation": "UP",
+            "tokenId": "LaserGun_186370029",
+            "position": {
+                "x": 0,
+                "y": 1
+            },
+            "type": "LaserGun"
+        }
+    ]
+}

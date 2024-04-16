@@ -176,22 +176,31 @@ public class TokenManager {
         return unplacedTokens.size();
     }
 
+    /**
+     * @return a copy of the unplacedTokens set.
+     */
     public Set<Token> getUnplacedTokens() {
-        return unplacedTokens;
+        // returning a copy of the unplacedTokens set
+        return new HashSet<>(unplacedTokens);
     }
 
     public void resetLevel() {
-        for (int i = 0; i < placedTokens.length; i++) {
+        for (Token[] placedToken : placedTokens) {
             for (int j = 0; j < placedTokens[0].length; j++) {
-                Token token = placedTokens[i][j];
+                Token token = placedToken[j];
                 if (token == null || !token.isMovable()) continue;
                 transferTokenToUnplacedTokens(token);
             }
         }
     }
 
+    /**
+     *
+     * @return a copy of the placedTokens array
+     */
     public Token[][] getPlacedTokens() {
-        return this.placedTokens;
+        // return a copy of the placedTokens array
+        return placedTokens.clone();
     }
 
 
