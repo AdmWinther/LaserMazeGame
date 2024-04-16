@@ -45,14 +45,14 @@ public class DataReaderSteps {
 
     @Then("The grid should be of size {int} by {int}")
     public void theGridShouldBeOfSizeBy(int height, int width) {
-        assertEquals(level.tokenManager().getHeightY(), height);
-        assertEquals(level.tokenManager().getWidthX(), width);
+        assertEquals(level.height, height);
+        assertEquals(level.width, width);
     }
 
     @And("The grid should be empty")
     public void theGridShouldBeEmpty() {
-        for (int i = 0; i < level.tokenManager().getHeightY(); i++) {
-            for (int j = 0; j < level.tokenManager().getWidthX(); j++) {
+        for (int i = 0; i < level.height; i++) {
+            for (int j = 0; j < level.width; j++) {
                 assertNull(level.tokenManager().getTokenAt(new Coordinate(i, j)));
             }
         }
@@ -65,8 +65,8 @@ public class DataReaderSteps {
 
     @And("The grid should be empty except for a LEFT LaserGun at \\({int}, {int}) and a UP Receiver at \\({int}, {int})")
     public void theGridShouldBeEmptyExceptForALEFTLaserGunAtAndAUPReceiverAt(int x1, int y1, int x2, int y2) {
-        for (int i = 0; i < level.tokenManager().getHeightY(); i++) {
-            for (int j = 0; j < level.tokenManager().getWidthX(); j++) {
+        for (int i = 0; i < level.height; i++) {
+            for (int j = 0; j < level.width; j++) {
                 if (i == x1 && j == y1) {
                     assertInstanceOf(LaserGun.class, level.tokenManager().getTokenAt(new Coordinate(i, j)));
                 } else if (i == x2 && j == y2) {
@@ -86,8 +86,8 @@ public class DataReaderSteps {
 
     @And("The grid should be empty except for a RIGHT LaserGun at \\({int}, {int}) and a UP OneSidedMirror at \\({int}, {int})")
     public void theGridShouldBeEmptyExceptForARIGHTLaserGunAtAndAUPOneSidedMirrorAt(int x1, int y1, int x2, int y2) {
-        for (int i = 0; i < level.tokenManager().getHeightY(); i++) {
-            for (int j = 0; j < level.tokenManager().getWidthX(); j++) {
+        for (int i = 0; i < level.height; i++) {
+            for (int j = 0; j < level.width; j++) {
                 if (i == x1 && j == y1) {
                     assertInstanceOf(LaserGun.class, level.tokenManager().getTokenAt(new Coordinate(i, j)));
                     assertEquals(((OrientedToken) level.tokenManager().getTokenAt(new Coordinate(i, j))).getOrientation(), Orientation.RIGHT);

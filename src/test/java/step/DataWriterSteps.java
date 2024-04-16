@@ -52,14 +52,14 @@ public class DataWriterSteps {
         finalLevel = levelBuilder.build();
 
         assertEquals(initialLevel.name(), finalLevel.name());
-        assertEquals(initialLevel.tokenManager().getWidthX(), finalLevel.tokenManager().getWidthX());
-        assertEquals(initialLevel.tokenManager().getHeightY(), finalLevel.tokenManager().getHeightY());
+        assertEquals(initialLevel.width, finalLevel.width);
+        assertEquals(initialLevel.height, finalLevel.height);
 
         // Only checking size here
         assertEquals(initialLevel.tokenManager().getUnplacedTokens().size(), finalLevel.tokenManager().getUnplacedTokens().size());
 
-        for (int i = 0; i < initialLevel.tokenManager().getHeightY(); i++) {
-            for (int j = 0; j < initialLevel.tokenManager().getWidthX(); j++) {
+        for (int i = 0; i < initialLevel.height; i++) {
+            for (int j = 0; j < initialLevel.width; j++) {
                 Token currentInitialToken = initialLevel.tokenManager().getTokenAt(new Coordinate(i, j));
                 Token currentFinalToken = finalLevel.tokenManager().getTokenAt(new Coordinate(i, j));
                 if (currentInitialToken == null || currentFinalToken == null) {

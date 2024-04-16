@@ -24,29 +24,6 @@ public class TokenManager {
         this.unplacedTokens = new HashSet<>(unplacedTokens);
     }
 
-    public void printTokens() {
-        System.out.println("Placed Tokens:");
-        StringBuilder sb = new StringBuilder();
-
-        for (int i = 0; i < placedTokens.length; i++) {
-            for (int j = 0; j < placedTokens[0].length; j++) {
-                if (placedTokens[i][j] == null) {
-                    sb.append("null ");
-                } else {
-                    sb.append(placedTokens[i][j]).append(" ");
-                }
-            }
-            sb.append("\n");
-        }
-        System.out.println(sb.toString());
-
-
-        System.out.println("Unplaced Tokens:");
-        for (Token token : unplacedTokens) {
-            System.out.println(token);
-        }
-    }
-
     /**
      * Checks if the position is out of bounds.
      *
@@ -152,26 +129,6 @@ public class TokenManager {
         return true;
     }
 
-    /**
-     * Returns the width of the board.
-     *
-     * @return The width of the board. -1 if the attributes are null.
-     */
-    public int getWidthX() {
-        if (checkAttributes()) return -1;
-        return placedTokens.length;
-    }
-
-    /**
-     * Returns the height of the board.
-     *
-     * @return The height of the board. -1 if the attributes are null.
-     */
-    public int getHeightY() {
-        if (checkAttributes()) return -1;
-        return placedTokens[0].length;
-    }
-
     public int getUnplacedTokensSize() {
         return unplacedTokens.size();
     }
@@ -184,7 +141,7 @@ public class TokenManager {
         return new HashSet<>(unplacedTokens);
     }
 
-    public void resetLevel() {
+    public void reset() {
         for (Token[] placedToken : placedTokens) {
             for (int j = 0; j < placedTokens[0].length; j++) {
                 Token token = placedToken[j];
@@ -224,8 +181,4 @@ public class TokenManager {
         return findTypePosition(Target.class);
     }
 
-    public LaserGun getLaserGun() {
-        Coordinate laserGunPosition = findLaserGunPosition();
-        return (LaserGun) this.placedTokens[laserGunPosition.x()][laserGunPosition.y()];
-    }
 }

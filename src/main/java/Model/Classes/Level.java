@@ -12,8 +12,8 @@ public class Level {
     private final LevelID id;
     private final LaserManager laserManager;
     private final TokenManager tokenManager;
-    private final int width;
-    private final int height;
+    public final int width;
+    public final int height;
 
 
     /**
@@ -26,9 +26,9 @@ public class Level {
         this.name = name;
         this.id = new LevelID(name + "_" + hashCode());
         tokenManager = new TokenManager(placedTokens, unplacedTokens);
-        laserManager = new LaserManager(tokenManager);
         width = placedTokens.length;
         height = placedTokens[0].length;
+        laserManager = new LaserManager(tokenManager, width, height);
     }
 
     public TokenManager tokenManager() {
@@ -39,17 +39,8 @@ public class Level {
         return laserManager;
     }
 
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void resetLevel() {
-        tokenManager.resetLevel();
+    public void reset() {
+        tokenManager.reset();
     }
 
     public LevelID id() {

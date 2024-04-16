@@ -17,11 +17,11 @@ public class LevelController {
     }
 
     public int getWidth() {
-        return level.getWidth();
+        return level.width;
     }
 
     public int getHeight() {
-        return level.getHeight();
+        return level.height;
     }
 
     public Set<Token> getUnplacedTokens() {
@@ -48,7 +48,7 @@ public class LevelController {
     }
 
     public void resetLevel() {
-        level.resetLevel();
+        level.reset();
     }
 
     public void moveToken(Coordinate from, Coordinate to) {
