@@ -1,5 +1,4 @@
 {
-  "id": [String],
   "name": [String],
   "boardSize": {
     "widthX": [int],
@@ -7,7 +6,7 @@
   },
   "placedTokens": [
     {
-      "id": [String],
+      "tokenId": [String],
       "type": "Receiver"
             | "LaserGun"
             | "OneSidedMirror"
@@ -25,7 +24,7 @@
   ],
   "unplacedTokens": [
     {
-      "id": [String],
+      "tokenId": [String],
       "type": "Receiver"
             | "LaserGun"
             | "OneSidedMirror"

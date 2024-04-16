@@ -34,7 +34,7 @@ public class DataSteps {
 
     @Given("I have a level stored with a ten-by-ten grid, with a LEFT LaserGun at \\(two, three) and a UP Receiver at \\(five, six), with a RIGHT DoubleSidedMirror to place.")
     public void iHaveALevelStoredWithATenByTenGridWithALEFTLaserGunAtTwoThreeAndAUPReceiverAtFiveSixWithARIGHTDoubleSidedMirrorToPlace() {
-        levelID = new LevelID("level_10x10_2TokensOnBoard_1TokenToPlace");
+        levelID = new LevelID("10x10_2TokensOnBoard_1TokenToPlace");
     }
 
     @When("I retrieve the level")

@@ -5,10 +5,9 @@ package Model.constants;
  *
  * @author Hugo Demule
  */
-public final class JsonConsts {
+public final class JsonConstants {
     /* JSON Attributes */
-    public final static String ATTR_LEVELS = "levels";
-    public final static String ATTR_ID = "id";
+    public final static String ATTR_TOKEN_ID = "tokenId";
     public final static String ATTR_NAME = "name";
     public final static String ATTR_BOARD_SIZE = "boardSize";
     public final static String ATTR_WIDTH_X = "widthX";

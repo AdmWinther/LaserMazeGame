@@ -1,15 +1,5 @@
 package step;
 
-<<<<<<< HEAD
-=======
-import Classes.*;
-<<<<<<< HEAD
-import Classes.Tokens.Block;
-import Classes.Tokens.Token;
->>>>>>> origin/dataRetrievalTests
-=======
->>>>>>> origin/MergeHugo
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PrinterSteps {
