@@ -1,16 +1,17 @@
 package Controller;
 
+import Model.Classes.Laser.LaserFragment;
 import Model.Classes.Level;
 import Model.Classes.Token.Token;
 import Model.Classes.Utils.Coordinate;
+import Model.Classes.Utils.Pair;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class LevelController {
 
     Level level;
+    boolean shouldGenerateLaser = false;
 
     public LevelController(Level level) {
         this.level = level;
@@ -63,4 +64,35 @@ public class LevelController {
         level.tokenManager().transferTokenToUnplacedTokens(token);
     }
 
+    public Set<Pair<Coordinate, Coordinate>> getLaserFragments() {
+        Set<Pair<Coordinate, Coordinate>> set = new HashSet<>();
+        List<LaserFragment> fragments = level.generateLaser().getFragments();
+
+        System.out.println("Number of fragments: " + fragments.size());
+        System.out.println("Fragments: " + fragments);
+        for (LaserFragment fragment : fragments) {
+            if (fragment == null) {
+                continue;
+            }
+            set.add(new Pair<>(fragment.from(), fragment.to()));
+        }
+
+        return set;
+    }
+
+    public Coordinate getLaserGunCoordinate() {
+        return level.tokenManager().findLaserGunPosition();
+    }
+
+    public void generateLaser() {
+        shouldGenerateLaser = true;
+    }
+
+    public boolean shouldGenerateLaser() {
+        return shouldGenerateLaser;
+    }
+
+    public void setShouldGenerateLaser(boolean b) {
+        shouldGenerateLaser = b;
+    }
 }

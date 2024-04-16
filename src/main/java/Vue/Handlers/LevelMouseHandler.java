@@ -39,6 +39,35 @@ public class LevelMouseHandler implements MouseListener {
             levelController.resetLevel();
             System.out.println("Reset tokens");
         }
+
+        int tileWidth = levelPanel.tileWidth;
+        int tileHeight = levelPanel.tileHeight;
+
+        int widthOffset = levelPanel.widthOffset;
+        int heightOffset = levelPanel.heightOffset;
+
+        int x_coordinate = (e.getX() - widthOffset) / tileWidth;
+        int y_coordinate = (e.getY() - heightOffset) / tileHeight;
+
+        int maxWidth = levelController.getWidth();
+        int maxHeight = levelController.getHeight();
+
+        if (x_coordinate >= 0 && x_coordinate < maxWidth && y_coordinate >= 0 && y_coordinate < maxHeight) {
+            Coordinate laserGunCoordinate = levelController.getLaserGunCoordinate();
+            System.out.println("Clicked on: " + x_coordinate + ", " + y_coordinate);
+            Coordinate coordinate = new Coordinate(x_coordinate, y_coordinate);
+
+            if (laserGunCoordinate.equals(coordinate)) {
+                levelController.generateLaser();
+            }
+        } else {
+            Token token = uiTokens.getUnplacedTokenAt(e.getX(), e.getY());
+            if (token != null) {
+                selectedToken = token;
+                isSelectedPlaced = false;
+                System.out.println("Selected Token: " + selectedToken);
+            }
+        }
     }
 
     @Override

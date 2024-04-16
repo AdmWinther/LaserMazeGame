@@ -1,5 +1,6 @@
 package Model.Classes;
 
+import Model.Classes.Laser.Laser;
 import Model.Classes.Laser.LaserManager;
 import Model.Classes.Token.Token;
 import Model.Classes.Token.TokenManager;
@@ -14,7 +15,6 @@ public class Level {
     private final TokenManager tokenManager;
     private final int width;
     private final int height;
-
 
     /**
      * Constructor for Level class
@@ -39,7 +39,6 @@ public class Level {
         return laserManager;
     }
 
-
     public int getWidth() {
         return width;
     }
@@ -58,5 +57,9 @@ public class Level {
 
     public String name() {
         return name;
+    }
+
+    public Laser generateLaser() {
+        return laserManager.generateLaser();
     }
 }

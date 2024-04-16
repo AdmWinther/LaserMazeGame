@@ -15,7 +15,7 @@ public class LevelPanel extends JPanel implements Runnable {
     // Tile size settings
     final int originalTileSize = 16;
     // Performance settings
-    final int fps = 60;
+    final int fps = 1;
     final int frameTime = 1000 / fps;
     // Level configuration, screen size in tiles
     public int maxCol;
@@ -23,7 +23,6 @@ public class LevelPanel extends JPanel implements Runnable {
     // Screen size in pixels
     public int screenWidth;
     public int screenHeight;
-    // Level
     // Controllers
     public LevelController levelController;
 
@@ -31,6 +30,7 @@ public class LevelPanel extends JPanel implements Runnable {
     public UIObjects UIObjects;
     public UITokens UITokens;
     public UITiles UITiles;
+    public UILaser UILaser;
 
 
     public LevelMouseHandler levelMouseHandler;
@@ -64,16 +64,10 @@ public class LevelPanel extends JPanel implements Runnable {
         widthOffset = (this.screenWidth - boardWidth * tileWidth) / 2;
         heightOffset = (this.screenHeight - boardHeight * tileHeight) / 2;
 
-        System.out.println("Dimension: " + boardWidth + "x" + boardHeight);
-        System.out.println("Screen Width: " + screenWidth);
-        System.out.println("Screen Height: " + screenHeight);
-        System.out.println("Tile Size: " + tileWidth + "x" + tileHeight);
-        System.out.println("Width Offset: " + widthOffset);
-        System.out.println("Height Offset: " + heightOffset);
-
         UIObjects = new UIObjects(this);
         UITiles = new UITiles(this, levelController);
         UITokens = new UITokens(this, levelController);
+        UILaser = new UILaser(this, levelController);
 
         levelMouseHandler = new LevelMouseHandler(this, levelController, UITokens);
         addMouseListener(levelMouseHandler);
@@ -126,8 +120,10 @@ public class LevelPanel extends JPanel implements Runnable {
         Graphics2D g2d = (Graphics2D) g;
 
         UITiles.draw(g2d);
+        UILaser.draw(g2d);
         UITokens.draw(g2d);
         UIObjects.draw(g2d);
+
 
         g2d.dispose();
     }
