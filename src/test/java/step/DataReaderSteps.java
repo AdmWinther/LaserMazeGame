@@ -16,7 +16,7 @@ import io.cucumber.java.en.When;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class DataSteps {
+public class DataReaderSteps {
     LevelID levelID;
     Level level;
 

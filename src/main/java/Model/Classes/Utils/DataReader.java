@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
@@ -23,7 +24,10 @@ public class DataReader {
      */
     private static JSONObject json(String path) {
         try {
-            String content = new String(Files.readAllBytes(Paths.get(path)));
+            Path filePath = Paths.get(path);
+            if (Files.notExists(filePath)) return null;
+
+            String content = new String(Files.readAllBytes(filePath));
             return new JSONObject(content);
         } catch (IOException e) {
             e.printStackTrace();
@@ -78,7 +82,7 @@ public class DataReader {
         switch (type) {
             case JsonConstants.VAL_TYPE_LASER_GUN:
                 return new LaserGun(isMovable, orientation);
-            case JsonConstants.VAL_TYPE_RECEIVER:
+            case JsonConstants.VAL_TYPE_TARGET:
                 return new Target(isMovable, orientation);
             case JsonConstants.VAL_DOUBLE_SIDED_MIRROR:
                 return new DoubleSidedMirror(isMovable, orientation);
