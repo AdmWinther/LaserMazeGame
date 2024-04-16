@@ -16,6 +16,7 @@
             <xs:enumeration value="io.cucumber"/>
             <xs:enumeration value="org.junit.jupiter"/>
             <xs:enumeration value="org.json"/>
+            <xs:enumeration value="org.jetbrains"/>
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
@@ -26,6 +27,7 @@
             <xs:enumeration value="cucumber-junit-platform-engine"/>
             <xs:enumeration value="junit-jupiter"/>
             <xs:enumeration value="json"/>
+            <xs:enumeration value="annotations"/>
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
@@ -35,10 +37,18 @@
             <xs:enumeration value="7.13.0"/>
             <xs:enumeration value="5.10.1"/>
             <xs:enumeration value="20240303"/>
+            <xs:enumeration value="13.0"/>
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
-      <xs:element type="xs:string" name="scope" minOccurs="0"/>
+      <xs:element name="scope" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="test"/>
+            <xs:enumeration value="compile"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="dependenciesType">

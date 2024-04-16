@@ -1,0 +1,29 @@
+{
+  "name": "level_5x5_BoardWithLaserGun@(1,2)&OneSidedMirror(3,2):Orientation/.",
+  "boardSize": {
+    "widthX": 5,
+    "heightY": 5
+  },
+  "placedTokens": [
+    {
+      "tokenId": "LaserGun_49",
+      "type": "LaserGun",
+      "orientation": "RIGHT",
+      "position": {
+        "x": 1,
+        "y": 2
+      }
+    },
+    {
+      "tokenId": "OSM_23",
+      "type": "OneSidedMirror",
+      "orientation": "UP",
+      "position": {
+        "x": 3,
+        "y": 2
+      }
+    }
+  ],
+  "unplacedTokens": [
+  ]
+}

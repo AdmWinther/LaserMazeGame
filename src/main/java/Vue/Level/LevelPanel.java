@@ -10,7 +10,7 @@ public class LevelPanel extends JPanel implements Runnable {
 
     // Borders
     public final int horizontalBorder = 2;
-    public final int verticalBorder = 3;
+    public final int verticalBorder = 1;
     public final int wallThickness = 1;
     // Tile size settings
     final int originalTileSize = 16;

@@ -8,6 +8,7 @@ import Model.Interfaces.LaserPropagator;
 public abstract class Token implements LaserPropagator {
 
     private boolean movable;
+    private final TokenID id;
 
     /**
      * Constructor for Token.
@@ -17,6 +18,7 @@ public abstract class Token implements LaserPropagator {
      */
     public Token(boolean movable) {
         this.movable = movable;
+        this.id = new TokenID(this.type() + "_" + hashCode());
     }
 
     /**
@@ -37,5 +39,13 @@ public abstract class Token implements LaserPropagator {
      */
     public void setMovable(boolean movable) {
         this.movable = movable;
+    }
+
+    public TokenID id() {
+        return id;
+    }
+
+    public String type(){
+        return this.getClass().getSimpleName();
     }
 }

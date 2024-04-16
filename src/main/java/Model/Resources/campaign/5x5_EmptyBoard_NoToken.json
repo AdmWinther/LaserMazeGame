@@ -1,0 +1,11 @@
+{
+  "name": "level_5x5_veryEmptyBoard_absoluteNoToken",
+  "boardSize": {
+    "widthX": 5,
+    "heightY": 5
+  },
+  "placedTokens": [
+  ],
+  "unplacedTokens": [
+  ]
+}

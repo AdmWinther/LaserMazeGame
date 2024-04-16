@@ -1,11 +1,8 @@
 package step;
 
 import Model.Classes.Level;
-<<<<<<< HEAD
-import Classes.Tokens.Token;
-=======
 import Model.Classes.Token.Token;
->>>>>>> origin/MergeHugo
+
 
 public class TokenPlacementSteps {
     Level level;
