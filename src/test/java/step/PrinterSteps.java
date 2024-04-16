@@ -3,14 +3,12 @@ package step;
 <<<<<<< HEAD
 =======
 import Classes.*;
+<<<<<<< HEAD
 import Classes.Tokens.Block;
 import Classes.Tokens.Token;
 >>>>>>> origin/dataRetrievalTests
-import Classes.Utils.Coordinate;
-import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
+=======
+>>>>>>> origin/MergeHugo
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

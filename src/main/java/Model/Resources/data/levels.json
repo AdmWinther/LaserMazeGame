@@ -1,0 +1,168 @@
+{
+  "levels": [
+    {
+      "id": "5x5_EmptyBoard_NoToken",
+      "name": "level_5x5_veryEmptyBoard_absoluteNoToken",
+      "boardSize": {
+        "widthX": 5,
+        "heightY": 5
+      },
+      "placedTokens": [
+      ],
+      "unplacedTokens": [
+      ]
+    },
+    {
+      "id": "level_10x10_2TokensOnBoard_1TokenToPlace",
+      "name": "10x10_OneTokenOnBoard_OneToken",
+      "boardSize": {
+        "widthX": 10,
+        "heightY": 10
+      },
+      "placedTokens": [
+        {
+          "id": "LaserGun_56",
+          "type": "LaserGun",
+          "orientation": "LEFT",
+          "position": {
+            "x": 2,
+            "y": 3
+          }
+        },
+        {
+          "id": "Receiver_strong",
+          "type": "Receiver",
+          "orientation": "UP",
+          "position": {
+            "x": 5,
+            "y": 6
+          }
+        }
+      ],
+      "unplacedTokens": [
+        {
+          "id": "D_S_Mirror-47",
+          "type": "DoubleSidedMirror",
+          "orientation": "RIGHT"
+        }
+      ]
+    },
+    {
+      "id": "5x5_LaseGun@(1,4)_Right",
+      "name": "level_5x5_BoardWithLaserGun@(1,4)_NoTokenTobePlaced",
+      "boardSize": {
+        "widthX": 5,
+        "heightY": 5
+      },
+      "placedTokens": [
+        {
+          "id": "LaserGun_49",
+          "type": "LaserGun",
+          "orientation": "RIGHT",
+          "position": {
+            "x": 1,
+            "y": 4
+          }
+        }
+      ],
+      "unplacedTokens": [
+      ]
+    },
+    {
+      "id": "5x5_LG@(1,2)_Right_OSM@(3,2):UP",
+      "name": "level_5x5_BoardWithLaserGun@(1,2)&OneSidedMirror(3,2):Orientation/.",
+      "boardSize": {
+        "widthX": 5,
+        "heightY": 5
+      },
+      "placedTokens": [
+        {
+          "id": "LaserGun_49",
+          "type": "LaserGun",
+          "orientation": "RIGHT",
+          "position": {
+            "x": 1,
+            "y": 2
+          }
+        },
+        {
+          "id": "OSM_23",
+          "type": "OneSidedMirror",
+          "orientation": "UP",
+          "position": {
+            "x": 3,
+            "y": 2
+          }
+        }
+      ],
+      "unplacedTokens": [
+      ]
+    },
+    {
+      "id": "5x5_LG@(0,1)_Right_4xOSM_square_Block@(3.0)",
+      "name": "level_5x5_BoardWithLaserGun@(0,1)&4xOneSidedMirrorMakingSquareAndBlock@(3.0)",
+      "boardSize": {
+        "widthX": 5,
+        "heightY": 5
+      },
+      "placedTokens": [
+        {
+          "id": "LaserGun_49",
+          "type": "LaserGun",
+          "orientation": "RIGHT",
+          "position": {
+            "x": 0,
+            "y": 1
+          }
+        },
+        {
+          "id": "OSM_23",
+          "type": "OneSidedMirror",
+          "orientation": "UP",
+          "position": {
+            "x": 3,
+            "y": 1
+          }
+        },
+        {
+          "id": "OSM_27",
+          "type": "OneSidedMirror",
+          "orientation": "LEFT",
+          "position": {
+            "x": 3,
+            "y": 3
+          }
+        },
+        {
+          "id": "OSM_31",
+          "type": "OneSidedMirror",
+          "orientation": "DOWN",
+          "position": {
+            "x": 1,
+            "y": 3
+          }
+        },
+        {
+          "id": "OSM_37",
+          "type": "OneSidedMirror",
+          "orientation": "RIGHT",
+          "position": {
+            "x": 1,
+            "y": 0
+          }
+        },
+        {
+          "id": "block1",
+          "type": "Block",
+          "orientation": "RIGHT",
+          "position": {
+            "x": 3,
+            "y": 0
+          }
+        }
+      ],
+      "unplacedTokens": [
+      ]
+    }
+  ]
+}
