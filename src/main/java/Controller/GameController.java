@@ -1,4 +1,4 @@
-package Controller.Game;
+package Controller;
 
 import Model.Classes.Level;
 import Model.Classes.LevelBuilder;

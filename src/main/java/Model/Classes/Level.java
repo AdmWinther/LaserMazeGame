@@ -9,6 +9,8 @@ import java.util.Set;
 public class Level {
     private final LaserManager laserManager;
     private final TokenManager tokenManager;
+    private final int width;
+    private final int height;
 
 
     /**
@@ -20,6 +22,8 @@ public class Level {
     public Level(Token[][] placedTokens, Set<Token> unplacedTokens) {
         tokenManager = new TokenManager(placedTokens, unplacedTokens);
         laserManager = new LaserManager(tokenManager);
+        width = placedTokens.length;
+        height = placedTokens[0].length;
     }
 
     public TokenManager tokenManager() {
@@ -28,5 +32,17 @@ public class Level {
 
     public LaserManager laserManager() {
         return laserManager;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void resetLevel() {
+        tokenManager.resetLevel();
     }
 }

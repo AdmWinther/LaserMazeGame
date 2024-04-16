@@ -1,30 +1,51 @@
 package Vue.Game;
 
-import Controller.Game.GameController;
-import Model.Classes.Level;
+import Controller.GameController;
+import Controller.LevelController;
+import Vue.Level.LevelPanel;
 
 import javax.swing.*;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 
 public class Game {
 
     JFrame frame;
-    GamePanel gamePanel;
+    LevelPanel levelPanel;
     GameController gameController;
 
     public Game() {
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setResizable(false);
+        frame.setResizable(true);
         frame.setLocationRelativeTo(null);
         frame.setTitle("Laser Maze");
 
-        GameController gameController = new GameController();
+        // TODO: This is a hard-coded level. We should have a gamePanel and the user should be able to select the level they want to play.
+        gameController = new GameController();
         gameController.setCurrentLevelID("level_10x10_2TokensOnBoard_1TokenToPlace");
-        Level level = gameController.getCurrentLevel();
 
-        gamePanel = new GamePanel(level);
+        LevelController levelController = new LevelController(gameController.getCurrentLevel());
+        levelPanel = new LevelPanel(levelController);
+        frame.add(levelPanel);
+        frame.addComponentListener(new ComponentListener() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                levelPanel.resize();
+            }
 
-        frame.add(gamePanel);
+            @Override
+            public void componentMoved(ComponentEvent e) {
+            }
+
+            @Override
+            public void componentShown(ComponentEvent e) {
+            }
+
+            @Override
+            public void componentHidden(ComponentEvent e) {
+            }
+        });
         frame.pack();
     }
 

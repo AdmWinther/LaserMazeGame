@@ -1,20 +1,21 @@
-package Controller.Handlers;
+package Vue.Handlers;
 
-import Model.Classes.Level;
+import Controller.LevelController;
 import Model.Classes.Token.Token;
 import Model.Classes.Utils.Coordinate;
-import Vue.Game.GamePanel;
+import Vue.Level.LevelPanel;
+import Vue.Level.UITokens;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Rectangle2D;
 
-public class MouseHandler implements MouseListener {
+public class LevelMouseHandler implements MouseListener {
 
-    private final Level level;
-    private final int widthOffset;
-    private final int heightOffset;
-    private final GamePanel gamePanel;
+    private LevelController levelController;
+    private LevelPanel levelPanel;
+    private UITokens uiTokens;
+
     private boolean isPressed = false;
     private int startX;
     private int startY;
@@ -24,19 +25,18 @@ public class MouseHandler implements MouseListener {
     private boolean isSelectedPlaced = false;
 
 
-    public MouseHandler(GamePanel gamePanel, Level level, int widthOffset, int heightOffset) {
-        this.level = level;
-        this.widthOffset = widthOffset;
-        this.heightOffset = heightOffset;
-        this.gamePanel = gamePanel;
+    public LevelMouseHandler(LevelPanel levelPanel, LevelController levelController, UITokens uiTokens) {
+        this.levelPanel = levelPanel;
+        this.levelController = levelController;
+        this.uiTokens = uiTokens;
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         // Check if we have clicked on the reset button
-        Rectangle2D reset = gamePanel.objectsManager.getPlacedObjects().get("reset");
+        Rectangle2D reset = levelPanel.UIObjects.getPlacedObjects().get("reset");
         if (reset.contains(e.getX(), e.getY())) {
-            level.tokenManager().resetLevel();
+            levelController.resetLevel();
             System.out.println("Reset tokens");
         }
     }
@@ -47,25 +47,30 @@ public class MouseHandler implements MouseListener {
             isPressed = true;
             startX = e.getX();
             startY = e.getY();
-            int tileSize = gamePanel.tileSize;
-            int x_coordinate = (startX - widthOffset) / tileSize;
-            int y_coordinate = (startY - heightOffset) / tileSize;
+            int tileWidth = levelPanel.tileWidth;
+            int tileHeight = levelPanel.tileHeight;
 
-            int maxWidth = level.tokenManager().getWidthX();
-            int maxHeight = level.tokenManager().getHeightY();
+            int widthOffset = levelPanel.widthOffset;
+            int heightOffset = levelPanel.heightOffset;
+
+            int x_coordinate = (startX - widthOffset) / tileWidth;
+            int y_coordinate = (startY - heightOffset) / tileHeight;
+
+            int maxWidth = levelController.getWidth();
+            int maxHeight = levelController.getHeight();
 
             if (x_coordinate >= 0 && x_coordinate < maxWidth && y_coordinate >= 0 && y_coordinate < maxHeight) {
                 System.out.println("Clicked on: " + x_coordinate + ", " + y_coordinate);
                 Coordinate coordinate = new Coordinate(x_coordinate, y_coordinate);
-                Token token = level.tokenManager().getTokenAt(coordinate);
+                Token token = levelController.getTokenAtCoordinate(coordinate);
                 System.out.println("Token: " + token);
                 if (token != null && token.isMovable()) {
-                    selectedToken = level.tokenManager().getTokenAt(coordinate);
+                    selectedToken = token;
                     isSelectedPlaced = true;
                     System.out.println("Selected Token: " + selectedToken);
                 }
             } else {
-                Token token = gamePanel.tokenManager.getUnplacedTokenAt(startX, startY);
+                Token token = uiTokens.getUnplacedTokenAt(startX, startY);
                 if (token != null) {
                     selectedToken = token;
                     isSelectedPlaced = false;
@@ -78,11 +83,16 @@ public class MouseHandler implements MouseListener {
     @Override
     public void mouseReleased(MouseEvent e) {
         if (isPressed) {
+            System.out.println("Mouse released");
+
             isPressed = false;
+
             endX = e.getX();
             endY = e.getY();
 
-            int tileSize = gamePanel.tileSize;
+            int widthOffset = levelPanel.widthOffset;
+            int heightOffset = levelPanel.heightOffset;
+
             double x_coordinate = (endX - widthOffset);
             double y_coordinate = (endY - heightOffset);
 
@@ -90,35 +100,39 @@ public class MouseHandler implements MouseListener {
                 return;
             }
 
-            x_coordinate /= tileSize;
-            y_coordinate /= tileSize;
+            int tileWidth = levelPanel.tileWidth;
+            int tileHeight = levelPanel.tileHeight;
 
-            int maxWidth = level.tokenManager().getWidthX();
-            int maxHeight = level.tokenManager().getHeightY();
+            x_coordinate /= tileWidth;
+            y_coordinate /= tileHeight;
+
+            int maxWidth = levelController.getWidth();
+            int maxHeight = levelController.getHeight();
+
+            if (selectedToken == null) {
+                return;
+            }
 
             if (x_coordinate < maxWidth && y_coordinate < maxHeight) {
                 System.out.println("Released on: " + x_coordinate + ", " + y_coordinate);
                 Coordinate coordinate = new Coordinate((int) x_coordinate, (int) y_coordinate);
-                if (selectedToken != null) {
-                    Coordinate from = new Coordinate((startX - widthOffset) / tileSize, (startY - heightOffset) / tileSize);
-                    if (isSelectedPlaced) {
-                        level.tokenManager().moveToken(from, coordinate);
-                        System.out.println("Moved Token: " + selectedToken + " from " + from + " to " + coordinate);
-                    } else {
-                        level.tokenManager().transferTokenToPlacedTokens(selectedToken, coordinate);
-                        System.out.println("Placed Token: " + selectedToken + " at " + coordinate);
-                    }
+                if (isSelectedPlaced) {
+                    Coordinate from = new Coordinate((startX - widthOffset) / tileWidth, (startY - heightOffset) / tileHeight);
+                    levelController.moveToken(from, coordinate);
+                    System.out.println("Moved Token: " + selectedToken + " from " + from + " to " + coordinate);
                 } else {
-                    System.out.println("No token selected");
+                    levelController.placeToken(selectedToken, coordinate);
+                    System.out.println("Placed Token: " + selectedToken + " at " + coordinate);
                 }
             } else {
-                Rectangle2D bin = gamePanel.objectsManager.getPlacedObjects().get("bin");
+                Rectangle2D bin = levelPanel.UIObjects.getPlacedObjects().get("bin");
                 if (bin.contains(endX, endY)) {
-                    level.tokenManager().transferTokenToUnplacedTokens(selectedToken);
-                    System.out.println("Token moved to unplaced tokens");
+                    levelController.removeToken(selectedToken);
+                    System.out.println("Removed Token: " + selectedToken);
                 }
             }
-            System.out.println("Mouse released");
+
+
             selectedToken = null;
         }
     }
