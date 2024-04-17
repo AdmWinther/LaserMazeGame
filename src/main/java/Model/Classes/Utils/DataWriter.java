@@ -7,7 +7,6 @@ import Model.Classes.Token.Token;
 import Model.Classes.Token.TokenID;
 import Model.constants.FilePaths;
 import Model.constants.JsonConstants;
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -74,33 +73,32 @@ public class DataWriter {
         return true;
     }
 
-    private static void addName(@NotNull JSONObject jsonLevel, @NotNull Level level) {
+    private static void addName(JSONObject jsonLevel, Level level) {
         String name = level.name();
         jsonLevel.put(JsonConstants.ATTR_NAME, name);
     }
 
-    private static void addBoardSize(@NotNull JSONObject jsonLevel, @NotNull Level level) {
+    private static void addBoardSize(JSONObject jsonLevel, Level level) {
         JSONObject boardSize = new JSONObject();
         boardSize.put(JsonConstants.ATTR_WIDTH_X, level.width);
         boardSize.put(JsonConstants.ATTR_HEIGHT_Y, level.height);
         jsonLevel.put(JsonConstants.ATTR_BOARD_SIZE, boardSize);
     }
 
-    private static void addPlacedTokens(@NotNull JSONObject jsonLevel, @NotNull Level level) {
+    private static void addPlacedTokens(JSONObject jsonLevel, Level level) {
         Token[][] placedTokens = level.tokenManager().getPlacedTokens();
         JSONArray placedTokensJson = createPlacedTokensJson(placedTokens);
         jsonLevel.put(JsonConstants.ATTR_PLACED_TOKENS, placedTokensJson);
     }
 
-    private static void addUnplacedTokens(@NotNull JSONObject jsonLevel, @NotNull Level level) {
+    private static void addUnplacedTokens(JSONObject jsonLevel, Level level) {
         Set<Token> unplacedTokens = level.tokenManager().getUnplacedTokens();
         JSONArray unplacedTokensJson = createUnplacedTokensJson(unplacedTokens);
         jsonLevel.put(JsonConstants.ATTR_UNPLACED_TOKENS, unplacedTokensJson);
     }
 
 
-    @NotNull
-    private static JSONArray createPlacedTokensJson(@NotNull Token[][] placedTokens) {
+    private static JSONArray createPlacedTokensJson(Token[][] placedTokens) {
         JSONArray placedTokensJson = new JSONArray();
         for (int x = 0; x < placedTokens.length; x++) {
             for (int y = 0; y < placedTokens[0].length; y++) {
@@ -129,8 +127,7 @@ public class DataWriter {
         return placedTokensJson;
     }
 
-    @NotNull
-    private static JSONArray createUnplacedTokensJson(@NotNull Set<Token> unplacedTokens) {
+    private static JSONArray createUnplacedTokensJson(Set<Token> unplacedTokens) {
         JSONArray unplacedTokensJson = new JSONArray();
         for (Token token : unplacedTokens) {
             JSONObject tokenJson = new JSONObject();

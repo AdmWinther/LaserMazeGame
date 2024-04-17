@@ -4,22 +4,22 @@ public enum Orientation {
     /**
      * Up orientation
      */
-    UP("U"),
+    UP("UP"),
 
     /**
      * Down orientation
      */
-    DOWN("D"),
+    DOWN("DOWN"),
 
     /**
      * Left orientation
      */
-    LEFT("L"),
+    LEFT("LEFT"),
 
     /**
      * Right orientation
      */
-    RIGHT("R");
+    RIGHT("RIGHT");
 
     private final String value;
 
