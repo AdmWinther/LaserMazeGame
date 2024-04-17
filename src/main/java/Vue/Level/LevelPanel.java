@@ -15,7 +15,7 @@ public class LevelPanel extends JPanel implements Runnable {
     // Tile size settings
     final int originalTileSize = 16;
     // Performance settings
-    final int fps = 1;
+    final int fps = 60;
     final int frameTime = 1000 / fps;
     // Level configuration, screen size in tiles
     public int maxCol;

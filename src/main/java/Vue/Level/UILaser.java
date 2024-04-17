@@ -17,6 +17,7 @@ public class UILaser {
     private final LevelPanel levelPanel;
     private final LevelController levelController;
     private final Map<String, BufferedImage> laserImages = new HashMap<>();
+    private final int laserDuration = 1; // 1 second
     private int laserTimer = 0;
 
     public UILaser(LevelPanel levelPanel, LevelController levelController) {
@@ -40,11 +41,14 @@ public class UILaser {
     public void draw(Graphics2D g2d) {
         Set<Pair<Coordinate, Coordinate>> laserFragments = levelController.getLaserFragments();
 
-        boolean shouldGenerateLaser = levelController.shouldGenerateLaser();
-        if (!shouldGenerateLaser) {
-            return;
+        boolean shouldDisplayLaser = levelController.shouldDisplayLaser();
+        if (shouldDisplayLaser && laserTimer == 0) {
+            laserTimer += laserDuration * levelPanel.fps;
+            levelController.setShouldDisplayLaser(false);
+        } else if (laserTimer > 0) {
+            laserTimer--;
         } else {
-            levelController.setShouldGenerateLaser(false);
+            return;
         }
 
         for (Pair<Coordinate, Coordinate> laserFragment : laserFragments) {
@@ -74,15 +78,6 @@ public class UILaser {
             } else { // Horizontal laser
                 minX += levelPanel.tileWidth / 2;
                 g2d.drawImage(laserImages.get("laser_horizontal"), minX, minY, width, levelPanel.tileHeight, null);
-            }
-        }
-
-        if (laserTimer == 0) {
-            laserTimer += levelPanel.fps;
-        } else {
-            laserTimer--;
-            if (laserTimer == 0) {
-                levelController.shouldGenerateLaser();
             }
         }
 

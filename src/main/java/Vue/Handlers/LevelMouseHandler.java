@@ -58,7 +58,7 @@ public class LevelMouseHandler implements MouseListener {
             Coordinate coordinate = new Coordinate(x_coordinate, y_coordinate);
 
             if (laserGunCoordinate.equals(coordinate)) {
-                levelController.generateLaser();
+                levelController.setShouldDisplayLaser(true);
             }
         } else {
             Token token = uiTokens.getUnplacedTokenAt(e.getX(), e.getY());

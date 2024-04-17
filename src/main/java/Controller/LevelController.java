@@ -11,7 +11,7 @@ import java.util.*;
 public class LevelController {
 
     Level level;
-    boolean shouldGenerateLaser = false;
+    boolean shouldDisplayLaser = false;
 
     public LevelController(Level level) {
         this.level = level;
@@ -67,9 +67,7 @@ public class LevelController {
     public Set<Pair<Coordinate, Coordinate>> getLaserFragments() {
         Set<Pair<Coordinate, Coordinate>> set = new HashSet<>();
         List<LaserFragment> fragments = level.generateLaser().getFragments();
-
-        System.out.println("Number of fragments: " + fragments.size());
-        System.out.println("Fragments: " + fragments);
+        
         for (LaserFragment fragment : fragments) {
             if (fragment == null) {
                 continue;
@@ -84,15 +82,11 @@ public class LevelController {
         return level.tokenManager().findLaserGunPosition();
     }
 
-    public void generateLaser() {
-        shouldGenerateLaser = true;
+    public boolean shouldDisplayLaser() {
+        return shouldDisplayLaser;
     }
 
-    public boolean shouldGenerateLaser() {
-        return shouldGenerateLaser;
-    }
-
-    public void setShouldGenerateLaser(boolean b) {
-        shouldGenerateLaser = b;
+    public void setShouldDisplayLaser(boolean b) {
+        shouldDisplayLaser = b;
     }
 }
