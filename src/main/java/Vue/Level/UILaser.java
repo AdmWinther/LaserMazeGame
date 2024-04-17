@@ -3,6 +3,7 @@ package Vue.Level;
 import Controller.LevelController;
 import Model.Classes.Utils.Coordinate;
 import Model.Classes.Utils.Pair;
+import Vue.Interfaces.Drawable;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -12,7 +13,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-public class UILaser {
+public class UILaser implements Drawable {
 
     private final LevelPanel levelPanel;
     private final LevelController levelController;
@@ -39,8 +40,6 @@ public class UILaser {
     }
 
     public void draw(Graphics2D g2d) {
-
-
         boolean shouldDisplayLaser = levelController.shouldDisplayLaser();
         if (shouldDisplayLaser && laserTimer == 0) {
             laserTimer += laserDuration * levelPanel.fps;

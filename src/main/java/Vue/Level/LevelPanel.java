@@ -28,12 +28,12 @@ public class LevelPanel extends JPanel implements Runnable {
     // Controllers
     public LevelController levelController;
 
-    // UI Tiles, Objects and Tokens
+    // Objects to draw
     public UIObjects UIObjects;
     public UITokens UITokens;
     public UITiles UITiles;
     public UILaser UILaser;
-
+    private LevelAnimations levelAnimations;
 
     public LevelMouseHandler levelMouseHandler;
     public TokenMouseHandler tokenMouseHandler;
@@ -72,16 +72,18 @@ public class LevelPanel extends JPanel implements Runnable {
         UITiles = new UITiles(this, levelController);
         UITokens = new UITokens(this, levelController);
         UILaser = new UILaser(this, levelController);
+        levelAnimations = new LevelAnimations(this);
 
         levelMouseHandler = new LevelMouseHandler(this, levelController);
         addMouseListener(levelMouseHandler);
         tokenMouseHandler = new TokenMouseHandler(this, levelController, UITokens);
         addMouseListener(tokenMouseHandler);
-        tokenMouseMotionHandler = new TokenMouseMotionHandler(this, levelController, UITokens, tokenMouseHandler);
+        tokenMouseMotionHandler = new TokenMouseMotionHandler(UITokens, tokenMouseHandler);
         addMouseMotionListener(tokenMouseMotionHandler);
 
         setFocusable(true);
         requestFocus();
+
 
         start();
     }
@@ -131,7 +133,7 @@ public class LevelPanel extends JPanel implements Runnable {
         UILaser.draw(g2d);
         UIObjects.draw(g2d);
         UITokens.draw(g2d);
-
+        levelAnimations.draw(g2d);
 
         g2d.dispose();
     }
@@ -156,7 +158,10 @@ public class LevelPanel extends JPanel implements Runnable {
 
         widthOffset = (maxCol - boardWidth) / 2 * tileWidth;
         heightOffset = (maxRow - boardHeight) / 2 * tileHeight;
+    }
 
+    public int getFPS() {
+        return fps;
     }
 }
 

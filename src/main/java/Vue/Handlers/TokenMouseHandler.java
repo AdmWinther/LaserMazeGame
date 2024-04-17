@@ -1,8 +1,10 @@
 package Vue.Handlers;
 
 import Controller.LevelController;
+import Model.Classes.Token.OrientedToken;
 import Model.Classes.Token.Token;
 import Model.Classes.Utils.Coordinate;
+import Model.Classes.Utils.Orientation;
 import Model.constants.MouseConstants;
 import Vue.Level.LevelPanel;
 import Vue.Level.UITokens;
@@ -41,6 +43,8 @@ public class TokenMouseHandler implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        selectedToken = null;
+        uiTokens.resetDraggedToken();
 
         int tileWidth = levelPanel.tileWidth;
         int tileHeight = levelPanel.tileHeight;
@@ -61,6 +65,15 @@ public class TokenMouseHandler implements MouseListener {
 
             if (laserGunCoordinate.equals(coordinate)) {
                 levelController.setShouldDisplayLaser(true);
+            } else {
+                Token other = levelController.getTokenAtCoordinate(coordinate);
+
+                if (other != null && other.isMovable() && other instanceof OrientedToken) {
+                    // TODO create method at another place ?
+                    OrientedToken orientedToken = (OrientedToken) other;
+                    Orientation nextOrientation = Orientation.values()[(orientedToken.getOrientation().ordinal() + 1) % 4];
+                    orientedToken.setOrientation(nextOrientation);
+                }
             }
         }
     }
@@ -106,6 +119,8 @@ public class TokenMouseHandler implements MouseListener {
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        uiTokens.resetDraggedToken();
+
         if (isPressed) {
             System.out.println("Mouse released");
 
@@ -115,7 +130,6 @@ public class TokenMouseHandler implements MouseListener {
             int endY = e.getY();
 
             if (Math.abs(endX - startX) < CLICK_MOVEMENT_THRESHOLD && Math.abs(endY - startY) < CLICK_MOVEMENT_THRESHOLD) {
-                uiTokens.resetDraggedToken();
                 mouseClicked(e);
                 return;
             }
@@ -127,7 +141,6 @@ public class TokenMouseHandler implements MouseListener {
             double y_coordinate = (endY - heightOffset);
 
             if (x_coordinate < 0 || y_coordinate < 0) {
-                uiTokens.resetDraggedToken();
                 return;
             }
 
@@ -141,7 +154,6 @@ public class TokenMouseHandler implements MouseListener {
             int maxHeight = levelController.getHeight();
 
             if (selectedToken == null) {
-                uiTokens.resetDraggedToken();
                 return;
             }
 
@@ -166,8 +178,6 @@ public class TokenMouseHandler implements MouseListener {
 
             selectedToken = null;
         }
-
-        uiTokens.resetDraggedToken();
     }
 
     @Override

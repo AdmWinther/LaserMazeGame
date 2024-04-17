@@ -25,7 +25,7 @@ public class Game {
 
         // TODO: This is a hard-coded level. We should have a gamePanel and the user should be able to select the level they want to play.
         gameController = new GameController();
-        gameController.setCurrentLevelID("level3");
+        gameController.setCurrentLevelID("10x10_AlmostCompleted");
 
         LevelController levelController = new LevelController(gameController.getCurrentLevel());
         levelPanel = new LevelPanel(levelController);
@@ -33,6 +33,7 @@ public class Game {
         frame.addComponentListener(new ComponentListener() {
             @Override
             public void componentResized(ComponentEvent e) {
+                // TODO find better way
                 frame.setSize(frame.getWidth(), (int) (frame.getWidth() / ASPECT_RATIO));
 
                 levelPanel.resize();

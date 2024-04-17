@@ -15,14 +15,10 @@ import java.awt.event.MouseMotionListener;
  * @author Nathan Gromb
  */
 public class TokenMouseMotionHandler implements MouseMotionListener {
-    private final LevelController levelController;
-    private final LevelPanel levelPanel;
     private final UITokens uiTokens;
     private final TokenMouseHandler tokenMouseHandler;
 
-    public TokenMouseMotionHandler(LevelPanel levelPanel, LevelController levelController, UITokens uiTokens, TokenMouseHandler tokenMouseHandler) {
-        this.levelPanel = levelPanel;
-        this.levelController = levelController;
+    public TokenMouseMotionHandler(UITokens uiTokens, TokenMouseHandler tokenMouseHandler) {
         this.uiTokens = uiTokens;
         this.tokenMouseHandler = tokenMouseHandler;
     }

@@ -5,6 +5,7 @@ import Model.Classes.Token.*;
 import Model.Classes.Utils.Coordinate;
 import Model.Classes.Utils.Orientation;
 import Model.Classes.Utils.Pair;
+import Vue.Interfaces.Drawable;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -21,7 +22,7 @@ import java.util.Set;
  * @see LevelPanel
  * @author Léonard Amsler, Nathan Gromb
  */
-public class UITokens {
+public class UITokens implements Drawable {
 
     LevelController levelController;
     Map<Token, Rectangle2D> unPlacedTokenRectangles = new HashMap<>();
