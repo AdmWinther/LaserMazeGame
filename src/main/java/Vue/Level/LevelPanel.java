@@ -2,6 +2,8 @@ package Vue.Level;
 
 import Controller.LevelController;
 import Vue.Handlers.LevelMouseHandler;
+import Vue.Handlers.TokenMouseHandler;
+import Vue.Handlers.TokenMouseMotionHandler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,6 +36,8 @@ public class LevelPanel extends JPanel implements Runnable {
 
 
     public LevelMouseHandler levelMouseHandler;
+    public TokenMouseHandler tokenMouseHandler;
+    public TokenMouseMotionHandler tokenMouseMotionHandler;
     // Offsets, number of pixels to the top left corner of the level board
     public int widthOffset;
     public int heightOffset;
@@ -69,8 +73,12 @@ public class LevelPanel extends JPanel implements Runnable {
         UITokens = new UITokens(this, levelController);
         UILaser = new UILaser(this, levelController);
 
-        levelMouseHandler = new LevelMouseHandler(this, levelController, UITokens);
+        levelMouseHandler = new LevelMouseHandler(this, levelController);
         addMouseListener(levelMouseHandler);
+        tokenMouseHandler = new TokenMouseHandler(this, levelController, UITokens);
+        addMouseListener(tokenMouseHandler);
+        tokenMouseMotionHandler = new TokenMouseMotionHandler(this, levelController, UITokens, tokenMouseHandler);
+        addMouseMotionListener(tokenMouseMotionHandler);
 
         setFocusable(true);
         requestFocus();
@@ -121,8 +129,8 @@ public class LevelPanel extends JPanel implements Runnable {
 
         UITiles.draw(g2d);
         UILaser.draw(g2d);
-        UITokens.draw(g2d);
         UIObjects.draw(g2d);
+        UITokens.draw(g2d);
 
 
         g2d.dispose();

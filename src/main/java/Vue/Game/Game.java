@@ -10,6 +10,8 @@ import java.awt.event.ComponentListener;
 
 public class Game {
 
+    private static final double ASPECT_RATIO = (double) 528 / 432;
+
     JFrame frame;
     LevelPanel levelPanel;
     GameController gameController;
@@ -31,6 +33,8 @@ public class Game {
         frame.addComponentListener(new ComponentListener() {
             @Override
             public void componentResized(ComponentEvent e) {
+                frame.setSize(frame.getWidth(), (int) (frame.getWidth() / ASPECT_RATIO));
+
                 levelPanel.resize();
             }
 
