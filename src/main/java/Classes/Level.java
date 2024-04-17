@@ -1,48 +1,32 @@
 package Classes;
 
+import Classes.Laser.LaserManager;
 import Classes.Token.Token;
+import Classes.Token.TokenManager;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class Level {
+    private final TokenManager tokenManager;
+    private final LaserManager laserManager;
+
 
     /**
-     * Board object
+     * Constructor for Level class
+     * @param placedTokens the tokens that are already placed on the board
+     * @param unplacedTokens the tokens that are not placed on the board
      */
-    private final Board board;
-
-    /**
-     * ArrayList of Token objects
-     */
-    private final Set<Token> tokens;
-
-    /**
-     * Parameterized constructor
-     *
-     * @param board Board - Board object
-     * @author Léonard Amsler - s231715
-     */
-    public Level(Board board) {
-        this.board = board;
-        this.tokens = new HashSet<>();
+    public Level(Token[][] placedTokens, Set<Token> unplacedTokens) {
+        tokenManager = new TokenManager(placedTokens, unplacedTokens);
+        laserManager = new LaserManager(tokenManager);
+    }
+    public TokenManager tokenManager() {
+        return tokenManager;
     }
 
-    /**
-     * Getter for board
-     *
-     * @return Board - Board object
-     * @author Léonard Amsler - s231715
-     */
-    public Board getBoard() {
-        return board;
+    public LaserManager laserManager() {
+        return laserManager;
     }
 
-    public boolean addToken(Token token) {
-        return tokens.add(token);
-    }
-
-    public Set<Token> getTokens() {
-        return tokens;
-    }
 }
+

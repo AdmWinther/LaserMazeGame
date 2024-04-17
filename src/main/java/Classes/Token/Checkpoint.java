@@ -2,6 +2,9 @@ package Classes.Token;
 
 import Classes.Utils.Orientation;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Checkpoint extends Token{
     boolean checked;
 
@@ -11,9 +14,9 @@ public class Checkpoint extends Token{
     }
 
     @Override
-    public Orientation propagateLaser(Orientation orientation) {
+    public Set<Orientation> propagateLaser(Orientation orientation) {
         checked = true;  //if the propagate laser method is called that means the checkpoint was passed
-        return orientation;
+        return null;
     }
 
     public boolean isChecked(){

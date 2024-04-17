@@ -2,6 +2,8 @@ package Classes.Token;
 
 import Classes.Utils.Orientation;
 
+import java.util.Set;
+
 /**
  * Token is an abstract class that represents a token in the game.
  */
@@ -39,5 +41,5 @@ public abstract class Token {
         this.movable = movable;
     }
 
-    public abstract Orientation propagateLaser(Orientation orientation);
+    public abstract Set<Orientation> propagateLaser(Orientation orientation);
 }

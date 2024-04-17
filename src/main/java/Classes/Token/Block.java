@@ -1,7 +1,8 @@
 package Classes.Token;
 
-import Classes.Token.Token;
 import Classes.Utils.Orientation;
+
+import java.util.Set;
 
 /**
  * Block is a class that represents a block token in the game.
@@ -21,7 +22,7 @@ public final class Block extends Token {
     }
 
     @Override
-    public Orientation propagateLaser(Orientation orientation) {
+    public Set<Orientation> propagateLaser(Orientation orientation) {
         return null;
     }
 }
