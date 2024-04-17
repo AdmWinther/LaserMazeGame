@@ -98,7 +98,7 @@ public class TokenManager {
         return false;
     }
 
-    public TokenkenAt(Coordinate position) {
+    public Token getTokenAt(Coordinate position) {
         if (checkAttributes()) return null;
         if (checkBounds(position)) return null;
         return placedTokens[position.x()][position.y()];
