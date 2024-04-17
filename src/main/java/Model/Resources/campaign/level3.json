@@ -61,5 +61,10 @@
     }
   ],
   "unplacedTokens": [
+    {
+      "tokenId": "OSM_76",
+      "type": "OneSidedMirror",
+      "orientation": "RIGHT"
+    }
   ]
 }
