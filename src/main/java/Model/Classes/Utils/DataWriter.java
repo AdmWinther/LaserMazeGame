@@ -1,7 +1,7 @@
 package Model.Classes.Utils;
 
-import Model.Classes.Level;
-import Model.Classes.LevelID;
+import Model.Classes.Level.CampaignLevel;
+import Model.Classes.Level.LevelID;
 import Model.Classes.Token.OrientedToken;
 import Model.Classes.Token.Token;
 import Model.Classes.Token.TokenID;
@@ -24,7 +24,7 @@ public class DataWriter {
      * @param level The level to be written
      * @return True if the level was written successfully, false otherwise
      */
-    public static boolean write(Level level) {
+    public static boolean write(CampaignLevel level) {
         return write(level, FilePaths.SANDBOX_LEVELS_PATH);
     }
 
@@ -37,7 +37,7 @@ public class DataWriter {
      *                      | USE FilePaths.CAMPAIGN_LEVELS_PATH for campaign levels
      * @return True if the level was written successfully, false otherwise
      */
-    public static boolean write(Level level, String parentDirPath) {
+    public static boolean write(CampaignLevel level, String parentDirPath) {
 
         JSONObject jsonLevel = new JSONObject();
         addName(jsonLevel, level);
@@ -73,25 +73,25 @@ public class DataWriter {
         return true;
     }
 
-    private static void addName(JSONObject jsonLevel, Level level) {
+    private static void addName(JSONObject jsonLevel, CampaignLevel level) {
         String name = level.name();
         jsonLevel.put(JsonConstants.ATTR_NAME, name);
     }
 
-    private static void addBoardSize(JSONObject jsonLevel, Level level) {
+    private static void addBoardSize(JSONObject jsonLevel, CampaignLevel level) {
         JSONObject boardSize = new JSONObject();
         boardSize.put(JsonConstants.ATTR_WIDTH_X, level.width);
         boardSize.put(JsonConstants.ATTR_HEIGHT_Y, level.height);
         jsonLevel.put(JsonConstants.ATTR_BOARD_SIZE, boardSize);
     }
 
-    private static void addPlacedTokens(JSONObject jsonLevel, Level level) {
+    private static void addPlacedTokens(JSONObject jsonLevel, CampaignLevel level) {
         Token[][] placedTokens = level.tokenManager().getPlacedTokens();
         JSONArray placedTokensJson = createPlacedTokensJson(placedTokens);
         jsonLevel.put(JsonConstants.ATTR_PLACED_TOKENS, placedTokensJson);
     }
 
-    private static void addUnplacedTokens(JSONObject jsonLevel, Level level) {
+    private static void addUnplacedTokens(JSONObject jsonLevel, CampaignLevel level) {
         Set<Token> unplacedTokens = level.tokenManager().getUnplacedTokens();
         JSONArray unplacedTokensJson = createUnplacedTokensJson(unplacedTokens);
         jsonLevel.put(JsonConstants.ATTR_UNPLACED_TOKENS, unplacedTokensJson);

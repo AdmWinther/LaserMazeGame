@@ -1,9 +1,9 @@
 package step;
 
 import Model.Classes.Laser.Laser;
-import Model.Classes.Level;
-import Model.Classes.LevelBuilder;
-import Model.Classes.LevelID;
+import Model.Classes.Level.CampaignLevel;
+import Model.Classes.Level.LevelBuilder;
+import Model.Classes.Level.LevelID;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -11,7 +11,7 @@ import io.cucumber.java.en.When;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class LaserSteps {
-    private Level level;
+    private CampaignLevel level;
     private Laser laser;
 
     @Given("To test LaserGenerator, I have the level with ID {string}")

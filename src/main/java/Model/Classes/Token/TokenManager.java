@@ -3,6 +3,7 @@ package Model.Classes.Token;
 import Model.Classes.Utils.Coordinate;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -24,13 +25,65 @@ public class TokenManager {
         this.unplacedTokens = new HashSet<>(unplacedTokens);
     }
 
+
+    /**
+     * Add a token to the placed tokens table at the given position
+     * @param token the token to place
+     * @param position the given position
+     * @return true if the token has been placed successfully, false otherwise
+     */
+    public boolean addToPlacedTokens(Token token, Coordinate position){
+        if (Objects.isNull(token)) return false;
+        if (Objects.isNull(position)) return false;
+        if (checkBounds(position)) return false;
+        if (checkAttributes()) return false;
+        if (!isEmpty(position)) return false;
+
+        placedTokens[position.x()][position.y()] = token;
+        return true;
+    }
+
+    /**
+     * Removes the placed token at given position
+     * @param position the position where the token should be removed
+     * @return the Token that has been removed, null otherwise
+     */
+    public Token removeFromPlacedTokens(Coordinate position) {
+        if (Objects.isNull(position)) return null;
+        if (checkBounds(position)) return null;
+        if (checkAttributes()) return null;
+
+        Token token = placedTokens[position.x()][position.y()];
+        placedTokens[position.x()][position.y()] = null;
+        return token;
+    }
+
+    /**
+     * Add the token to the unplaced tokens Set
+     * @param token the token to add
+     * @return true if the token has been added
+     */
+    public boolean addToUnplacedTokens(Token token){
+        if (Objects.isNull(token)) return false;
+        return unplacedTokens.add(token);
+    }
+
+    /**
+     * Removes the token from the unplaced tokens Set
+     * @param token the token to remove
+     * @return true if the token has been removed, false otherwise
+     */
+    public boolean removeFromUnplacedTokens(Token token) {
+        if (Objects.isNull(token)) return false;
+        return unplacedTokens.remove(token);
+    }
+
     /**
      * Checks if the position is out of bounds.
-     *
      * @param position The position to be checked.
      * @return True if the position is out of bounds, false otherwise.
      */
-    private boolean checkBounds(Coordinate position) {
+    private  boolean checkBounds(Coordinate position) {
         if (position == null) return true;
         return position.x() < 0
                 || position.x() >= placedTokens.length
@@ -43,7 +96,7 @@ public class TokenManager {
     }
 
     /**
-     * Checks if the attributes of the TokenManager class are null.
+     * Checks if the attributes of the StrictTokenManager class are null.
      *
      * @return True if any of the attributes is null, false otherwise.
      */
@@ -152,7 +205,6 @@ public class TokenManager {
     }
 
     /**
-     *
      * @return a copy of the placedTokens array
      */
     public Token[][] getPlacedTokens() {
@@ -180,5 +232,6 @@ public class TokenManager {
     public Coordinate findTargetPosition() {
         return findTypePosition(Target.class);
     }
+
 
 }

@@ -1,7 +1,7 @@
 package Controller;
 
 import Model.Classes.Laser.LaserFragment;
-import Model.Classes.Level;
+import Model.Classes.Level.CampaignLevel;
 import Model.Classes.Token.Token;
 import Model.Classes.Utils.Coordinate;
 import Model.Classes.Utils.Pair;
@@ -10,10 +10,10 @@ import java.util.*;
 
 public class LevelController {
 
-    Level level;
+    CampaignLevel level;
     boolean shouldDisplayLaser = false;
 
-    public LevelController(Level level) {
+    public LevelController(CampaignLevel level) {
         this.level = level;
     }
 

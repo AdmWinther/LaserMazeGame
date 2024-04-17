@@ -1,8 +1,8 @@
 package step;
 
-import Model.Classes.Level;
-import Model.Classes.LevelBuilder;
-import Model.Classes.LevelID;
+import Model.Classes.Level.CampaignLevel;
+import Model.Classes.Level.LevelBuilder;
+import Model.Classes.Level.LevelID;
 import Model.Classes.Token.LaserGun;
 import Model.Classes.Token.OneSidedMirror;
 import Model.Classes.Token.OrientedToken;
@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class DataReaderSteps {
     LevelID levelID;
-    Level level;
+    CampaignLevel level;
 
     @Given("I have a level stored with a five-by-five grid, empty, with no token")
     public void iHaveALevelStoredWithAFiveByFiveGridEmptyWithNoToken() {

@@ -1,4 +1,4 @@
-package Model.Classes;
+package Model.Classes.Level;
 
 import Model.Classes.Token.Token;
 import Model.Classes.Utils.DataReader;
@@ -10,9 +10,9 @@ import java.util.Set;
  * A class that builds a Level from their ID
  *
  * @author Hugo Demule
- * @see Level
+ * @see CampaignLevel
  */
-public class LevelBuilder implements Builder<Level> {
+public class LevelBuilder implements Builder<CampaignLevel> {
     private LevelID id;
 
     /**
@@ -40,15 +40,15 @@ public class LevelBuilder implements Builder<Level> {
      *
      * @return the level built from the ID or null if there was an error
      * @author Hugo Demule
-     * @see Level
+     * @see CampaignLevel
      */
     @Override
-    public Level build() {
+    public CampaignLevel build() {
         try {
             String name = DataReader.readLevelIDName(id);
             Token[][] placedTokens = DataReader.readLevelIDPlacedTokens(id);
             Set<Token> unplacedTokens = DataReader.readLevelIDUnplacedTokens(id);
-            return new Level(name, placedTokens, unplacedTokens);
+            return new CampaignLevel(name, placedTokens, unplacedTokens);
         } catch (Exception e) {
             e.printStackTrace();
         }

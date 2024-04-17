@@ -2,12 +2,13 @@ package Model.Classes;
 
 import Model.Classes.Laser.Laser;
 import Model.Classes.Laser.LaserFragment;
+import Model.Classes.Level.CampaignLevel;
 import Model.Classes.Token.Target;
 import Model.Classes.Utils.Coordinate;
 import Model.Classes.Utils.Orientation;
 
 public class SolutionChecker {
-    public static boolean check(Level level) {
+    public static boolean check(CampaignLevel level) {
         Laser laser = level.laserManager().generateLaser();
 
         Coordinate targetPos;

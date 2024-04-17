@@ -1,5 +1,6 @@
 package Model.Classes;
 
+import Model.Classes.Level.CampaignLevel;
 import Model.Classes.Token.Block;
 import Model.Classes.Token.Token;
 import Model.Classes.Utils.Coordinate;
@@ -8,7 +9,7 @@ public class Printer {
     private int width;
     private int height;
 
-    public String draw(Level level) {
+    public String draw(CampaignLevel level) {
         this.height = level.height;
         this.width = level.width;
 
@@ -33,7 +34,7 @@ public class Printer {
         return (boardPrint.toString());
     }
 
-    private StringBuilder drawBoardGrid(Level level) {
+    private StringBuilder drawBoardGrid(CampaignLevel level) {
         StringBuilder grid = new StringBuilder();
         for (int i = 0; i < this.height; i++) {
             grid.append(" ").append(i).append("|");

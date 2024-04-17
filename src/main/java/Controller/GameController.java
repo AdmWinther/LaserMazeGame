@@ -1,14 +1,14 @@
 package Controller;
 
-import Model.Classes.Level;
-import Model.Classes.LevelBuilder;
-import Model.Classes.LevelID;
+import Model.Classes.Level.CampaignLevel;
+import Model.Classes.Level.LevelBuilder;
+import Model.Classes.Level.LevelID;
 
 public class GameController {
 
     private LevelBuilder levelBuilder;
     private LevelID currentLevelID;
-    private Level currentLevel;
+    private CampaignLevel currentLevel;
 
     public GameController() {
     }
@@ -23,7 +23,7 @@ public class GameController {
         this.currentLevel = this.levelBuilder.build();
     }
 
-    public Level getCurrentLevel() {
+    public CampaignLevel getCurrentLevel() {
         return this.currentLevel;
     }
 }

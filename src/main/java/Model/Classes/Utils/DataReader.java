@@ -1,6 +1,6 @@
 package Model.Classes.Utils;
 
-import Model.Classes.LevelID;
+import Model.Classes.Level.LevelID;
 import Model.Classes.Token.*;
 import Model.constants.FilePaths;
 import Model.constants.JsonConstants;
