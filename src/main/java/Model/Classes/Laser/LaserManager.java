@@ -16,14 +16,19 @@ public class LaserManager {
     private Coordinate laserTipCoordinate;
     private boolean laserContinue = false;
 
-    public LaserManager(TokenManager tokenManager) {
+    private final int boardWidth;
+    private final int boardHeight;
+
+    public LaserManager(TokenManager tokenManager, int boardWidth, int boardHeight) {
         this.tokenManager = tokenManager;
         this.laserContinue = false;
+        this.boardWidth = boardWidth;
+        this.boardHeight = boardHeight;
     }
 
     private boolean isCoordinateOnTheBoard(Coordinate coordinate) {
-        if (coordinate.x() < tokenManager.getWidthX() && coordinate.x() >= 0) {
-            return coordinate.y() < tokenManager.getHeightY() && coordinate.y() >= 0;
+        if (coordinate.x() < boardWidth && coordinate.x() >= 0) {
+            return coordinate.y() < boardHeight && coordinate.y() >= 0;
         }
         return false;
     }
@@ -62,7 +67,7 @@ public class LaserManager {
     }
 
     private LaserFragment generateLaserFragmentFromLaserGun() {
-        LaserGun laserGun = tokenManager.getLaserGun();
+        LaserGun laserGun = (LaserGun)tokenManager.getTokenAt(tokenManager.findLaserGunPosition());
         Coordinate laserGunPosition = tokenManager.findLaserGunPosition();
         this.laserTipOrientation = laserGun.getOrientation();
         Coordinate laserFragmentTo = oneCellInDirectionOfOrientation(laserGunPosition);

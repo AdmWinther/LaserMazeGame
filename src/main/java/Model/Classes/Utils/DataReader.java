@@ -140,26 +140,6 @@ public class DataReader {
 
 
     /**
-     * Extracts the LevelIDs from the game data files
-     * <<<<<<< HEAD
-     *
-     * @param path the path to the corresponding JSON file
-     *             =======
-     *             >>>>>>> origin/LevelBuilder
-     * @return a list of LevelIDs
-     * @throws NullPointerException if the path to the JSON file does not exist
-     * @author Hugo Demule
-     */
-    public static List<LevelID> extractLevelIDs(String path) throws NullPointerException {
-        JSONArray jsonIDs = Objects.requireNonNull(json(path)).getJSONArray(JsonConstants.ATTR_LEVELS_IDS);
-        List<LevelID> levelIDS = new ArrayList<>();
-
-        for (int i = 0; i < jsonIDs.length(); i++) levelIDS.add(new LevelID(jsonIDs.getString(i)));
-
-        return levelIDS;
-    }
-
-    /**
      * Reads the name of a level given its ID
      *
      * @param id the ID of the level
