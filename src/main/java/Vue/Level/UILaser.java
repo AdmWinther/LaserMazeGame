@@ -38,7 +38,7 @@ public class UILaser {
     }
 
     public void draw(Graphics2D g2d) {
-        Set<Pair<Coordinate, Coordinate>> laserFragments = levelController.getLaserFragments();
+
 
         boolean shouldGenerateLaser = levelController.shouldGenerateLaser();
         if (!shouldGenerateLaser) {
@@ -46,6 +46,8 @@ public class UILaser {
         } else {
             levelController.setShouldGenerateLaser(false);
         }
+
+        Set<Pair<Coordinate, Coordinate>> laserFragments = levelController.getLaserFragments();
 
         for (Pair<Coordinate, Coordinate> laserFragment : laserFragments) {
             Coordinate start = laserFragment.first();

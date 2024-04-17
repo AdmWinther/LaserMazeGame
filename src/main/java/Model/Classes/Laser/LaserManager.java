@@ -34,16 +34,16 @@ public class LaserManager {
     }
 
     private Coordinate oneCellInDirectionOfOrientation(Coordinate from) {
-        if (this.laserTipOrientation == Orientation.UP) return new Coordinate(from.x(), from.y() + 1);
-        if (this.laserTipOrientation == Orientation.DOWN) return new Coordinate(from.x(), from.y() - 1);
+        if (this.laserTipOrientation == Orientation.UP) return new Coordinate(from.x(), from.y() - 1);
+        if (this.laserTipOrientation == Orientation.DOWN) return new Coordinate(from.x(), from.y() + 1);
         if (this.laserTipOrientation == Orientation.RIGHT) return new Coordinate(from.x() + 1, from.y());
         if (this.laserTipOrientation == Orientation.LEFT) return new Coordinate(from.x() - 1, from.y());
         return null;
     }
 
     private Coordinate oneCellInDirectionOfOrientation(Coordinate from, Orientation newOrientation) {
-        if (newOrientation == Orientation.UP) return new Coordinate(from.x(), from.y() + 1);
-        if (newOrientation == Orientation.DOWN) return new Coordinate(from.x(), from.y() - 1);
+        if (newOrientation == Orientation.UP) return new Coordinate(from.x(), from.y() - 1);
+        if (newOrientation == Orientation.DOWN) return new Coordinate(from.x(), from.y() + 1);
         if (newOrientation == Orientation.RIGHT) return new Coordinate(from.x() + 1, from.y());
         if (newOrientation == Orientation.LEFT) return new Coordinate(from.x() - 1, from.y());
         return null;
@@ -111,11 +111,17 @@ public class LaserManager {
         laser.addFragment(generateLaserFragmentFromLaserGun());   //If laser is not shooting at a wall or a block it generates the first fragment.
         while (laserContinue) {    //if laserFragments is empty, laser is shooting in the wrong direction.
             Token tokenAtLaserTipCoordinate = tokenManager.getTokenAt(laserTipCoordinate);
+            LaserFragment fragment;
             if (tokenAtLaserTipCoordinate == null) {
-                laser.addFragment(continueLaserInSameDirectionOneCell());
+                fragment = continueLaserInSameDirectionOneCell();
             } else {
-                laser.addFragment(generateTokenLaserPropagation());
+                fragment = generateTokenLaserPropagation();
             }
+            if (fragment == null){
+                return laser;
+            }
+            laser.addFragment(fragment);
+            System.out.println("New laser fragment added: " + fragment);
         }
         return laser;
     }
