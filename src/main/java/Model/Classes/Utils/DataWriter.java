@@ -81,8 +81,8 @@ public class DataWriter {
 
     private static void addBoardSize(@NotNull JSONObject jsonLevel, @NotNull Level level) {
         JSONObject boardSize = new JSONObject();
-        boardSize.put(JsonConstants.ATTR_WIDTH_X, level.tokenManager().getWidthX());
-        boardSize.put(JsonConstants.ATTR_HEIGHT_Y, level.tokenManager().getHeightY());
+        boardSize.put(JsonConstants.ATTR_WIDTH_X, level.width);
+        boardSize.put(JsonConstants.ATTR_HEIGHT_Y, level.height);
         jsonLevel.put(JsonConstants.ATTR_BOARD_SIZE, boardSize);
     }
 

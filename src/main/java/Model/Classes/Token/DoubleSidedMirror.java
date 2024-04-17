@@ -12,14 +12,14 @@ public class DoubleSidedMirror extends OrientedToken {
 
     /*
     Double-sided mirror can have only these two positions // and \\
-    The position // is considered left and up
-    The position \\ is considered right and down
+    The position // is considered left and up->RIGHT
+    The position \\ is considered right and down -> UP and Down
     */
     @Override
     public Set<Orientation> propagateLaser(Orientation incomingLaserOrientation) {
 
         Set<Orientation> propagatedLaser = new HashSet<>();
-        if (this.getOrientation() == Orientation.LEFT || this.getOrientation() == Orientation.UP) {
+        if (this.getOrientation() == Orientation.LEFT || this.getOrientation() == Orientation.RIGHT) {
             // doubleSidedMirror is in the position //
             if (incomingLaserOrientation == Orientation.UP) propagatedLaser.add(Orientation.RIGHT);
             if (incomingLaserOrientation == Orientation.DOWN) propagatedLaser.add(Orientation.LEFT);

@@ -17,7 +17,7 @@
     {
       "tokenId": "OSM_23",
       "type": "OneSidedMirror",
-      "orientation": "UP",
+      "orientation": "DOWN",
       "position": {
         "x": 3,
         "y": 1
@@ -35,7 +35,7 @@
     {
       "tokenId": "OSM_31",
       "type": "OneSidedMirror",
-      "orientation": "DOWN",
+      "orientation": "UP",
       "position": {
         "x": 1,
         "y": 3

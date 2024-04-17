@@ -9,8 +9,8 @@ public class Printer {
     private int height;
 
     public String draw(Level level) {
-        this.height = level.tokenManager().getHeightY();
-        this.width = level.tokenManager().getWidthX();
+        this.height = level.height;
+        this.width = level.width;
 
         //initializing the boardPrint
         StringBuilder boardPrint = new StringBuilder();
