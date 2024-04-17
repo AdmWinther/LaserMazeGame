@@ -60,13 +60,6 @@ public class LevelMouseHandler implements MouseListener {
             if (laserGunCoordinate.equals(coordinate)) {
                 levelController.setShouldDisplayLaser(true);
             }
-        } else {
-            Token token = uiTokens.getUnplacedTokenAt(e.getX(), e.getY());
-            if (token != null) {
-                selectedToken = token;
-                isSelectedPlaced = false;
-                System.out.println("Selected Token: " + selectedToken);
-            }
         }
     }
 
