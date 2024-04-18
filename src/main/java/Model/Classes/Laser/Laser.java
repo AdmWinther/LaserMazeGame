@@ -1,11 +1,16 @@
 package Model.Classes.Laser;
 
+import Model.Classes.Utils.Coordinate;
+import Model.Classes.Utils.Orientation;
+
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class Laser {
     private final List<LaserFragment> fragments;
+
+    private Coordinate laserTipCoordinate;
 
     public Laser() {
         fragments = new ArrayList<>();
@@ -27,5 +32,19 @@ public class Laser {
         }
 
         return false;
+    }
+
+    public Coordinate getLaserTipCoordinate(){
+        return this.laserTipCoordinate;
+    }
+
+    public void setLaserTipCoordinate(Coordinate coordinate){
+        this.laserTipCoordinate = coordinate;
+    }
+
+    public Orientation laserTipOrientation(){
+        int index = this.fragments.size();
+        //todo: Generate the Orientation based on the latest fragment.
+        return Orientation.UP;
     }
 }
