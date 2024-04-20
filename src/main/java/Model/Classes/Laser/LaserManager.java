@@ -1,8 +1,8 @@
 package Model.Classes.Laser;
 
 import Model.Classes.Token.LaserGun;
-import Model.Classes.Token.StrictTokenManager;
 import Model.Classes.Token.Token;
+import Model.Classes.Token.TokenManager;
 import Model.Classes.Utils.Coordinate;
 import Model.Classes.Utils.Orientation;
 
@@ -11,16 +11,16 @@ import java.util.Set;
 
 public class LaserManager {
 
-    private final StrictTokenManager strictTokenManager;
+    private final TokenManager tokenManager;
     private Orientation laserTipOrientation;
     private Coordinate laserTipCoordinate;
-    private boolean laserContinue = false;
+    private boolean laserContinue;
 
     private final int boardWidth;
     private final int boardHeight;
 
-    public LaserManager(StrictTokenManager strictTokenManager, int boardWidth, int boardHeight) {
-        this.strictTokenManager = strictTokenManager;
+    public LaserManager(TokenManager tokenManager, int boardWidth, int boardHeight) {
+        this.tokenManager = tokenManager;
         this.laserContinue = false;
         this.boardWidth = boardWidth;
         this.boardHeight = boardHeight;
@@ -67,8 +67,8 @@ public class LaserManager {
     }
 
     private LaserFragment generateLaserFragmentFromLaserGun() {
-        LaserGun laserGun = (LaserGun) strictTokenManager.getTokenAt(strictTokenManager.findLaserGunPosition());
-        Coordinate laserGunPosition = strictTokenManager.findLaserGunPosition();
+        LaserGun laserGun = (LaserGun) tokenManager.getTokenAt(tokenManager.findLaserGunPosition());
+        Coordinate laserGunPosition = tokenManager.findLaserGunPosition();
         this.laserTipOrientation = laserGun.getOrientation();
         Coordinate laserFragmentTo = oneCellInDirectionOfOrientation(laserGunPosition);
         if (laserFragmentTo != null) {
@@ -82,7 +82,7 @@ public class LaserManager {
     }
 
     private LaserFragment generateTokenLaserPropagation() {
-        Token tokenInCell = strictTokenManager.getTokenAt(laserTipCoordinate);
+        Token tokenInCell = tokenManager.getTokenAt(laserTipCoordinate);
         Set<Orientation> propagatedLaser = tokenInCell.propagateLaser(laserTipOrientation);
         for (Orientation propagatedLaserOrientation : propagatedLaser) {
             if (propagatedLaserOrientation == null) {
@@ -110,7 +110,7 @@ public class LaserManager {
 
         laser.addFragment(generateLaserFragmentFromLaserGun());   //If laser is not shooting at a wall or a block it generates the first fragment.
         while (laserContinue) {    //if laserFragments is empty, laser is shooting in the wrong direction.
-            Token tokenAtLaserTipCoordinate = strictTokenManager.getTokenAt(laserTipCoordinate);
+            Token tokenAtLaserTipCoordinate = tokenManager.getTokenAt(laserTipCoordinate);
             LaserFragment fragment;
             if (tokenAtLaserTipCoordinate == null) {
                 fragment = continueLaserInSameDirectionOneCell();
