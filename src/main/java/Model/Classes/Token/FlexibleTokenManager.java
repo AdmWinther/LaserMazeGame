@@ -9,18 +9,13 @@ import java.util.Set;
 
 public class FlexibleTokenManager implements TokenManager {
 
-    private Token[][] placedTokens;
-    private Set<Token> unplacedTokens;
+
     private FixedTokenManager tokenManager;
+    boolean placedLaser;
+    boolean placedTarget;
 
     public FlexibleTokenManager(Token[][] placedTokens, Set<Token> unplacedTokens) {
-        this.placedTokens = new Token[placedTokens.length][placedTokens[0].length];
-        for (int i = 0; i < placedTokens.length; i++) {
-            System.arraycopy(placedTokens[i], 0, this.placedTokens[i], 0, placedTokens[i].length);
-        }
-
-        // Hard Copy of the unplacedTokens set
-        this.unplacedTokens = new HashSet<>(unplacedTokens);
+        if(!correctInput(placedTokens)) throw new IllegalArgumentException();
         tokenManager = new FixedTokenManager(placedTokens,unplacedTokens);
     }
 
@@ -37,7 +32,14 @@ public class FlexibleTokenManager implements TokenManager {
         if (tokenManager.checkBounds(position)) return false;
         if (tokenManager.checkAttributes()) return false;
         if (!tokenManager.isEmpty(position)) return false;
+        if (findLaserGunPosition() != null || findTargetPosition() != null ) return false;
+        if (placedTarget || placedLaser ) return false;
 
+        if (token instanceof Target) placedTarget = true;
+        if (token instanceof LaserGun) placedLaser = true;
+
+        Token[][] placedTokens = tokenManager.getPlacedTokens();
+        Set<Token> unplacedTokens = tokenManager.getUnplacedTokens();
         placedTokens[position.x()][position.y()] = token;
         tokenManager = new FixedTokenManager(placedTokens,unplacedTokens);
         return true;
@@ -53,7 +55,14 @@ public class FlexibleTokenManager implements TokenManager {
         if (tokenManager.checkBounds(position)) return null;
         if (tokenManager.checkAttributes()) return null;
 
+        Token[][] placedTokens = tokenManager.getPlacedTokens();
+        Set<Token> unplacedTokens = tokenManager.getUnplacedTokens();
+
         Token token = placedTokens[position.x()][position.y()];
+
+        if (token instanceof Target) placedTarget = false;
+        if (token instanceof LaserGun) placedLaser = false;
+
         placedTokens[position.x()][position.y()] = null;
         tokenManager = new FixedTokenManager(placedTokens,unplacedTokens);
         return token;
@@ -65,6 +74,8 @@ public class FlexibleTokenManager implements TokenManager {
      * @return true if the token has been added
      */
     public boolean addToUnplacedTokens(Token token) {
+        Token[][] placedTokens = tokenManager.getPlacedTokens();
+        Set<Token> unplacedTokens = tokenManager.getUnplacedTokens();
         if (Objects.nonNull(token) && unplacedTokens.add(token)) {
             tokenManager = new FixedTokenManager(placedTokens, unplacedTokens);
             return true;
@@ -78,11 +89,38 @@ public class FlexibleTokenManager implements TokenManager {
      * @return true if the token has been removed, false otherwise
      */
     public boolean removeFromUnplacedTokens(Token token) {
+        Token[][] placedTokens = tokenManager.getPlacedTokens();
+        Set<Token> unplacedTokens = tokenManager.getUnplacedTokens();
     if (Objects.nonNull(token) && unplacedTokens.remove(token)) {
         tokenManager = new FixedTokenManager(placedTokens, unplacedTokens);
         return true;
     }
     return false;
+    }
+
+    /**
+     * Checks if the input given are correct meaning that the placed tokens has at most one target
+     * and one laser
+     * @param placedTokens given placed tokens in the level
+     * @return true if the level has at most one target and one laser
+     */
+    private boolean correctInput (Token[][] placedTokens) {
+        if(placedTokens == null) return true;
+        int t = 0;
+        int l = 0;
+        for (Token[] row : placedTokens) {
+            for (Token token : row) {
+                if (token instanceof LaserGun){
+                    placedLaser = true;
+                    l++;
+                }
+                if (token instanceof Target) {
+                    placedTarget = true;
+                    t++;
+                }
+            }
+        }
+        return (l<2 && t<2);
     }
 
     @Override
@@ -138,5 +176,10 @@ public class FlexibleTokenManager implements TokenManager {
     @Override
     public Coordinate findTargetPosition() {
         return tokenManager.findTargetPosition();
+    }
+
+    @Override
+    public boolean isEmpty(Coordinate coordinate) {
+        return tokenManager.isEmpty(coordinate);
     }
 }

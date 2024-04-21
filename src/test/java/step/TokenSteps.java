@@ -1,4 +1,4 @@
-package java.step;
+package step;
 import Model.Classes.Token.*;
 import Model.Classes.Utils.Orientation;
 import io.cucumber.java.en.Given;
@@ -15,7 +15,7 @@ public class TokenSteps {
     OrientedToken token;
     OrientedToken laserGun;
 
-    @Given("I have a single sided mirror token with a {string} orientation")
+    @Given("I have a single sided token token with a {string} orientation")
     public void iHaveASingleSidedMirrorTokenWithAOrientation(String orientation) {
         token = new OneSidedMirror(true,Orientation.valueOf(orientation));
     }
@@ -41,7 +41,7 @@ public class TokenSteps {
         //token = new Splitter(true,Orientation.valueOf(o));
     }
 
-    @Given("I have a double sided mirror token with a {string} orientation")
+    @Given("I have a double sided token token with a {string} orientation")
     public void iHaveADoubleSidedMirrorTokenWithAOrientation(String o) {
         token = new DoubleSidedMirror(true,Orientation.valueOf(o));
     }

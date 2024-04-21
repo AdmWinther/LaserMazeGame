@@ -20,6 +20,5 @@ public interface TokenManager {
 
     Coordinate findLaserGunPosition();
     Coordinate findTargetPosition();
-
-
+    boolean isEmpty(Coordinate coordinate);
 }
