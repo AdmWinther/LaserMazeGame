@@ -23,7 +23,7 @@ public class Game {
 
         // TODO: This is a hard-coded level. We should have a gamePanel and the user should be able to select the level they want to play.
         gameController = new GameController();
-        gameController.setCurrentLevelID("level3");
+        gameController.setCurrentLevelID("level6");
 
         LevelController levelController = new LevelController(gameController.getCurrentLevel());
         levelPanel = new LevelPanel(levelController);

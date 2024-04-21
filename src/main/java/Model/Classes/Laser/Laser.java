@@ -2,22 +2,38 @@ package Model.Classes.Laser;
 
 import Model.Classes.Utils.Coordinate;
 import Model.Classes.Utils.Orientation;
+import Model.Classes.Utils.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class Laser {
-    private final List<LaserFragment> fragments;
+    private int fragmentIndex;
 
-    private Coordinate laserTipCoordinate;
+    private List<LaserBranch> laserBranches;
+    private final List<LaserFragment> fragments;
 
     public Laser() {
         fragments = new ArrayList<>();
+        this.fragmentIndex = 0;
+        this.laserBranches = new ArrayList<LaserBranch>();
     }
 
-    public void addFragment(LaserFragment fragment) {
+    public int getFragmentIndex() {
+        return fragmentIndex;
+    }
+
+    public void incrementFragmentIndex() {
+        this.fragmentIndex +=1;
+    }
+
+    public void addFragment(int laserBranchNumber, LaserFragment fragment) {
         fragments.add(fragment);
+
+        Orientation orientation = LaserFragment.getFragmentOrientation(fragment);
+        Coordinate coordinate = fragment.to();
+        this.laserBranches.set(laserBranchNumber, new LaserBranch(coordinate, orientation, true));
     }
 
     public List<LaserFragment> getFragments() {
@@ -34,17 +50,42 @@ public class Laser {
         return false;
     }
 
-    public Coordinate getLaserTipCoordinate(){
-        return this.laserTipCoordinate;
+    public void reset(){
+        this.fragments.clear();
+        this.fragmentIndex = 0;
+        this.laserBranches.clear();
     }
 
-    public void setLaserTipCoordinate(Coordinate coordinate){
-        this.laserTipCoordinate = coordinate;
+    public LaserBranch getLaserBranch(int i){
+        return laserBranches.get(i);
     }
 
-    public Orientation laserTipOrientation(){
-        int index = this.fragments.size();
-        //todo: Generate the Orientation based on the latest fragment.
-        return Orientation.UP;
+    public Orientation getLaserTipOrientation(int i){
+        return laserBranches.get(i).orientation();
+    }
+
+    public Coordinate getLaserTipCoordinate(int i){
+        return laserBranches.get(i).coordinate();
+    }
+
+    public int getLaserBranchCount() {
+        return this.laserBranches.size();
+    }
+
+    public void newLaserBranch(LaserFragment fragment) {
+        Coordinate coordinate = fragment.to();
+        Orientation orientation = LaserFragment.getFragmentOrientation(fragment);
+        this.laserBranches.add(new LaserBranch(coordinate, orientation, false));
+        this.addFragment(this.getLaserBranchCount()-1,fragment);
+    }
+
+    public void refineBranches() {
+        laserBranches.removeIf(branch -> !branch.continueBranch());
+    }
+
+    public void discontinueBranch(int laserBranchNumber) {
+        Coordinate coordinate = new Coordinate(0,0);
+        Orientation orientation = Orientation.UP;
+        this.laserBranches.set(laserBranchNumber, (new LaserBranch(coordinate, orientation, false )));
     }
 }

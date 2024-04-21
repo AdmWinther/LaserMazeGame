@@ -48,6 +48,9 @@ public class UITokens {
             BufferedImage doubleMirrorImageUPDOWN = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tokens/doubleMirror_UD.png")));
             BufferedImage doubleMirrorImageLEFTRIGHT = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tokens/doubleMirror_RL.png")));
 
+            BufferedImage splitterImageUPDOWN = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tokens/splitter_UD.png")));
+            BufferedImage splitterImageLEFTRIGHT = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tokens/splitter_RL.png")));
+
             BufferedImage targetImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tokens/target.png")));
 
             // 2. Store the images in the maps
@@ -71,6 +74,12 @@ public class UITokens {
             orientedTokenImages.put(new Pair<>(doubleMirrorClassName, Orientation.DOWN), doubleMirrorImageUPDOWN);
             orientedTokenImages.put(new Pair<>(doubleMirrorClassName, Orientation.LEFT), doubleMirrorImageLEFTRIGHT);
             orientedTokenImages.put(new Pair<>(doubleMirrorClassName, Orientation.RIGHT), doubleMirrorImageLEFTRIGHT);
+
+            String splitterClassName = Splitter.class.getSimpleName();
+            orientedTokenImages.put(new Pair<>(splitterClassName, Orientation.UP), splitterImageUPDOWN);
+            orientedTokenImages.put(new Pair<>(splitterClassName, Orientation.DOWN), splitterImageUPDOWN);
+            orientedTokenImages.put(new Pair<>(splitterClassName, Orientation.LEFT), splitterImageLEFTRIGHT);
+            orientedTokenImages.put(new Pair<>(splitterClassName, Orientation.RIGHT), splitterImageLEFTRIGHT);
 
             String targetClassName = Target.class.getSimpleName();
             orientedTokenImages.put(new Pair<>(targetClassName, Orientation.UP), targetImage);

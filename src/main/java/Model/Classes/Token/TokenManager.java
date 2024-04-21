@@ -104,6 +104,15 @@ public class TokenManager {
         return placedTokens[position.x()][position.y()];
     }
 
+    public LaserGun getLaserGun() {
+        if (checkAttributes()) return null;
+        Coordinate laserGunCoordinate = findLaserGunPosition();
+
+        Token laserGun =  placedTokens[laserGunCoordinate.x()][laserGunCoordinate.y()];
+        if(laserGun instanceof LaserGun) return (LaserGun) laserGun;
+        return null;
+    }
+
     public boolean moveToken(Coordinate from, Coordinate to) {
         if (checkAttributes()) {
             System.out.println("Attributes non valid");
