@@ -1,26 +1,32 @@
 package Vue.MainMenu;
 
+import Controller.GameController;
 import Controller.LevelController;
 import Vue.Handlers.LevelMouseHandler;
-import Vue.Level.UILaser;
-import Vue.Level.UIObjects;
-import Vue.Level.UITiles;
-import Vue.Level.UITokens;
+import Vue.Level.*;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 
 public class MainMenuPanel extends JPanel{
 
     public int screenWidth;
     public int screenHeight;
 
+    private static JFrame frame;
+
     Thread mainMenuThread;
 
-    public MainMenuPanel() {
+    public MainMenuPanel(JFrame frame) {
         this.screenWidth = 720;
         this.screenHeight = 720;
+        this.frame = frame;
+
 
         setPreferredSize(new Dimension(screenWidth, screenHeight));
         setDoubleBuffered(true);
@@ -63,6 +69,12 @@ public class MainMenuPanel extends JPanel{
         loadGame.setAlignmentX(Component.CENTER_ALIGNMENT);
 //        loadGame.setBorder(BorderFactory.createLineBorder(Color.gray, 3));
 //        loadGame.setMargin(new Insets(20, 20, 20, 20));
+        loadGame.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+//                System.out.println("You clicked the button");
+                prepareLevel("level6", frame);
+            }
+        });
 
         JButton newGame = new JButton("New Game");
         newGame.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -87,5 +99,36 @@ public class MainMenuPanel extends JPanel{
         container.add(emptyLable2);
 
         return container;
+    }
+
+
+    private static void prepareLevel(String levelID, JFrame frame){
+
+        GameController gameController = new GameController();
+        gameController.setCurrentLevelID(levelID);
+
+        LevelController levelController = new LevelController(gameController.getCurrentLevel());
+
+        LevelPanel levelPanel = new LevelPanel(levelController);
+        frame.add(levelPanel);
+        frame.addComponentListener(new ComponentListener() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                levelPanel.resize();
+            }
+
+            @Override
+            public void componentMoved(ComponentEvent e) {
+            }
+
+            @Override
+            public void componentShown(ComponentEvent e) {
+            }
+
+            @Override
+            public void componentHidden(ComponentEvent e) {
+            }
+        });
+        frame.pack();
     }
 }
