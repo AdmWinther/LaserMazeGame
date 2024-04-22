@@ -144,8 +144,4 @@ public class SandboxSteps {
         assertEquals(1, Arrays.stream(placedTokens).flatMap(Arrays::stream).filter(t -> t instanceof Target).count());
     }
 
-    @When("I remove the mirror from the deck")
-    public void iRemoveTheMirrorFromTheDeck() {
-
-    }
 }

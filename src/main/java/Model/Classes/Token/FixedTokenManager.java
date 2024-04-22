@@ -39,11 +39,10 @@ public class FixedTokenManager implements TokenManager {
                 || position.y() >= placedTokens[0].length;
     }
 
+    @Override
     public boolean isEmpty(Coordinate position) {
         return placedTokens[position.x()][position.y()] == null;
     }
-
-
 
     /**
      * Checks if the attributes of the simpleTokenManager class are null.
@@ -53,6 +52,7 @@ public class FixedTokenManager implements TokenManager {
         return (placedTokens == null) || (unplacedTokens == null);
     }
 
+    @Override
     public boolean transferTokenToPlacedTokens(Token token, Coordinate position) {
         if (checkAttributes()) return false;
         if (checkBounds(position)) return false;
@@ -63,12 +63,8 @@ public class FixedTokenManager implements TokenManager {
         return true;
     }
 
-    /**
-     * Transfers a token to the level at the specified position.
-     *
-     * @param position The position on the board where the token should be transferred.
-     * @implNote This method is RECOMMENDED compared to the method with the Token instance parameter.
-     */
+
+    @Override
     public boolean transferTokenToUnplacedTokens(Coordinate position) {
         if (checkAttributes()) return false;
         if (checkBounds(position)) return false;
@@ -79,12 +75,8 @@ public class FixedTokenManager implements TokenManager {
         return unplacedTokens.add(token);
     }
 
-    /**
-     * Transfers a token from the board to the level.
-     *
-     * @param token The token to be transferred.
-     * @implNote This method is NOT RECOMMENDED compared to the method with the Coordinate instance parameter.
-     */
+
+    @Override
     public boolean transferTokenToUnplacedTokens(Token token) {
         if (checkAttributes()) return false;
         if (token == null) return false;
@@ -100,12 +92,14 @@ public class FixedTokenManager implements TokenManager {
         return false;
     }
 
+    @Override
     public Token getTokenAt(Coordinate position) {
         if (checkAttributes()) return null;
         if (checkBounds(position)) return null;
         return placedTokens[position.x()][position.y()];
     }
 
+    @Override
     public boolean moveToken(Coordinate from, Coordinate to) {
         if (checkAttributes()) {
             System.out.println("Attributes non valid");
@@ -131,6 +125,7 @@ public class FixedTokenManager implements TokenManager {
         return true;
     }
 
+    @Override
     public int getUnplacedTokensSize() {
         return unplacedTokens.size();
     }
@@ -138,11 +133,13 @@ public class FixedTokenManager implements TokenManager {
     /**
      * @return a copy of the unplacedTokens set.
      */
+    @Override
     public Set<Token> getUnplacedTokens() {
         // returning a copy of the unplacedTokens set
         return new HashSet<>(unplacedTokens);
     }
 
+    @Override
     public void reset() {
         for (int i = 0; i < placedTokens.length; i++) {
             for (int j = 0; j < placedTokens[0].length; j++) {
@@ -155,15 +152,17 @@ public class FixedTokenManager implements TokenManager {
         }
     }
 
-    /**
-     * @return a copy of the placedTokens array
-     */
+    @Override
     public Token[][] getPlacedTokens() {
         // return a copy of the placedTokens array
         return placedTokens.clone();
     }
 
-
+    /**
+     * Helper function to find the position of a specific token type
+     * @param type token type to find
+     * @return the Coordinate of that type if found,null if not
+     */
     private Coordinate findTypePosition(Class<? extends Token> type) {
         for (int x = 0; x < placedTokens.length; x++) {
             for (int y = 0; y < placedTokens[0].length; y++) {
@@ -176,10 +175,12 @@ public class FixedTokenManager implements TokenManager {
         return null;
     }
 
+    @Override
     public Coordinate findLaserGunPosition() {
         return findTypePosition(LaserGun.class);
     }
 
+    @Override
     public Coordinate findTargetPosition() {
         return findTypePosition(Target.class);
     }
