@@ -69,10 +69,7 @@ public class TokenMouseHandler implements MouseListener {
                 Token other = levelController.getTokenAtCoordinate(coordinate);
 
                 if (other != null && other.isMovable() && other instanceof OrientedToken) {
-                    // TODO create method at another place ?
-                    OrientedToken orientedToken = (OrientedToken) other;
-                    Orientation nextOrientation = Orientation.values()[(orientedToken.getOrientation().ordinal() + 1) % 4];
-                    orientedToken.setOrientation(nextOrientation);
+                    //TODO rotate token
                 }
             }
         }

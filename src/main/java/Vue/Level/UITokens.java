@@ -53,7 +53,7 @@ public class UITokens implements Drawable {
             BufferedImage beamerImageLEFT = readImage("/Tokens/lasergun_LEFT.png");
             BufferedImage beamerImageRIGHT = readImage("/Tokens/lasergun_RIGHT.png");
 
-            BufferedImage blockerImage = readImage("/Tokens/blocker.png");
+            BufferedImage blockerImage = readImage("/Tokens/block.png");
 
             BufferedImage mirrorImageUP = readImage("/Tokens/mirror_UP.png");
             BufferedImage mirrorImageDOWN = readImage("/Tokens/mirror_DOWN.png");
