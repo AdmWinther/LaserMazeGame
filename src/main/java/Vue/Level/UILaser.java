@@ -20,12 +20,24 @@ public class UILaser {
     private final int laserDuration = 1; // 1 second
     private int laserTimer = 0;
 
+    /**
+     * Constructor of the UI laser class
+     *
+     * @param levelPanel      - The level panel
+     * @param levelController - The level controller
+     * @Author Léonard Amsler - s231715
+     */
     public UILaser(LevelPanel levelPanel, LevelController levelController) {
         this.levelPanel = levelPanel;
         this.levelController = levelController;
         loadLaserImages();
     }
 
+    /**
+     * Load the laser images
+     *
+     * @Author Léonard Amsler - s231715
+     */
     public void loadLaserImages() {
         try {
             BufferedImage laserImage_horizontal = ImageIO.read(Objects.requireNonNull(getClass().getResource("/laser/laser_horizontal.png")));
@@ -38,6 +50,13 @@ public class UILaser {
         }
     }
 
+    /**
+     * Draw the laser
+     *
+     * @param g2d - The 2d graphics object
+     * @Author Léonard Amsler - s231715
+     * @Author Hussein (Adam)
+     */
     public void draw(Graphics2D g2d) {
 
 

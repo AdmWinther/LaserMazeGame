@@ -8,18 +8,35 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * This class is responsible for placing and drawing objects on the screen
+ *
+ * @Author Léonard Amsler - s231715
+ */
 public class UIObjects {
 
     private final LevelPanel levelPanel;
     private final Map<String, Rectangle2D> placedObjects = new HashMap<>();
     private final Map<String, BufferedImage> objectImages = new HashMap<>();
 
+    /**
+     * Constructor of the UI objects class
+     *
+     * @param levelPanel - The level panel
+     * @Author Léonard Amsler - s231715
+     */
     public UIObjects(LevelPanel levelPanel) {
         this.levelPanel = levelPanel;
         initializeObjectSet();
         setPlacedObjects();
     }
 
+    /**
+     * Initialize the object set
+     *
+     * @Author Léonard Amsler - s231715
+     * @Author Hussein (Adam)
+     */
     public void initializeObjectSet() {
         try {
             BufferedImage binImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Objects/bin.png")));
@@ -32,10 +49,23 @@ public class UIObjects {
         }
     }
 
+    /**
+     * Place an object on the screen
+     *
+     * @param objectName - The name of the object
+     * @param x          - The x coordinate
+     * @param y          - The y coordinate
+     * @Author Léonard Amsler - s231715
+     */
     public void placeObject(String objectName, int x, int y) {
         placedObjects.put(objectName, new Rectangle(x, y, levelPanel.tileWidth, levelPanel.tileHeight));
     }
 
+    /**
+     * Set the placed objects
+     *
+     * @Author Léonard Amsler - s231715
+     */
     public void setPlacedObjects() {
         int width = levelPanel.screenWidth;
         int height = levelPanel.screenHeight;
@@ -49,6 +79,12 @@ public class UIObjects {
         placeObject("reset", (int) (width - rightPadding), 0);
     }
 
+    /**
+     * Draw the objects on the screen
+     *
+     * @param g2d - The 2d graphics object
+     * @Author Léonard Amsler - s231715
+     */
     public void draw(Graphics2D g2d) {
         setPlacedObjects();
         for (Map.Entry<String, Rectangle2D> entry : placedObjects.entrySet()) {
@@ -59,6 +95,12 @@ public class UIObjects {
         }
     }
 
+    /**
+     * Get the placed objects
+     *
+     * @return The placed objects
+     * @Author Léonard Amsler - s231715
+     */
     public Map<String, Rectangle2D> getPlacedObjects() {
         return placedObjects;
     }

@@ -9,6 +9,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * This class is responsible for drawing the tiles on the screen
+ *
+ * @Author Léonard Amsler - s231715
+ */
 public class UITiles {
 
     LevelPanel levelPanel;
@@ -16,6 +21,13 @@ public class UITiles {
     String[][] levelTiles;
     Map<String, BufferedImage> tileImages = new HashMap<>();
 
+    /**
+     * Constructor of the UI tiles class
+     *
+     * @param levelPanel      - The level panel
+     * @param levelController - The level controller
+     * @Author Léonard Amsler - s231715
+     */
     public UITiles(LevelPanel levelPanel, LevelController levelController) {
         this.levelPanel = levelPanel;
         this.levelController = levelController;
@@ -23,6 +35,11 @@ public class UITiles {
         setLevelTiles();
     }
 
+    /**
+     * Set the level tiles
+     *
+     * @Author Léonard Amsler - s231715
+     */
     private void setLevelTiles() {
 
         levelTiles = new String[levelPanel.maxRow + 1][levelPanel.maxCol + 1];
@@ -50,6 +67,11 @@ public class UITiles {
         }
     }
 
+    /**
+     * Get the tile image
+     *
+     * @Author Léonard Amsler - s231715
+     */
     public void getTileImage() {
         try {
             BufferedImage background = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tiles/background.png")));
@@ -70,6 +92,11 @@ public class UITiles {
         }
     }
 
+    /**
+     * Draw the tiles
+     *
+     * @param g2d - The 2d graphics object
+     */
     public void draw(Graphics2D g2d) {
         for (int row = 0; row < levelPanel.maxRow + 1; row++) {
             for (int col = 0; col < levelPanel.maxCol + 1; col++) {

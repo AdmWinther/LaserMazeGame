@@ -1,8 +1,6 @@
 package Vue.MainMenu;
 
 import Controller.GameController;
-import Controller.LevelController;
-import Vue.Level.LevelPanel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -12,10 +10,34 @@ import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
+import static Vue.MainMenu.LevelPreparation.prepareLevel;
+import static Vue.MainMenu.LevelPreparation.showPanel;
+import static Vue.Utils.ButtonUtil.setButtonTransparent;
+import static Vue.Utils.ImageUtil.resizeImage;
+
+/**
+ * This class is responsible for the main menu panel
+ *
+ * @Author Léonard Amsler - s231715
+ * @Author Hussein (Adam)
+ */
 public class MainMenuPanel extends JPanel {
 
-    public MainMenuPanel(JFrame frame) {
+    Thread mainMenuThread;
+    GameController gameController;
 
+    /**
+     * Constructor of the main menu panel class
+     *
+     * @param frame          - The frame
+     * @param gameController - The game controller
+     * @Author Léonard Amsler - s231715
+     * @Author Nathan Gromb - s231674
+     * @Author Hussein (Adam)
+     */
+    public MainMenuPanel(JFrame frame, GameController gameController) {
+
+        this.gameController = gameController;
 
         int screenWidth = frame.getWidth();
         int screenHeight = frame.getHeight();
@@ -50,21 +72,14 @@ public class MainMenuPanel extends JPanel {
         frame.pack();
     }
 
-    private static void prepareLevel(String levelID, JFrame frame) {
-
-        GameController gameController = new GameController();
-        gameController.setCurrentLevelID(levelID);
-        LevelController levelController = new LevelController(gameController.getCurrentLevel());
-
-        LevelPanel levelPanel = new LevelPanel(levelController);
-
-        frame.getContentPane().removeAll();
-        frame.add(levelPanel);
-        frame.revalidate();
-        frame.repaint();
-        
-    }
-
+    /**
+     * Create the button panel
+     *
+     * @param frame - The frame
+     * @return JPanel - The button panel
+     * @Author Léonard Amsler - s231715
+     * @Author Nathan Gromb - s231674
+     */
     private JPanel createButtonPanel(JFrame frame) {
         // Button panel for the three buttons
         JPanel buttonPanel = new JPanel();
@@ -83,11 +98,6 @@ public class MainMenuPanel extends JPanel {
         if (height > 300) {
             topPadding = (height - 300) / 2;
         }
-
-        System.out.println("width: " + width);
-        System.out.println("height: " + height);
-        System.out.println("sidePadding: " + sidePadding);
-        System.out.println("topPadding: " + topPadding);
 
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(topPadding, sidePadding, topPadding, sidePadding));
 
@@ -108,8 +118,10 @@ public class MainMenuPanel extends JPanel {
         assert campaignButtonImage != null;
         assert sandboxButtonImage != null;
         assert randomButtonImage != null;
-        int buttonWidth = 200;
-        int buttonHeight = 50;
+        int VScale = 4;
+        double HScale = 2.5;
+        int buttonWidth = campaignButtonImage.getWidth() * VScale;
+        int buttonHeight = (int) (campaignButtonImage.getHeight() * HScale);
         campaignButtonImage = resizeImage(campaignButtonImage, buttonWidth, buttonHeight);
         sandboxButtonImage = resizeImage(sandboxButtonImage, buttonWidth, buttonHeight);
         randomButtonImage = resizeImage(randomButtonImage, buttonWidth, buttonHeight);
@@ -122,33 +134,26 @@ public class MainMenuPanel extends JPanel {
         // Add action listeners to buttons
         campaignButton.addActionListener(e -> {
             System.out.println("Campaign button clicked");
+            displayCampaignLevels(frame);
         });
         sandboxButton.addActionListener(e -> {
             System.out.println("Sandbox button clicked");
         });
         randomButton.addActionListener(e -> {
             System.out.println("Random button clicked");
-            prepareLevel("level1", frame);
+            // TODO: Implement random level generation, for now just load level 1
+            prepareLevel("level1", frame, gameController);
         });
 
         // Set button to transparent
-        campaignButton.setOpaque(false);
-        campaignButton.setContentAreaFilled(false);
-        campaignButton.setBorderPainted(false);
-
-        sandboxButton.setOpaque(false);
-        sandboxButton.setContentAreaFilled(false);
-        sandboxButton.setBorderPainted(false);
-
-        randomButton.setOpaque(false);
-        randomButton.setContentAreaFilled(false);
-        randomButton.setBorderPainted(false);
+        setButtonTransparent(campaignButton);
+        setButtonTransparent(sandboxButton);
+        setButtonTransparent(randomButton);
 
         // Remove the blue line around the button
         campaignButton.setFocusPainted(false);
         sandboxButton.setFocusPainted(false);
         randomButton.setFocusPainted(false);
-
 
         // Add buttons to panel
         buttonPanel.add(campaignButton);
@@ -171,57 +176,34 @@ public class MainMenuPanel extends JPanel {
                 if (height > 300) {
                     topPadding = (height - 300) / 2;
                 }
-
-                System.out.println("width: " + width);
-                System.out.println("height: " + height);
-                System.out.println("sidePadding: " + sidePadding);
-                System.out.println("topPadding: " + topPadding);
-
                 buttonPanel.setBorder(BorderFactory.createEmptyBorder(topPadding, sidePadding, topPadding, sidePadding));
                 buttonPanel.repaint();
             }
         });
 
         return buttonPanel;
+
     }
 
-    private BufferedImage resizeImage(BufferedImage campaignButtonImage, int i, int i1) {
-        Image tmp = campaignButtonImage.getScaledInstance(i, i1, Image.SCALE_SMOOTH);
-        BufferedImage resized = new BufferedImage(i, i1, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2d = resized.createGraphics();
-        g2d.drawImage(tmp, 0, 0, null);
-        g2d.dispose();
-        return resized;
-    }
-
-    private static class ImagePanel extends JPanel {
-        private final Image backgroundImage;
-
-        public ImagePanel(Image backgroundImage) {
-            this.backgroundImage = backgroundImage;
-        }
-
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-
-            Graphics2D g2d = (Graphics2D) g;
-
-            if (backgroundImage != null) {
-                // Calculate the number of tiles needed to fill the panel
-                int width = getWidth();
-                int height = getHeight();
-                int scale = 3;
-                int tileWidth = backgroundImage.getWidth(null) * scale;
-                int tileHeight = backgroundImage.getHeight(null) * scale;
-
-                // Draw the background image tiles to fill the panel
-                for (int x = 0; x < width; x += tileWidth) {
-                    for (int y = 0; y < height; y += tileHeight) {
-                        g2d.drawImage(backgroundImage, x, y, tileWidth, tileHeight, this);
-                    }
-                }
+    /**
+     * Display the campaign levels
+     *
+     * @param frame - The frame
+     * @Author Nathan Gromb - s231674
+     */
+    private void displayCampaignLevels(JFrame frame) {
+        CampaignPanel campaignPanel = new CampaignPanel(frame, gameController);
+        frame.add(campaignPanel, "CampaignLevels");
+        frame.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                campaignPanel.resize();
             }
-        }
+        });
+
+        showPanel(frame, "CampaignLevels");
+        frame.pack();
     }
+
+
 }

@@ -5,7 +5,14 @@ import Vue.Handlers.LevelMouseHandler;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
+/**
+ * This class is the panel for the level
+ *
+ * @Author Léonard Amsler - s231715
+ */
 public class LevelPanel extends JPanel implements Runnable {
 
     // Borders
@@ -45,6 +52,12 @@ public class LevelPanel extends JPanel implements Runnable {
     Thread gameThread;
 
 
+    /**
+     * Constructor of the level panel class
+     *
+     * @param levelController - The level controller
+     * @author Léonard Amsler - s231715
+     */
     public LevelPanel(LevelController levelController) {
 
         this.levelController = levelController;
@@ -76,14 +89,33 @@ public class LevelPanel extends JPanel implements Runnable {
         requestFocus();
 
         start();
+
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                resize();
+            }
+        });
     }
 
+    /**
+     * Start the game thread
+     *
+     * @Author Léonard Amsler - s231715
+     */
     public void start() {
         gameThread = new Thread(this);
         gameThread.start();
     }
 
 
+    /**
+     * Run method of the game thread
+     * It is the game engine, it will update the game state and repaint the screen at a fixed frame rate
+     * It follows the delta time pattern: <a href="https://en.wikipedia.org/wiki/Delta_timing"> description of the pattern </a>
+     *
+     * @Author Léonard Amsler - s231715
+     */
     @Override
     public void run() {
 
@@ -113,6 +145,12 @@ public class LevelPanel extends JPanel implements Runnable {
         }
     }
 
+    /**
+     * Paint the component
+     *
+     * @param g - The graphics object
+     * @Author Léonard Amsler - s231715
+     */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -128,6 +166,12 @@ public class LevelPanel extends JPanel implements Runnable {
         g2d.dispose();
     }
 
+    /**
+     * Resize the level panel
+     * This method is called when the window is resized
+     *
+     * @Author Léonard Amsler - s231715
+     */
     public void resize() {
         // Get the size of the screen
         Dimension screenSize = getSize();
