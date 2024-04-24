@@ -14,14 +14,14 @@ import java.util.Set;
 
 public class UILaser {
 
-    private final LevelPanel levelPanel;
+    private final PlayableLevelPanel playableLevelPanel;
     private final LevelController levelController;
     private final Map<String, BufferedImage> laserImages = new HashMap<>();
     private final int laserDuration = 1; // 1 second
     private int laserTimer = 0;
 
-    public UILaser(LevelPanel levelPanel, LevelController levelController) {
-        this.levelPanel = levelPanel;
+    public UILaser(PlayableLevelPanel playableLevelPanel, LevelController levelController) {
+        this.playableLevelPanel = playableLevelPanel;
         this.levelController = levelController;
         loadLaserImages();
     }
@@ -43,7 +43,7 @@ public class UILaser {
 
         boolean shouldDisplayLaser = levelController.shouldDisplayLaser();
         if (shouldDisplayLaser && laserTimer == 0) {
-            laserTimer += laserDuration * levelPanel.fps;
+            laserTimer += laserDuration * playableLevelPanel.fps;
             levelController.setShouldDisplayLaser(false);
         } else if (laserTimer > 0) {
             laserTimer--;
@@ -57,13 +57,13 @@ public class UILaser {
             Coordinate start = laserFragment.first();
             Coordinate end = laserFragment.second();
 
-            int widthOffset = levelPanel.widthOffset;
-            int heightOffset = levelPanel.heightOffset;
+            int widthOffset = playableLevelPanel.widthOffset;
+            int heightOffset = playableLevelPanel.heightOffset;
 
-            int startX = start.x() * levelPanel.tileWidth + widthOffset;
-            int startY = start.y() * levelPanel.tileHeight + heightOffset;
-            int endX = end.x() * levelPanel.tileWidth + widthOffset;
-            int endY = end.y() * levelPanel.tileHeight + heightOffset;
+            int startX = start.x() * playableLevelPanel.tileWidth + widthOffset;
+            int startY = start.y() * playableLevelPanel.tileHeight + heightOffset;
+            int endX = end.x() * playableLevelPanel.tileWidth + widthOffset;
+            int endY = end.y() * playableLevelPanel.tileHeight + heightOffset;
 
             int minX = Math.min(startX, endX);
             int minY = Math.min(startY, endY);
@@ -75,11 +75,11 @@ public class UILaser {
 
 
             if (startX == endX) { // Vertical laser
-                minY += levelPanel.tileHeight / 2;
-                g2d.drawImage(laserImages.get("laser_vertical"), minX, minY, levelPanel.tileWidth, height, null);
+                minY += playableLevelPanel.tileHeight / 2;
+                g2d.drawImage(laserImages.get("laser_vertical"), minX, minY, playableLevelPanel.tileWidth, height, null);
             } else { // Horizontal laser
-                minX += levelPanel.tileWidth / 2;
-                g2d.drawImage(laserImages.get("laser_horizontal"), minX, minY, width, levelPanel.tileHeight, null);
+                minX += playableLevelPanel.tileWidth / 2;
+                g2d.drawImage(laserImages.get("laser_horizontal"), minX, minY, width, playableLevelPanel.tileHeight, null);
             }
         }
 

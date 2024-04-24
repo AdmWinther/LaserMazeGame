@@ -1,12 +1,13 @@
 package Vue.Level;
 
 import Controller.LevelController;
+import Controller.PlayableLevelController;
 import Vue.Handlers.LevelMouseHandler;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class LevelPanel extends JPanel implements Runnable {
+public class PlayableLevelPanel extends JPanel implements Runnable {
 
     // Borders
     public final int horizontalBorder = 2;
@@ -24,7 +25,7 @@ public class LevelPanel extends JPanel implements Runnable {
     public int screenWidth;
     public int screenHeight;
     // Controllers
-    public LevelController levelController;
+    public PlayableLevelController levelController;
 
     // UI Tiles, Objects and Tokens
     public UIObjects UIObjects;
@@ -45,7 +46,7 @@ public class LevelPanel extends JPanel implements Runnable {
     Thread gameThread;
 
 
-    public LevelPanel(LevelController levelController) {
+    public PlayableLevelPanel(PlayableLevelController levelController) {
 
         this.levelController = levelController;
 

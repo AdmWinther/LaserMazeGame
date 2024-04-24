@@ -21,11 +21,11 @@ public class UITokens {
     Map<Token, Rectangle2D> unPlacedTokenRectangles = new HashMap<>();
     Map<String, BufferedImage> tokenImages = new HashMap<>();
     Map<Pair<String, Orientation>, BufferedImage> orientedTokenImages = new HashMap<>();
-    LevelPanel levelPanel;
+    PlayableLevelPanel playableLevelPanel;
 
-    public UITokens(LevelPanel levelPanel, LevelController levelController) {
+    public UITokens(PlayableLevelPanel playableLevelPanel, LevelController levelController) {
         this.levelController = levelController;
-        this.levelPanel = levelPanel;
+        this.playableLevelPanel = playableLevelPanel;
         setTokenImages();
     }
 
@@ -92,26 +92,26 @@ public class UITokens {
 
         Map<Coordinate, Token> placedTokens = levelController.getPlacedTokens();
 
-        int widthOffset = levelPanel.widthOffset;
-        int heightOffset = levelPanel.heightOffset;
+        int widthOffset = playableLevelPanel.widthOffset;
+        int heightOffset = playableLevelPanel.heightOffset;
 
         for (Map.Entry<Coordinate, Token> entry : placedTokens.entrySet()) {
             Coordinate coordinate = entry.getKey();
             Token token = entry.getValue();
-            int x = widthOffset + coordinate.x() * levelPanel.tileWidth;
-            int y = heightOffset + coordinate.y() * levelPanel.tileHeight;
-            drawToken(g2d, token, x, y, levelPanel.tileWidth, levelPanel.tileHeight);
+            int x = widthOffset + coordinate.x() * playableLevelPanel.tileWidth;
+            int y = heightOffset + coordinate.y() * playableLevelPanel.tileHeight;
+            drawToken(g2d, token, x, y, playableLevelPanel.tileWidth, playableLevelPanel.tileHeight);
         }
 
     }
 
     public void drawUnplacedTokens(Graphics2D g2d) {
         // Display the unplaced tokens at the bottom of the screen, centered horizontally
-        int tileWidth = levelPanel.tileWidth;
-        int tileHeight = levelPanel.tileHeight;
+        int tileWidth = playableLevelPanel.tileWidth;
+        int tileHeight = playableLevelPanel.tileHeight;
 
-        int nbTilesHorizontal = levelPanel.maxCol;
-        int nbTilesVertical = levelPanel.maxRow;
+        int nbTilesHorizontal = playableLevelPanel.maxCol;
+        int nbTilesVertical = playableLevelPanel.maxRow;
 
         Set<Token> unplacedTokens = levelController.getUnplacedTokens();
         int size = unplacedTokens.size();

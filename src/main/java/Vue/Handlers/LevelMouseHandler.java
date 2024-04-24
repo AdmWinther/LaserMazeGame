@@ -3,7 +3,7 @@ package Vue.Handlers;
 import Controller.LevelController;
 import Model.Classes.Token.Token;
 import Model.Classes.Utils.Coordinate;
-import Vue.Level.LevelPanel;
+import Vue.Level.PlayableLevelPanel;
 import Vue.Level.UITokens;
 
 import java.awt.event.MouseEvent;
@@ -13,7 +13,7 @@ import java.awt.geom.Rectangle2D;
 public class LevelMouseHandler implements MouseListener {
 
     private LevelController levelController;
-    private LevelPanel levelPanel;
+    private PlayableLevelPanel playableLevelPanel;
     private UITokens uiTokens;
 
     private boolean isPressed = false;
@@ -25,8 +25,8 @@ public class LevelMouseHandler implements MouseListener {
     private boolean isSelectedPlaced = false;
 
 
-    public LevelMouseHandler(LevelPanel levelPanel, LevelController levelController, UITokens uiTokens) {
-        this.levelPanel = levelPanel;
+    public LevelMouseHandler(PlayableLevelPanel playableLevelPanel, LevelController levelController, UITokens uiTokens) {
+        this.playableLevelPanel = playableLevelPanel;
         this.levelController = levelController;
         this.uiTokens = uiTokens;
     }
@@ -34,17 +34,17 @@ public class LevelMouseHandler implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         // Check if we have clicked on the reset button
-        Rectangle2D reset = levelPanel.UIObjects.getPlacedObjects().get("reset");
+        Rectangle2D reset = playableLevelPanel.UIObjects.getPlacedObjects().get("reset");
         if (reset.contains(e.getX(), e.getY())) {
             levelController.resetLevel();
             System.out.println("Reset tokens");
         }
 
-        int tileWidth = levelPanel.tileWidth;
-        int tileHeight = levelPanel.tileHeight;
+        int tileWidth = playableLevelPanel.tileWidth;
+        int tileHeight = playableLevelPanel.tileHeight;
 
-        int widthOffset = levelPanel.widthOffset;
-        int heightOffset = levelPanel.heightOffset;
+        int widthOffset = playableLevelPanel.widthOffset;
+        int heightOffset = playableLevelPanel.heightOffset;
 
         int x_coordinate = (e.getX() - widthOffset) / tileWidth;
         int y_coordinate = (e.getY() - heightOffset) / tileHeight;
@@ -76,11 +76,11 @@ public class LevelMouseHandler implements MouseListener {
             isPressed = true;
             startX = e.getX();
             startY = e.getY();
-            int tileWidth = levelPanel.tileWidth;
-            int tileHeight = levelPanel.tileHeight;
+            int tileWidth = playableLevelPanel.tileWidth;
+            int tileHeight = playableLevelPanel.tileHeight;
 
-            int widthOffset = levelPanel.widthOffset;
-            int heightOffset = levelPanel.heightOffset;
+            int widthOffset = playableLevelPanel.widthOffset;
+            int heightOffset = playableLevelPanel.heightOffset;
 
             int x_coordinate = (startX - widthOffset) / tileWidth;
             int y_coordinate = (startY - heightOffset) / tileHeight;
@@ -119,8 +119,8 @@ public class LevelMouseHandler implements MouseListener {
             endX = e.getX();
             endY = e.getY();
 
-            int widthOffset = levelPanel.widthOffset;
-            int heightOffset = levelPanel.heightOffset;
+            int widthOffset = playableLevelPanel.widthOffset;
+            int heightOffset = playableLevelPanel.heightOffset;
 
             double x_coordinate = (endX - widthOffset);
             double y_coordinate = (endY - heightOffset);
@@ -129,8 +129,8 @@ public class LevelMouseHandler implements MouseListener {
                 return;
             }
 
-            int tileWidth = levelPanel.tileWidth;
-            int tileHeight = levelPanel.tileHeight;
+            int tileWidth = playableLevelPanel.tileWidth;
+            int tileHeight = playableLevelPanel.tileHeight;
 
             x_coordinate /= tileWidth;
             y_coordinate /= tileHeight;
@@ -154,7 +154,7 @@ public class LevelMouseHandler implements MouseListener {
                     System.out.println("Placed Token: " + selectedToken + " at " + coordinate);
                 }
             } else {
-                Rectangle2D bin = levelPanel.UIObjects.getPlacedObjects().get("bin");
+                Rectangle2D bin = playableLevelPanel.UIObjects.getPlacedObjects().get("bin");
                 if (bin.contains(endX, endY)) {
                     levelController.transferTokenToUnplacedTokens(selectedToken);
                     System.out.println("Removed Token: " + selectedToken);

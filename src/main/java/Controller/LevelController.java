@@ -2,8 +2,10 @@ package Controller;
 
 import Model.Classes.Laser.LaserFragment;
 import Model.Classes.Level.Level;
+import Model.Classes.Token.OrientedToken;
 import Model.Classes.Token.Token;
 import Model.Classes.Utils.Coordinate;
+import Model.Classes.Utils.Orientation;
 import Model.Classes.Utils.Pair;
 
 import java.util.*;
@@ -88,6 +90,13 @@ public abstract class LevelController {
 
     public void setShouldDisplayLaser(boolean b) {
         shouldDisplayLaser = b;
+    }
+
+    public void rotateToken(Token token){
+        if (token instanceof OrientedToken orientedToken && token.isMovable()) {
+            Orientation nextOrientation = Orientation.values()[(orientedToken.getOrientation().ordinal() + 1) % Orientation.values().length];
+            orientedToken.setOrientation(nextOrientation);
+        }
     }
 
     public boolean isSandbox() {

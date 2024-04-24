@@ -3,7 +3,7 @@ package Vue.Game;
 import Controller.GameController;
 import Controller.LevelController;
 import Controller.PlayableLevelController;
-import Vue.Level.LevelPanel;
+import Vue.Level.PlayableLevelPanel;
 
 import javax.swing.*;
 import java.awt.event.ComponentEvent;
@@ -12,7 +12,7 @@ import java.awt.event.ComponentListener;
 public class Game {
 
     JFrame frame;
-    LevelPanel levelPanel;
+    PlayableLevelPanel playableLevelPanel;
     GameController gameController;
 
     public Game() {
@@ -26,13 +26,13 @@ public class Game {
         gameController = new GameController();
         gameController.setCurrentLevelID("level3");
 
-        LevelController levelController = new PlayableLevelController(gameController.getCurrentLevel());
-        levelPanel = new LevelPanel(levelController);
-        frame.add(levelPanel);
+        PlayableLevelController levelController = new PlayableLevelController(gameController.getCurrentLevel());
+        playableLevelPanel = new PlayableLevelPanel(levelController);
+        frame.add(playableLevelPanel);
         frame.addComponentListener(new ComponentListener() {
             @Override
             public void componentResized(ComponentEvent e) {
-                levelPanel.resize();
+                playableLevelPanel.resize();
             }
 
             @Override

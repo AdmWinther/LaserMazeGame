@@ -10,12 +10,12 @@ import java.util.Objects;
 
 public class UIObjects {
 
-    private final LevelPanel levelPanel;
+    private final PlayableLevelPanel playableLevelPanel;
     private final Map<String, Rectangle2D> placedObjects = new HashMap<>();
     private final Map<String, BufferedImage> objectImages = new HashMap<>();
 
-    public UIObjects(LevelPanel levelPanel) {
-        this.levelPanel = levelPanel;
+    public UIObjects(PlayableLevelPanel playableLevelPanel) {
+        this.playableLevelPanel = playableLevelPanel;
         initializeObjectSet();
         setPlacedObjects();
     }
@@ -33,18 +33,18 @@ public class UIObjects {
     }
 
     public void placeObject(String objectName, int x, int y) {
-        placedObjects.put(objectName, new Rectangle(x, y, levelPanel.tileWidth, levelPanel.tileHeight));
+        placedObjects.put(objectName, new Rectangle(x, y, playableLevelPanel.tileWidth, playableLevelPanel.tileHeight));
     }
 
     public void setPlacedObjects() {
-        int width = levelPanel.screenWidth;
-        int height = levelPanel.screenHeight;
-        double rightPadding = levelPanel.tileWidth * 1.5;
+        int width = playableLevelPanel.screenWidth;
+        int height = playableLevelPanel.screenHeight;
+        double rightPadding = playableLevelPanel.tileWidth * 1.5;
 
         // Place bin on the right side of the screen
-        placeObject("bin", (int) (width - rightPadding), height / 2 - levelPanel.tileHeight / 2);
+        placeObject("bin", (int) (width - rightPadding), height / 2 - playableLevelPanel.tileHeight / 2);
 
-        rightPadding = levelPanel.tileWidth;
+        rightPadding = playableLevelPanel.tileWidth;
         // Place reset button on the top right corner of the screen
         placeObject("reset", (int) (width - rightPadding), 0);
     }
