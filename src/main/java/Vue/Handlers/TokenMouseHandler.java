@@ -125,8 +125,9 @@ public class TokenMouseHandler implements MouseListener {
             int endX = e.getX();
             int endY = e.getY();
 
-            if (Math.abs(endX - startX) < CLICK_MOVEMENT_THRESHOLD && Math.abs(endY - startY) < CLICK_MOVEMENT_THRESHOLD) {
-                mouseClicked(e);
+            if (Math.abs(endX - startX) < CLICK_MOVEMENT_THRESHOLD && Math.abs(endY - startY) < CLICK_MOVEMENT_THRESHOLD
+                    && e.getClickCount() == 0) {
+                mouseClicked(e); // make sure that mouseClicked has not been called already
                 return;
             }
 
