@@ -9,10 +9,6 @@ import java.nio.file.Paths;
 public class CampaignProgression {
 
     private static final Path path = Paths.get("src/main/java/Model/Resources/campaignProgression.txt");
-    // campaignProgression.txt example:
-    // user1:1
-    // user2:2
-    // user3:73
 
     public static void saveProgression(String username, int level) {
         // Get the file, read the file, check if the username and password match
@@ -31,7 +27,7 @@ public class CampaignProgression {
                 String[] parts = line.split(":");
                 if (parts[0].equals(username)) {
                     found = true;
-                    parts[1] = Integer.toString(level);
+                    fileContent = fileContent.replace(line, username + ":" + level);
                 }
             }
 
@@ -77,4 +73,39 @@ public class CampaignProgression {
         return output;
     }
 
+    public static void resetProgression(String username) {
+        try (InputStream is = new FileInputStream(path.toString())) {
+
+            byte[] buffer = new byte[is.available()];
+
+            is.read(buffer);
+
+            String fileContent = new String(buffer);
+
+            String[] lines = fileContent.split("\n");
+
+            for (String line : lines) {
+                String[] parts = line.split(":");
+                if (parts[0].equals(username)) {
+                    fileContent = fileContent.replace(line, "");
+                }
+            }
+
+            // Save the new progression
+            FileOutputStream os = new FileOutputStream(path.toString());
+            os.write(fileContent.getBytes());
+            os.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void resetAllProgression() {
+        try (FileOutputStream os = new FileOutputStream(path.toString())) {
+            os.write(("").getBytes());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
