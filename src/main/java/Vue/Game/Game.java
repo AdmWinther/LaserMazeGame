@@ -1,7 +1,6 @@
 package Vue.Game;
 
 import Controller.GameController;
-import Controller.LevelController;
 import Controller.PlayableLevelController;
 import Vue.Level.PlayableLevelPanel;
 
@@ -15,6 +14,8 @@ public class Game {
     PlayableLevelPanel playableLevelPanel;
     GameController gameController;
 
+    private final double aspectRatio;
+
     public Game() {
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -24,14 +25,18 @@ public class Game {
 
         // TODO: This is a hard-coded level. We should have a gamePanel and the user should be able to select the level they want to play.
         gameController = new GameController();
-        gameController.setCurrentLevelID("level3");
+        gameController.setCurrentLevelID("10x10_AlmostCompleted");
 
         PlayableLevelController levelController = new PlayableLevelController(gameController.getCurrentLevel());
         playableLevelPanel = new PlayableLevelPanel(levelController);
         frame.add(playableLevelPanel);
+
+        aspectRatio = (double) playableLevelPanel.maxCol / playableLevelPanel.maxRow;
+
         frame.addComponentListener(new ComponentListener() {
             @Override
             public void componentResized(ComponentEvent e) {
+                frame.setSize(frame.getWidth(), (int) (frame.getWidth() / aspectRatio));
                 playableLevelPanel.resize();
             }
 

@@ -5,6 +5,7 @@ import Model.Classes.Token.*;
 import Model.Classes.Utils.Coordinate;
 import Model.Classes.Utils.Orientation;
 import Model.Classes.Utils.Pair;
+import Vue.Interfaces.Drawable;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -15,7 +16,13 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-public class UITokens {
+/**
+ * This class is responsible for handling the tokens' display in the level.
+ *
+ * @see PlayableLevelPanel
+ * @author Léonard Amsler, Nathan Gromb
+ */
+public class UITokens implements Drawable {
 
     LevelController levelController;
     Map<Token, Rectangle2D> unPlacedTokenRectangles = new HashMap<>();
@@ -23,72 +30,104 @@ public class UITokens {
     Map<Pair<String, Orientation>, BufferedImage> orientedTokenImages = new HashMap<>();
     PlayableLevelPanel playableLevelPanel;
 
-    public UITokens(PlayableLevelPanel playableLevelPanel, LevelController levelController) {
+    //TODO make this a 3-tuple
+    private Pair<Token, Pair<Integer, Integer>> draggedToken = null;
+
+    public UITokens(PlayableLevelPanel levelPanel, LevelController levelController) {
         this.levelController = levelController;
-        this.playableLevelPanel = playableLevelPanel;
+        this.playableLevelPanel = levelPanel;
         setTokenImages();
     }
 
-    public void setTokenImages() {
+    /**
+     * Loads the images for the tokens.
+     *
+     * @author Léonard Amsler
+     */
+    private void setTokenImages() {
 
         try {
             // 1. Load the images for the tokens
-            BufferedImage beamerImageUP = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tokens/lasergun_UP.png")));
-            BufferedImage beamerImageDOWN = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tokens/lasergun_DOWN.png")));
-            BufferedImage beamerImageLEFT = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tokens/lasergun_LEFT.png")));
-            BufferedImage beamerImageRIGHT = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tokens/lasergun_RIGHT.png")));
+            BufferedImage beamerImageUP = readImage("/Tokens/lasergun_UP.png");
+            BufferedImage beamerImageDOWN = readImage("/Tokens/lasergun_DOWN.png");
+            BufferedImage beamerImageLEFT = readImage("/Tokens/lasergun_LEFT.png");
+            BufferedImage beamerImageRIGHT = readImage("/Tokens/lasergun_RIGHT.png");
 
-            BufferedImage blockerImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tokens/blocker.png")));
+            BufferedImage blockerImage = readImage("/Tokens/block.png");
 
-            BufferedImage mirrorImageUP = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tokens/mirror_U.png")));
-            BufferedImage mirrorImageDOWN = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tokens/mirror_D.png")));
-            BufferedImage mirrorImageLEFT = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tokens/mirror_L.png")));
-            BufferedImage mirrorImageRIGHT = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tokens/mirror_R.png")));
+            BufferedImage mirrorImageUP = readImage("/Tokens/mirror_UP.png");
+            BufferedImage mirrorImageDOWN = readImage("/Tokens/mirror_DOWN.png");
+            BufferedImage mirrorImageLEFT = readImage("/Tokens/mirror_LEFT.png");
+            BufferedImage mirrorImageRIGHT = readImage("/Tokens/mirror_RIGHT.png");
 
-            BufferedImage doubleMirrorImageUPDOWN = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tokens/doubleMirror_UD.png")));
-            BufferedImage doubleMirrorImageLEFTRIGHT = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tokens/doubleMirror_RL.png")));
+            BufferedImage doubleMirrorImageUPDOWN = readImage("/Tokens/doubleMirror_UD.png");
+            BufferedImage doubleMirrorImageLEFTRIGHT = readImage("/Tokens/doubleMirror_RL.png");
 
-            BufferedImage targetImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tokens/target.png")));
+            BufferedImage targetImageUP = readImage("/Tokens/target_UP.png");
+            BufferedImage targetImageDOWN = readImage("/Tokens/target_DOWN.png");
+            BufferedImage targetImageLEFT = readImage("/Tokens/target_LEFT.png");
+            BufferedImage targetImageRIGHT = readImage("/Tokens/target_RIGHT.png");
 
             // 2. Store the images in the maps
             String beamerClassName = LaserGun.class.getSimpleName();
-            orientedTokenImages.put(new Pair<>(beamerClassName, Orientation.UP), beamerImageUP);
-            orientedTokenImages.put(new Pair<>(beamerClassName, Orientation.DOWN), beamerImageDOWN);
-            orientedTokenImages.put(new Pair<>(beamerClassName, Orientation.LEFT), beamerImageLEFT);
-            orientedTokenImages.put(new Pair<>(beamerClassName, Orientation.RIGHT), beamerImageRIGHT);
+            putOrientedTokenImage(beamerImageUP, beamerImageDOWN, beamerImageLEFT, beamerImageRIGHT, beamerClassName);
 
             String blockerClassName = Block.class.getSimpleName();
             tokenImages.put(blockerClassName, blockerImage);
 
             String mirrorClassName = OneSidedMirror.class.getSimpleName();
-            orientedTokenImages.put(new Pair<>(mirrorClassName, Orientation.UP), mirrorImageUP);
-            orientedTokenImages.put(new Pair<>(mirrorClassName, Orientation.DOWN), mirrorImageDOWN);
-            orientedTokenImages.put(new Pair<>(mirrorClassName, Orientation.LEFT), mirrorImageLEFT);
-            orientedTokenImages.put(new Pair<>(mirrorClassName, Orientation.RIGHT), mirrorImageRIGHT);
+            putOrientedTokenImage(mirrorImageUP, mirrorImageDOWN, mirrorImageLEFT, mirrorImageRIGHT, mirrorClassName);
 
             String doubleMirrorClassName = DoubleSidedMirror.class.getSimpleName();
-            orientedTokenImages.put(new Pair<>(doubleMirrorClassName, Orientation.UP), doubleMirrorImageUPDOWN);
-            orientedTokenImages.put(new Pair<>(doubleMirrorClassName, Orientation.DOWN), doubleMirrorImageUPDOWN);
-            orientedTokenImages.put(new Pair<>(doubleMirrorClassName, Orientation.LEFT), doubleMirrorImageLEFTRIGHT);
-            orientedTokenImages.put(new Pair<>(doubleMirrorClassName, Orientation.RIGHT), doubleMirrorImageLEFTRIGHT);
+            putOrientedTokenImage(doubleMirrorImageUPDOWN, doubleMirrorImageUPDOWN, doubleMirrorImageLEFTRIGHT, doubleMirrorImageLEFTRIGHT, doubleMirrorClassName);
 
             String targetClassName = Target.class.getSimpleName();
-            orientedTokenImages.put(new Pair<>(targetClassName, Orientation.UP), targetImage);
-            orientedTokenImages.put(new Pair<>(targetClassName, Orientation.DOWN), targetImage);
-            orientedTokenImages.put(new Pair<>(targetClassName, Orientation.LEFT), targetImage);
-            orientedTokenImages.put(new Pair<>(targetClassName, Orientation.RIGHT), targetImage);
+            putOrientedTokenImage(targetImageUP, targetImageDOWN, targetImageLEFT, targetImageRIGHT, targetClassName);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Utility method to read an image from the resources.
+     *
+     * @author Nathan Gromb
+     */
+    private BufferedImage readImage(String path) throws Exception {
+        return ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path)));
+    }
+
+    /**
+     * Utility method to store the oriented token images in the map.
+     *
+     * @author Nathan Gromb
+     */
+    private void putOrientedTokenImage(BufferedImage beamerImageUP, BufferedImage beamerImageDOWN, BufferedImage beamerImageLEFT, BufferedImage beamerImageRIGHT, String beamerClassName) {
+        orientedTokenImages.put(new Pair<>(beamerClassName, Orientation.UP), beamerImageUP);
+        orientedTokenImages.put(new Pair<>(beamerClassName, Orientation.DOWN), beamerImageDOWN);
+        orientedTokenImages.put(new Pair<>(beamerClassName, Orientation.LEFT), beamerImageLEFT);
+        orientedTokenImages.put(new Pair<>(beamerClassName, Orientation.RIGHT), beamerImageRIGHT);
+    }
+
+    /**
+     * Draws the tokens on the board.
+     *
+     * @param g2d The graphics object to draw on
+     * @author Léonard Amsler
+     */
     public void draw(Graphics2D g2d) {
         drawPlacedTokens(g2d);
         drawUnplacedTokens(g2d);
     }
 
-    public void drawPlacedTokens(Graphics2D g2d) {
+    /**
+     * Draws the tokens that are placed on the board.
+     *
+     * @param g2d The graphics object to draw on
+     * @author Léonard Amsler
+     */
+    private void drawPlacedTokens(Graphics2D g2d) {
 
         Map<Coordinate, Token> placedTokens = levelController.getPlacedTokens();
 
@@ -98,14 +137,23 @@ public class UITokens {
         for (Map.Entry<Coordinate, Token> entry : placedTokens.entrySet()) {
             Coordinate coordinate = entry.getKey();
             Token token = entry.getValue();
+
             int x = widthOffset + coordinate.x() * playableLevelPanel.tileWidth;
             int y = heightOffset + coordinate.y() * playableLevelPanel.tileHeight;
-            drawToken(g2d, token, x, y, playableLevelPanel.tileWidth, playableLevelPanel.tileHeight);
+
+            Pair<Integer, Integer> position = getTokenPosition(token, x, y);
+            drawToken(g2d, token, position.first(), position.second(), playableLevelPanel.tileWidth, playableLevelPanel.tileHeight);
         }
 
     }
 
-    public void drawUnplacedTokens(Graphics2D g2d) {
+    /**
+     * Draws the tokens that are not placed on the board.
+     *
+     * @param g2d The graphics object to draw on
+     * @author Léonard Amsler
+     */
+    private void drawUnplacedTokens(Graphics2D g2d) {
         // Display the unplaced tokens at the bottom of the screen, centered horizontally
         int tileWidth = playableLevelPanel.tileWidth;
         int tileHeight = playableLevelPanel.tileHeight;
@@ -126,11 +174,19 @@ public class UITokens {
         for (Token token : unplacedTokens) {
             Rectangle2D rect = new Rectangle2D.Double(x, y, tileWidth, tileHeight);
             unPlacedTokenRectangles.put(token, rect);
-            drawToken(g2d, token, x, y, tileWidth, tileHeight);
+
+            Pair<Integer, Integer> position = getTokenPosition(token, x, y);
+            drawToken(g2d, token, position.first(), position.second(), tileWidth, tileHeight);
+
             x += tileWidth;
         }
     }
 
+    /**
+     * Draws a token at the given position.
+     *
+     * @author Léonard Amsler
+     */
     private void drawToken(Graphics2D g2d, Token token, int x, int y, int tileWidth, int tileHeight) {
 
         String tokenClassName = token.getClass().getSimpleName();
@@ -147,6 +203,11 @@ public class UITokens {
         g2d.drawImage(tokenImage, x, y, tileWidth, tileHeight, null);
     }
 
+    /**
+     * Returns the unplaced token at the given position.
+     *
+     * @author Léonard Amsler
+     */
     public Token getUnplacedTokenAt(int x, int y) {
         for (Map.Entry<Token, Rectangle2D> entry : unPlacedTokenRectangles.entrySet()) {
             Rectangle2D rectangle = entry.getValue();
@@ -155,5 +216,51 @@ public class UITokens {
             }
         }
         return null;
+    }
+
+    /**
+     * Sets the token being dragged and its position.
+     *
+     * @param token The token being dragged
+     * @param x The x position of the mouse
+     * @param y The y position of the mouse
+     * @author Nathan Gromb
+     */
+    public void setDraggedToken(Token token, int x, int y) {
+        draggedToken = new Pair<>(token, new Pair<>(x, y));
+    }
+
+    /**
+     * Resets the dragged token to null.
+     *
+     * @author Nathan Gromb
+     */
+    public void resetDraggedToken() {
+        draggedToken = null;
+    }
+
+    /**
+     * Returns the position of the token, overriding the real position if the token is being dragged.
+     *
+     * @author Nathan Gromb
+     */
+    private Pair<Integer, Integer> getTokenPosition(Token token, int realX, int realY) {
+        if (isDraggedToken(token)) {
+            int x = draggedToken.second().first();
+            int y = draggedToken.second().second();
+
+            return new Pair<>(x - playableLevelPanel.tileWidth / 2, y - playableLevelPanel.tileHeight / 2);
+        }
+
+        return new Pair<>(realX, realY);
+    }
+
+    /**
+     * Returns whether the token is the one being dragged.
+     *
+     * @author Nathan Gromb
+     */
+    private boolean isDraggedToken(Token token) {
+        return draggedToken != null && draggedToken.first().equals(token);
     }
 }

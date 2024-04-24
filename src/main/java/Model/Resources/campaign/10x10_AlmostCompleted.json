@@ -1,0 +1,88 @@
+{
+  "name": "10x10_OneTokenOnBoard_OneToken",
+  "boardSize": {
+    "widthX": 10,
+    "heightY": 10
+  },
+  "placedTokens": [
+    {
+      "tokenId": "LaserGun_56",
+      "type": "LaserGun",
+      "orientation": "RIGHT",
+      "position": {
+        "x": 2,
+        "y": 3
+      }
+    },
+    {
+        "tokenId": "Receiver_strong",
+        "type": "Target",
+        "orientation": "UP",
+        "position": {
+            "x": 5,
+            "y": 6
+        }
+    },
+    {
+        "tokenId": "D_S_Mirror-47",
+        "type": "DoubleSidedMirror",
+        "orientation": "RIGHT",
+        "position": {
+            "x": 7,
+            "y": 7
+        }
+    },
+    {
+      "tokenId": "D_S_Mirror-48",
+      "type": "DoubleSidedMirror",
+      "orientation": "UP",
+      "position": {
+        "x": 7,
+        "y": 3
+      }
+    },
+    {
+      "tokenId": "D_S_Mirror-48E",
+      "type": "DoubleSidedMirror",
+      "orientation": "UP",
+      "position": {
+        "x": 1,
+        "y": 7
+      }
+    },
+    {
+      "tokenId": "D_S_Mirror-48",
+      "type": "DoubleSidedMirror",
+      "orientation": "RIGHT",
+      "position": {
+        "x": 1,
+        "y": 1
+      }
+    },
+    {
+      "tokenId": "Block",
+      "type": "Block",
+      "position": {
+        "x": 5,
+        "y": 2
+      }
+    }
+  ],
+  "unplacedTokens": [
+    {
+      "tokenId": "D_S_Mirror-1",
+      "type": "DoubleSidedMirror",
+      "orientation": "RIGHT"
+    },
+    {
+      "tokenId": "D_S_Mirror-2",
+      "type": "DoubleSidedMirror",
+      "orientation": "RIGHT"
+    },
+    {
+      "tokenId": "O_Mirror-2",
+      "type": "OneSidedMirror",
+      "orientation": "RIGHT"
+    }
+  ]
+}

@@ -1,5 +1,7 @@
 package Vue.Level;
 
+import Vue.Interfaces.Drawable;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -8,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class UIObjects {
+public class UIObjects implements Drawable {
 
     private final PlayableLevelPanel playableLevelPanel;
     private final Map<String, Rectangle2D> placedObjects = new HashMap<>();

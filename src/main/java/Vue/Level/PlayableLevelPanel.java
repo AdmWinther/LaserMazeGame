@@ -3,6 +3,8 @@ package Vue.Level;
 import Controller.LevelController;
 import Controller.PlayableLevelController;
 import Vue.Handlers.LevelMouseHandler;
+import Vue.Handlers.TokenMouseHandler;
+import Vue.Handlers.TokenMouseMotionHandler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,22 +21,24 @@ public class PlayableLevelPanel extends JPanel implements Runnable {
     final int fps = 60;
     final int frameTime = 1000 / fps;
     // Level configuration, screen size in tiles
-    public int maxCol;
-    public int maxRow;
+    public final int maxCol;
+    public final int maxRow;
     // Screen size in pixels
     public int screenWidth;
     public int screenHeight;
     // Controllers
     public PlayableLevelController levelController;
 
-    // UI Tiles, Objects and Tokens
+    // Objects to draw
     public UIObjects UIObjects;
     public UITokens UITokens;
     public UITiles UITiles;
     public UILaser UILaser;
-
+    private LevelAnimations levelAnimations;
 
     public LevelMouseHandler levelMouseHandler;
+    public TokenMouseHandler tokenMouseHandler;
+    public TokenMouseMotionHandler tokenMouseMotionHandler;
     // Offsets, number of pixels to the top left corner of the level board
     public int widthOffset;
     public int heightOffset;
@@ -69,12 +73,18 @@ public class PlayableLevelPanel extends JPanel implements Runnable {
         UITiles = new UITiles(this, levelController);
         UITokens = new UITokens(this, levelController);
         UILaser = new UILaser(this, levelController);
+        levelAnimations = new LevelAnimations(this);
 
-        levelMouseHandler = new LevelMouseHandler(this, levelController, UITokens);
+        levelMouseHandler = new LevelMouseHandler(this, levelController);
         addMouseListener(levelMouseHandler);
+        tokenMouseHandler = new TokenMouseHandler(this, levelController, UITokens);
+        addMouseListener(tokenMouseHandler);
+        tokenMouseMotionHandler = new TokenMouseMotionHandler(UITokens, tokenMouseHandler);
+        addMouseMotionListener(tokenMouseMotionHandler);
 
         setFocusable(true);
         requestFocus();
+
 
         start();
     }
@@ -122,9 +132,9 @@ public class PlayableLevelPanel extends JPanel implements Runnable {
 
         UITiles.draw(g2d);
         UILaser.draw(g2d);
-        UITokens.draw(g2d);
         UIObjects.draw(g2d);
-
+        UITokens.draw(g2d);
+        levelAnimations.draw(g2d);
 
 
         g2d.dispose();
@@ -150,7 +160,10 @@ public class PlayableLevelPanel extends JPanel implements Runnable {
 
         widthOffset = (maxCol - boardWidth) / 2 * tileWidth;
         heightOffset = (maxRow - boardHeight) / 2 * tileHeight;
+    }
 
+    public int getFPS() {
+        return fps;
     }
 }
 

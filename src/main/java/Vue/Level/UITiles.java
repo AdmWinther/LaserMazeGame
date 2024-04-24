@@ -1,6 +1,7 @@
 package Vue.Level;
 
 import Controller.LevelController;
+import Vue.Interfaces.Drawable;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -9,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class UITiles {
+public class UITiles implements Drawable {
 
     PlayableLevelPanel playableLevelPanel;
     LevelController levelController;
