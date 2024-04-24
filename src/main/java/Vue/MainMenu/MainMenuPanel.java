@@ -3,171 +3,225 @@ package Vue.MainMenu;
 import Controller.GameController;
 import Controller.LevelController;
 import Vue.Level.LevelPanel;
-import org.jetbrains.annotations.NotNull;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.image.BufferedImage;
-import java.util.Objects;
+import java.io.File;
 
 public class MainMenuPanel extends JPanel {
 
-    private static JFrame frame;
-    final int originalTileSize = 16;
-    public int screenWidth;
-    public int screenHeight;
-    Thread mainMenuThread;
-    int HScale = 3;
-    int VScale = 3;
-    int tileWidth = originalTileSize * HScale;
-    int tileHeight = originalTileSize * VScale;
-
     public MainMenuPanel(JFrame frame) {
-        this.screenWidth = 720;
-        this.screenHeight = 720;
-        this.frame = frame;
 
 
+        int screenWidth = frame.getWidth();
+        int screenHeight = frame.getHeight();
         setPreferredSize(new Dimension(screenWidth, screenHeight));
-        setDoubleBuffered(true);
-        setFocusable(true);
-        requestFocus();
+        setLayout(new BorderLayout());
 
-        JPanel backgroundPanel = getBackgroundJPanel();
-        this.add(backgroundPanel);
+        // Background image
+        ImageIcon backgroundImage = new ImageIcon("src/main/java/Vue/Resources/Tiles/background.png");
+        ImagePanel backgroundPanel = new ImagePanel(backgroundImage.getImage());
+        backgroundPanel.setLayout(new BorderLayout());
+        add(backgroundPanel, BorderLayout.CENTER);
 
-        BorderLayout borderPanel = new BorderLayout();
+        // Title label
+        JLabel titleLabel = new JLabel("Laser Maze", SwingConstants.CENTER);
+        // Use a custom font
+        titleLabel.setFont(new Font("Courier New", Font.BOLD, 30));
+        titleLabel.setForeground(Color.LIGHT_GRAY);
+        titleLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
+        backgroundPanel.add(titleLabel, BorderLayout.NORTH);
+
+        JPanel buttonPanel = createButtonPanel(frame);
+        backgroundPanel.add(buttonPanel, BorderLayout.CENTER);
 
 
-        this.setLayout(new BorderLayout());
+        // Footer label
+        JLabel footerLabel = new JLabel("Made by group 3", SwingConstants.RIGHT);
+        footerLabel.setFont(new Font("Courier New", Font.PLAIN, 10));
+        footerLabel.setForeground(Color.LIGHT_GRAY);
+        footerLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        backgroundPanel.add(footerLabel, BorderLayout.SOUTH);
 
-        JLabel welcome = new JLabel("Welcome to the game", SwingConstants.CENTER);
-        this.add(welcome, BorderLayout.NORTH);
-
-
-        JPanel buttons = getButtonsJPanel();
-        this.add(buttons, BorderLayout.CENTER);
-
-        JLabel footer = new JLabel("Made by Group-3", SwingConstants.CENTER);
-        this.add(footer, BorderLayout.SOUTH);
-
-        this.setVisible(true);
-
+        frame.pack();
     }
 
     private static void prepareLevel(String levelID, JFrame frame) {
 
         GameController gameController = new GameController();
         gameController.setCurrentLevelID(levelID);
-
         LevelController levelController = new LevelController(gameController.getCurrentLevel());
 
         LevelPanel levelPanel = new LevelPanel(levelController);
+
+        frame.getContentPane().removeAll();
         frame.add(levelPanel);
-        frame.addComponentListener(new ComponentListener() {
+        frame.revalidate();
+        frame.repaint();
+        
+    }
+
+    private JPanel createButtonPanel(JFrame frame) {
+        // Button panel for the three buttons
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(3, 1, 0, 30));
+        buttonPanel.setOpaque(false); // Make the panel transparent
+
+        int width = frame.getWidth();
+        int height = frame.getHeight();
+
+        int sidePadding = 0;
+        int topPadding = 0;
+
+        if (width > 200) {
+            sidePadding = (width - 200) / 2;
+        }
+        if (height > 300) {
+            topPadding = (height - 300) / 2;
+        }
+
+        System.out.println("width: " + width);
+        System.out.println("height: " + height);
+        System.out.println("sidePadding: " + sidePadding);
+        System.out.println("topPadding: " + topPadding);
+
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(topPadding, sidePadding, topPadding, sidePadding));
+
+
+        // Create buttons
+        BufferedImage campaignButtonImage = null;
+        BufferedImage sandboxButtonImage = null;
+        BufferedImage randomButtonImage = null;
+        try {
+            campaignButtonImage = ImageIO.read(new File("src/main/java/Vue/Resources/MenuButtons/campaign.png"));
+            sandboxButtonImage = ImageIO.read(new File("src/main/java/Vue/Resources/MenuButtons/sandbox.png"));
+            randomButtonImage = ImageIO.read(new File("src/main/java/Vue/Resources/MenuButtons/random.png"));
+        } catch (Exception e) {
+            System.out.println("Error loading campaign button image");
+        }
+
+        // Resize button image such that they fit the button
+        assert campaignButtonImage != null;
+        assert sandboxButtonImage != null;
+        assert randomButtonImage != null;
+        int buttonWidth = 200;
+        int buttonHeight = 50;
+        campaignButtonImage = resizeImage(campaignButtonImage, buttonWidth, buttonHeight);
+        sandboxButtonImage = resizeImage(sandboxButtonImage, buttonWidth, buttonHeight);
+        randomButtonImage = resizeImage(randomButtonImage, buttonWidth, buttonHeight);
+
+        // Create buttons
+        JButton campaignButton = new JButton(new ImageIcon(campaignButtonImage));
+        JButton sandboxButton = new JButton(new ImageIcon(sandboxButtonImage));
+        JButton randomButton = new JButton(new ImageIcon(randomButtonImage));
+
+        // Add action listeners to buttons
+        campaignButton.addActionListener(e -> {
+            System.out.println("Campaign button clicked");
+        });
+        sandboxButton.addActionListener(e -> {
+            System.out.println("Sandbox button clicked");
+        });
+        randomButton.addActionListener(e -> {
+            System.out.println("Random button clicked");
+            prepareLevel("level1", frame);
+        });
+
+        // Set button to transparent
+        campaignButton.setOpaque(false);
+        campaignButton.setContentAreaFilled(false);
+        campaignButton.setBorderPainted(false);
+
+        sandboxButton.setOpaque(false);
+        sandboxButton.setContentAreaFilled(false);
+        sandboxButton.setBorderPainted(false);
+
+        randomButton.setOpaque(false);
+        randomButton.setContentAreaFilled(false);
+        randomButton.setBorderPainted(false);
+
+        // Remove the blue line around the button
+        campaignButton.setFocusPainted(false);
+        sandboxButton.setFocusPainted(false);
+        randomButton.setFocusPainted(false);
+
+
+        // Add buttons to panel
+        buttonPanel.add(campaignButton);
+        buttonPanel.add(sandboxButton);
+        buttonPanel.add(randomButton);
+
+        this.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                levelPanel.resize();
-            }
+                System.out.println("Resized mainmenu");
+                int width = frame.getWidth();
+                int height = frame.getHeight();
 
-            @Override
-            public void componentMoved(ComponentEvent e) {
-            }
+                int sidePadding = 0;
+                int topPadding = 0;
 
-            @Override
-            public void componentShown(ComponentEvent e) {
-            }
+                if (width > 200) {
+                    sidePadding = (width - 200) / 2;
+                }
+                if (height > 300) {
+                    topPadding = (height - 300) / 2;
+                }
 
-            @Override
-            public void componentHidden(ComponentEvent e) {
-            }
-        });
-        frame.pack();
-    }
+                System.out.println("width: " + width);
+                System.out.println("height: " + height);
+                System.out.println("sidePadding: " + sidePadding);
+                System.out.println("topPadding: " + topPadding);
 
-    @NotNull
-    private JPanel getButtonsJPanel() {
-
-        JPanel backgroundPanel = new JPanel();
-
-        backgroundPanel.setLayout(new BoxLayout(backgroundPanel, BoxLayout.Y_AXIS));
-        backgroundPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-
-        JPanel container = new JPanel();
-        container.setLayout(new GridLayout(3, 1));
-
-        JLabel emptyLabel1 = new JLabel(" ");
-        container.add(emptyLabel1);
-
-        JButton loadGame = new JButton("Load Game");
-        loadGame.setAlignmentX(Component.CENTER_ALIGNMENT);
-//        loadGame.setBorder(BorderFactory.createLineBorder(Color.gray, 3));
-//        loadGame.setMargin(new Insets(20, 20, 20, 20));
-        loadGame.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-//                System.out.println("You clicked the button");
-                prepareLevel("level6", frame);
+                buttonPanel.setBorder(BorderFactory.createEmptyBorder(topPadding, sidePadding, topPadding, sidePadding));
+                buttonPanel.repaint();
             }
         });
 
-        JButton newGame = new JButton("New Game");
-        newGame.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        JButton campaign = new JButton("Campaign");
-        campaign.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        backgroundPanel.add(Box.createHorizontalStrut(10));
-        backgroundPanel.add(newGame);
-        backgroundPanel.add(Box.createHorizontalStrut(10));
-        backgroundPanel.add(loadGame);
-        backgroundPanel.add(Box.createHorizontalStrut(10));
-        backgroundPanel.add(campaign);
-        backgroundPanel.add(Box.createHorizontalStrut(10));
-
-        container.add(backgroundPanel);
-
-        return container;
+        return buttonPanel;
     }
 
-    private JPanel getBackgroundJPanel() {
-        // Add the background
-        int nbTilesX = screenWidth / tileWidth;
-        int nbTilesY = screenHeight / tileHeight;
+    private BufferedImage resizeImage(BufferedImage campaignButtonImage, int i, int i1) {
+        Image tmp = campaignButtonImage.getScaledInstance(i, i1, Image.SCALE_SMOOTH);
+        BufferedImage resized = new BufferedImage(i, i1, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = resized.createGraphics();
+        g2d.drawImage(tmp, 0, 0, null);
+        g2d.dispose();
+        return resized;
+    }
 
-        BufferedImage background = null;
-        try {
-            background = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tiles/background.png")));
-        } catch (Exception e) {
-            e.printStackTrace();
+    private static class ImagePanel extends JPanel {
+        private final Image backgroundImage;
+
+        public ImagePanel(Image backgroundImage) {
+            this.backgroundImage = backgroundImage;
         }
-        final BufferedImage finalBackground = background;
 
-        if (background == null) {
-            return new JPanel();
-        }
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
 
+            Graphics2D g2d = (Graphics2D) g;
 
-        JPanel backgroundPanel = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
+            if (backgroundImage != null) {
+                // Calculate the number of tiles needed to fill the panel
+                int width = getWidth();
+                int height = getHeight();
+                int scale = 3;
+                int tileWidth = backgroundImage.getWidth(null) * scale;
+                int tileHeight = backgroundImage.getHeight(null) * scale;
 
-                Graphics2D g2d = (Graphics2D) g;
-
-                for (int i = 0; i < nbTilesX; i++) {
-                    for (int j = 0; j < nbTilesY; j++) {
-                        g2d.drawImage(finalBackground, i * tileWidth, j * tileHeight, tileWidth, tileHeight, null);
+                // Draw the background image tiles to fill the panel
+                for (int x = 0; x < width; x += tileWidth) {
+                    for (int y = 0; y < height; y += tileHeight) {
+                        g2d.drawImage(backgroundImage, x, y, tileWidth, tileHeight, this);
                     }
                 }
             }
-        };
-
-        return backgroundPanel;
+        }
     }
 }
