@@ -2,6 +2,7 @@ package Vue.Game;
 
 import Controller.GameController;
 import Controller.PlayableLevelController;
+import Vue.Level.LevelPanel;
 import Vue.Level.PlayableLevelPanel;
 
 import javax.swing.*;
@@ -11,7 +12,7 @@ import java.awt.event.ComponentListener;
 public class Game {
 
     JFrame frame;
-    PlayableLevelPanel playableLevelPanel;
+    LevelPanel levelPanel;
     GameController gameController;
 
     private final double aspectRatio;
@@ -28,16 +29,16 @@ public class Game {
         gameController.setCurrentLevelID("10x10_AlmostCompleted");
 
         PlayableLevelController levelController = new PlayableLevelController(gameController.getCurrentLevel());
-        playableLevelPanel = new PlayableLevelPanel(levelController);
-        frame.add(playableLevelPanel);
+        levelPanel = new PlayableLevelPanel(levelController);
+        frame.add(levelPanel);
 
-        aspectRatio = (double) playableLevelPanel.maxCol / playableLevelPanel.maxRow;
+        aspectRatio = (double) levelPanel.maxCol / levelPanel.maxRow;
 
         frame.addComponentListener(new ComponentListener() {
             @Override
             public void componentResized(ComponentEvent e) {
                 frame.setSize(frame.getWidth(), (int) (frame.getWidth() / aspectRatio));
-                playableLevelPanel.resize();
+                levelPanel.resize();
             }
 
             @Override

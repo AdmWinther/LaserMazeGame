@@ -1,7 +1,7 @@
 package Vue.Animations;
 
 import Vue.Interfaces.Animation;
-import Vue.Level.UILayers.UIAnimations;
+import Vue.Level.UILayers.AnimationsUI;
 
 import java.awt.*;
 
@@ -15,10 +15,10 @@ public class LevelCompletedAnimation implements Animation {
 
     private boolean running = false;
 
-    private final UIAnimations UIAnimations;
+    private final AnimationsUI AnimationsUI;
 
-    public LevelCompletedAnimation(UIAnimations UIAnimations) {
-        this.UIAnimations = UIAnimations;
+    public LevelCompletedAnimation(AnimationsUI AnimationsUI) {
+        this.AnimationsUI = AnimationsUI;
     }
 
     @Override
@@ -41,8 +41,8 @@ public class LevelCompletedAnimation implements Animation {
             return;
         }
 
-        UIAnimations.circle(Color.BLACK);
-        UIAnimations.confetti();
+        AnimationsUI.circle(Color.BLACK);
+        AnimationsUI.confetti();
 
         running = false;
     }

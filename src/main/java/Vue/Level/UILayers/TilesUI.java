@@ -2,7 +2,7 @@ package Vue.Level.UILayers;
 
 import Controller.LevelController;
 import Vue.Interfaces.Drawable;
-import Vue.Level.PlayableLevelPanel;
+import Vue.Level.LevelPanel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -11,15 +11,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class UITiles implements Drawable {
+public class TilesUI implements Drawable {
 
-    PlayableLevelPanel playableLevelPanel;
+    LevelPanel levelPanel;
     LevelController levelController;
     String[][] levelTiles;
     Map<String, BufferedImage> tileImages = new HashMap<>();
 
-    public UITiles(PlayableLevelPanel playableLevelPanel, LevelController levelController) {
-        this.playableLevelPanel = playableLevelPanel;
+    public TilesUI(LevelPanel levelPanel, LevelController levelController) {
+        this.levelPanel = levelPanel;
         this.levelController = levelController;
         getTileImage();
         setLevelTiles();
@@ -27,13 +27,13 @@ public class UITiles implements Drawable {
 
     private void setLevelTiles() {
 
-        levelTiles = new String[playableLevelPanel.maxRow + 1][playableLevelPanel.maxCol + 1];
+        levelTiles = new String[levelPanel.maxRow + 1][levelPanel.maxCol + 1];
 
-        int maxRow = playableLevelPanel.maxRow;
-        int maxCol = playableLevelPanel.maxCol;
-        int horizontalBorder = playableLevelPanel.horizontalBorder;
-        int verticalBorder = playableLevelPanel.verticalBorder;
-        int wallThickness = playableLevelPanel.wallThickness;
+        int maxRow = levelPanel.maxRow;
+        int maxCol = levelPanel.maxCol;
+        int horizontalBorder = levelPanel.horizontalBorder;
+        int verticalBorder = levelPanel.verticalBorder;
+        int wallThickness = levelPanel.wallThickness;
 
         // Load map, set border and randomize the background tile
         for (int i = 0; i < maxRow + 1; i++) {
@@ -73,12 +73,12 @@ public class UITiles implements Drawable {
     }
 
     public void draw(Graphics2D g2d) {
-        for (int row = 0; row < playableLevelPanel.maxRow + 1; row++) {
-            for (int col = 0; col < playableLevelPanel.maxCol + 1; col++) {
+        for (int row = 0; row < levelPanel.maxRow + 1; row++) {
+            for (int col = 0; col < levelPanel.maxCol + 1; col++) {
                 String tileName = levelTiles[row][col];
-                int x = col * playableLevelPanel.tileWidth;
-                int y = row * playableLevelPanel.tileHeight;
-                g2d.drawImage(tileImages.get(tileName), x, y, playableLevelPanel.tileWidth, playableLevelPanel.tileHeight, null);
+                int x = col * levelPanel.tileWidth;
+                int y = row * levelPanel.tileHeight;
+                g2d.drawImage(tileImages.get(tileName), x, y, levelPanel.tileWidth, levelPanel.tileHeight, null);
             }
         }
     }

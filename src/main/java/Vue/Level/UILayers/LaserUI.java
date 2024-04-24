@@ -4,7 +4,7 @@ import Controller.LevelController;
 import Model.Classes.Utils.Coordinate;
 import Model.Classes.Utils.Pair;
 import Vue.Interfaces.Drawable;
-import Vue.Level.PlayableLevelPanel;
+import Vue.Level.LevelPanel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -14,16 +14,16 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-public class UILaser implements Drawable {
+public class LaserUI implements Drawable {
 
-    private final PlayableLevelPanel playableLevelPanel;
+    private final LevelPanel levelPanel;
     private final LevelController levelController;
     private final Map<String, BufferedImage> laserImages = new HashMap<>();
     private final int laserDuration = 1; // 1 second
     private int laserTimer = 0;
 
-    public UILaser(PlayableLevelPanel playableLevelPanel, LevelController levelController) {
-        this.playableLevelPanel = playableLevelPanel;
+    public LaserUI(LevelPanel levelPanel, LevelController levelController) {
+        this.levelPanel = levelPanel;
         this.levelController = levelController;
         loadLaserImages();
     }
@@ -43,7 +43,7 @@ public class UILaser implements Drawable {
     public void draw(Graphics2D g2d) {
         boolean shouldDisplayLaser = levelController.shouldDisplayLaser();
         if (shouldDisplayLaser && laserTimer == 0) {
-            laserTimer += laserDuration * playableLevelPanel.getFPS();
+            laserTimer += laserDuration * levelPanel.getFPS();
             levelController.setShouldDisplayLaser(false);
         } else if (laserTimer > 0) {
             laserTimer--;
@@ -57,13 +57,13 @@ public class UILaser implements Drawable {
             Coordinate start = laserFragment.first();
             Coordinate end = laserFragment.second();
 
-            int widthOffset = playableLevelPanel.widthOffset;
-            int heightOffset = playableLevelPanel.heightOffset;
+            int widthOffset = levelPanel.widthOffset;
+            int heightOffset = levelPanel.heightOffset;
 
-            int startX = start.x() * playableLevelPanel.tileWidth + widthOffset;
-            int startY = start.y() * playableLevelPanel.tileHeight + heightOffset;
-            int endX = end.x() * playableLevelPanel.tileWidth + widthOffset;
-            int endY = end.y() * playableLevelPanel.tileHeight + heightOffset;
+            int startX = start.x() * levelPanel.tileWidth + widthOffset;
+            int startY = start.y() * levelPanel.tileHeight + heightOffset;
+            int endX = end.x() * levelPanel.tileWidth + widthOffset;
+            int endY = end.y() * levelPanel.tileHeight + heightOffset;
 
             int minX = Math.min(startX, endX);
             int minY = Math.min(startY, endY);
@@ -75,11 +75,11 @@ public class UILaser implements Drawable {
 
 
             if (startX == endX) { // Vertical laser
-                minY += playableLevelPanel.tileHeight / 2;
-                g2d.drawImage(laserImages.get("laser_vertical"), minX, minY, playableLevelPanel.tileWidth, height, null);
+                minY += levelPanel.tileHeight / 2;
+                g2d.drawImage(laserImages.get("laser_vertical"), minX, minY, levelPanel.tileWidth, height, null);
             } else { // Horizontal laser
-                minX += playableLevelPanel.tileWidth / 2;
-                g2d.drawImage(laserImages.get("laser_horizontal"), minX, minY, width, playableLevelPanel.tileHeight, null);
+                minX += levelPanel.tileWidth / 2;
+                g2d.drawImage(laserImages.get("laser_horizontal"), minX, minY, width, levelPanel.tileHeight, null);
             }
         }
 

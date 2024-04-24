@@ -1,7 +1,7 @@
 package Vue.Animations;
 
 import Vue.Interfaces.Animation;
-import Vue.Level.PlayableLevelPanel;
+import Vue.Level.LevelPanel;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class ConfettiAnimation implements Animation {
      */
     private static final int CONFETTI_MAX_SPEED = 10;
 
-    private final PlayableLevelPanel levelPanel;
+    private final LevelPanel levelPanel;
     private final ArrayList<Confetti> confettiList;
     private final Random random;
 
@@ -35,7 +35,7 @@ public class ConfettiAnimation implements Animation {
     private final int x;
     private final int y;
 
-    public ConfettiAnimation(PlayableLevelPanel levelPanel, int x, int y) {
+    public ConfettiAnimation(LevelPanel levelPanel, int x, int y) {
         this.x = x;
         this.y = y;
         this.levelPanel = levelPanel;
@@ -43,7 +43,7 @@ public class ConfettiAnimation implements Animation {
         this.random = new Random();
     }
 
-    public ConfettiAnimation(PlayableLevelPanel levelPanel) {
+    public ConfettiAnimation(LevelPanel levelPanel) {
         this(levelPanel, levelPanel.getWidth() / 2, levelPanel.getHeight() / 2);
     }
 

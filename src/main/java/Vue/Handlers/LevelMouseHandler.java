@@ -2,7 +2,7 @@ package Vue.Handlers;
 
 import Controller.LevelController;
 import Model.constants.MouseConstants;
-import Vue.Level.PlayableLevelPanel;
+import Vue.Level.LevelPanel;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -12,13 +12,13 @@ public class LevelMouseHandler implements MouseListener {
     private static final int CLICK_MOVEMENT_THRESHOLD = MouseConstants.CLICK_MOVEMENT_THRESHOLD;
 
     private final LevelController levelController;
-    private final PlayableLevelPanel levelPanel;
+    private final LevelPanel levelPanel;
 
     private boolean isPressed = false;
     private int startX;
     private int startY;
 
-    public LevelMouseHandler(PlayableLevelPanel levelPanel, LevelController levelController) {
+    public LevelMouseHandler(LevelPanel levelPanel, LevelController levelController) {
         this.levelPanel = levelPanel;
         this.levelController = levelController;
     }
@@ -26,7 +26,7 @@ public class LevelMouseHandler implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         // Check if we have clicked on the reset button
-        Rectangle2D reset = levelPanel.UIObjects.getPlacedObjects().get("reset");
+        Rectangle2D reset = levelPanel.ExtrasUI.getPlacedObjects().get("reset");
         if (reset.contains(e.getX(), e.getY())) {
             levelController.resetLevel();
             System.out.println("Reset tokens");

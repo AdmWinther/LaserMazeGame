@@ -6,7 +6,7 @@ import Model.Classes.Utils.Coordinate;
 import Model.Classes.Utils.Orientation;
 import Model.Classes.Utils.Pair;
 import Vue.Interfaces.Drawable;
-import Vue.Level.PlayableLevelPanel;
+import Vue.Level.LevelPanel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -20,23 +20,23 @@ import java.util.Set;
 /**
  * This class is responsible for handling the tokens' display in the level.
  *
- * @see PlayableLevelPanel
+ * @see LevelPanel
  * @author Léonard Amsler, Nathan Gromb
  */
-public class UITokens implements Drawable {
+public class TokensUI implements Drawable {
 
     LevelController levelController;
     Map<Token, Rectangle2D> unPlacedTokenRectangles = new HashMap<>();
     Map<String, BufferedImage> tokenImages = new HashMap<>();
     Map<Pair<String, Orientation>, BufferedImage> orientedTokenImages = new HashMap<>();
-    PlayableLevelPanel playableLevelPanel;
+    LevelPanel levelPanel;
 
     //TODO make this a 3-tuple
     private Pair<Token, Pair<Integer, Integer>> draggedToken = null;
 
-    public UITokens(PlayableLevelPanel levelPanel, LevelController levelController) {
+    public TokensUI(LevelPanel levelPanel, LevelController levelController) {
         this.levelController = levelController;
-        this.playableLevelPanel = levelPanel;
+        this.levelPanel = levelPanel;
         setTokenImages();
     }
 
@@ -132,18 +132,18 @@ public class UITokens implements Drawable {
 
         Map<Coordinate, Token> placedTokens = levelController.getPlacedTokens();
 
-        int widthOffset = playableLevelPanel.widthOffset;
-        int heightOffset = playableLevelPanel.heightOffset;
+        int widthOffset = levelPanel.widthOffset;
+        int heightOffset = levelPanel.heightOffset;
 
         for (Map.Entry<Coordinate, Token> entry : placedTokens.entrySet()) {
             Coordinate coordinate = entry.getKey();
             Token token = entry.getValue();
 
-            int x = widthOffset + coordinate.x() * playableLevelPanel.tileWidth;
-            int y = heightOffset + coordinate.y() * playableLevelPanel.tileHeight;
+            int x = widthOffset + coordinate.x() * levelPanel.tileWidth;
+            int y = heightOffset + coordinate.y() * levelPanel.tileHeight;
 
             Pair<Integer, Integer> position = getTokenPosition(token, x, y);
-            drawToken(g2d, token, position.first(), position.second(), playableLevelPanel.tileWidth, playableLevelPanel.tileHeight);
+            drawToken(g2d, token, position.first(), position.second(), levelPanel.tileWidth, levelPanel.tileHeight);
         }
 
     }
@@ -156,11 +156,11 @@ public class UITokens implements Drawable {
      */
     private void drawUnplacedTokens(Graphics2D g2d) {
         // Display the unplaced tokens at the bottom of the screen, centered horizontally
-        int tileWidth = playableLevelPanel.tileWidth;
-        int tileHeight = playableLevelPanel.tileHeight;
+        int tileWidth = levelPanel.tileWidth;
+        int tileHeight = levelPanel.tileHeight;
 
-        int nbTilesHorizontal = playableLevelPanel.maxCol;
-        int nbTilesVertical = playableLevelPanel.maxRow;
+        int nbTilesHorizontal = levelPanel.maxCol;
+        int nbTilesVertical = levelPanel.maxRow;
 
         Set<Token> unplacedTokens = levelController.getUnplacedTokens();
         int size = unplacedTokens.size();
@@ -250,7 +250,7 @@ public class UITokens implements Drawable {
             int x = draggedToken.second().first();
             int y = draggedToken.second().second();
 
-            return new Pair<>(x - playableLevelPanel.tileWidth / 2, y - playableLevelPanel.tileHeight / 2);
+            return new Pair<>(x - levelPanel.tileWidth / 2, y - levelPanel.tileHeight / 2);
         }
 
         return new Pair<>(realX, realY);

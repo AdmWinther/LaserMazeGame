@@ -1,6 +1,6 @@
 package Vue.Handlers;
 
-import Vue.Level.UILayers.UITokens;
+import Vue.Level.UILayers.TokensUI;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
@@ -13,18 +13,18 @@ import java.awt.event.MouseMotionListener;
  * @author Nathan Gromb
  */
 public class TokenMouseMotionHandler implements MouseMotionListener {
-    private final UITokens uiTokens;
+    private final TokensUI tokensUI;
     private final TokenMouseHandler tokenMouseHandler;
 
-    public TokenMouseMotionHandler(UITokens uiTokens, TokenMouseHandler tokenMouseHandler) {
-        this.uiTokens = uiTokens;
+    public TokenMouseMotionHandler(TokensUI tokensUI, TokenMouseHandler tokenMouseHandler) {
+        this.tokensUI = tokensUI;
         this.tokenMouseHandler = tokenMouseHandler;
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
         if (tokenMouseHandler.getSelectedToken() != null) {
-            uiTokens.setDraggedToken(tokenMouseHandler.getSelectedToken(), e.getX(), e.getY());
+            tokensUI.setDraggedToken(tokenMouseHandler.getSelectedToken(), e.getX(), e.getY());
         }
     }
 

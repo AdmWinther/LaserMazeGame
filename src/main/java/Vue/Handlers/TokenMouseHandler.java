@@ -5,8 +5,8 @@ import Model.Classes.Token.OrientedToken;
 import Model.Classes.Token.Token;
 import Model.Classes.Utils.Coordinate;
 import Model.constants.MouseConstants;
-import Vue.Level.PlayableLevelPanel;
-import Vue.Level.UILayers.UITokens;
+import Vue.Level.LevelPanel;
+import Vue.Level.UILayers.TokensUI;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -24,8 +24,8 @@ public class TokenMouseHandler implements MouseListener {
     private static final int CLICK_MOVEMENT_THRESHOLD = MouseConstants.CLICK_MOVEMENT_THRESHOLD;
 
     private final LevelController levelController;
-    private final PlayableLevelPanel levelPanel;
-    private final UITokens uiTokens;
+    private final LevelPanel levelPanel;
+    private final TokensUI tokensUI;
 
     private boolean isPressed = false;
     private int startX;
@@ -34,16 +34,16 @@ public class TokenMouseHandler implements MouseListener {
     private Token selectedToken = null;
     private boolean isSelectedPlaced = false;
 
-    public TokenMouseHandler(PlayableLevelPanel levelPanel, LevelController levelController, UITokens uiTokens) {
+    public TokenMouseHandler(LevelPanel levelPanel, LevelController levelController, TokensUI tokensUI) {
         this.levelPanel = levelPanel;
         this.levelController = levelController;
-        this.uiTokens = uiTokens;
+        this.tokensUI = tokensUI;
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         selectedToken = null;
-        uiTokens.resetDraggedToken();
+        tokensUI.resetDraggedToken();
 
         int tileWidth = levelPanel.tileWidth;
         int tileHeight = levelPanel.tileHeight;
@@ -103,7 +103,7 @@ public class TokenMouseHandler implements MouseListener {
                     System.out.println("Selected Token: " + selectedToken);
                 }
             } else {
-                Token token = uiTokens.getUnplacedTokenAt(startX, startY);
+                Token token = tokensUI.getUnplacedTokenAt(startX, startY);
                 if (token != null) {
                     selectedToken = token;
                     isSelectedPlaced = false;
@@ -115,7 +115,7 @@ public class TokenMouseHandler implements MouseListener {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        uiTokens.resetDraggedToken();
+        tokensUI.resetDraggedToken();
 
         if (isPressed) {
             System.out.println("Mouse released");
@@ -165,7 +165,7 @@ public class TokenMouseHandler implements MouseListener {
                     System.out.println("Placed Token: " + selectedToken + " at " + coordinate);
                 }
             } else {
-                Rectangle2D bin = levelPanel.UIObjects.getPlacedObjects().get("bin");
+                Rectangle2D bin = levelPanel.ExtrasUI.getPlacedObjects().get("bin");
                 if (bin.contains(endX, endY)) {
                     levelController.transferTokenToUnplacedTokens(selectedToken);
                     System.out.println("Removed Token: " + selectedToken);

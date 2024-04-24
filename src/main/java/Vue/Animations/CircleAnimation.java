@@ -1,7 +1,7 @@
 package Vue.Animations;
 
 import Vue.Interfaces.Animation;
-import Vue.Level.PlayableLevelPanel;
+import Vue.Level.LevelPanel;
 
 import java.awt.*;
 import java.awt.geom.Area;
@@ -15,7 +15,7 @@ import java.awt.geom.Ellipse2D;
 public class CircleAnimation implements Animation {
     private static final double SHRINKING_SPEED = 0.5;
 
-    private final PlayableLevelPanel levelPanel;
+    private final LevelPanel levelPanel;
     private int circleSize; // Size of the circle
     private boolean running = false;
 
@@ -25,13 +25,13 @@ public class CircleAnimation implements Animation {
     private int duration = 0;
     private int stillDuration = 0;
 
-    public CircleAnimation(PlayableLevelPanel levelPanel, Color color, int timeStill) {
+    public CircleAnimation(LevelPanel levelPanel, Color color, int timeStill) {
         this.levelPanel = levelPanel;
         this.timeStill = timeStill;
         this.color = color;
     }
 
-    public CircleAnimation(PlayableLevelPanel levelPanel, Color color) {
+    public CircleAnimation(LevelPanel levelPanel, Color color) {
         this(levelPanel, color, 2);
     }
 
