@@ -1,7 +1,6 @@
 package Vue.Handlers;
 
-import Controller.LevelController;
-import Vue.Level.UITokens;
+import Vue.Level.UILayers.UITokens;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;

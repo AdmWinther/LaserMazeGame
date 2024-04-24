@@ -1,4 +1,4 @@
-package Vue.Level;
+package Vue.Level.UILayers;
 
 import Controller.LevelController;
 import Model.Classes.Token.*;
@@ -6,6 +6,7 @@ import Model.Classes.Utils.Coordinate;
 import Model.Classes.Utils.Orientation;
 import Model.Classes.Utils.Pair;
 import Vue.Interfaces.Drawable;
+import Vue.Level.PlayableLevelPanel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

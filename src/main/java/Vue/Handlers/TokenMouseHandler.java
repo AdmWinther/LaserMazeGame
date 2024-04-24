@@ -6,7 +6,7 @@ import Model.Classes.Token.Token;
 import Model.Classes.Utils.Coordinate;
 import Model.constants.MouseConstants;
 import Vue.Level.PlayableLevelPanel;
-import Vue.Level.UITokens;
+import Vue.Level.UILayers.UITokens;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;

@@ -1,10 +1,11 @@
-package Vue.Level;
+package Vue.Level.UILayers;
 
 import Vue.Animations.CircleAnimation;
 import Vue.Animations.ConfettiAnimation;
 import Vue.Animations.LevelCompletedAnimation;
 import Vue.Interfaces.Animation;
 import Vue.Interfaces.Drawable;
+import Vue.Level.PlayableLevelPanel;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
  *
  * @author Nathan Gromb
  */
-public class LevelAnimations implements Drawable {
+public class UIAnimations implements Drawable {
 
     private static final int LEVEL_COMPLETED_DELAY = 100;
 
@@ -24,7 +25,7 @@ public class LevelAnimations implements Drawable {
 
     private int delay = 0;
 
-    public LevelAnimations(PlayableLevelPanel levelPanel) {
+    public UIAnimations(PlayableLevelPanel levelPanel) {
         this.activeAnimations = new ArrayList<>();
         this.queue = new ArrayList<>();
         this.levelPanel = levelPanel;

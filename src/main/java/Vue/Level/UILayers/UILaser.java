@@ -1,9 +1,10 @@
-package Vue.Level;
+package Vue.Level.UILayers;
 
 import Controller.LevelController;
 import Model.Classes.Utils.Coordinate;
 import Model.Classes.Utils.Pair;
 import Vue.Interfaces.Drawable;
+import Vue.Level.PlayableLevelPanel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -42,7 +43,7 @@ public class UILaser implements Drawable {
     public void draw(Graphics2D g2d) {
         boolean shouldDisplayLaser = levelController.shouldDisplayLaser();
         if (shouldDisplayLaser && laserTimer == 0) {
-            laserTimer += laserDuration * playableLevelPanel.fps;
+            laserTimer += laserDuration * playableLevelPanel.getFPS();
             levelController.setShouldDisplayLaser(false);
         } else if (laserTimer > 0) {
             laserTimer--;

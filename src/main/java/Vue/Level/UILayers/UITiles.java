@@ -1,7 +1,8 @@
-package Vue.Level;
+package Vue.Level.UILayers;
 
 import Controller.LevelController;
 import Vue.Interfaces.Drawable;
+import Vue.Level.PlayableLevelPanel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

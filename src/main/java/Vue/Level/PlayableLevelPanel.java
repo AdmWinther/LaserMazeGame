@@ -1,10 +1,10 @@
 package Vue.Level;
 
-import Controller.LevelController;
 import Controller.PlayableLevelController;
 import Vue.Handlers.LevelMouseHandler;
 import Vue.Handlers.TokenMouseHandler;
 import Vue.Handlers.TokenMouseMotionHandler;
+import Vue.Level.UILayers.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,11 +30,11 @@ public class PlayableLevelPanel extends JPanel implements Runnable {
     public PlayableLevelController levelController;
 
     // Objects to draw
-    public UIObjects UIObjects;
-    public UITokens UITokens;
-    public UITiles UITiles;
-    public UILaser UILaser;
-    private LevelAnimations levelAnimations;
+    public Vue.Level.UILayers.UIObjects UIObjects;
+    public Vue.Level.UILayers.UITokens UITokens;
+    public Vue.Level.UILayers.UITiles UITiles;
+    public Vue.Level.UILayers.UILaser UILaser;
+    private Vue.Level.UILayers.UIAnimations UIAnimations;
 
     public LevelMouseHandler levelMouseHandler;
     public TokenMouseHandler tokenMouseHandler;
@@ -73,7 +73,7 @@ public class PlayableLevelPanel extends JPanel implements Runnable {
         UITiles = new UITiles(this, levelController);
         UITokens = new UITokens(this, levelController);
         UILaser = new UILaser(this, levelController);
-        levelAnimations = new LevelAnimations(this);
+        UIAnimations = new UIAnimations(this);
 
         levelMouseHandler = new LevelMouseHandler(this, levelController);
         addMouseListener(levelMouseHandler);
@@ -134,7 +134,7 @@ public class PlayableLevelPanel extends JPanel implements Runnable {
         UILaser.draw(g2d);
         UIObjects.draw(g2d);
         UITokens.draw(g2d);
-        levelAnimations.draw(g2d);
+        UIAnimations.draw(g2d);
 
 
         g2d.dispose();
