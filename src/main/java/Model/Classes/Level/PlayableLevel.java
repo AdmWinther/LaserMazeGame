@@ -2,13 +2,13 @@ package Model.Classes.Level;
 
 import Model.Classes.Laser.Laser;
 import Model.Classes.Laser.LaserManager;
-import Model.Classes.Token.FixedTokenManager;
+import Model.Classes.Token.StrictTokenManager;
 import Model.Classes.Token.Token;
 import Model.Classes.Token.TokenManager;
 
 import java.util.Set;
 
-public final class CampaignLevel extends Level{
+public final class PlayableLevel extends Level{
 
 
 
@@ -21,9 +21,9 @@ public final class CampaignLevel extends Level{
      * @param unplacedTokens the tokens that are not placed on the board
      */
 
-    public CampaignLevel(String name, Token[][] placedTokens, Set<Token> unplacedTokens) {
+    public PlayableLevel(String name, Token[][] placedTokens, Set<Token> unplacedTokens) {
         super(name,placedTokens.length,placedTokens[0].length);
-        this.tokenManager = new FixedTokenManager(placedTokens, unplacedTokens);
+        this.tokenManager = new StrictTokenManager(placedTokens, unplacedTokens);
         this.laserManager = new LaserManager(tokenManager, width, height);
     }
 

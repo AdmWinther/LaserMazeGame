@@ -1,19 +1,19 @@
 package Controller;
 
 import Model.Classes.Laser.LaserFragment;
-import Model.Classes.Level.CampaignLevel;
+import Model.Classes.Level.Level;
 import Model.Classes.Token.Token;
 import Model.Classes.Utils.Coordinate;
 import Model.Classes.Utils.Pair;
 
 import java.util.*;
 
-public class LevelController {
+public abstract class LevelController {
 
-    CampaignLevel level;
+    protected Level level;
     boolean shouldDisplayLaser = false;
 
-    public LevelController(CampaignLevel level) {
+    public LevelController(Level level) {
         this.level = level;
     }
 
@@ -44,7 +44,7 @@ public class LevelController {
         return placedTokens;
     }
 
-    public Token getTokenAtCoordinate(Coordinate coordinate) {
+    public Token getTokenAt(Coordinate coordinate) {
         return level.tokenManager().getTokenAt(coordinate);
     }
 
@@ -56,11 +56,11 @@ public class LevelController {
         level.tokenManager().moveToken(from, to);
     }
 
-    public void placeToken(Token token, Coordinate coordinate) {
+    public void transferTokenToPlacedTokens(Token token, Coordinate coordinate) {
         level.tokenManager().transferTokenToPlacedTokens(token, coordinate);
     }
 
-    public void removeToken(Token token) {
+    public void transferTokenToUnplacedTokens(Token token) {
         level.tokenManager().transferTokenToUnplacedTokens(token);
     }
 
@@ -88,5 +88,9 @@ public class LevelController {
 
     public void setShouldDisplayLaser(boolean b) {
         shouldDisplayLaser = b;
+    }
+
+    public boolean isSandbox() {
+        return false;
     }
 }

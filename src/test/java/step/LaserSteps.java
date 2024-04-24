@@ -1,7 +1,6 @@
 package step;
 
 import Model.Classes.Laser.Laser;
-import Model.Classes.Level.CampaignLevel;
 import Model.Classes.Level.Level;
 import Model.Classes.Level.LevelBuilder;
 import Model.Classes.Level.LevelID;

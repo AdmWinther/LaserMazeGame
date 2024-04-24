@@ -1,6 +1,6 @@
 package step;
 
-import Model.Classes.Level.SandboxLevel;
+import Model.Classes.Level.EditableLevel;
 import Model.Classes.Token.*;
 import Model.Classes.Utils.Coordinate;
 import Model.Classes.Utils.Orientation;
@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class SandboxSteps {
 
-    SandboxLevel level;
+    EditableLevel level;
     Token token;
     Coordinate tokenCoordinate;
     Set<Class<? extends Token>> inventory = new HashSet<>(Arrays.asList(Block.class,DoubleSidedMirror.class,LaserGun.class,
@@ -27,7 +27,7 @@ public class SandboxSteps {
     public void iHaveAnEmptySandboxLevelWithAllThePossibleTokensInMyInventory() {
         Token[][] placedTokens = new Token[5][5];
         Set<Token> unplacedTokens = new HashSet<>();
-        level = new SandboxLevel("test_level",placedTokens,unplacedTokens,inventory);
+        level = new EditableLevel("test_level",placedTokens,unplacedTokens,inventory);
 
     }
 
@@ -72,7 +72,7 @@ public class SandboxSteps {
         tokenCoordinate = new Coordinate(x,y);
         placedTokens[x][y] = token;
         Set<Token> unplacedTokens = new HashSet<>();
-        level = new SandboxLevel("test_level",placedTokens,unplacedTokens,inventory);
+        level = new EditableLevel("test_level",placedTokens,unplacedTokens,inventory);
     }
 
     @When("I move the same mirror token in the deck")
@@ -85,7 +85,7 @@ public class SandboxSteps {
         Token[][] placedTokens = new Token[5][5];
         token = new OneSidedMirror(true,Orientation.UP);
         Set<Token> unplacedTokens = new HashSet<>(){{add(token);}};
-        level = new SandboxLevel("test_level",placedTokens,unplacedTokens,inventory);
+        level = new EditableLevel("test_level",placedTokens,unplacedTokens,inventory);
     }
 
     @When("I move the mirror from the deck to the board at position \\({int} {int})")
@@ -109,7 +109,7 @@ public class SandboxSteps {
         Token[][] placedTokens = new Token[5][5];
         placedTokens[x][y] = new LaserGun(true,Orientation.UP);
         Set<Token> deck = new HashSet<>();
-        level = new SandboxLevel("test_level",placedTokens, deck,inventory);
+        level = new EditableLevel("test_level",placedTokens, deck,inventory);
     }
 
 
@@ -129,7 +129,7 @@ public class SandboxSteps {
         Token[][] placedTokens = new Token[5][5];
         placedTokens[x][y] = new Target(true,Orientation.UP);
         Set<Token> deck = new HashSet<>();
-        level = new SandboxLevel("test_level",placedTokens, deck,inventory);
+        level = new EditableLevel("test_level",placedTokens, deck,inventory);
     }
 
     @When("I try to place another target at \\({int} {int})")

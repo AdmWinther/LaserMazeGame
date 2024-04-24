@@ -6,13 +6,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-public class FixedTokenManager implements TokenManager {
+public class StrictTokenManager implements TokenManager {
 
     private final FlexibleTokenManager tokenManager;
 
 
 
-    public FixedTokenManager(Token[][] placedTokens, Set<Token> unplacedTokens) {
+    public StrictTokenManager(Token[][] placedTokens, Set<Token> unplacedTokens) {
 
         // Hard Copy of the placedTokens array
         Token[][] copyOfPlacedTokens = new Token[placedTokens.length][placedTokens[0].length];

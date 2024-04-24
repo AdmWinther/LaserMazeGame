@@ -22,6 +22,27 @@ public class FlexibleTokenManager implements TokenManager {
         this.unplacedTokens = unplacedTokens;
     }
 
+    /**
+     * Set all placed tokens to unmovable
+     */
+    public void setPlacedTokensMovability(boolean movability) {
+        for (Token[] row : placedTokens) {
+            for (Token token : row) {
+                if (token != null) {
+                    token.setMovable(movability);
+                }
+            }
+        }
+    }
+
+    /**
+     * Set all unplaced tokens to movable
+     */
+    public void setUnplacedTokensMovability(boolean movability) {
+        for (Token token : unplacedTokens) {
+            token.setMovable(movability);
+        }
+    }
 
     /**
      * Add a token to the placed tokens table at the given position

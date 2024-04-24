@@ -1,6 +1,6 @@
 package step;
 
-import Model.Classes.Level.CampaignLevel;
+import Model.Classes.Level.PlayableLevel;
 import Model.Classes.Level.LevelBuilder;
 import Model.Classes.Token.*;
 import Model.Classes.Utils.Coordinate;
@@ -19,14 +19,14 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 public class DataWriterSteps {
 
     String parentDirPath = FilePaths.SANDBOX_LEVELS_PATH;
-    CampaignLevel initialLevel;
-    CampaignLevel finalLevel;
+    PlayableLevel initialLevel;
+    PlayableLevel finalLevel;
 
     @Given("an empty level of size {int}x{int}")
     public void anEmptyLevelOfSizeX(int widthX, int heightY) {
         Token[][] placedTokens = new Token[widthX][heightY];
         Set<Token> unplacedTokens = Set.of();
-        initialLevel = new CampaignLevel("dataWriterStepsEmptyLevel", placedTokens, unplacedTokens);
+        initialLevel = new PlayableLevel("dataWriterStepsEmptyLevel", placedTokens, unplacedTokens);
     }
 
     @Given("a level of size {int}x{int} with a UP LaserGun in \\({int} {int}) and a DOWN Target in \\({int} {int}), with a DoubleSidedMirror and a SingleSidedMirror to place")
@@ -37,7 +37,7 @@ public class DataWriterSteps {
 
         Set<Token> unplacedTokens = Set.of(new DoubleSidedMirror(true, Orientation.UP), new OneSidedMirror(true, Orientation.UP));
 
-        initialLevel = new CampaignLevel("dataWriterStepsComplexLevel", placedTokens, unplacedTokens);
+        initialLevel = new PlayableLevel("dataWriterStepsComplexLevel", placedTokens, unplacedTokens);
     }
 
     @When("I write the level to a file")

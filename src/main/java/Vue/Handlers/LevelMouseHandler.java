@@ -91,7 +91,7 @@ public class LevelMouseHandler implements MouseListener {
             if (x_coordinate >= 0 && x_coordinate < maxWidth && y_coordinate >= 0 && y_coordinate < maxHeight) {
                 System.out.println("Clicked on: " + x_coordinate + ", " + y_coordinate);
                 Coordinate coordinate = new Coordinate(x_coordinate, y_coordinate);
-                Token token = levelController.getTokenAtCoordinate(coordinate);
+                Token token = levelController.getTokenAt(coordinate);
                 System.out.println("Token: " + token);
                 if (token != null && token.isMovable()) {
                     selectedToken = token;
@@ -150,13 +150,13 @@ public class LevelMouseHandler implements MouseListener {
                     levelController.moveToken(from, coordinate);
                     System.out.println("Moved Token: " + selectedToken + " from " + from + " to " + coordinate);
                 } else {
-                    levelController.placeToken(selectedToken, coordinate);
+                    levelController.transferTokenToPlacedTokens(selectedToken, coordinate);
                     System.out.println("Placed Token: " + selectedToken + " at " + coordinate);
                 }
             } else {
                 Rectangle2D bin = levelPanel.UIObjects.getPlacedObjects().get("bin");
                 if (bin.contains(endX, endY)) {
-                    levelController.removeToken(selectedToken);
+                    levelController.transferTokenToUnplacedTokens(selectedToken);
                     System.out.println("Removed Token: " + selectedToken);
                 }
             }

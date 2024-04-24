@@ -1,11 +1,11 @@
 package step;
 
-import Model.Classes.Level.CampaignLevel;
+import Model.Classes.Level.PlayableLevel;
 import Model.Classes.Token.Token;
 
 
 public class TokenPlacementSteps {
-    CampaignLevel level;
+    PlayableLevel level;
 
     Token movableToken;
     Token unmovableToken;

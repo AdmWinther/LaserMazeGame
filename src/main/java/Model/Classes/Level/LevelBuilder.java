@@ -10,9 +10,9 @@ import java.util.Set;
  * A class that builds a Level from their ID
  *
  * @author Hugo Demule
- * @see CampaignLevel
+ * @see PlayableLevel
  */
-public class LevelBuilder implements Builder<CampaignLevel> {
+public class LevelBuilder implements Builder<PlayableLevel> {
     private LevelID id;
 
     /**
@@ -40,15 +40,15 @@ public class LevelBuilder implements Builder<CampaignLevel> {
      *
      * @return the level built from the ID or null if there was an error
      * @author Hugo Demule
-     * @see CampaignLevel
+     * @see PlayableLevel
      */
     @Override
-    public CampaignLevel build() {
+    public PlayableLevel build() {
         try {
             String name = DataReader.readLevelIDName(id);
             Token[][] placedTokens = DataReader.readLevelIDPlacedTokens(id);
             Set<Token> unplacedTokens = DataReader.readLevelIDUnplacedTokens(id);
-            return new CampaignLevel(name, placedTokens, unplacedTokens);
+            return new PlayableLevel(name, placedTokens, unplacedTokens);
         } catch (Exception e) {
             e.printStackTrace();
         }
