@@ -2,6 +2,7 @@ package Vue.Game;
 
 import Controller.GameController;
 import Controller.LevelController;
+import Controller.PlayableLevelController;
 import Vue.Level.LevelPanel;
 
 import javax.swing.*;
@@ -25,7 +26,7 @@ public class Game {
         gameController = new GameController();
         gameController.setCurrentLevelID("level3");
 
-        LevelController levelController = new LevelController(gameController.getCurrentLevel());
+        LevelController levelController = new PlayableLevelController(gameController.getCurrentLevel());
         levelPanel = new LevelPanel(levelController);
         frame.add(levelPanel);
         frame.addComponentListener(new ComponentListener() {

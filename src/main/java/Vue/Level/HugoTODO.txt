@@ -1,0 +1,5 @@
+1. Créer UIInventory
+2. Séparer les animations de LevelPanel.
+3. Créer un "playableLevelPanel"
+4. Créer un "EditableLevelPanel"
+5. Éviter les duplications de code
