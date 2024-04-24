@@ -13,6 +13,7 @@ public class SoundPlayer {
         AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(file);
         Clip clip = AudioSystem.getClip();
         clip.open(audioInputStream);
+        //test comment
 
         if (loop) {
             clip.loop(Clip.LOOP_CONTINUOUSLY); // This will cause the music/sound-effect to loop indefinitely
