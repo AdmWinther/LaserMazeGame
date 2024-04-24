@@ -47,7 +47,10 @@ public class LevelMouseHandler implements MouseListener {
         if (isPressed) {
             isPressed = false;
 
-            if (Math.abs(e.getX() - startX) < CLICK_MOVEMENT_THRESHOLD && Math.abs(e.getY() - startY) < CLICK_MOVEMENT_THRESHOLD) {
+            // If the drag is very short, consider it as a click
+            // make sure that mouseClicked has not been called already using e.getClickCount() == 0
+            if (Math.abs(e.getX() - startX) < CLICK_MOVEMENT_THRESHOLD && Math.abs(e.getY() - startY) < CLICK_MOVEMENT_THRESHOLD
+                && e.getClickCount() == 0) {
                 mouseClicked(e);
             }
         }

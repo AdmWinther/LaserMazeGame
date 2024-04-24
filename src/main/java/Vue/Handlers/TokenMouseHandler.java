@@ -11,6 +11,7 @@ import Vue.Level.UILayers.TokensUI;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Rectangle2D;
+import java.util.function.DoubleToIntFunction;
 
 /**
  * This class is responsible for handling the mouse events for the tokens.
@@ -93,21 +94,17 @@ public class TokenMouseHandler implements MouseListener {
             int maxHeight = levelController.getHeight();
 
             if (x_coordinate >= 0 && x_coordinate < maxWidth && y_coordinate >= 0 && y_coordinate < maxHeight) {
-                System.out.println("Clicked on: " + x_coordinate + ", " + y_coordinate);
                 Coordinate coordinate = new Coordinate(x_coordinate, y_coordinate);
                 Token token = levelController.getTokenAt(coordinate);
-                System.out.println("Token: " + token);
                 if (token != null && token.isMovable()) {
                     selectedToken = token;
                     isSelectedPlaced = true;
-                    System.out.println("Selected Token: " + selectedToken);
                 }
             } else {
                 Token token = tokensUI.getUnplacedTokenAt(startX, startY);
                 if (token != null) {
                     selectedToken = token;
                     isSelectedPlaced = false;
-                    System.out.println("Selected Token: " + selectedToken);
                 }
             }
         }
@@ -118,16 +115,18 @@ public class TokenMouseHandler implements MouseListener {
         tokensUI.resetDraggedToken();
 
         if (isPressed) {
-            System.out.println("Mouse released");
-
             isPressed = false;
 
             int endX = e.getX();
             int endY = e.getY();
 
+            // If the drag is very short, consider it as a click
+            // make sure that mouseClicked has not been called already using e.getClickCount() == 0
             if (Math.abs(endX - startX) < CLICK_MOVEMENT_THRESHOLD && Math.abs(endY - startY) < CLICK_MOVEMENT_THRESHOLD
                     && e.getClickCount() == 0) {
-                mouseClicked(e); // make sure that mouseClicked has not been called already
+                mouseClicked(e);
+                return;
+            } else if (e.getClickCount() > 0) {
                 return;
             }
 
@@ -155,7 +154,6 @@ public class TokenMouseHandler implements MouseListener {
             }
 
             if (x_coordinate < maxWidth && y_coordinate < maxHeight) {
-                System.out.println("Released on: " + x_coordinate + ", " + y_coordinate);
                 Coordinate coordinate = new Coordinate((int) x_coordinate, (int) y_coordinate);
                 if (isSelectedPlaced) {
                     Coordinate from = new Coordinate((startX - widthOffset) / tileWidth, (startY - heightOffset) / tileHeight);

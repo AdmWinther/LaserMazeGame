@@ -215,7 +215,6 @@ public class FlexibleTokenManager implements TokenManager {
             return false;
         }
         if (isEmpty(from) || !isEmpty(to)) {
-            System.out.println("Token at from: " + getTokenAt(from) + "and at to: " + getTokenAt(to));
             System.out.println("Positions non valid");
             return false;
         }

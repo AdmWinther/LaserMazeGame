@@ -121,7 +121,6 @@ public class LaserManager {
                 return laser;
             }
             laser.addFragment(fragment);
-            System.out.println("New laser fragment added: " + fragment);
         }
         return laser;
     }

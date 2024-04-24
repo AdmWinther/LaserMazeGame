@@ -95,7 +95,6 @@ public abstract class LevelController {
     public void rotateToken(Token token){
         if (token instanceof OrientedToken orientedToken && token.isMovable()) {
             Orientation nextOrientation = Orientation.values()[(orientedToken.getOrientation().ordinal() + 1) % Orientation.values().length];
-            System.out.println(nextOrientation.toString());
             orientedToken.setOrientation(nextOrientation);
         }
     }
