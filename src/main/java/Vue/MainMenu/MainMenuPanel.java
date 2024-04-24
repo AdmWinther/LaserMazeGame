@@ -17,7 +17,7 @@ import java.util.Objects;
 
 public class MainMenuPanel extends JPanel {
 
-    private static JFrame frame;
+    private JFrame frame;
     final int originalTileSize = 16;
     public int screenWidth;
     public int screenHeight;
@@ -60,7 +60,7 @@ public class MainMenuPanel extends JPanel {
 
     }
 
-    private static void prepareLevel(String levelID, JFrame frame) {
+    private void prepareLevel(String levelID, JFrame frame) {
 
         GameController gameController = new GameController();
         gameController.setCurrentLevelID(levelID);
@@ -68,7 +68,7 @@ public class MainMenuPanel extends JPanel {
         LevelController levelController = new LevelController(gameController.getCurrentLevel());
 
         LevelPanel levelPanel = new LevelPanel(levelController);
-        frame.add(levelPanel);
+        frame.add(levelPanel, "Level");
         frame.addComponentListener(new ComponentListener() {
             @Override
             public void componentResized(ComponentEvent e) {
@@ -87,6 +87,33 @@ public class MainMenuPanel extends JPanel {
             public void componentHidden(ComponentEvent e) {
             }
         });
+        showPanel("Level");
+        frame.pack();
+    }
+
+    private void displayCampaignLevels(JFrame frame) {
+        CampaignPanel campaignPanel = new CampaignPanel(frame);
+        frame.add(campaignPanel, "CampaignLevels");
+        frame.addComponentListener(new ComponentListener() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                campaignPanel.resize();
+            }
+
+            @Override
+            public void componentMoved(ComponentEvent e) {
+            }
+
+            @Override
+            public void componentShown(ComponentEvent e) {
+            }
+
+            @Override
+            public void componentHidden(ComponentEvent e) {
+            }
+        });
+
+        showPanel("CampaignLevels");
         frame.pack();
     }
 
@@ -109,11 +136,9 @@ public class MainMenuPanel extends JPanel {
         loadGame.setAlignmentX(Component.CENTER_ALIGNMENT);
 //        loadGame.setBorder(BorderFactory.createLineBorder(Color.gray, 3));
 //        loadGame.setMargin(new Insets(20, 20, 20, 20));
-        loadGame.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        loadGame.addActionListener(e -> {
 //                System.out.println("You clicked the button");
-                prepareLevel("level6", frame);
-            }
+            prepareLevel("level6", frame);
         });
 
         JButton newGame = new JButton("New Game");
@@ -121,6 +146,7 @@ public class MainMenuPanel extends JPanel {
 
         JButton campaign = new JButton("Campaign");
         campaign.setAlignmentX(Component.CENTER_ALIGNMENT);
+        campaign.addActionListener(e -> displayCampaignLevels(frame));
 
         backgroundPanel.add(Box.createHorizontalStrut(10));
         backgroundPanel.add(newGame);
@@ -169,5 +195,10 @@ public class MainMenuPanel extends JPanel {
         };
 
         return backgroundPanel;
+    }
+
+    private void showPanel(String panelName) {
+        CardLayout cardLayout = (CardLayout) frame.getContentPane().getLayout();
+        cardLayout.show(frame.getContentPane(), panelName);
     }
 }
