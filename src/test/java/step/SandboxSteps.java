@@ -22,6 +22,7 @@ public class SandboxSteps {
     Set<Class<? extends Token>> inventory = new HashSet<>(Arrays.asList(Block.class,DoubleSidedMirror.class,LaserGun.class,
             OneSidedMirror.class,Target.class));
 
+
     @Given("I have an empty sandbox level with all the possible tokens in my inventory")
     public void iHaveAnEmptySandboxLevelWithAllThePossibleTokensInMyInventory() {
         Token[][] placedTokens = new Token[5][5];

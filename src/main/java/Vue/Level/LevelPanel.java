@@ -125,6 +125,7 @@ public class LevelPanel extends JPanel implements Runnable {
         UIObjects.draw(g2d);
 
 
+
         g2d.dispose();
     }
 

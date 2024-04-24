@@ -3,20 +3,23 @@ package Model.Classes.Token;
 import Model.Classes.Utils.Coordinate;
 
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 
 public class FlexibleTokenManager implements TokenManager {
 
-
-    private FixedTokenManager tokenManager;
     boolean placedLaser;
     boolean placedTarget;
 
+    private final Token[][] placedTokens;
+    private final Set<Token> unplacedTokens;
+
     public FlexibleTokenManager(Token[][] placedTokens, Set<Token> unplacedTokens) {
         if(!correctInput(placedTokens)) throw new IllegalArgumentException();
-        tokenManager = new FixedTokenManager(placedTokens,unplacedTokens);
+        this.placedTokens = placedTokens;
+        this.unplacedTokens = unplacedTokens;
     }
 
 
@@ -29,19 +32,16 @@ public class FlexibleTokenManager implements TokenManager {
     public boolean addToPlacedTokens(Token token, Coordinate position){
         if (Objects.isNull(token)) return false;
         if (Objects.isNull(position)) return false;
-        if (tokenManager.checkBounds(position)) return false;
-        if (tokenManager.checkAttributes()) return false;
-        if (!tokenManager.isEmpty(position)) return false;
-        if (findLaserGunPosition() != null || findTargetPosition() != null ) return false;
-        if (placedTarget || placedLaser ) return false;
+        if (checkBounds(position)) return false;
+        if (checkAttributes()) return false;
+        if (!isEmpty(position)) return false;
+        if (placedLaser && token instanceof LaserGun) return false;
+        if (placedTarget && token instanceof Target) return false;
 
         if (token instanceof Target) placedTarget = true;
         if (token instanceof LaserGun) placedLaser = true;
 
-        Token[][] placedTokens = tokenManager.getPlacedTokens();
-        Set<Token> unplacedTokens = tokenManager.getUnplacedTokens();
         placedTokens[position.x()][position.y()] = token;
-        tokenManager = new FixedTokenManager(placedTokens,unplacedTokens);
         return true;
     }
 
@@ -52,19 +52,16 @@ public class FlexibleTokenManager implements TokenManager {
      */
     public Token removeFromPlacedTokens(Coordinate position) {
         if (Objects.isNull(position)) return null;
-        if (tokenManager.checkBounds(position)) return null;
-        if (tokenManager.checkAttributes()) return null;
+        if (checkBounds(position)) return null;
+        if (checkAttributes()) return null;
 
-        Token[][] placedTokens = tokenManager.getPlacedTokens();
-        Set<Token> unplacedTokens = tokenManager.getUnplacedTokens();
 
         Token token = placedTokens[position.x()][position.y()];
+        placedTokens[position.x()][position.y()] = null;
 
         if (token instanceof Target) placedTarget = false;
         if (token instanceof LaserGun) placedLaser = false;
 
-        placedTokens[position.x()][position.y()] = null;
-        tokenManager = new FixedTokenManager(placedTokens,unplacedTokens);
         return token;
     }
 
@@ -74,13 +71,8 @@ public class FlexibleTokenManager implements TokenManager {
      * @return true if the token has been added
      */
     public boolean addToUnplacedTokens(Token token) {
-        Token[][] placedTokens = tokenManager.getPlacedTokens();
-        Set<Token> unplacedTokens = tokenManager.getUnplacedTokens();
-        if (Objects.nonNull(token) && unplacedTokens.add(token)) {
-            tokenManager = new FixedTokenManager(placedTokens, unplacedTokens);
-            return true;
-        }
-        return false;
+        if (Objects.isNull(token)) return false;
+        return unplacedTokens.add(token);
     }
 
     /**
@@ -89,13 +81,8 @@ public class FlexibleTokenManager implements TokenManager {
      * @return true if the token has been removed, false otherwise
      */
     public boolean removeFromUnplacedTokens(Token token) {
-        Token[][] placedTokens = tokenManager.getPlacedTokens();
-        Set<Token> unplacedTokens = tokenManager.getUnplacedTokens();
-    if (Objects.nonNull(token) && unplacedTokens.remove(token)) {
-        tokenManager = new FixedTokenManager(placedTokens, unplacedTokens);
-        return true;
-    }
-    return false;
+        if (Objects.isNull(token)) return false;
+        return unplacedTokens.remove(token);
     }
 
     /**
@@ -123,63 +110,162 @@ public class FlexibleTokenManager implements TokenManager {
         return (l<2 && t<2);
     }
 
+    /**
+     * Checks if the position is out of bounds.
+     * @param position The position to be checked.
+     * @return True if the position is out of bounds, false otherwise.
+     */
+    public  boolean checkBounds(Coordinate position) {
+        if (position == null) return true;
+        return position.x() < 0
+                || position.x() >= placedTokens.length
+                || position.y() < 0
+                || position.y() >= placedTokens[0].length;
+    }
+
     @Override
-    public void reset() {
-        tokenManager.reset();
+    public boolean isEmpty(Coordinate position) {
+        return placedTokens[position.x()][position.y()] == null;
+    }
+
+    /**
+     * Checks if the attributes of the simpleTokenManager class are null.
+     * @return True if any of the attributes is null, false otherwise.
+     */
+    public boolean checkAttributes() {
+        return (placedTokens == null) || (unplacedTokens == null);
     }
 
     @Override
     public boolean transferTokenToPlacedTokens(Token token, Coordinate position) {
-        return tokenManager.transferTokenToPlacedTokens(token,position);
+        if (checkAttributes()) return false;
+        if (checkBounds(position)) return false;
+        if (!isEmpty(position)) return false;
+        if (!unplacedTokens.remove(token)) return false;
+
+        placedTokens[position.x()][position.y()] = token;
+        return true;
     }
+
 
     @Override
     public boolean transferTokenToUnplacedTokens(Coordinate position) {
-        return tokenManager.transferTokenToUnplacedTokens(position);
+        if (checkAttributes()) return false;
+        if (checkBounds(position)) return false;
+        if (isEmpty(position)) return false;
+
+        Token token = placedTokens[position.x()][position.y()];
+        placedTokens[position.x()][position.y()] = null;
+        return unplacedTokens.add(token);
     }
+
 
     @Override
     public boolean transferTokenToUnplacedTokens(Token token) {
-        return tokenManager.transferTokenToUnplacedTokens(token);
-    }
+        if (checkAttributes()) return false;
+        if (token == null) return false;
 
-    @Override
-    public boolean moveToken(Coordinate from, Coordinate to) {
-        return tokenManager.moveToken(from,to);
+        for (int i = 0; i < placedTokens.length; i++) {
+            for (int j = 0; j < placedTokens[0].length; j++) {
+                if (placedTokens[i][j] == token && token.isMovable()) {
+                    placedTokens[i][j] = null;
+                    return unplacedTokens.add(token);
+                }
+            }
+        }
+        return false;
     }
 
     @Override
     public Token getTokenAt(Coordinate position) {
-        return tokenManager.getTokenAt(position);
+        if (checkAttributes()) return null;
+        if (checkBounds(position)) return null;
+        return placedTokens[position.x()][position.y()];
     }
 
     @Override
-    public Token[][] getPlacedTokens() {
-        return tokenManager.getPlacedTokens();
-    }
+    public boolean moveToken(Coordinate from, Coordinate to) {
+        if (checkAttributes()) {
+            System.out.println("Attributes non valid");
+            return false;
+        }
+        if (checkBounds(from) || checkBounds(to)) {
+            System.out.println("Bounds non valid");
+            return false;
+        }
+        if (isEmpty(from) || !isEmpty(to)) {
+            System.out.println("Token at from: " + getTokenAt(from) + "and at to: " + getTokenAt(to));
+            System.out.println("Positions non valid");
+            return false;
+        }
 
-    @Override
-    public Set<Token> getUnplacedTokens() {
-        return tokenManager.getUnplacedTokens();
+        Token token = placedTokens[from.x()][from.y()];
+        if (!token.isMovable()) {
+            System.out.println("Token is not movable");
+        }
+
+        placedTokens[from.x()][from.y()] = null;
+        placedTokens[to.x()][to.y()] = token;
+        return true;
     }
 
     @Override
     public int getUnplacedTokensSize() {
-        return tokenManager.getUnplacedTokensSize();
+        return unplacedTokens.size();
+    }
+
+    /**
+     * @return a copy of the unplacedTokens set.
+     */
+    @Override
+    public Set<Token> getUnplacedTokens() {
+        // returning a copy of the unplacedTokens set
+        return new HashSet<>(unplacedTokens);
+    }
+
+    @Override
+    public void reset() {
+        for (int i = 0; i < placedTokens.length; i++) {
+            for (int j = 0; j < placedTokens[0].length; j++) {
+                Token token = placedTokens[i][j];
+                if (token == null || !token.isMovable()) continue;
+                placedTokens[i][j] = null;
+                unplacedTokens.add(token);
+            }
+        }
+    }
+
+    @Override
+    public Token[][] getPlacedTokens() {
+        // return a copy of the placedTokens array
+        return placedTokens.clone();
+    }
+
+    /**
+     * Helper function to find the position of a specific token type
+     * @param type token type to find
+     * @return the Coordinate of that type if found,null if not
+     */
+    private Coordinate findTypePosition(Class<? extends Token> type) {
+        for (int x = 0; x < placedTokens.length; x++) {
+            for (int y = 0; y < placedTokens[0].length; y++) {
+                if (placedTokens[x][y] != null && placedTokens[x][y].getClass() == type) {
+                    return new Coordinate(x, y);
+                }
+            }
+        }
+
+        return null;
     }
 
     @Override
     public Coordinate findLaserGunPosition() {
-        return tokenManager.findLaserGunPosition();
+        return findTypePosition(LaserGun.class);
     }
 
     @Override
     public Coordinate findTargetPosition() {
-        return tokenManager.findTargetPosition();
+        return findTypePosition(Target.class);
     }
 
-    @Override
-    public boolean isEmpty(Coordinate coordinate) {
-        return tokenManager.isEmpty(coordinate);
-    }
 }
