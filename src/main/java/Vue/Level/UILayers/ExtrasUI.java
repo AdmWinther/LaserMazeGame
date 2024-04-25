@@ -23,6 +23,12 @@ public class ExtrasUI implements Drawable {
         setPlacedObjects();
     }
 
+    /**
+     * Initialize the object set
+     *
+     * @Author Léonard Amsler - s231715
+     * @Author Hussein (Adam)
+     */
     public void initializeObjectSet() {
         try {
             BufferedImage binImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Objects/bin.png")));
@@ -35,10 +41,23 @@ public class ExtrasUI implements Drawable {
         }
     }
 
+    /**
+     * Place an object on the screen
+     *
+     * @param objectName - The name of the object
+     * @param x          - The x coordinate
+     * @param y          - The y coordinate
+     * @Author Léonard Amsler - s231715
+     */
     public void placeObject(String objectName, int x, int y) {
         placedObjects.put(objectName, new Rectangle(x, y, levelPanel.tileWidth, levelPanel.tileHeight));
     }
 
+    /**
+     * Set the placed objects
+     *
+     * @Author Léonard Amsler - s231715
+     */
     public void setPlacedObjects() {
         int width = levelPanel.screenWidth;
         int height = levelPanel.screenHeight;
@@ -52,6 +71,12 @@ public class ExtrasUI implements Drawable {
         placeObject("reset", (int) (width - rightPadding), 0);
     }
 
+    /**
+     * Draw the objects on the screen
+     *
+     * @param g2d - The 2d graphics object
+     * @Author Léonard Amsler - s231715
+     */
     public void draw(Graphics2D g2d) {
         setPlacedObjects();
         for (Map.Entry<String, Rectangle2D> entry : placedObjects.entrySet()) {
@@ -62,6 +87,12 @@ public class ExtrasUI implements Drawable {
         }
     }
 
+    /**
+     * Get the placed objects
+     *
+     * @return The placed objects
+     * @Author Léonard Amsler - s231715
+     */
     public Map<String, Rectangle2D> getPlacedObjects() {
         return placedObjects;
     }

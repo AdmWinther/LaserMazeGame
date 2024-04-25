@@ -86,6 +86,8 @@ public class DataReader {
                 return new Target(isMovable, orientation);
             case JsonConstants.VAL_DOUBLE_SIDED_MIRROR:
                 return new DoubleSidedMirror(isMovable, orientation);
+            case JsonConstants.VAL_TYPE_SPLITTER:
+                return new Splitter(isMovable, orientation);
             case JsonConstants.VAL_TYPE_ONE_SIDED_MIRROR:
                 return new OneSidedMirror(isMovable, orientation);
             case JsonConstants.VAL_TYPE_BLOCK:

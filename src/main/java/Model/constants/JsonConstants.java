@@ -26,5 +26,6 @@ public final class JsonConstants {
     public final static String VAL_TYPE_LASER_GUN = "LaserGun";
     public final static String VAL_TYPE_ONE_SIDED_MIRROR = "OneSidedMirror";
     public final static String VAL_DOUBLE_SIDED_MIRROR = "DoubleSidedMirror";
+    public final static String VAL_TYPE_SPLITTER = "Splitter";
     public final static String VAL_TYPE_BLOCK = "Block";
 }

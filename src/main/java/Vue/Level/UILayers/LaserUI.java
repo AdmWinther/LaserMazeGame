@@ -28,6 +28,11 @@ public class LaserUI implements Drawable {
         loadLaserImages();
     }
 
+    /**
+     * Load the laser images
+     *
+     * @Author Léonard Amsler - s231715
+     */
     public void loadLaserImages() {
         try {
             BufferedImage laserImage_horizontal = ImageIO.read(Objects.requireNonNull(getClass().getResource("/laser/laser_horizontal.png")));
@@ -40,6 +45,13 @@ public class LaserUI implements Drawable {
         }
     }
 
+    /**
+     * Draw the laser
+     *
+     * @param g2d - The 2d graphics object
+     * @Author Léonard Amsler - s231715
+     * @Author Hussein (Adam)
+     */
     public void draw(Graphics2D g2d) {
         boolean shouldDisplayLaser = levelController.shouldDisplayLaser();
         if (shouldDisplayLaser && laserTimer == 0) {

@@ -25,6 +25,11 @@ public class TilesUI implements Drawable {
         setLevelTiles();
     }
 
+    /**
+     * Set the level tiles
+     *
+     * @Author Léonard Amsler - s231715
+     */
     private void setLevelTiles() {
 
         levelTiles = new String[levelPanel.maxRow + 1][levelPanel.maxCol + 1];
@@ -52,6 +57,11 @@ public class TilesUI implements Drawable {
         }
     }
 
+    /**
+     * Get the tile image
+     *
+     * @Author Léonard Amsler - s231715
+     */
     public void getTileImage() {
         try {
             BufferedImage background = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tiles/background.png")));
@@ -72,6 +82,11 @@ public class TilesUI implements Drawable {
         }
     }
 
+    /**
+     * Draw the tiles
+     *
+     * @param g2d - The 2d graphics object
+     */
     public void draw(Graphics2D g2d) {
         for (int row = 0; row < levelPanel.maxRow + 1; row++) {
             for (int col = 0; col < levelPanel.maxCol + 1; col++) {

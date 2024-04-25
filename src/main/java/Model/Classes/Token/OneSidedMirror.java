@@ -11,7 +11,7 @@ public class OneSidedMirror extends OrientedToken {
     }
     /*
     Situation /. is considered UP       to LEFT
-Situation .\ is considered RIGHT        to UP
+    Situation .\ is considered RIGHT        to UP
     Situation ./ is considered DOWN     to RIGHT
     Situation \. is considered LEFT     to DOWN
     */
