@@ -10,10 +10,10 @@ public class OneSidedMirror extends OrientedToken {
         super(isMovable, orientation);
     }
     /*
-    Situation /. is considered UP       to LEFT
-    Situation .\ is considered RIGHT        to UP
-    Situation ./ is considered DOWN     to RIGHT
-    Situation \. is considered LEFT     to DOWN
+    Situation /. is considered LEFT
+    Situation .\ is considered UP
+    Situation ./ is considered RIGHT
+    Situation \. is considered DOWN
     */
 
     @Override

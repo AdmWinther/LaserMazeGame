@@ -1,12 +1,17 @@
 package Vue.Level;
 
+import Controller.GameController;
 import Controller.LevelController;
 import Vue.Handlers.LevelMouseHandler;
+import Vue.MainMenu.MainMenuPanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+
+import static Vue.MainMenu.LevelPreparation.prepareLevel;
+import static Vue.MainMenu.LevelPreparation.showPanel;
 
 /**
  * This class is the panel for the level
@@ -51,6 +56,9 @@ public class LevelPanel extends JPanel implements Runnable {
     // Thread
     Thread gameThread;
 
+    JFrame frame;
+    GameController gameController;
+
 
     /**
      * Constructor of the level panel class
@@ -58,7 +66,7 @@ public class LevelPanel extends JPanel implements Runnable {
      * @param levelController - The level controller
      * @author Léonard Amsler - s231715
      */
-    public LevelPanel(LevelController levelController) {
+    public LevelPanel(JFrame frame, GameController gameController, LevelController levelController) {
 
         this.levelController = levelController;
 
@@ -84,6 +92,9 @@ public class LevelPanel extends JPanel implements Runnable {
 
         levelMouseHandler = new LevelMouseHandler(this, levelController, UITokens);
         addMouseListener(levelMouseHandler);
+
+        this.frame = frame;
+        this.gameController = gameController;
 
         setFocusable(true);
         requestFocus();
@@ -136,6 +147,21 @@ public class LevelPanel extends JPanel implements Runnable {
                 System.out.println("FPS: " + count);
                 count = 0;
             }
+            if(this.levelController.levelComplete()){
+                if(gameController.getCampaignGameMode()){
+                    //if in the campaign mode, it should go to the next level.
+                    gameThread = null;
+                    prepareLevel("level"+(levelController.getLevelSerialNr()+1), frame, gameController);
+                } else{
+                    //if we are in Random level mode
+                    gameThread = null;
+                    MainMenuPanel mainMenuPanel = new MainMenuPanel(frame, gameController);
+                    frame.add(mainMenuPanel, "MainMenu");
+                    showPanel(frame, "MainMenu");
+                    frame.pack();
+                }
+
+            };
 
             if (delta >= 1) {
                 repaint();

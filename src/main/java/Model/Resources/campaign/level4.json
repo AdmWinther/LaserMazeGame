@@ -1,5 +1,6 @@
 {
   "name": "10x10_OneTokenOnBoard_OneToken",
+  "serialNr": 4,
   "boardSize": {
     "widthX": 10,
     "heightY": 10
@@ -16,7 +17,7 @@
     },
     {
       "tokenId": "Receiver_strong",
-      "type": "Receiver",
+      "type": "Target",
       "orientation": "UP",
       "position": {
         "x": 5,
@@ -26,9 +27,19 @@
   ],
   "unplacedTokens": [
     {
-      "tokenId": "D_S_Mirror-47",
+      "tokenId": "D_S_Mirror-01",
       "type": "DoubleSidedMirror",
       "orientation": "RIGHT"
+    },
+    {
+      "tokenId": "D_S_Mirror-02",
+      "type": "DoubleSidedMirror",
+      "orientation": "UP"
+    },
+    {
+      "tokenId": "D_S_Mirror-03",
+      "type": "DoubleSidedMirror",
+      "orientation": "UP"
     }
   ]
 }

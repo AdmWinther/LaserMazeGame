@@ -5,6 +5,7 @@ import Model.Classes.Token.Token;
 import Model.Classes.Utils.Coordinate;
 import Vue.Level.LevelPanel;
 import Vue.Level.UITokens;
+import Vue.MainMenu.MainMenuPanel;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -60,6 +61,12 @@ public class LevelMouseHandler implements MouseListener {
         if (reset.contains(e.getX(), e.getY())) {
             levelController.resetLevel();
             System.out.println("Reset tokens");
+        }
+
+        Rectangle2D back = levelPanel.UIObjects.getPlacedObjects().get("back");
+        if (back.contains(e.getX(), e.getY())) {
+//            this.levelPanel.goToMainMenu();
+            System.out.println("back");
         }
 
         int tileWidth = levelPanel.tileWidth;

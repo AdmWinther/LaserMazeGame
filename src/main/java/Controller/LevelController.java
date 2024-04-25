@@ -89,4 +89,12 @@ public class LevelController {
     public void setShouldDisplayLaser(boolean b) {
         shouldDisplayLaser = b;
     }
+
+    public boolean levelComplete(){
+        return level.isLevelCompleted();
+    }
+
+    public int getLevelSerialNr(){
+        return level.getSerialNr();
+    }
 }

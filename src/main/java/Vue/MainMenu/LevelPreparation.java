@@ -21,7 +21,7 @@ public class LevelPreparation {
         gameController.setCurrentLevelID(levelID);
         LevelController levelController = new LevelController(gameController.getCurrentLevel());
 
-        LevelPanel levelPanel = new LevelPanel(levelController);
+        LevelPanel levelPanel = new LevelPanel(frame, gameController, levelController);
 
         frame.add(levelPanel, "Level");
         showPanel(frame, "Level");

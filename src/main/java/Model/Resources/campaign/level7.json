@@ -1,6 +1,6 @@
 {
-  "name": "10x10_OneTokenOnBoard_OneToken",
-  "serialNr": 6,
+  "name": "10x10_threeTokenOnBoard_twoDSM",
+  "serialNr": 7,
   "boardSize": {
     "widthX": 10,
     "heightY": 10
@@ -39,6 +39,15 @@
       "orientation": "RIGHT",
       "position": {
         "x": 4,
+        "y": 3
+      }
+    },
+    {
+      "tokenId": "target",
+      "type": "Target",
+      "orientation": "RIGHT",
+      "position": {
+        "x": 0,
         "y": 3
       }
     }

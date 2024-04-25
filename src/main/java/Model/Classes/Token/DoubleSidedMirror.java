@@ -12,8 +12,8 @@ public class DoubleSidedMirror extends OrientedToken {
 
     /*
     Double-sided mirror can have only these two positions // and \\
-    The position // is considered left and up->RIGHT
-    The position \\ is considered right and down -> UP and Down
+    The position // is considered LEFT and RIGHT
+    The position \\ is considered UP and Down
     */
     @Override
     public Set<Orientation> propagateLaser(Orientation incomingLaserOrientation) {

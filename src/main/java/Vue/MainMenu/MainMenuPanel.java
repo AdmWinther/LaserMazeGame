@@ -192,6 +192,7 @@ public class MainMenuPanel extends JPanel {
      * @Author Nathan Gromb - s231674
      */
     private void displayCampaignLevels(JFrame frame) {
+        gameController.turnOnCampaignGameMode();
         CampaignPanel campaignPanel = new CampaignPanel(frame, gameController);
         frame.add(campaignPanel, "CampaignLevels");
         frame.addComponentListener(new ComponentAdapter() {

@@ -200,6 +200,12 @@ public class DataReader {
         //generate the 2D array of Tokens, named as PlacedTokens
         return createPlacedTokens(jsonArrayPlacedTokens, widthX, heightY);
     }
+
+    public static int readLevelSerialNr(LevelID id) throws FileNotFoundException{
+        JSONObject level = findLevelByID(id);
+        requireFileFound(level, id.value());
+        return level.getInt(JsonConstants.ATTR_SERIALNR);
+    }
 }
 
 

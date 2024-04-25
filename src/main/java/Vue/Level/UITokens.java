@@ -63,7 +63,10 @@ public class UITokens {
             BufferedImage splitterImageUPDOWN = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tokens/splitter_UD.png")));
             BufferedImage splitterImageLEFTRIGHT = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tokens/splitter_RL.png")));
 
-            BufferedImage targetImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tokens/target.png")));
+            BufferedImage targetImageRIGHT = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tokens/target_RIGHT.png")));
+            BufferedImage targetImageLEFT = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tokens/target_LEFT.png")));
+            BufferedImage targetImageUP = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tokens/target_UP.png")));
+            BufferedImage targetImageDOWN = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tokens/target_DOWN.png")));
 
             // 2. Store the images in the maps
             String beamerClassName = LaserGun.class.getSimpleName();
@@ -94,10 +97,10 @@ public class UITokens {
             orientedTokenImages.put(new Pair<>(splitterClassName, Orientation.RIGHT), splitterImageLEFTRIGHT);
 
             String targetClassName = Target.class.getSimpleName();
-            orientedTokenImages.put(new Pair<>(targetClassName, Orientation.UP), targetImage);
-            orientedTokenImages.put(new Pair<>(targetClassName, Orientation.DOWN), targetImage);
-            orientedTokenImages.put(new Pair<>(targetClassName, Orientation.LEFT), targetImage);
-            orientedTokenImages.put(new Pair<>(targetClassName, Orientation.RIGHT), targetImage);
+            orientedTokenImages.put(new Pair<>(targetClassName, Orientation.UP), targetImageUP);
+            orientedTokenImages.put(new Pair<>(targetClassName, Orientation.DOWN), targetImageDOWN);
+            orientedTokenImages.put(new Pair<>(targetClassName, Orientation.LEFT), targetImageLEFT);
+            orientedTokenImages.put(new Pair<>(targetClassName, Orientation.RIGHT), targetImageRIGHT);
 
         } catch (Exception e) {
             e.printStackTrace();

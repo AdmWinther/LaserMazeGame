@@ -4,6 +4,7 @@ import Model.Classes.Token.Token;
 import Model.Classes.Utils.DataReader;
 import Model.Interfaces.Builder;
 
+import javax.xml.crypto.Data;
 import java.util.Set;
 
 /**
@@ -46,9 +47,10 @@ public class LevelBuilder implements Builder<Level> {
     public Level build() {
         try {
             String name = DataReader.readLevelIDName(id);
+            int serialNumber = DataReader.readLevelSerialNr(id);
             Token[][] placedTokens = DataReader.readLevelIDPlacedTokens(id);
             Set<Token> unplacedTokens = DataReader.readLevelIDUnplacedTokens(id);
-            return new Level(name, placedTokens, unplacedTokens);
+            return new Level(name, serialNumber, placedTokens, unplacedTokens);
         } catch (Exception e) {
             e.printStackTrace();
         }

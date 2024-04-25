@@ -9,6 +9,7 @@ public final class JsonConstants {
     /* JSON Attributes */
     public final static String ATTR_TOKEN_ID = "tokenId";
     public final static String ATTR_NAME = "name";
+    public final static String ATTR_SERIALNR = "serialNr";
     public final static String ATTR_BOARD_SIZE = "boardSize";
     public final static String ATTR_WIDTH_X = "widthX";
     public final static String ATTR_HEIGHT_Y = "heightY";

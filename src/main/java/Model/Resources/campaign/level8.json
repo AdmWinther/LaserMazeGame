@@ -1,9 +1,9 @@
 {
-  "name": "10x10_OneTokenOnBoard_OneToken",
-  "serialNr": 6,
+  "name": "8x8_OneTokenOnBoard_OneToken",
+  "serialNr": 8,
   "boardSize": {
-    "widthX": 10,
-    "heightY": 10
+    "widthX": 8,
+    "heightY": 8
   },
   "placedTokens": [
     {
@@ -11,7 +11,7 @@
       "type": "LaserGun",
       "orientation": "LEFT",
       "position": {
-        "x": 9,
+        "x": 7,
         "y": 3
       }
     },
@@ -25,8 +25,8 @@
       }
     },
     {
-      "tokenId": "splitter2",
-      "type": "Splitter",
+      "tokenId": "block",
+      "type": "Block",
       "orientation": "RIGHT",
       "position": {
         "x": 6,
@@ -41,18 +41,22 @@
         "x": 4,
         "y": 3
       }
+    },
+    {
+      "tokenId": "target",
+      "type": "Target",
+      "orientation": "UP",
+      "position": {
+        "x": 2,
+        "y": 7
+      }
     }
   ],
   "unplacedTokens": [
     {
-      "tokenId": "D_S_Mirror-47",
-      "type": "DoubleSidedMirror",
+      "tokenId": "OSM1",
+      "type": "OneSidedMirror",
       "orientation": "RIGHT"
-    },
-    {
-      "tokenId": "D_S_Mirror-7",
-      "type": "DoubleSidedMirror",
-      "orientation": "LEFT"
     }
   ]
 }

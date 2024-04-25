@@ -1,15 +1,17 @@
 package Model.Classes.Laser;
 
+import Model.Classes.Level;
+import Model.Classes.SolutionChecker;
 import Model.Classes.Token.LaserGun;
 import Model.Classes.Token.Token;
 import Model.Classes.Token.TokenManager;
 import Model.Classes.Utils.Coordinate;
 import Model.Classes.Utils.Orientation;
+import Model.Classes.Utils.Pair;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-
 
 public class LaserManager {
 
@@ -144,4 +146,12 @@ public class LaserManager {
         }
         return this.laser;
     }
+    public Pair<Laser, Boolean> checkSolution(){
+        Laser laser = generateLaser();
+        Boolean correctSolution = SolutionChecker.check(this.tokenManager, this.laser);
+        return new Pair<>(laser, correctSolution);
+    }
 }
+
+
+

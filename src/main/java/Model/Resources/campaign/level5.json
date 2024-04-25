@@ -1,5 +1,6 @@
 {
   "name": "level_5x5_BoardWithLaserGun@(1,2)&OneSidedMirror(3,2):Orientation/.",
+  "serialNr": 5,
   "boardSize": {
     "widthX": 5,
     "heightY": 5

@@ -41,9 +41,11 @@ public class UIObjects {
         try {
             BufferedImage binImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Objects/bin.png")));
             BufferedImage resetImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Objects/reset.png")));
+            BufferedImage backImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Objects/back.png")));
 
             objectImages.put("bin", binImage);
             objectImages.put("reset", resetImage);
+            objectImages.put("back", backImage);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -77,6 +79,8 @@ public class UIObjects {
         rightPadding = levelPanel.tileWidth;
         // Place reset button on the top right corner of the screen
         placeObject("reset", (int) (width - rightPadding), 0);
+        // Place back button On the left side of the reset button
+        placeObject("back", (int) (width - 2 * rightPadding), 0);
     }
 
     /**
