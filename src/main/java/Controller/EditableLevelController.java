@@ -6,6 +6,9 @@ import Model.Classes.Utils.Coordinate;
 import Model.Classes.Utils.DataWriter;
 import Model.constants.FilePaths;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class EditableLevelController extends LevelController{
 
     public EditableLevelController(EditableLevel level) {
@@ -32,6 +35,10 @@ public class EditableLevelController extends LevelController{
         ((EditableLevel) level).tokenManager().setPlacedTokensMovability(false);
         ((EditableLevel) level).tokenManager().setUnplacedTokensMovability(true);
         return DataWriter.write(level, FilePaths.SANDBOX_LEVELS_PATH);
+    }
+
+    public Set<Class<? extends Token>> getInventory() {
+        return new HashSet<>(((EditableLevel) level).tokenManager().getInventory());
     }
 
     @Override

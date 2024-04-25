@@ -3,7 +3,6 @@ package Vue.Handlers;
 import Controller.LevelController;
 import Model.constants.MouseConstants;
 import Vue.Level.LevelPanel;
-import Vue.Level.UILayers.TokensUI;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -32,7 +31,6 @@ public class LevelMouseHandler implements MouseListener {
      *
      * @param levelPanel      - The level panel
      * @param levelController - The level controller
-     * @param tokensUI        - The UI tokens
      * @author Léonard Amsler - s231715
      */
     public LevelMouseHandler(LevelPanel levelPanel, LevelController levelController) {
@@ -40,14 +38,13 @@ public class LevelMouseHandler implements MouseListener {
         this.levelController = levelController;
     }
 
-    @Override
     /**
      * Handle the mouse click event
      * This method is called when the mouse is clicked
-     *
      * @param e - The mouse event
      * @author Léonard Amsler - s231715
      */
+    @Override
     public void mouseClicked(MouseEvent e) {
         // Check if we have clicked on the reset button
         Rectangle2D reset = levelPanel.ExtrasUI.getPlacedObjects().get("reset");

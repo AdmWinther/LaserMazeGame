@@ -11,13 +11,11 @@ public final class EditableLevel extends Level {
 
     private final FlexibleTokenManager tokenManager;
     private final LaserManager laserManager;
-    private final Set<Class<? extends Token>> inventory;
 
     public EditableLevel(String name, Token[][] placedTokens, Set<Token> unplacedTokens, Set<Class<? extends Token>> inventory ) {
         super(name,placedTokens.length,placedTokens[0].length);
-        this.tokenManager = new FlexibleTokenManager(placedTokens, unplacedTokens);
+        this.tokenManager = new FlexibleTokenManager(placedTokens, unplacedTokens, inventory);
         this.laserManager = new LaserManager(tokenManager, width, height);
-        this.inventory = new HashSet<>(inventory);
     }
 
    @Override

@@ -2,6 +2,7 @@ package Vue.Game;
 
 import Controller.GameController;
 import Controller.PlayableLevelController;
+import Model.Classes.Level.PlayableLevel;
 import Vue.Level.LevelPanel;
 import Vue.Level.PlayableLevelPanel;
 import Vue.MainMenu.MainMenuPanel;
@@ -41,7 +42,7 @@ public class Game {
         gameController = new GameController();
         gameController.setCurrentLevelID("10x10_AlmostCompleted");
 
-        PlayableLevelController levelController = new PlayableLevelController(gameController.getCurrentLevel());
+        PlayableLevelController levelController = new PlayableLevelController((PlayableLevel) gameController.getCurrentLevel());
         PlayableLevelPanel levelPanel = new PlayableLevelPanel(levelController);
         frame.add(levelPanel);
 

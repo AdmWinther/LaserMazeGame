@@ -102,6 +102,7 @@ public class TokenMouseHandler implements MouseListener {
                 }
             } else {
                 Token token = tokensUI.getUnplacedTokenAt(startX, startY);
+                System.out.println("Token chosen!" + token);
                 if (token != null) {
                     selectedToken = token;
                     isSelectedPlaced = false;
@@ -126,7 +127,7 @@ public class TokenMouseHandler implements MouseListener {
                     && e.getClickCount() == 0) {
                 mouseClicked(e);
                 return;
-            } else if (e.getClickCount() > 0) {
+            } else if (e.getClickCount() > 1) {
                 return;
             }
 

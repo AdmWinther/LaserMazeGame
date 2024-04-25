@@ -16,10 +16,17 @@ public class FlexibleTokenManager implements TokenManager {
     private final Token[][] placedTokens;
     private final Set<Token> unplacedTokens;
 
+    private Set<Class<? extends Token>> inventory = new HashSet<>();
+
     public FlexibleTokenManager(Token[][] placedTokens, Set<Token> unplacedTokens) {
         if(!correctInput(placedTokens)) throw new IllegalArgumentException();
         this.placedTokens = placedTokens;
         this.unplacedTokens = unplacedTokens;
+    }
+
+    public FlexibleTokenManager(Token[][] placedTokens, Set<Token> unplacedTokens, Set<Class<? extends Token>> inventory) {
+        this(placedTokens, unplacedTokens);
+        this.inventory = inventory;
     }
 
     /**
@@ -234,14 +241,7 @@ public class FlexibleTokenManager implements TokenManager {
         return unplacedTokens.size();
     }
 
-    /**
-     * @return a copy of the unplacedTokens set.
-     */
-    @Override
-    public Set<Token> getUnplacedTokens() {
-        // returning a copy of the unplacedTokens set
-        return new HashSet<>(unplacedTokens);
-    }
+
 
     @Override
     public void reset() {
@@ -255,10 +255,23 @@ public class FlexibleTokenManager implements TokenManager {
         }
     }
 
+    /**
+     * @return a copy of the unplacedTokens set.
+     */
+    @Override
+    public Set<Token> getUnplacedTokens() {
+        // returning a copy of the unplacedTokens set
+        return new HashSet<>(unplacedTokens);
+    }
+
     @Override
     public Token[][] getPlacedTokens() {
         // return a copy of the placedTokens array
         return placedTokens.clone();
+    }
+
+    public Set<Class<? extends Token>> getInventory() {
+        return new HashSet<>(inventory);
     }
 
     /**

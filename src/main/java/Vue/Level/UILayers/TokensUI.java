@@ -26,7 +26,7 @@ import java.util.Set;
 public class TokensUI implements Drawable {
 
     LevelController levelController;
-    Map<Token, Rectangle2D> unPlacedTokenRectangles = new HashMap<>();
+    Map<Token, Rectangle2D> unplacedTokenRectangles = new HashMap<>();
     Map<String, BufferedImage> tokenImages = new HashMap<>();
     Map<Pair<String, Orientation>, BufferedImage> orientedTokenImages = new HashMap<>();
     LevelPanel levelPanel;
@@ -170,11 +170,11 @@ public class TokensUI implements Drawable {
         int x = sidePadding;
         int y = nbTilesVertical * tileHeight - tileHeight;
 
-        unPlacedTokenRectangles.clear();
+        unplacedTokenRectangles.clear();
 
         for (Token token : unplacedTokens) {
             Rectangle2D rect = new Rectangle2D.Double(x, y, tileWidth, tileHeight);
-            unPlacedTokenRectangles.put(token, rect);
+            unplacedTokenRectangles.put(token, rect);
 
             Pair<Integer, Integer> position = getTokenPosition(token, x, y);
             drawToken(g2d, token, position.first(), position.second(), tileWidth, tileHeight);
@@ -210,7 +210,7 @@ public class TokensUI implements Drawable {
      * @author Léonard Amsler
      */
     public Token getUnplacedTokenAt(int x, int y) {
-        for (Map.Entry<Token, Rectangle2D> entry : unPlacedTokenRectangles.entrySet()) {
+        for (Map.Entry<Token, Rectangle2D> entry : unplacedTokenRectangles.entrySet()) {
             Rectangle2D rectangle = entry.getValue();
             if (rectangle.contains(x, y)) {
                 return entry.getKey();

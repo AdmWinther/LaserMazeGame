@@ -1,16 +1,19 @@
 package Vue.Level;
 
-import Controller.PlayableLevelController;
+import Controller.EditableLevelController;
 import Vue.Level.UILayers.AnimationsUI;
+import Vue.Level.UILayers.InventoryUI;
 
 import java.awt.*;
 
-public final class PlayableLevelPanel extends LevelPanel {
+public final class EditableLevelPanel extends LevelPanel {
 
+    private final InventoryUI inventoryUI;
     private final AnimationsUI animationsUI;
 
-    public PlayableLevelPanel(PlayableLevelController levelController) {
+    public EditableLevelPanel(EditableLevelController levelController) {
         super(levelController);
+        inventoryUI = new InventoryUI(this, levelController);
         animationsUI = new AnimationsUI(this);
     }
 
@@ -19,7 +22,7 @@ public final class PlayableLevelPanel extends LevelPanel {
         Graphics2D g2d = (Graphics2D) g;
 
         super.paintComponent(g);
-
+        inventoryUI.draw(g2d);
         animationsUI.draw(g2d);
     }
 }

@@ -1,6 +1,6 @@
 package Controller;
 
-import Model.Classes.Level.PlayableLevel;
+import Model.Classes.Level.Level;
 import Model.Classes.Level.LevelBuilder;
 import Model.Classes.Level.LevelID;
 
@@ -8,7 +8,7 @@ public class GameController {
 
     private LevelBuilder levelBuilder;
     private LevelID currentLevelID;
-    private PlayableLevel currentLevel;
+    private Level currentLevel;
 
     public GameController() {
     }
@@ -20,10 +20,11 @@ public class GameController {
         } else {
             this.levelBuilder.setID(this.currentLevelID);
         }
-        this.currentLevel = this.levelBuilder.build();
+        // TODO: TO REMOVE!!! find a way to build the level of the right type
+        this.currentLevel = this.levelBuilder.build("editable");
     }
 
-    public PlayableLevel getCurrentLevel() {
+    public Level getCurrentLevel() {
         return this.currentLevel;
     }
 }
