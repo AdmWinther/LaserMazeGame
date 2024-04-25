@@ -100,6 +100,7 @@ public class InventoryUI implements Drawable {
             BufferedImage mirrorImage = readImage("/Tokens/mirror_RIGHT.png");
             BufferedImage doubleMirrorImage = readImage("/Tokens/doubleMirror_RL.png");
             BufferedImage targetImage = readImage("/Tokens/target_RIGHT.png");
+            BufferedImage splitterImage = readImage("/Tokens/splitter_RL.png");
 
             // 2. Store the images in the maps
             String blockerClassName = Block.class.getSimpleName();
@@ -116,6 +117,9 @@ public class InventoryUI implements Drawable {
 
             String targetClassName = Target.class.getSimpleName();
             itemImages.put(targetClassName, targetImage);
+
+            String splitterClassName = Splitter.class.getSimpleName();
+            itemImages.put(splitterClassName, splitterImage);
 
         } catch (Exception e) {
             e.printStackTrace();

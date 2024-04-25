@@ -69,6 +69,9 @@ public class TokensUI implements Drawable {
             BufferedImage targetImageLEFT = readImage("/Tokens/target_LEFT.png");
             BufferedImage targetImageRIGHT = readImage("/Tokens/target_RIGHT.png");
 
+            BufferedImage splitterImageLEFTRIGHT = readImage("/Tokens/splitter_RL.png");
+            BufferedImage splitterImageUPDOWN = readImage("/Tokens/splitter_UD.png");
+
             // 2. Store the images in the maps
             String beamerClassName = LaserGun.class.getSimpleName();
             putOrientedTokenImage(beamerImageUP, beamerImageDOWN, beamerImageLEFT, beamerImageRIGHT, beamerClassName);
@@ -84,6 +87,9 @@ public class TokensUI implements Drawable {
 
             String targetClassName = Target.class.getSimpleName();
             putOrientedTokenImage(targetImageUP, targetImageDOWN, targetImageLEFT, targetImageRIGHT, targetClassName);
+
+            String splitterClassName = Splitter.class.getSimpleName();
+            putOrientedTokenImage(splitterImageUPDOWN, splitterImageUPDOWN, splitterImageLEFTRIGHT, splitterImageLEFTRIGHT, splitterClassName);
 
         } catch (Exception e) {
             e.printStackTrace();
