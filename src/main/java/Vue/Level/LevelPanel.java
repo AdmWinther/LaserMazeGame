@@ -3,6 +3,7 @@ package Vue.Level;
 import Controller.GameController;
 import Controller.LevelController;
 import Vue.Handlers.LevelMouseHandler;
+import Vue.MainMenu.CampaignPanel;
 import Vue.MainMenu.MainMenuPanel;
 
 import javax.swing.*;
@@ -148,13 +149,12 @@ public class LevelPanel extends JPanel implements Runnable {
                 count = 0;
             }
             if(this.levelController.levelComplete()){
+                gameThread = null;
                 if(gameController.getCampaignGameMode()){
                     //if in the campaign mode, it should go to the next level.
-                    gameThread = null;
                     prepareLevel("level"+(levelController.getLevelSerialNr()+1), frame, gameController);
                 } else{
                     //if we are in Random level mode
-                    gameThread = null;
                     MainMenuPanel mainMenuPanel = new MainMenuPanel(frame, gameController);
                     frame.add(mainMenuPanel, "MainMenu");
                     showPanel(frame, "MainMenu");
@@ -219,6 +219,20 @@ public class LevelPanel extends JPanel implements Runnable {
         widthOffset = (maxCol - boardWidth) / 2 * tileWidth;
         heightOffset = (maxRow - boardHeight) / 2 * tileHeight;
 
+    }
+
+    public void exitLevel() {
+        gameThread = null;
+        MainMenuPanel mainMenuPanel = new MainMenuPanel(frame, gameController);
+        if(gameController.getCampaignGameMode()){
+            //if in the campaign mode, it should go to the next level.
+            mainMenuPanel.displayCampaignLevels(frame);
+        } else{
+            //if we are in Random level mode
+            frame.add(mainMenuPanel, "MainMenu");
+            showPanel(frame, "MainMenu");
+            frame.pack();
+        }
     }
 }
 

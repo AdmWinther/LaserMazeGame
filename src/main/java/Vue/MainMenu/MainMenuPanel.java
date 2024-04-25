@@ -141,7 +141,9 @@ public class MainMenuPanel extends JPanel {
         });
         randomButton.addActionListener(e -> {
             System.out.println("Random button clicked");
+
             // TODO: Implement random level generation, for now just load level 1
+            gameController.turnOffCampaignGameMode();
             prepareLevel("level1", frame, gameController);
         });
 
@@ -191,7 +193,7 @@ public class MainMenuPanel extends JPanel {
      * @param frame - The frame
      * @Author Nathan Gromb - s231674
      */
-    private void displayCampaignLevels(JFrame frame) {
+    public void displayCampaignLevels(JFrame frame) {
         gameController.turnOnCampaignGameMode();
         CampaignPanel campaignPanel = new CampaignPanel(frame, gameController);
         frame.add(campaignPanel, "CampaignLevels");

@@ -77,7 +77,7 @@ public class UIObjects {
         placeObject("bin", (int) (width - rightPadding), height / 2 - levelPanel.tileHeight / 2);
 
         rightPadding = levelPanel.tileWidth;
-        // Place reset button on the top right corner of the screen
+        // Place reset button in the top right corner of the screen
         placeObject("reset", (int) (width - rightPadding), 0);
         // Place back button On the left side of the reset button
         placeObject("back", (int) (width - 2 * rightPadding), 0);

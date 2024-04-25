@@ -23,8 +23,27 @@
         "x": 3,
         "y": 2
       }
+    },
+    {
+      "tokenId": "Target",
+      "type": "Target",
+      "orientation": "DOWN",
+      "position": {
+        "x": 0,
+        "y": 2
+      }
     }
   ],
   "unplacedTokens": [
+    {
+      "tokenId": "splitter_23",
+      "type": "Splitter",
+      "orientation": "LEFT"
+    },
+    {
+      "tokenId": "DSM01",
+      "type": "DoubleSidedMirror",
+      "orientation": "UP"
+    }
   ]
 }

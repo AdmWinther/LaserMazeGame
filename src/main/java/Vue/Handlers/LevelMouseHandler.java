@@ -65,8 +65,7 @@ public class LevelMouseHandler implements MouseListener {
 
         Rectangle2D back = levelPanel.UIObjects.getPlacedObjects().get("back");
         if (back.contains(e.getX(), e.getY())) {
-//            this.levelPanel.goToMainMenu();
-            System.out.println("back");
+            this.levelPanel.exitLevel();
         }
 
         int tileWidth = levelPanel.tileWidth;

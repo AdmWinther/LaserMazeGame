@@ -23,6 +23,14 @@
         "x": 5,
         "y": 6
       }
+    },
+    {
+      "tokenId": "Block01",
+      "type": "Block",
+      "position": {
+        "x": 5,
+        "y": 4
+      }
     }
   ],
   "unplacedTokens": [
