@@ -4,7 +4,10 @@ import Controller.LevelController;
 import Vue.Handlers.LevelMouseHandler;
 import Vue.Handlers.TokenMouseHandler;
 import Vue.Handlers.TokenMouseMotionHandler;
-import Vue.Level.UILayers.*;
+import Vue.Level.UILayers.ExtrasUI;
+import Vue.Level.UILayers.LaserUI;
+import Vue.Level.UILayers.TilesUI;
+import Vue.Level.UILayers.TokensUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,14 +20,14 @@ public abstract class LevelPanel extends JPanel implements Runnable {
     public final int horizontalBorder = 2;
     public final int verticalBorder = 1;
     public final int wallThickness = 1;
+    // Level configuration, screen size in tiles
+    public final int maxCol;
+    public final int maxRow;
     // Tile size settings
     final int originalTileSize = 16;
     // Performance settings
     final int fps = 60;
     final int frameTime = 1000 / fps;
-    // Level configuration, screen size in tiles
-    public final int maxCol;
-    public final int maxRow;
     // Screen size in pixels
     public int screenWidth;
     public int screenHeight;
@@ -166,7 +169,7 @@ public abstract class LevelPanel extends JPanel implements Runnable {
         ExtrasUI.draw(g2d);
         TokensUI.draw(g2d);
 
-        g2d.dispose();
+
     }
 
     /**

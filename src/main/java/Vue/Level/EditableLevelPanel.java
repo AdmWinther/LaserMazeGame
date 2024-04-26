@@ -24,5 +24,6 @@ public final class EditableLevelPanel extends LevelPanel {
         super.paintComponent(g);
         inventoryUI.draw(g2d);
         animationsUI.draw(g2d);
+        
     }
 }
