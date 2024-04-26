@@ -6,6 +6,7 @@ import Model.Interfaces.Builder;
 import Model.Interfaces.Inventory;
 import Model.constants.SandboxInventory;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -57,7 +58,7 @@ public class LevelBuilder implements Builder<Level> {
 
         if (id.equals(LevelID.NEW_LEVEL)) {
             if (!editable) throw new IllegalArgumentException("Cannot build a new empty playable level.");
-            return new EditableLevel("New Level", new Token[7][7], Set.of(), new SandboxInventory());
+            return new EditableLevel("New Level", new Token[7][7], new HashSet<>(), new SandboxInventory());
         }
 
         try {
