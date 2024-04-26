@@ -25,6 +25,7 @@ public class TokenMouseMotionHandler implements MouseMotionListener {
     public void mouseDragged(MouseEvent e) {
         if (tokenMouseHandler.getSelectedToken() != null) {
             tokensUI.setDraggedToken(tokenMouseHandler.getSelectedToken(), e.getX(), e.getY());
+
         }
     }
 

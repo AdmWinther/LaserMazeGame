@@ -33,7 +33,7 @@ public class TemporaryEditableLevelGame {
         frame.setTitle("Laser Maze");
 
         gameController = new GameController();
-        gameController.setCurrentLevelID("sandbox-level1");
+        gameController.setCurrentLevelID("sandbox-level1", "editable");
 
         EditableLevelController levelController = new EditableLevelController((EditableLevel) gameController.getCurrentLevel());
         levelPanel = new EditableLevelPanel(levelController);

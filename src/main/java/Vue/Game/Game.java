@@ -40,7 +40,6 @@ public class Game {
         frame.setIconImage(img.getImage());
 
         gameController = new GameController();
-        gameController.setCurrentLevelID("10x10_AlmostCompleted");
 
         PlayableLevelController levelController = new PlayableLevelController((PlayableLevel) gameController.getCurrentLevel());
         PlayableLevelPanel levelPanel = new PlayableLevelPanel(levelController);

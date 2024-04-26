@@ -13,7 +13,9 @@ public class GameController {
     public GameController() {
     }
 
-    public void setCurrentLevelID(String levelID) {
+    public void setCurrentLevelID(String levelID, String levelType) {
+        assert levelType.equals("editable") || levelType.equals("playable");
+
         this.currentLevelID = new LevelID(levelID);
         if (this.levelBuilder == null) {
             this.levelBuilder = new LevelBuilder(this.currentLevelID);
@@ -21,8 +23,10 @@ public class GameController {
             this.levelBuilder.setID(this.currentLevelID);
         }
         // TODO: TO REMOVE!!! find a way to build the level of the right type
-        this.currentLevel = this.levelBuilder.build("editable");
+        this.currentLevel = this.levelBuilder.build(levelType);
     }
+
+
 
     public Level getCurrentLevel() {
         return this.currentLevel;
