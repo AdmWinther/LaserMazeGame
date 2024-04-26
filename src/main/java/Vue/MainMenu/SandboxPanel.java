@@ -142,8 +142,8 @@ public class SandboxPanel extends JPanel {
         assert newLevelButtonImage != null;
 
         int scale = 5;
-        backgroundLevelList = ImageUtil.resizeImage(backgroundLevelList, tileWidth * scale * 6, tileHeight * scale);
-        newLevelButtonImage = ImageUtil.resizeImage(newLevelButtonImage, tileWidth * scale * 6, tileHeight * scale);
+        backgroundLevelList = ImageUtil.resizeImage(backgroundLevelList, tileWidth * scale * 8, tileHeight * scale);
+        newLevelButtonImage = ImageUtil.resizeImage(newLevelButtonImage, tileWidth * scale * 8, tileHeight * scale);
         double resizeFactor = 0.5;
         playButtonImage = ImageUtil.resizeImage(playButtonImage, (int)(tileWidth * scale * resizeFactor), (int)(tileHeight * scale * resizeFactor));
         editButtonImage = ImageUtil.resizeImage(editButtonImage, (int)(tileWidth * scale * resizeFactor), (int)(tileHeight * scale * resizeFactor));
@@ -183,6 +183,7 @@ public class SandboxPanel extends JPanel {
             levelPanel.setLayout(new BorderLayout());
             levelPanel.setPreferredSize(new Dimension(scaledIcon.getIconWidth(), scaledIcon.getIconHeight()));
 
+
             JPanel levelNameContainer = new JPanel();
             levelNameContainer.setOpaque(false);
             levelNameContainer.setLayout(new BoxLayout(levelNameContainer, BoxLayout.X_AXIS));
@@ -190,7 +191,7 @@ public class SandboxPanel extends JPanel {
 
             // add a label with the level name
             JLabel levelName = new JLabel(levelID.value());
-            levelName.setFont(new Font("MonoSpaced", Font.BOLD, 20));
+            levelName.setFont(new Font("MonoSpaced", Font.BOLD, 25));
             levelNameContainer.add(levelName);
 
 
