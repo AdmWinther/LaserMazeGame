@@ -39,24 +39,24 @@ public class LevelBuilder implements Builder<Level> {
 
     @Override
     public Level build() {
-        return build("playable");
+        return build(false);
     }
 
     /**
      * Builds the level from the ID
-     * @param type the type of the level to build ("playable" or "editable")
+     * @param editable the type of the level to build (true for EditableLevel, false for PlayableLevel)
      * @return the level built from the ID or null if there was an error
      * @author Hugo Demule
      * @see PlayableLevel
      * @see EditableLevel
      */
     @Override
-    public Level build(String type) {
+    public Level build(boolean editable) {
         try {
             String name = DataReader.readLevelIDName(id);
             Token[][] placedTokens = DataReader.readLevelIDPlacedTokens(id);
             Set<Token> unplacedTokens = DataReader.readLevelIDUnplacedTokens(id);
-            if (type.equals("editable")) {
+            if (editable) {
                 /* TODO : implement this in another place */
                 Set<Class<? extends Token>> inventory = new HashSet<>(
                         Set.of(Block.class,

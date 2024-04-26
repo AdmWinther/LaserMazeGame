@@ -3,5 +3,5 @@ package Model.Interfaces;
 public interface Builder<T> {
     T build();
 
-    T build(String type);
+    T build(boolean editable);
 }

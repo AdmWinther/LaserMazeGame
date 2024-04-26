@@ -21,7 +21,7 @@ public class LevelPreparation {
      * @Author Léonard Amsler - s231715
      */
     public static void prepareLevel(String levelID, JFrame frame, GameController gameController) {
-        gameController.setCurrentLevelID(levelID);
+        gameController.setCurrentLevelID(levelID, true);
         PlayableLevelController levelController = new PlayableLevelController((PlayableLevel) gameController.getCurrentLevel());
 
         LevelPanel levelPanel = new PlayableLevelPanel(levelController);
