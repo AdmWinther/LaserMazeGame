@@ -9,11 +9,13 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
-
+import Model.Classes.Utils.SoundPlayer;
+import Model.constants.SoundPaths;
 import static Vue.MainMenu.LevelPreparation.preparePlayableLevel;
 import static Vue.MainMenu.LevelPreparation.showPanel;
 import static Vue.Utils.ButtonUtil.setButtonTransparent;
 import static Vue.Utils.ImageUtil.resizeImage;
+
 
 /**
  * This class is responsible for the main menu panel
@@ -25,6 +27,7 @@ public class MainMenuPanel extends JPanel {
 
     Thread mainMenuThread;
     GameController gameController;
+    SoundPlayer soundPlayer;
 
     /**
      * Constructor of the main menu panel class
@@ -133,17 +136,21 @@ public class MainMenuPanel extends JPanel {
 
         // Add action listeners to buttons
         campaignButton.addActionListener(e -> {
+            SoundPlayer.play(SoundPaths.MENU_BUTTON_SOUND_PATH, false);
             System.out.println("Campaign button clicked");
             displayCampaignLevels(frame);
         });
         sandboxButton.addActionListener(e -> {
+            SoundPlayer.play(SoundPaths.TOKKEN_EFFECT_MOVE_PATH, false);
             System.out.println("Sandbox button clicked");
             //displaySandboxLevels(frame);
+
         });
         randomButton.addActionListener(e -> {
             System.out.println("Random button clicked");
             // TODO: Implement random level generation, for now just load level 1
             preparePlayableLevel("level1", frame, gameController);
+            SoundPlayer.play(SoundPaths.EXTRA_BUTTON_EFFECT_PATH , false);
         });
 
         // Set button to transparent

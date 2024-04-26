@@ -22,6 +22,9 @@ public class SoundPaths {
     public final static String LOADING_GAME_SOUND_PATH = "src/main/java/Model/Resources/sounds/LoadingGame2.wav";
     public final static String LEVEL_FAILED_SOUND_PATH = "src/main/java/Model/Resources/sounds/LevelFailed.wav";
     public final static String PLACEMENT_TOKKEN_SOUND_PATH = "src/main/java/Model/Resources/sounds/Placement.wav";
+    public final static String MENU_BUTTON_SOUND_PATH = "src/main/java/Model/Resources/sounds/MenuButtonEffect.wav";
+
+
 
 
 

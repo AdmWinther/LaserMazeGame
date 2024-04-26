@@ -3,6 +3,8 @@ package Vue.Game;
 import Controller.GameController;
 import Controller.PlayableLevelController;
 import Model.Classes.Level.PlayableLevel;
+import Model.Classes.Utils.SoundPlayer;
+import Model.constants.SoundPaths;
 import Vue.Level.LevelPanel;
 import Vue.Level.PlayableLevelPanel;
 import Vue.MainMenu.MainMenuPanel;
@@ -14,7 +16,6 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
 import static Vue.MainMenu.LevelPreparation.showPanel;
-
 /**
  * Main class of the UI
  * This is the entry point of the application
@@ -25,6 +26,7 @@ public class Game {
 
     JFrame frame;
     GameController gameController;
+    SoundPlayer soundPlayer;
 
 
     public Game() {
@@ -54,6 +56,8 @@ public class Game {
                 frame.setSize(frame.getWidth(), (int) (frame.getWidth() / aspectRatio));
             }
         });
+
+
         MainMenuPanel mainMenuPanel = new MainMenuPanel(frame, gameController);
         frame.add(mainMenuPanel, "MainMenu");
 
@@ -83,5 +87,7 @@ public class Game {
      */
     public void start() {
         frame.setVisible(true);
+        //SoundPlayer.play(SoundPaths.MAIN_MENU_MUSIC1_PATH, true);
+
     }
 }
