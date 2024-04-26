@@ -1,30 +1,32 @@
 {
-  "name": "level_5x5_BoardWithLaserGun@(1,4)_NoTokenTobePlaced",
-  "serialNr": 1,
-  "boardSize": {
-    "widthX": 5,
-    "heightY": 5
-  },
-  "placedTokens": [
-    {
-      "tokenId": "LaserGun_49",
-      "type": "LaserGun",
-      "orientation": "RIGHT",
-      "position": {
-        "x": 1,
-        "y": 4
-      }
+    "unplacedTokens": [{
+        "orientation": "UP",
+        "tokenId": "DoubleSidedMirror_1389133897",
+        "type": "DoubleSidedMirror"
+    }],
+    "boardSize": {
+        "widthX": 6,
+        "heightY": 6
     },
-    {
-      "tokenId": "Target01",
-      "type": "Target",
-      "orientation": "LEFT",
-      "position": {
-        "x": 4,
-        "y": 4
-      }
-    }
-  ],
-  "unplacedTokens": [
-  ]
+    "name": "beginner_1",
+    "placedTokens": [
+        {
+            "orientation": "DOWN",
+            "tokenId": "LaserGun_2129789493",
+            "position": {
+                "x": 1,
+                "y": 1
+            },
+            "type": "LaserGun"
+        },
+        {
+            "orientation": "LEFT",
+            "tokenId": "Target_317574433",
+            "position": {
+                "x": 4,
+                "y": 4
+            },
+            "type": "Target"
+        }
+    ]
 }

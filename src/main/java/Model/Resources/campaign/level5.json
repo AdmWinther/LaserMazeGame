@@ -1,49 +1,35 @@
 {
-  "name": "level_5x5_BoardWithLaserGun@(1,2)&OneSidedMirror(3,2):Orientation/.",
-  "serialNr": 5,
-  "boardSize": {
-    "widthX": 5,
-    "heightY": 5
-  },
-  "placedTokens": [
-    {
-      "tokenId": "LaserGun_49",
-      "type": "LaserGun",
-      "orientation": "RIGHT",
-      "position": {
-        "x": 1,
-        "y": 2
-      }
+    "unplacedTokens": [
+        {
+            "orientation": "UP",
+            "tokenId": "Target_1494279232",
+            "type": "Target"
+        },
+        {
+            "orientation": "UP",
+            "tokenId": "OneSidedMirror_1921595561",
+            "type": "OneSidedMirror"
+        },
+        {
+            "orientation": "UP",
+            "tokenId": "OneSidedMirror_565760380",
+            "type": "OneSidedMirror"
+        },
+        {
+            "orientation": "UP",
+            "tokenId": "LaserGun_6566818",
+            "type": "LaserGun"
+        },
+        {
+            "orientation": "UP",
+            "tokenId": "OneSidedMirror_930990596",
+            "type": "OneSidedMirror"
+        }
+    ],
+    "boardSize": {
+        "widthX": 6,
+        "heightY": 6
     },
-    {
-      "tokenId": "splitter_23",
-      "type": "Splitter",
-      "orientation": "DOWN",
-      "position": {
-        "x": 3,
-        "y": 2
-      }
-    },
-    {
-      "tokenId": "Target",
-      "type": "Target",
-      "orientation": "DOWN",
-      "position": {
-        "x": 0,
-        "y": 2
-      }
-    }
-  ],
-  "unplacedTokens": [
-    {
-      "tokenId": "splitter_23",
-      "type": "Splitter",
-      "orientation": "LEFT"
-    },
-    {
-      "tokenId": "DSM01",
-      "type": "DoubleSidedMirror",
-      "orientation": "UP"
-    }
-  ]
+    "name": "intermediate_2",
+    "placedTokens": []
 }
