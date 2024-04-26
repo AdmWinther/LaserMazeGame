@@ -1,29 +1,31 @@
 package Vue.LoginMenu;
 
 import Controller.GameController;
-import Controller.LoginMenuController;
+import Controller.LoginController;
 import Vue.MainMenu.ImagePanel;
 import Vue.MainMenu.MainMenuPanel;
 
 import javax.swing.*;
 import java.awt.*;
 
+import static Vue.MainMenu.LevelPreparation.showPanel;
+
 public class LoginMenu extends JPanel {
 
     Thread mainMenuThread;
     GameController gameController;
-    LoginMenuController loginMenuController;
+    LoginController loginController;
 
-    public LoginMenu(JFrame frame, LoginMenuController loginMenuController, GameController gameController) {
+    public LoginMenu(JFrame frame, LoginController loginController, GameController gameController) {
         this.gameController = gameController;
-        this.loginMenuController = loginMenuController;
-        
+        this.loginController = loginController;
+
         int screenWidth = frame.getWidth();
         int screenHeight = frame.getHeight();
         setPreferredSize(new Dimension(screenWidth, screenHeight));
         setLayout(new BorderLayout());
 
-        final int panelBorder = 30;
+        final int panelBorder = 46;
         final int preferredWidth = 300;
         final int preferredHeight = 200;
 
@@ -55,22 +57,22 @@ public class LoginMenu extends JPanel {
         loginRegisterPanel.setBorder(BorderFactory.createEmptyBorder(panelBorder, 0, panelBorder, 0));
 
         // Login panel
-        LoginPanel loginPanel = new LoginPanel(frame, gameController);
+        LoginPanel loginPanel = new LoginPanel(frame, gameController, loginController);
         loginPanel.setOpaque(false);
-        loginPanel.setBorder(BorderFactory.createEmptyBorder(panelBorder, panelBorder, panelBorder, panelBorder));
         loginPanel.setPreferredSize(new Dimension(preferredWidth, preferredHeight));
         loginRegisterPanel.add(loginPanel);
 
+        // Add some space between the panels
+
         // Register panel
-        registerPanel registerPanel = new registerPanel(frame, gameController);
+        registerPanel registerPanel = new registerPanel(frame, gameController, loginController);
         registerPanel.setOpaque(false);
-        registerPanel.setBorder(BorderFactory.createEmptyBorder(panelBorder, panelBorder, panelBorder, panelBorder));
         registerPanel.setPreferredSize(new Dimension(preferredWidth, preferredHeight));
         loginRegisterPanel.add(registerPanel);
 
-
         backgroundPanel.add(loginRegisterPanel, BorderLayout.CENTER);
 
+        frame.setMinimumSize(new Dimension(800, 600));
 
         add(backgroundPanel);
     }
@@ -79,7 +81,7 @@ public class LoginMenu extends JPanel {
 }
 
 class LoginPanel extends JPanel {
-    public LoginPanel(JFrame frame, GameController gameController) {
+    public LoginPanel(JFrame frame, GameController gameController, LoginController loginController) {
         // Login panel
         JPanel loginPanel = new JPanel();
         loginPanel.setLayout(new BoxLayout(loginPanel, BoxLayout.Y_AXIS));
@@ -112,19 +114,15 @@ class LoginPanel extends JPanel {
         JButton loginButton = new JButton("Login");
         loginButton.addActionListener(e -> {
             // Check if the username and password are correct
-            boolean error = false;
-            if (!(usernameTextField.getText().equals("admin") && new String(passwordTextField.getPassword()).equals("admin"))) {
+            boolean success = loginController.login(usernameTextField.getText(), new String(passwordTextField.getPassword()));
+            if (success) {
+                // Show the main menu
+                MainMenuPanel mainMenuPanel = new MainMenuPanel(frame, gameController, loginController);
+                frame.add(mainMenuPanel, "MainMenu");
+                showPanel(frame, "MainMenu");
+            } else {
                 // Show an error message
-                JOptionPane.showMessageDialog(frame, "Invalid username or password", "Error", JOptionPane.ERROR_MESSAGE);
-                error = true;
-            }
-
-            if (!error) {
-                frame.getContentPane().removeAll();
-                MainMenuPanel mainMenuPanel = new MainMenuPanel(frame, gameController);
-                frame.add(mainMenuPanel);
-                frame.revalidate();
-                frame.repaint();
+                JOptionPane.showMessageDialog(frame, "Incorrect username or password", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 
@@ -142,7 +140,7 @@ class LoginPanel extends JPanel {
 }
 
 class registerPanel extends JPanel {
-    public registerPanel(JFrame frame, GameController gameController) {
+    public registerPanel(JFrame frame, GameController gameController, LoginController loginController) {
         // Register panel
         JPanel registerPanel = new JPanel();
         registerPanel.setLayout(new BoxLayout(registerPanel, BoxLayout.Y_AXIS));
@@ -185,27 +183,29 @@ class registerPanel extends JPanel {
         JButton registerButton = new JButton("Register");
         registerButton.addActionListener(e -> {
             // Check if the password and confirm password are the same
-            boolean error = false;
             if (!new String(passwordTextField.getPassword()).equals(new String(confirmPasswordTextField.getPassword()))) {
                 // Show an error message
                 JOptionPane.showMessageDialog(frame, "Passwords do not match", "Error", JOptionPane.ERROR_MESSAGE);
-                error = true;
+                return;
             }
 
             // Check that the username is not empty and the password is not empty
             if (usernameTextField.getText().equals("") || new String(passwordTextField.getPassword()).equals("")) {
                 // Show an error message
                 JOptionPane.showMessageDialog(frame, "Username or password cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);
-                error = true;
+                return;
             }
 
-            // Show the main menu
-            if (!error) {
-                frame.getContentPane().removeAll();
-                MainMenuPanel mainMenuPanel = new MainMenuPanel(frame, gameController);
-                frame.add(mainMenuPanel);
-                frame.revalidate();
-                frame.repaint();
+            // Register the user
+            boolean result = loginController.register(usernameTextField.getText(), new String(passwordTextField.getPassword()));
+            if (result) {
+                // Show the main menu
+                MainMenuPanel mainMenuPanel = new MainMenuPanel(frame, gameController, loginController);
+                frame.add(mainMenuPanel, "MainMenu");
+                showPanel(frame, "MainMenu");
+            } else {
+                // Show an error message
+                JOptionPane.showMessageDialog(frame, "Username already exists", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 

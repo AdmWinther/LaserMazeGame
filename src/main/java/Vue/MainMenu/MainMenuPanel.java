@@ -1,6 +1,7 @@
 package Vue.MainMenu;
 
 import Controller.GameController;
+import Controller.LoginController;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -25,6 +26,7 @@ public class MainMenuPanel extends JPanel {
 
     Thread mainMenuThread;
     GameController gameController;
+    LoginController loginController;
 
     /**
      * Constructor of the main menu panel class
@@ -35,9 +37,10 @@ public class MainMenuPanel extends JPanel {
      * @Author Nathan Gromb - s231674
      * @Author Hussein (Adam)
      */
-    public MainMenuPanel(JFrame frame, GameController gameController) {
+    public MainMenuPanel(JFrame frame, GameController gameController, LoginController loginController) {
 
         this.gameController = gameController;
+        this.loginController = loginController;
 
         int screenWidth = frame.getWidth();
         int screenHeight = frame.getHeight();
@@ -50,24 +53,61 @@ public class MainMenuPanel extends JPanel {
         backgroundPanel.setLayout(new BorderLayout());
         add(backgroundPanel, BorderLayout.CENTER);
 
+        // Top panel
+        JPanel topPanel = new JPanel();
+        topPanel.setOpaque(false);
+        topPanel.setLayout(new BorderLayout());
+
+
+        topPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        backgroundPanel.add(topPanel, BorderLayout.NORTH);
+
         // Title label
         JLabel titleLabel = new JLabel("Laser Maze", SwingConstants.CENTER);
-        // Use a custom font
         titleLabel.setFont(new Font("Courier New", Font.BOLD, 30));
         titleLabel.setForeground(Color.LIGHT_GRAY);
-        titleLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
-        backgroundPanel.add(titleLabel, BorderLayout.NORTH);
+        topPanel.add(titleLabel, BorderLayout.SOUTH);
 
+
+        // Logout button
+        JButton logoutButton = new JButton("Logout");
+        logoutButton.addActionListener(e -> {
+            System.out.println("Logout button clicked");
+            loginController.logout();
+            showPanel(frame, "LoginMenu");
+        });
+        logoutButton.setFont(new Font("Courier New", Font.PLAIN, 20));
+        logoutButton.setForeground(Color.LIGHT_GRAY);
+        setButtonTransparent(logoutButton);
+        logoutButton.setHorizontalAlignment(SwingConstants.RIGHT);
+
+
+        topPanel.add(logoutButton, BorderLayout.NORTH);
+
+
+        // Button panel
         JPanel buttonPanel = createButtonPanel(frame);
         backgroundPanel.add(buttonPanel, BorderLayout.CENTER);
 
 
         // Footer label
+        JPanel footerPanel = new JPanel();
+        footerPanel.setOpaque(false);
+        footerPanel.setLayout(new BorderLayout());
+
         JLabel footerLabel = new JLabel("Made by group 3", SwingConstants.RIGHT);
         footerLabel.setFont(new Font("Courier New", Font.PLAIN, 10));
         footerLabel.setForeground(Color.LIGHT_GRAY);
         footerLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        backgroundPanel.add(footerLabel, BorderLayout.SOUTH);
+        footerPanel.add(footerLabel, BorderLayout.EAST);
+
+        JLabel loginLabel = new JLabel("Logged in as: " + loginController.getCurrentUsername().username, SwingConstants.LEFT);
+        loginLabel.setFont(new Font("Courier New", Font.PLAIN, 10));
+        loginLabel.setForeground(Color.LIGHT_GRAY);
+        loginLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        footerPanel.add(loginLabel, BorderLayout.WEST);
+
+        backgroundPanel.add(footerPanel, BorderLayout.SOUTH);
 
         frame.pack();
     }
@@ -144,7 +184,7 @@ public class MainMenuPanel extends JPanel {
 
             // TODO: Implement random level generation, for now just load level 1
             gameController.turnOffCampaignGameMode();
-            prepareLevel("level1", frame, gameController);
+            prepareLevel("level1", frame, gameController, loginController);
         });
 
         // Set button to transparent
@@ -195,7 +235,7 @@ public class MainMenuPanel extends JPanel {
      */
     public void displayCampaignLevels(JFrame frame) {
         gameController.turnOnCampaignGameMode();
-        CampaignPanel campaignPanel = new CampaignPanel(frame, gameController);
+        CampaignPanel campaignPanel = new CampaignPanel(frame, gameController, loginController);
         frame.add(campaignPanel, "CampaignLevels");
         frame.addComponentListener(new ComponentAdapter() {
             @Override

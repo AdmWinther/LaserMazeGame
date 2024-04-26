@@ -1,7 +1,7 @@
 package Vue.Game;
 
 import Controller.GameController;
-import Controller.LoginMenuController;
+import Controller.LoginController;
 import Vue.LoginMenu.LoginMenu;
 
 import javax.swing.*;
@@ -37,8 +37,8 @@ public class Game {
         //frame.add(mainMenuPanel, "MainMenu");
         //showPanel(frame, "MainMenu");
 
-        LoginMenuController loginMenuController = new LoginMenuController();
-        LoginMenu loginMenu = new LoginMenu(frame, loginMenuController, gameController);
+        LoginController loginController = new LoginController();
+        LoginMenu loginMenu = new LoginMenu(frame, loginController, gameController);
         frame.add(loginMenu, "LoginMenu");
         showPanel(frame, "LoginMenu");
 
