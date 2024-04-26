@@ -14,13 +14,7 @@ import static Vue.MainMenu.LevelPreparation.preparePlayableLevel;
 import static Vue.Utils.ButtonUtil.setButtonTransparent;
 import static Vue.Utils.ImageUtil.resizeImage;
 
-/**
- * This class is responsible for the campaign panel
- *
- * @Author Léonard Amsler - s231715
- * @Author Nathan Gromb - s231674
- */
-public class CampaignPanel extends JPanel {
+public class SandboxPanel extends JPanel {
     private final JFrame frame;
     private final JPanel buttons;
     private final JLabel backButton;
@@ -33,10 +27,9 @@ public class CampaignPanel extends JPanel {
      *
      * @param frame          - The frame
      * @param gameController - The game controller
-     * @Author Léonard Amsler - s231715
-     * @Author Nathan Gromb - s231674
+     * @author Hugo Demule
      */
-    public CampaignPanel(JFrame frame, GameController gameController) {
+    public SandboxPanel(JFrame frame, GameController gameController) {
         this.gameController = gameController;
         this.frame = frame;
 
@@ -68,9 +61,7 @@ public class CampaignPanel extends JPanel {
 
     /**
      * Resize the campaign panel
-     *
-     * @Author Léonard Amsler - s231715
-     * @Author Nathan Gromb - s231674
+     * @author Hugo Demule
      */
     public void resize() {
 
@@ -103,8 +94,7 @@ public class CampaignPanel extends JPanel {
      * Get the level buttons
      *
      * @return JPanel - The level buttons
-     * @Author Léonard Amsler - s231715
-     * @Author Nathan Gromb - s231674
+     * @author Hugo Demule
      */
     private JPanel getLevelButtons() {
         JPanel levelButtonPanel = new JPanel();
@@ -155,9 +145,8 @@ public class CampaignPanel extends JPanel {
 
     /**
      * Get the back button
-     *
      * @return JLabel - The back button
-     * @Author Nathan Gromb - s231674
+     * @author Hugo Demule
      */
     private JLabel getBackButton() {
         JLabel button = new JLabel();
@@ -170,7 +159,7 @@ public class CampaignPanel extends JPanel {
 
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent e) {
-                frame.getContentPane().remove(CampaignPanel.this);
+                frame.getContentPane().remove(SandboxPanel.this);
             }
         });
 
