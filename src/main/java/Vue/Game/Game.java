@@ -78,6 +78,6 @@ public class Game {
      */
     public void start() {
         frame.setVisible(true);
-        Sound.mainMenuClip().start();
+        Sound.playMainMenuTheme();
     }
 }

@@ -6,6 +6,7 @@ import Model.Classes.Level.LevelID;
 import Model.Classes.Utils.DataReader;
 import Model.Classes.Utils.DataWriter;
 import Vue.Handlers.ButtonHoverHandler;
+import Vue.SoundEffects.Sound;
 import Vue.Utils.ImageUtil;
 
 import javax.imageio.ImageIO;
@@ -17,6 +18,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+
+import static Vue.MainMenu.LevelPreparation.showPanel;
 
 
 public class SandboxPanel extends JPanel {
@@ -167,6 +170,7 @@ public class SandboxPanel extends JPanel {
 
         newLevelButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Sound.playButtonSound(null); // TODO null
                 System.out.println("NEW LEVEL");
                 LevelPreparation.prepareNewEditableLevel(frame, gameController);
             }
@@ -241,6 +245,7 @@ public class SandboxPanel extends JPanel {
 
             playButton.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    Sound.playButtonSound(null); // TODO null
                     System.out.println(levelID.value() + " PLAY");
                     LevelPreparation.preparePlayableLevel(levelID, frame, gameController, loginController);
                 }
@@ -249,6 +254,7 @@ public class SandboxPanel extends JPanel {
 
             editButton.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    Sound.playButtonSound(null); // TODO null
                     System.out.println(levelID.value() + " EDIT");
                     LevelPreparation.prepareEditableLevel(levelID, frame, gameController);
                 }
@@ -257,6 +263,7 @@ public class SandboxPanel extends JPanel {
 
             deleteButton.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Sound.playButtonSound(null); // TODO null
                 System.out.println(levelID.value() + " DELETE");
                 try {
                     DataWriter.delete(levelID);
@@ -275,9 +282,10 @@ public class SandboxPanel extends JPanel {
     }
 
     private void refresh(){
-        frame.getContentPane().add(new SandboxPanel(frame, gameController, loginController));
+        frame.add(new SandboxPanel(frame, gameController, loginController), "SandboxLevels");
         frame.getContentPane().remove(this);
         frame.revalidate();
+        showPanel(frame, "SandboxLevels");
         frame.repaint();
     }
 
@@ -298,9 +306,12 @@ public class SandboxPanel extends JPanel {
 
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent e) {
+                Sound.playButtonSound(null); // TODO null
                 frame.getContentPane().remove(SandboxPanel.this);
+                showPanel(frame, "MainMenu");
             }
         });
+        button.addMouseListener(new ButtonHoverHandler());
 
         return button;
     }

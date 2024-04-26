@@ -5,6 +5,7 @@ import Model.Classes.Level.Level;
 import Model.Classes.Token.Token;
 import Vue.Interfaces.Drawable;
 import Vue.Level.LevelPanel;
+import Vue.SoundEffects.Sound;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -142,10 +143,12 @@ public class ExtrasUI implements Drawable {
         Rectangle2D reset = levelPanel.getExtrasUI().getPlacedObjects().get("reset");
         Rectangle2D back = levelPanel.getExtrasUI().getPlacedObjects().get("back");
         if (reset.contains(x, y)) {
+            Sound.playButtonSound(null); // TODO null
             levelPanel.levelController.resetLevel();
             System.out.println("Reset tokens");
         }
         if (back.contains(x, y)) {
+            Sound.playButtonSound(null); // TODO null
             levelPanel.levelController.backToMenu();
             System.out.println("Back to menu");
         }

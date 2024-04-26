@@ -25,7 +25,7 @@ public final class PlayableLevelPanel extends LevelPanel {
         super(frame, gameController, levelController, loginController);
         extrasUI = new ExtrasUI(this);
         animationsUI = new AnimationsUI(this);
-        this.tada = Sound.levelCompleted();
+        this.tada = Sound.getLevelCompleted();
     }
 
     @Override
