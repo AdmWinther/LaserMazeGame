@@ -14,4 +14,9 @@ public class Target extends OrientedToken {
     public Set<Orientation> propagateLaser(Orientation orientation) {
         return Collections.emptySet();
     }
+
+    @Override
+    public Token copy() {
+        return new Target(this.isMovable(), this.getOrientation());
+    }
 }

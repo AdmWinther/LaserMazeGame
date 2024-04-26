@@ -1,0 +1,32 @@
+{
+    "unplacedTokens": [{
+        "orientation": "UP",
+        "tokenId": "DoubleSidedMirror_1389133897",
+        "type": "DoubleSidedMirror"
+    }],
+    "boardSize": {
+        "widthX": 6,
+        "heightY": 6
+    },
+    "name": "beginner_1",
+    "placedTokens": [
+        {
+            "orientation": "DOWN",
+            "tokenId": "LaserGun_2129789493",
+            "position": {
+                "x": 1,
+                "y": 1
+            },
+            "type": "LaserGun"
+        },
+        {
+            "orientation": "LEFT",
+            "tokenId": "Target_317574433",
+            "position": {
+                "x": 4,
+                "y": 4
+            },
+            "type": "Target"
+        }
+    ]
+}

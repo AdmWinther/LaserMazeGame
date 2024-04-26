@@ -1,10 +1,9 @@
 package step;
 
-import Model.Classes.Level;
-import Model.Classes.LevelBuilder;
+import Model.Classes.Level.PlayableLevel;
+import Model.Classes.Level.LevelBuilder;
 import Model.Classes.Token.*;
 import Model.Classes.Utils.Coordinate;
-import Model.Classes.Utils.DataReader;
 import Model.Classes.Utils.DataWriter;
 import Model.Classes.Utils.Orientation;
 import Model.constants.FilePaths;
@@ -20,14 +19,14 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 public class DataWriterSteps {
 
     String parentDirPath = FilePaths.SANDBOX_LEVELS_PATH;
-    Level initialLevel;
-    Level finalLevel;
+    PlayableLevel initialLevel;
+    PlayableLevel finalLevel;
 
     @Given("an empty level of size {int}x{int}")
     public void anEmptyLevelOfSizeX(int widthX, int heightY) {
         Token[][] placedTokens = new Token[widthX][heightY];
         Set<Token> unplacedTokens = Set.of();
-        initialLevel = new Level("dataWriterStepsEmptyLevel", placedTokens, unplacedTokens);
+        initialLevel = new PlayableLevel("dataWriterStepsEmptyLevel", placedTokens, unplacedTokens);
     }
 
     @Given("a level of size {int}x{int} with a UP LaserGun in \\({int} {int}) and a DOWN Target in \\({int} {int}), with a DoubleSidedMirror and a SingleSidedMirror to place")
@@ -38,7 +37,7 @@ public class DataWriterSteps {
 
         Set<Token> unplacedTokens = Set.of(new DoubleSidedMirror(true, Orientation.UP), new OneSidedMirror(true, Orientation.UP));
 
-        initialLevel = new Level("dataWriterStepsComplexLevel", placedTokens, unplacedTokens);
+        initialLevel = new PlayableLevel("dataWriterStepsComplexLevel", placedTokens, unplacedTokens);
     }
 
     @When("I write the level to a file")
@@ -49,7 +48,7 @@ public class DataWriterSteps {
     @Then("I should retrieve the initial level using DataReader")
     public void iShouldRetrieveTheInitialLevelUsingDataReader() {
         LevelBuilder levelBuilder = new LevelBuilder(initialLevel.id());
-        finalLevel = levelBuilder.build();
+        finalLevel = (PlayableLevel) levelBuilder.build();
 
         assertEquals(initialLevel.name(), finalLevel.name());
         assertEquals(initialLevel.width, finalLevel.width);

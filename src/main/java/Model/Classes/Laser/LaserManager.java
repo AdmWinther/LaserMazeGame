@@ -1,26 +1,25 @@
 package Model.Classes.Laser;
 
-import Model.Classes.Level;
 import Model.Classes.SolutionChecker;
 import Model.Classes.Token.LaserGun;
 import Model.Classes.Token.Token;
-import Model.Classes.Token.TokenManager;
 import Model.Classes.Utils.Coordinate;
 import Model.Classes.Utils.Orientation;
 import Model.Classes.Utils.Pair;
+import Model.Interfaces.TokenManager;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
 
 public class LaserManager {
 
-    private Laser laser;
     private final TokenManager tokenManager;
-//    private boolean laserContinue;
-
     private final int boardWidth;
     private final int boardHeight;
+    private Laser laser;
+    private Orientation laserTipOrientation;
+    private Coordinate laserTipCoordinate;
+    private boolean laserContinue;
 
     public LaserManager(TokenManager tokenManager, int boardWidth, int boardHeight) {
         this.tokenManager = tokenManager;
@@ -37,7 +36,7 @@ public class LaserManager {
     }
 
     private Coordinate oneCellInDirectionOfOrientation(Coordinate from, Orientation laserTipOrientation) {
-        switch (laserTipOrientation){
+        switch (laserTipOrientation) {
             case UP -> {
                 return new Coordinate(from.x(), from.y() - 1);
             }
@@ -72,7 +71,7 @@ public class LaserManager {
     }
 
     private LaserFragment generateLaserFragmentFromLaserGun() {
-        LaserGun laserGun = tokenManager.getLaserGun();
+        LaserGun laserGun = (LaserGun) tokenManager.getTokenAt(tokenManager.findLaserGunPosition());
         Coordinate laserGunPosition = tokenManager.findLaserGunPosition();
 
         Coordinate laserFragmentTo = oneCellInDirectionOfOrientation(laserGunPosition, laserGun.getOrientation());
@@ -103,7 +102,7 @@ public class LaserManager {
         return fragments;
     }
 
-    private ArrayList<LaserFragment> generateNextFragment(int laserBranchIndex){
+    private ArrayList<LaserFragment> generateNextFragment(int laserBranchIndex) {
 
         Orientation laserTipOrientation = laser.getLaserTipOrientation(laserBranchIndex);
         Coordinate laserTipCoordinate = laser.getLaserTipCoordinate(laserBranchIndex);
@@ -121,21 +120,21 @@ public class LaserManager {
         this.laser.reset();
 
         LaserFragment LaserGunFragment = generateLaserFragmentFromLaserGun();
-        if(LaserGunFragment != null){
+        if (LaserGunFragment != null) {
             laser.newLaserBranch(LaserGunFragment);
             laser.incrementFragmentIndex();
         }
 
-        while (laser.getLaserBranchCount() > 0){
-            for(int laserBranchNumber = 0; laserBranchNumber < laser.getLaserBranchCount(); laserBranchNumber++){
+        while (laser.getLaserBranchCount() > 0) {
+            for (int laserBranchNumber = 0; laserBranchNumber < laser.getLaserBranchCount(); laserBranchNumber++) {
 
                 ArrayList<LaserFragment> fragments = generateNextFragment(laserBranchNumber);
 
-                if (fragments == null || fragments.isEmpty()){
+                if (fragments == null || fragments.isEmpty()) {
                     laser.discontinueBranch(laserBranchNumber);
                 } else {
                     this.laser.addFragment(laserBranchNumber, fragments.get(0));
-                    if(fragments.size()>1){
+                    if (fragments.size() > 1) {
                         laser.newLaserBranch(fragments.get(1));
                         laser.incrementFragmentIndex();
                     }
@@ -146,7 +145,8 @@ public class LaserManager {
         }
         return this.laser;
     }
-    public Pair<Laser, Boolean> checkSolution(){
+
+    public Pair<Laser, Boolean> checkSolution() {
         Laser laser = generateLaser();
         Boolean correctSolution = SolutionChecker.check(this.tokenManager, this.laser);
         return new Pair<>(laser, correctSolution);

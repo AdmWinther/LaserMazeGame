@@ -2,18 +2,20 @@ package Model.Classes;
 
 import Model.Classes.Laser.Laser;
 import Model.Classes.Laser.LaserFragment;
+import Model.Classes.Level.PlayableLevel;
 import Model.Classes.Token.Target;
-import Model.Classes.Token.TokenManager;
 import Model.Classes.Utils.Coordinate;
 import Model.Classes.Utils.Orientation;
+import Model.Interfaces.TokenManager;
 
 public class SolutionChecker {
-    public static boolean check(TokenManager tokenManager, Laser laser) {
-        boolean didLaserHitTargetWithCorrectOrientation = false;
-        boolean areAllTokensUsed = false;
 
-//        Laser laser = level.laserManager().generateLaser();
+    public static boolean check(PlayableLevel level) {
+        return check(level.tokenManager(), level.generateLaser());
+    }
 
+
+    public static Boolean check(TokenManager tokenManager, Laser laser) {
         Coordinate targetPos;
         if ((targetPos = tokenManager.findTargetPosition()) == null) {
             return false;
@@ -27,14 +29,15 @@ public class SolutionChecker {
             case RIGHT -> Orientation.LEFT;
         };
 
+        boolean didLaserHitTargetWithCorrectOrientation = false;
         for (LaserFragment fragment : laser.getFragments()) {
             if (fragment.to().equals(targetPos) && fragment.getOrientation() == expectedOrientation) {
                 didLaserHitTargetWithCorrectOrientation = true;
-//                return true;
+                break;
             }
         }
 
-        if(tokenManager.getUnplacedTokensSize() == 0) areAllTokensUsed = true;
+        boolean areAllTokensUsed = tokenManager.getUnplacedTokensSize() == 0;
 
         return didLaserHitTargetWithCorrectOrientation && areAllTokensUsed;
     }

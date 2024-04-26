@@ -2,6 +2,7 @@ package Vue.MainMenu;
 
 import Controller.GameController;
 import Controller.LoginController;
+import Model.Classes.Level.LevelID;
 import Vue.SoundEffects.Sound;
 
 import javax.imageio.ImageIO;
@@ -13,7 +14,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-import static Vue.MainMenu.LevelPreparation.prepareLevel;
+import static Vue.MainMenu.LevelPreparation.preparePlayableLevel;
 import static Vue.MainMenu.LevelPreparation.showPanel;
 import static Vue.Utils.ButtonUtil.setButtonTransparent;
 import static Vue.Utils.ImageUtil.resizeImage;
@@ -185,6 +186,7 @@ public class MainMenuPanel extends JPanel {
         sandboxButton.addActionListener(e -> {
             Sound.playCampaignButtonSound(campaignButtonClickSound);
             System.out.println("Sandbox button clicked");
+            displaySandboxLevels(frame);
         });
         randomButton.addActionListener(e -> {
             Sound.playCampaignButtonSound(campaignButtonClickSound);
@@ -193,7 +195,7 @@ public class MainMenuPanel extends JPanel {
             gameController.turnOffCampaignGameMode();
             int maxLevel = gameController.getMaxCampaignLevel();
             int randomLevel = (int) (Math.random() * maxLevel) + 1;
-            prepareLevel("level" + randomLevel, frame, gameController, loginController);
+            preparePlayableLevel(new LevelID("level" + randomLevel), frame, gameController, loginController);
         });
 
         // Set button to transparent
@@ -254,6 +256,20 @@ public class MainMenuPanel extends JPanel {
         });
 
         showPanel(frame, "CampaignLevels");
+        frame.pack();
+    }
+
+    private void displaySandboxLevels(JFrame frame) {
+        SandboxPanel sandboxPanel = new SandboxPanel(frame, gameController, loginController);
+        frame.add(sandboxPanel, "SandboxLevels");
+        frame.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                sandboxPanel.resize();
+            }
+        });
+
+        showPanel(frame, "SandboxLevels");
         frame.pack();
     }
 

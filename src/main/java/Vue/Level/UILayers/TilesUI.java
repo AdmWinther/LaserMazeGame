@@ -1,6 +1,8 @@
-package Vue.Level;
+package Vue.Level.UILayers;
 
 import Controller.LevelController;
+import Vue.Interfaces.Drawable;
+import Vue.Level.LevelPanel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -9,26 +11,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-/**
- * This class is responsible for drawing the tiles on the screen
- *
- * @Author Léonard Amsler - s231715
- */
-public class UITiles {
+public class TilesUI implements Drawable {
 
     LevelPanel levelPanel;
     LevelController levelController;
     String[][] levelTiles;
     Map<String, BufferedImage> tileImages = new HashMap<>();
 
-    /**
-     * Constructor of the UI tiles class
-     *
-     * @param levelPanel      - The level panel
-     * @param levelController - The level controller
-     * @Author Léonard Amsler - s231715
-     */
-    public UITiles(LevelPanel levelPanel, LevelController levelController) {
+    public TilesUI(LevelPanel levelPanel, LevelController levelController) {
         this.levelPanel = levelPanel;
         this.levelController = levelController;
         getTileImage();

@@ -1,17 +1,18 @@
-package Model.Classes;
+package Model.Classes.Level;
 
 import Model.Classes.Token.Token;
 import Model.Classes.Utils.DataReader;
 import Model.Interfaces.Builder;
+import Model.Interfaces.Inventory;
+import Model.constants.SandboxInventory;
 
-import javax.xml.crypto.Data;
 import java.util.Set;
 
 /**
  * A class that builds a Level from their ID
  *
  * @author Hugo Demule
- * @see Level
+ * @see PlayableLevel
  */
 public class LevelBuilder implements Builder<Level> {
     private LevelID id;
@@ -36,21 +37,39 @@ public class LevelBuilder implements Builder<Level> {
         this.id = id;
     }
 
+
+    @Override
+    public Level build() {
+        return build(false);
+    }
+
     /**
      * Builds the level from the ID
      *
+     * @param editable the type of the level to build (true for EditableLevel, false for PlayableLevel)
      * @return the level built from the ID or null if there was an error
      * @author Hugo Demule
-     * @see Level
+     * @see PlayableLevel
+     * @see EditableLevel
      */
     @Override
-    public Level build() {
+    public Level build(boolean editable) {
+
+        if (id.equals(LevelID.NEW_LEVEL)) {
+            if (!editable) throw new IllegalArgumentException("Cannot build a new empty playable level.");
+            return new EditableLevel("New Level", new Token[7][7], Set.of(), new SandboxInventory());
+        }
+
         try {
             String name = DataReader.readLevelIDName(id);
-            int serialNumber = DataReader.readLevelSerialNr(id);
             Token[][] placedTokens = DataReader.readLevelIDPlacedTokens(id);
             Set<Token> unplacedTokens = DataReader.readLevelIDUnplacedTokens(id);
-            return new Level(name, serialNumber, placedTokens, unplacedTokens);
+            if (editable) {
+                Inventory inventory = new SandboxInventory();
+                return new EditableLevel(name, placedTokens, unplacedTokens, inventory);
+            } else {
+                return new PlayableLevel(name, placedTokens, unplacedTokens);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

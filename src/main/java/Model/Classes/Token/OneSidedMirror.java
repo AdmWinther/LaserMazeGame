@@ -46,4 +46,9 @@ public class OneSidedMirror extends OrientedToken {
         }
         return propagatedLaser;
     }
+
+    @Override
+    public Token copy() {
+        return new OneSidedMirror(this.isMovable(), this.getOrientation());
+    }
 }

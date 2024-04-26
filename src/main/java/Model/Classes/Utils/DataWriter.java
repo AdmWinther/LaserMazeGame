@@ -1,7 +1,7 @@
 package Model.Classes.Utils;
 
-import Model.Classes.Level;
-import Model.Classes.LevelID;
+import Model.Classes.Level.Level;
+import Model.Classes.Level.LevelID;
 import Model.Classes.Token.OrientedToken;
 import Model.Classes.Token.Token;
 import Model.Classes.Token.TokenID;

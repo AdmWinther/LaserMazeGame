@@ -1,4 +1,10 @@
-package Vue.Level;
+package Vue.Level.UILayers;
+
+import Controller.LevelController;
+import Model.Classes.Level.Level;
+import Model.Classes.Token.Token;
+import Vue.Interfaces.Drawable;
+import Vue.Level.LevelPanel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -8,27 +14,23 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-/**
- * This class is responsible for placing and drawing objects on the screen
- *
- * @Author Léonard Amsler - s231715
- */
-public class UIObjects {
+public class ExtrasUI implements Drawable {
 
     private final LevelPanel levelPanel;
     private final Map<String, Rectangle2D> placedObjects = new HashMap<>();
     private final Map<String, BufferedImage> objectImages = new HashMap<>();
 
-    /**
-     * Constructor of the UI objects class
-     *
-     * @param levelPanel - The level panel
-     * @Author Léonard Amsler - s231715
-     */
-    public UIObjects(LevelPanel levelPanel) {
+    public ExtrasUI(LevelPanel levelPanel, boolean init) {
         this.levelPanel = levelPanel;
-        initializeObjectSet();
-        setPlacedObjects();
+
+        if (init) {
+            initializeObjectSet();
+            setPlacedObjects();
+        }
+    }
+
+    public ExtrasUI(LevelPanel levelPanel) {
+        this(levelPanel, true);
     }
 
     /**
@@ -39,12 +41,12 @@ public class UIObjects {
      */
     public void initializeObjectSet() {
         try {
-            BufferedImage binImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Objects/bin.png")));
+            BufferedImage chestImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Objects/chest.png")));
             BufferedImage resetImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Objects/reset.png")));
             BufferedImage backImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Objects/back.png")));
             BufferedImage bingoImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Objects/bingo.png")));
 
-            objectImages.put("bin", binImage);
+            objectImages.put("chest", chestImage);
             objectImages.put("reset", resetImage);
             objectImages.put("back", backImage);
             objectImages.put("bingo", bingoImage);
@@ -80,8 +82,8 @@ public class UIObjects {
         int height = levelPanel.screenHeight;
         double rightPadding = levelPanel.tileWidth * 1.5;
 
-        // Place bin on the right side of the screen
-        placeObject("bin", (int) (width - rightPadding), height / 2 - levelPanel.tileHeight / 2);
+        // Place chest on the right side of the screen
+        placeObject("chest", (int) (width - rightPadding), height / 2 - levelPanel.tileHeight / 2);
 
         rightPadding = levelPanel.tileWidth;
         // Place reset button in the top right corner of the screen
@@ -124,4 +126,27 @@ public class UIObjects {
         return placedObjects;
     }
 
+    public Map<String, BufferedImage> getObjectImages() {
+        return objectImages;
+    }
+
+    public void handleTokenDrop(Token token, int x, int y, LevelController controller) {
+        Rectangle2D chest = getPlacedObjects().get("chest");
+        if (chest.contains(x, y)) {
+            controller.transferTokenToUnplacedTokens(token);
+            System.out.println("Removed Token: " + token);
+        }
+    }
+
+    public void handleClick(int x, int y) {
+        Rectangle2D reset = levelPanel.getExtrasUI().getPlacedObjects().get("reset");
+        if (reset.contains(x, y)) {
+            levelPanel.levelController.resetLevel();
+            System.out.println("Reset tokens");
+        }
+    }
+
+    public LevelPanel getLevelPanel() {
+        return levelPanel;
+    }
 }

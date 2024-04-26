@@ -1,23 +1,18 @@
-package Model.Classes;
+package Model.Classes.Level;
 
 import Model.Classes.Laser.Laser;
 import Model.Classes.Laser.LaserManager;
 import Model.Classes.Token.Token;
-import Model.Classes.Token.TokenManager;
+import Model.Classes.TokenManager.StrictTokenManager;
 import Model.Classes.Utils.Pair;
+import Model.Interfaces.TokenManager;
 
 import java.util.Set;
 
-public class Level {
+public final class PlayableLevel extends Level {
 
-    private final String name;
-    private final LevelID id;
-    private final LaserManager laserManager;
     private final TokenManager tokenManager;
-    public final int width;
-    public final int height;
-    private final int serialNr;
-
+    private final LaserManager laserManager;
     private boolean levelCompleted;
 
     /**
@@ -26,41 +21,29 @@ public class Level {
      * @param placedTokens   the tokens that are already placed on the board
      * @param unplacedTokens the tokens that are not placed on the board
      */
-    public Level(String name, int serialNr,Token[][] placedTokens, Set<Token> unplacedTokens) {
-        this.name = name;
-        this.id = new LevelID(name + "_" + hashCode());
-        this.serialNr = serialNr;
-        tokenManager = new TokenManager(placedTokens, unplacedTokens);
-        width = placedTokens.length;
-        height = placedTokens[0].length;
+    public PlayableLevel(String name, Token[][] placedTokens, Set<Token> unplacedTokens) {
+        super(name, placedTokens.length, placedTokens[0].length);
+        tokenManager = new StrictTokenManager(placedTokens, unplacedTokens);
         laserManager = new LaserManager(tokenManager, width, height);
         levelCompleted = false;
     }
 
+    @Override
     public TokenManager tokenManager() {
         return tokenManager;
     }
 
+    @Override
     public LaserManager laserManager() {
         return laserManager;
     }
 
-    /**
-     * Resets the level
-     */
+    @Override
     public void reset() {
         tokenManager.reset();
-
     }
 
-    public LevelID id() {
-        return id;
-    }
-
-    public String name() {
-        return name;
-    }
-
+    @Override
     public Laser generateLaser() {
         Pair<Laser, Boolean> result;
         result = laserManager.checkSolution();
@@ -72,9 +55,5 @@ public class Level {
 
     public boolean isLevelCompleted() {
         return this.levelCompleted;
-    }
-
-    public int getSerialNr() {
-        return serialNr;
     }
 }

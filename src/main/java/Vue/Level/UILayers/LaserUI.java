@@ -1,8 +1,10 @@
-package Vue.Level;
+package Vue.Level.UILayers;
 
 import Controller.LevelController;
 import Model.Classes.Utils.Coordinate;
 import Model.Classes.Utils.Pair;
+import Vue.Interfaces.Drawable;
+import Vue.Level.LevelPanel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -12,7 +14,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-public class UILaser {
+public class LaserUI implements Drawable {
 
     private final LevelPanel levelPanel;
     private final LevelController levelController;
@@ -20,14 +22,7 @@ public class UILaser {
     private final int laserDuration = 1; // 1 second
     private int laserTimer = 0;
 
-    /**
-     * Constructor of the UI laser class
-     *
-     * @param levelPanel      - The level panel
-     * @param levelController - The level controller
-     * @Author Léonard Amsler - s231715
-     */
-    public UILaser(LevelPanel levelPanel, LevelController levelController) {
+    public LaserUI(LevelPanel levelPanel, LevelController levelController) {
         this.levelPanel = levelPanel;
         this.levelController = levelController;
         loadLaserImages();
@@ -58,11 +53,9 @@ public class UILaser {
      * @Author Hussein (Adam)
      */
     public void draw(Graphics2D g2d) {
-
-
         boolean shouldDisplayLaser = levelController.shouldDisplayLaser();
         if (shouldDisplayLaser && laserTimer == 0) {
-            laserTimer += laserDuration * levelPanel.fps;
+            laserTimer += laserDuration * levelPanel.getFPS();
             levelController.setShouldDisplayLaser(false);
         } else if (laserTimer > 0) {
             laserTimer--;

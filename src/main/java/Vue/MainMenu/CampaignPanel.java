@@ -2,6 +2,9 @@ package Vue.MainMenu;
 
 import Controller.GameController;
 import Controller.LoginController;
+import Model.Classes.Level.LevelID;
+import Model.Classes.Utils.DataReader;
+import Vue.Utils.ButtonUtil;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -10,10 +13,10 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.List;
 
-import static Vue.MainMenu.LevelPreparation.prepareLevel;
+import static Vue.MainMenu.LevelPreparation.preparePlayableLevel;
 import static Vue.MainMenu.LevelPreparation.showPanel;
-import static Vue.Utils.ButtonUtil.setButtonTransparent;
 import static Vue.Utils.ImageUtil.resizeImage;
 
 /**
@@ -139,9 +142,13 @@ public class CampaignPanel extends JPanel {
         enable_image = resizeImage(enable_image, tileWidth * scale, tileHeight * scale);
         disable_image = resizeImage(disable_image, tileWidth * scale, tileHeight * scale);
 
-        for (int i = 0; i < rows * cols; i++) {
+        List<LevelID> levelIDs = DataReader.readCampaignLevelIDs();
+
+        int i = 1;
+
+        for (LevelID levelID : levelIDs) {
             ImageIcon scaledIcon = new ImageIcon(enable_image);
-            JButton levelButton = new JButton(String.valueOf(i + 1), scaledIcon);
+            JButton levelButton = new JButton(String.valueOf(i++), scaledIcon);
 
             levelButton.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -149,15 +156,14 @@ public class CampaignPanel extends JPanel {
             levelButton.setVerticalTextPosition(SwingConstants.CENTER);
             levelButton.setFont(new Font("MonoSpaced", Font.BOLD, 30));
 
-            setButtonTransparent(levelButton);
+            ButtonUtil.setButtonTransparent(levelButton);
 
             levelButton.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
                     if (!levelButton.isEnabled()) {
                         return;
                     }
-                    System.out.println("Level " + levelButton.getText() + " clicked");
-                    prepareLevel("level" + levelButton.getText(), frame, gameController, loginController);
+                    preparePlayableLevel(new LevelID("level" + levelButton.getText()), frame, gameController, loginController);
                 }
             });
 

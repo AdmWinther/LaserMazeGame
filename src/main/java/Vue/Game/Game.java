@@ -6,6 +6,8 @@ import Vue.LoginMenu.LoginMenu;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 import static Vue.MainMenu.LevelPreparation.showPanel;
 
@@ -20,6 +22,7 @@ public class Game {
     JFrame frame;
     GameController gameController;
 
+
     public Game() {
         frame = new JFrame();
         frame.setLayout(new CardLayout());
@@ -27,20 +30,28 @@ public class Game {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(true);
         frame.setTitle("Laser Maze");
-        frame.setPreferredSize(new java.awt.Dimension(800, 600));
+        int INIT_WIDTH = 800;
+        int INIT_HEIGHT = 600;
+
+        frame.setPreferredSize(new java.awt.Dimension(INIT_WIDTH, INIT_HEIGHT));
 
         ImageIcon img = new ImageIcon("./src/main/java/Vue/Resources/Tokens/icon.png");
         frame.setIconImage(img.getImage());
 
         gameController = new GameController();
-        //MainMenuPanel mainMenuPanel = new MainMenuPanel(frame, gameController);
-        //frame.add(mainMenuPanel, "MainMenu");
-        //showPanel(frame, "MainMenu");
-
         LoginController loginController = new LoginController();
         LoginMenu loginMenu = new LoginMenu(frame, loginController, gameController);
         frame.add(loginMenu, "LoginMenu");
         showPanel(frame, "LoginMenu");
+
+        double aspectRatio = INIT_WIDTH / (double) INIT_HEIGHT;
+        frame.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                frame.setSize(frame.getWidth(), (int) (frame.getWidth() / aspectRatio));
+            }
+        });
+
 
         frame.pack();
         frame.setLocationRelativeTo(null);
