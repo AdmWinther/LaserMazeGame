@@ -13,8 +13,8 @@ public class GameController {
     public GameController() {
     }
 
-    public void setCurrentLevelID(String levelID, boolean editable) {
-        this.currentLevelID = new LevelID(levelID);
+    public void setCurrentLevelID(LevelID levelID, boolean editable) {
+        this.currentLevelID = levelID;
         if (this.levelBuilder == null) {
             this.levelBuilder = new LevelBuilder(this.currentLevelID);
         } else {

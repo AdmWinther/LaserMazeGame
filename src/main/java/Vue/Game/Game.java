@@ -9,6 +9,7 @@ import Vue.MainMenu.MainMenuPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
@@ -25,7 +26,6 @@ public class Game {
     JFrame frame;
     GameController gameController;
 
-    private final double aspectRatio;
 
     public Game() {
         frame = new JFrame();
@@ -34,36 +34,23 @@ public class Game {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(true);
         frame.setTitle("Laser Maze");
-        frame.setPreferredSize(new java.awt.Dimension(800, 600));
+        int INIT_WIDTH = 800;
+        int INIT_HEIGHT = 600;
+
+        frame.setPreferredSize(new java.awt.Dimension(INIT_WIDTH, INIT_HEIGHT));
 
         ImageIcon img = new ImageIcon("./src/main/java/Vue/Resources/Tokens/icon.png");
         frame.setIconImage(img.getImage());
 
         gameController = new GameController();
 
-        PlayableLevelController levelController = new PlayableLevelController((PlayableLevel) gameController.getCurrentLevel());
-        PlayableLevelPanel levelPanel = new PlayableLevelPanel(levelController);
-        frame.add(levelPanel);
+        double aspectRatio = INIT_WIDTH / (double) INIT_HEIGHT;
 
-        aspectRatio = (double) levelPanel.maxCol / levelPanel.maxRow;
 
-        frame.addComponentListener(new ComponentListener() {
+        frame.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
                 frame.setSize(frame.getWidth(), (int) (frame.getWidth() / aspectRatio));
-                levelPanel.resize();
-            }
-
-            @Override
-            public void componentMoved(ComponentEvent e) {
-            }
-
-            @Override
-            public void componentShown(ComponentEvent e) {
-            }
-
-            @Override
-            public void componentHidden(ComponentEvent e) {
             }
         });
         MainMenuPanel mainMenuPanel = new MainMenuPanel(frame, gameController);

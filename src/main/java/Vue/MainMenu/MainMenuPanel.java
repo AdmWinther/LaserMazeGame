@@ -1,6 +1,8 @@
 package Vue.MainMenu;
 
 import Controller.GameController;
+import Model.Classes.Level.LevelID;
+import Model.Classes.Utils.DataReader;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -10,7 +12,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-import static Vue.MainMenu.LevelPreparation.prepareLevel;
+import static Vue.MainMenu.LevelPreparation.preparePlayableLevel;
 import static Vue.MainMenu.LevelPreparation.showPanel;
 import static Vue.Utils.ButtonUtil.setButtonTransparent;
 import static Vue.Utils.ImageUtil.resizeImage;
@@ -138,11 +140,12 @@ public class MainMenuPanel extends JPanel {
         });
         sandboxButton.addActionListener(e -> {
             System.out.println("Sandbox button clicked");
+            displaySandboxLevels(frame);
         });
         randomButton.addActionListener(e -> {
             System.out.println("Random button clicked");
             // TODO: Implement random level generation, for now just load level 1
-            prepareLevel("level1", frame, gameController);
+            preparePlayableLevel(new LevelID("level1"), frame, gameController);
         });
 
         // Set button to transparent
@@ -202,6 +205,20 @@ public class MainMenuPanel extends JPanel {
         });
 
         showPanel(frame, "CampaignLevels");
+        frame.pack();
+    }
+
+    private void displaySandboxLevels(JFrame frame){
+        SandboxPanel sandboxPanel = new SandboxPanel(frame, gameController);
+        frame.add(sandboxPanel, "SandboxLevels");
+        frame.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                sandboxPanel.resize();
+            }
+        });
+
+        showPanel(frame, "SandboxLevels");
         frame.pack();
     }
 

@@ -1,9 +1,13 @@
 package Vue.MainMenu;
 
+import Controller.EditableLevelController;
 import Controller.GameController;
 import Controller.LevelController;
 import Controller.PlayableLevelController;
+import Model.Classes.Level.EditableLevel;
+import Model.Classes.Level.LevelID;
 import Model.Classes.Level.PlayableLevel;
+import Vue.Level.EditableLevelPanel;
 import Vue.Level.LevelPanel;
 import Vue.Level.PlayableLevelPanel;
 
@@ -20,11 +24,28 @@ public class LevelPreparation {
      * @param gameController The game controller
      * @Author Léonard Amsler - s231715
      */
-    public static void prepareLevel(String levelID, JFrame frame, GameController gameController) {
-        gameController.setCurrentLevelID(levelID, true);
-        PlayableLevelController levelController = new PlayableLevelController((PlayableLevel) gameController.getCurrentLevel());
+    public static void preparePlayableLevel(LevelID levelID, JFrame frame, GameController gameController) {
+        prepareLevel(levelID, frame, gameController, false);
+    }
 
-        LevelPanel levelPanel = new PlayableLevelPanel(levelController);
+    public static void prepareEditableLevel(LevelID levelID, JFrame frame, GameController gameController) {
+        prepareLevel(levelID, frame, gameController, true);
+    }
+
+    private static void prepareLevel(LevelID levelID, JFrame frame, GameController gameController, boolean editable) {
+        gameController.setCurrentLevelID(levelID, editable);
+
+        LevelController levelController;
+        LevelPanel levelPanel;
+
+        if (editable) {
+            levelController = new EditableLevelController((EditableLevel) gameController.getCurrentLevel());
+            levelPanel = new EditableLevelPanel((EditableLevelController) levelController);
+        } else {
+            levelController = new PlayableLevelController((PlayableLevel) gameController.getCurrentLevel());
+            levelPanel = new PlayableLevelPanel((PlayableLevelController) levelController);
+        }
+
 
         frame.add(levelPanel, "Level");
         showPanel(frame, "Level");

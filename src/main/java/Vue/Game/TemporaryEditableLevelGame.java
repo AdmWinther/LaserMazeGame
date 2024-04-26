@@ -4,6 +4,7 @@ import Controller.EditableLevelController;
 import Controller.GameController;
 import Controller.PlayableLevelController;
 import Model.Classes.Level.EditableLevel;
+import Model.Classes.Level.LevelID;
 import Vue.Level.EditableLevelPanel;
 import Vue.Level.LevelPanel;
 import Vue.Level.PlayableLevelPanel;
@@ -33,7 +34,7 @@ public class TemporaryEditableLevelGame {
         frame.setTitle("Laser Maze");
 
         gameController = new GameController();
-        gameController.setCurrentLevelID("sandbox-level1", true);
+        gameController.setCurrentLevelID(new LevelID("sandbox-level1"), true);
 
         EditableLevelController levelController = new EditableLevelController((EditableLevel) gameController.getCurrentLevel());
         levelPanel = new EditableLevelPanel(levelController);
