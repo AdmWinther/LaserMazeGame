@@ -1,7 +1,8 @@
 package Vue.Game;
 
 import Controller.GameController;
-import Vue.MainMenu.MainMenuPanel;
+import Controller.LoginMenuController;
+import Vue.LoginMenu.LoginMenu;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,12 +33,16 @@ public class Game {
         frame.setIconImage(img.getImage());
 
         gameController = new GameController();
-        MainMenuPanel mainMenuPanel = new MainMenuPanel(frame, gameController);
-        frame.add(mainMenuPanel, "MainMenu");
+        //MainMenuPanel mainMenuPanel = new MainMenuPanel(frame, gameController);
+        //frame.add(mainMenuPanel, "MainMenu");
+        //showPanel(frame, "MainMenu");
 
-        showPanel(frame, "MainMenu");
+        LoginMenuController loginMenuController = new LoginMenuController();
+        LoginMenu loginMenu = new LoginMenu(frame, loginMenuController, gameController);
+        frame.add(loginMenu, "LoginMenu");
+        showPanel(frame, "LoginMenu");
+
         frame.pack();
-
         frame.setLocationRelativeTo(null);
     }
 
