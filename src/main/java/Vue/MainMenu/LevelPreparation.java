@@ -32,6 +32,10 @@ public class LevelPreparation {
         prepareLevel(levelID, frame, gameController, true);
     }
 
+    public static void prepareNewEditableLevel(JFrame frame, GameController gameController) {
+        prepareLevel(LevelID.NEW_LEVEL, frame, gameController, true);
+    }
+
     private static void prepareLevel(LevelID levelID, JFrame frame, GameController gameController, boolean editable) {
         gameController.setCurrentLevelID(levelID, editable);
 

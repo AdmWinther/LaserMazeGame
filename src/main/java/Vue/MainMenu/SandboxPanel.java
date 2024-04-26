@@ -121,25 +121,29 @@ public class SandboxPanel extends JPanel {
         int padding = 50;
         levelButtonPanel.setBorder(BorderFactory.createEmptyBorder(padding, padding, padding, padding));
 
-        BufferedImage image = null;
+        BufferedImage backgroundLevelList = null;
         BufferedImage playButtonImage = null;
         BufferedImage editButtonImage = null;
         BufferedImage deleteButtonImage = null;
+        BufferedImage newLevelButtonImage = null;
         try {
-            image = ImageIO.read(new File("src/main/java/Vue/Resources/Tiles/longBoardTile1.png"));
+            backgroundLevelList = ImageIO.read(new File("src/main/java/Vue/Resources/MenuButtons/level.png"));
             playButtonImage = ImageIO.read(new File("src/main/java/Vue/Resources/Objects/play.png"));
             editButtonImage = ImageIO.read(new File("src/main/java/Vue/Resources/Objects/edit.png"));
             deleteButtonImage = ImageIO.read(new File("src/main/java/Vue/Resources/Objects/bin.png"));
+            newLevelButtonImage = ImageIO.read(new File("src/main/java/Vue/Resources/MenuButtons/new_level.png"));
         } catch (Exception e) {
             System.out.println("Error loading campaign button image");
         }
-        assert image != null;
+        assert backgroundLevelList != null;
         assert playButtonImage != null;
         assert editButtonImage != null;
         assert deleteButtonImage != null;
+        assert newLevelButtonImage != null;
 
         int scale = 5;
-        image = ImageUtil.resizeImage(image, tileWidth * scale * 6, tileHeight * scale);
+        backgroundLevelList = ImageUtil.resizeImage(backgroundLevelList, tileWidth * scale * 6, tileHeight * scale);
+        newLevelButtonImage = ImageUtil.resizeImage(newLevelButtonImage, tileWidth * scale * 6, tileHeight * scale);
         double resizeFactor = 0.5;
         playButtonImage = ImageUtil.resizeImage(playButtonImage, (int)(tileWidth * scale * resizeFactor), (int)(tileHeight * scale * resizeFactor));
         editButtonImage = ImageUtil.resizeImage(editButtonImage, (int)(tileWidth * scale * resizeFactor), (int)(tileHeight * scale * resizeFactor));
@@ -148,8 +152,27 @@ public class SandboxPanel extends JPanel {
         List<LevelID> levelIDs = DataReader.readSandboxLevelIDs();
         System.out.println(levelIDs);
 
+        ImageIcon newLevelButtonIcon = new ImageIcon(newLevelButtonImage);
+        JPanel newLevelButton = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(newLevelButtonIcon.getImage(), 0, 0, null);
+            }
+        };
+        newLevelButton.setPreferredSize(new Dimension(newLevelButtonIcon.getIconWidth(), newLevelButtonIcon.getIconHeight()));
+        panel.add(newLevelButton);
+
+        newLevelButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                System.out.println("NEW LEVEL");
+                LevelPreparation.prepareNewEditableLevel(frame, gameController);
+            }
+        });
+        newLevelButton.addMouseListener(new ButtonHoverHandler());
+
         for (LevelID levelID: levelIDs) {
-            ImageIcon scaledIcon = new ImageIcon(image);
+            ImageIcon scaledIcon = new ImageIcon(backgroundLevelList);
             JPanel levelPanel = new JPanel() {
                 @Override
                 protected void paintComponent(Graphics g) {

@@ -53,6 +53,12 @@ public class LevelBuilder implements Builder<Level> {
      */
     @Override
     public Level build(boolean editable) {
+
+        if (id.equals(LevelID.NEW_LEVEL)) {
+            if (!editable) throw new IllegalArgumentException("Cannot build a new empty playable level.");
+            return new EditableLevel("New Level", new Token[7][7], Set.of(), new SandboxInventory());
+        }
+
         try {
             String name = DataReader.readLevelIDName(id);
             Token[][] placedTokens = DataReader.readLevelIDPlacedTokens(id);
