@@ -1,8 +1,10 @@
 package Vue.MainMenu;
 
 import Controller.GameController;
+import Vue.SoundEffects.Sound;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
@@ -25,6 +27,10 @@ public class MainMenuPanel extends JPanel {
 
     Thread mainMenuThread;
     GameController gameController;
+    private Clip mainMenuClip;
+    private Clip campaignButtonClickSound;
+    private boolean isButtonClickSoundStarted;
+
 
     /**
      * Constructor of the main menu panel class
@@ -134,12 +140,15 @@ public class MainMenuPanel extends JPanel {
         // Add action listeners to buttons
         campaignButton.addActionListener(e -> {
             System.out.println("Campaign button clicked");
+            Sound.playCampaignButtonSound(campaignButtonClickSound);
             displayCampaignLevels(frame);
         });
         sandboxButton.addActionListener(e -> {
+            Sound.playCampaignButtonSound(campaignButtonClickSound);
             System.out.println("Sandbox button clicked");
         });
         randomButton.addActionListener(e -> {
+            Sound.playCampaignButtonSound(campaignButtonClickSound);
             System.out.println("Random button clicked");
 
             // TODO: Implement random level generation, for now just load level 1

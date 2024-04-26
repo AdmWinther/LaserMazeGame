@@ -67,7 +67,7 @@ public class LevelPanel extends JPanel implements Runnable {
     GameController gameController;
     private boolean tadaPlayed = false;
 
-    private Clip tada;
+    private final Clip tada;
     private Timer timer;
 
 

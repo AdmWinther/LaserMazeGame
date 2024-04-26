@@ -1,5 +1,7 @@
 package Vue.SoundEffects;
 
+import Model.constants.SoundPaths;
+
 import javax.sound.sampled.*;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -39,6 +41,36 @@ public class Sound {
     public static Clip click(){
         try {
             URL file  = new URL("file:./src/main/java/Vue/Resources/Sounds/click.wav");
+            return loadFile(file);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static Clip mainMenuClip(){
+        try {
+            URL file  = new URL("file:./src/main/java/Vue/Resources/Sounds/MainMenu.wav");
+            return loadFile(file);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static Clip playCampaignButtonSound(Clip clip){
+        if(clip != null) clip=null;
+        try {
+            URL file  = new URL(SoundPaths.CAMPAING_BUTTON);
+            clip = loadFile(file);
+            clip.start();
+            return clip;
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static Clip getCampaignButtonClickSound() {
+        try {
+            URL file  = new URL(SoundPaths.CAMPAING_BUTTON);
             return loadFile(file);
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
