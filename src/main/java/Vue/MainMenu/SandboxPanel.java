@@ -4,6 +4,7 @@ import Controller.GameController;
 import Controller.LoginController;
 import Model.Classes.Level.LevelID;
 import Model.Classes.Utils.DataReader;
+import Model.Classes.Utils.DataWriter;
 import Vue.Handlers.ButtonHoverHandler;
 import Vue.Utils.ImageUtil;
 
@@ -14,6 +15,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 
@@ -190,7 +192,15 @@ public class SandboxPanel extends JPanel {
             levelNameContainer.setBorder(BorderFactory.createEmptyBorder(0, 25, 0, 0));
 
             // add a label with the level name
-            JLabel levelName = new JLabel(levelID.value());
+            String levelNameString = "";
+            try {
+                levelNameString = DataReader.readLevelIDName(levelID);
+                int lengthLimit = 25;
+                if (levelNameString.length() > lengthLimit) levelNameString = levelNameString.substring(0, lengthLimit) + "...";
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            JLabel levelName = new JLabel(levelNameString);
             levelName.setFont(new Font("MonoSpaced", Font.BOLD, 25));
             levelNameContainer.add(levelName);
 
@@ -247,14 +257,13 @@ public class SandboxPanel extends JPanel {
 
             deleteButton.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    System.out.println(levelID.value() + " DELETE");
-                    /*
-                    try {
-                        DataWriter.delete(new LevelID("test"));
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                     */
+                System.out.println(levelID.value() + " DELETE");
+                try {
+                    DataWriter.delete(levelID);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                refresh();
                 }
             });
             deleteButton.addMouseListener(new ButtonHoverHandler());
@@ -263,6 +272,13 @@ public class SandboxPanel extends JPanel {
         }
 
         return levelButtonPanel;
+    }
+
+    private void refresh(){
+        frame.getContentPane().add(new SandboxPanel(frame, gameController, loginController));
+        frame.getContentPane().remove(this);
+        frame.revalidate();
+        frame.repaint();
     }
 
     /**

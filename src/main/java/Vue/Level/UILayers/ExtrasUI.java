@@ -140,9 +140,14 @@ public class ExtrasUI implements Drawable {
 
     public void handleClick(int x, int y) {
         Rectangle2D reset = levelPanel.getExtrasUI().getPlacedObjects().get("reset");
+        Rectangle2D back = levelPanel.getExtrasUI().getPlacedObjects().get("back");
         if (reset.contains(x, y)) {
             levelPanel.levelController.resetLevel();
             System.out.println("Reset tokens");
+        }
+        if (back.contains(x, y)) {
+            levelPanel.levelController.backToMenu();
+            System.out.println("Back to menu");
         }
     }
 

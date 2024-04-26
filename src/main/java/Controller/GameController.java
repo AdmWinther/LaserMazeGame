@@ -23,7 +23,6 @@ public class GameController {
         } else {
             this.levelBuilder.setID(this.currentLevelID);
         }
-        // TODO: TO REMOVE!!! find a way to build the level of the right type
         this.currentLevel = this.levelBuilder.build(editable);
     }
 
