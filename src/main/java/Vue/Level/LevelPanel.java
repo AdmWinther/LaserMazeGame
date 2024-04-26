@@ -155,7 +155,6 @@ public abstract class LevelPanel extends JPanel implements Runnable {
 
             if (currentTime / 1000 != lastSecond) {
                 lastSecond = (int) (currentTime / 1000);
-                System.out.println("FPS: " + count);
                 count = 0;
             }
 

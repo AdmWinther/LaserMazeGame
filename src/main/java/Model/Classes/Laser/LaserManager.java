@@ -74,6 +74,10 @@ public class LaserManager {
         LaserGun laserGun = (LaserGun) tokenManager.getTokenAt(tokenManager.findLaserGunPosition());
         Coordinate laserGunPosition = tokenManager.findLaserGunPosition();
 
+        if (laserGun == null) {
+            return null;
+        }
+
         Coordinate laserFragmentTo = oneCellInDirectionOfOrientation(laserGunPosition, laserGun.getOrientation());
         if (laserFragmentTo != null) {
             if (isCoordinateOnTheBoard(laserFragmentTo)) {    //Check if laser is not shooting out of the board.

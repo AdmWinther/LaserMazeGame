@@ -7,20 +7,41 @@ import Model.Classes.Token.Token;
 import Model.Classes.Utils.Coordinate;
 import Model.Classes.Utils.Orientation;
 import Model.Classes.Utils.Pair;
+import Vue.Level.LevelPanel;
+import Vue.MainMenu.MainMenuPanel;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 public abstract class LevelController {
 
     protected Level level;
     boolean shouldDisplayLaser = false;
+    protected final JFrame frame;
+    protected LevelPanel levelPanel;
 
-    public LevelController(Level level) {
+    public LevelController(JFrame frame, LevelPanel levelPanel, Level level) {
+        this.frame = frame;
         this.level = level;
+        this.levelPanel = levelPanel;
     }
 
     public int getWidth() {
         return level.width;
+    }
+
+    public void backToMenu(){
+        System.out.println(Arrays.toString(frame.getContentPane().getComponents()));
+        frame.getContentPane().remove(levelPanel);
+        // show the main menu
+        CardLayout cardLayout = (CardLayout) frame.getContentPane().getLayout();
+        cardLayout.show(frame.getContentPane(), "MainMenu");
+    }
+
+    public void setLevelPanel(LevelPanel levelPanel){
+        this.levelPanel = levelPanel;
     }
 
     public int getHeight() {
