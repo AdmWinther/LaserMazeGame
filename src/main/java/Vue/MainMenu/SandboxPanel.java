@@ -4,6 +4,7 @@ import Controller.GameController;
 import Model.Classes.Level.LevelID;
 import Model.Classes.Utils.DataReader;
 import Model.Classes.Utils.DataWriter;
+import Vue.Handlers.ButtonHoverHandler;
 import Vue.Utils.ButtonUtil;
 import Vue.Utils.ImageUtil;
 import org.json.JSONObject;
@@ -126,8 +127,8 @@ public class SandboxPanel extends JPanel {
         BufferedImage deleteButtonImage = null;
         try {
             image = ImageIO.read(new File("src/main/java/Vue/Resources/Tiles/longBoardTile1.png"));
-            playButtonImage = ImageIO.read(new File("src/main/java/Vue/Resources/Objects/bin.png"));
-            editButtonImage = ImageIO.read(new File("src/main/java/Vue/Resources/Objects/bin.png"));
+            playButtonImage = ImageIO.read(new File("src/main/java/Vue/Resources/Objects/play.png"));
+            editButtonImage = ImageIO.read(new File("src/main/java/Vue/Resources/Objects/edit.png"));
             deleteButtonImage = ImageIO.read(new File("src/main/java/Vue/Resources/Objects/bin.png"));
         } catch (Exception e) {
             System.out.println("Error loading campaign button image");
@@ -173,7 +174,7 @@ public class SandboxPanel extends JPanel {
             JPanel buttonsContainer = new JPanel();
             buttonsContainer.setOpaque(false);
             buttonsContainer.setLayout(new BoxLayout(buttonsContainer, BoxLayout.X_AXIS));
-            buttonsContainer.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));
+            buttonsContainer.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 10));
 
             // add three buttons stacked to the right of the levelPanel with three different images
             JPanel playButton = new JPanel();
@@ -210,6 +211,7 @@ public class SandboxPanel extends JPanel {
                     LevelPreparation.preparePlayableLevel(levelID, frame, gameController);
                 }
             });
+            playButton.addMouseListener(new ButtonHoverHandler());
 
             editButton.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -217,6 +219,7 @@ public class SandboxPanel extends JPanel {
                     LevelPreparation.prepareEditableLevel(levelID, frame, gameController);
                 }
             });
+            editButton.addMouseListener(new ButtonHoverHandler());
 
             deleteButton.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -230,6 +233,7 @@ public class SandboxPanel extends JPanel {
                      */
                 }
             });
+            deleteButton.addMouseListener(new ButtonHoverHandler());
 
             panel.add(levelPanel);
         }
