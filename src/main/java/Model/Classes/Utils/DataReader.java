@@ -8,11 +8,13 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Stream;
 
 public class DataReader {
     /**
@@ -199,6 +201,41 @@ public class DataReader {
 
         //generate the 2D array of Tokens, named as PlacedTokens
         return createPlacedTokens(jsonArrayPlacedTokens, widthX, heightY);
+    }
+
+    /**
+     * Reads the campaign level IDs
+     * @return a list of LevelIDs of the campaign levels
+     * @author Hugo Demule
+     */
+    public static List<LevelID> readCampaignLevelIDs() {
+        return readLevelIDs(FilePaths.CAMPAIGN_LEVELS_PATH);
+    }
+
+    /**
+     * Reads the sandbox level IDs
+     * @return a list of LevelIDs of the sandbox levels
+     * @author Hugo Demule
+     */
+    public static List<LevelID> readSandboxLevelIDs() {
+        return readLevelIDs(FilePaths.SANDBOX_LEVELS_PATH);
+    }
+
+    private static List<LevelID> readLevelIDs(String path) {
+        List<LevelID> levelIDs = new ArrayList<>();
+        try (Stream<Path> paths = Files.walk(Paths.get(path))) {
+            // Create a list of strings that contains all the files names stored at FilePaths.CAMPAIGN_LEVELS_PATH
+            paths.filter(Files::isRegularFile)
+                    .forEach(file -> {
+                        String fileName = file.getFileName().toString();
+                        String fileID = fileName.substring(0, fileName.lastIndexOf('.'));
+                        levelIDs.add(new LevelID(fileID));
+                    });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return levelIDs;
     }
 }
 

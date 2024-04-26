@@ -1,6 +1,8 @@
 package Vue.MainMenu;
 
 import Controller.GameController;
+import Model.Classes.Level.LevelID;
+import Model.Classes.Utils.DataReader;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -138,12 +140,12 @@ public class MainMenuPanel extends JPanel {
         });
         sandboxButton.addActionListener(e -> {
             System.out.println("Sandbox button clicked");
-            //displaySandboxLevels(frame);
+            displaySandboxLevels(frame);
         });
         randomButton.addActionListener(e -> {
             System.out.println("Random button clicked");
             // TODO: Implement random level generation, for now just load level 1
-            preparePlayableLevel("level1", frame, gameController);
+            preparePlayableLevel(new LevelID("level1"), frame, gameController);
         });
 
         // Set button to transparent

@@ -1,6 +1,10 @@
 package Vue.MainMenu;
 
 import Controller.GameController;
+import Model.Classes.Level.LevelID;
+import Model.Classes.Utils.DataReader;
+import Vue.Utils.ButtonUtil;
+import Vue.Utils.ImageUtil;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -9,10 +13,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
-
-import static Vue.MainMenu.LevelPreparation.preparePlayableLevel;
-import static Vue.Utils.ButtonUtil.setButtonTransparent;
-import static Vue.Utils.ImageUtil.resizeImage;
+import java.util.List;
 
 /**
  * This class is responsible for the campaign panel
@@ -126,11 +127,14 @@ public class CampaignPanel extends JPanel {
         assert image != null;
 
         int scale = 5;
-        image = resizeImage(image, tileWidth * scale, tileHeight * scale);
+        image = ImageUtil.resizeImage(image, tileWidth * scale, tileHeight * scale);
 
-        for (int i = 0; i < rows * cols; i++) {
+        List<LevelID> levelIDs = DataReader.readCampaignLevelIDs();
+        int i = 1;
+
+        for (LevelID levelID : levelIDs) {
             ImageIcon scaledIcon = new ImageIcon(image);
-            JButton levelButton = new JButton(String.valueOf(i + 1), scaledIcon);
+            JButton levelButton = new JButton(String.valueOf(i++), scaledIcon);
 
             levelButton.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -138,12 +142,12 @@ public class CampaignPanel extends JPanel {
             levelButton.setVerticalTextPosition(SwingConstants.CENTER);
             levelButton.setFont(new Font("MonoSpaced", Font.BOLD, 30));
 
-            setButtonTransparent(levelButton);
+            ButtonUtil.setButtonTransparent(levelButton);
 
             levelButton.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
                     System.out.println("Level " + levelButton.getText() + " clicked");
-                    preparePlayableLevel("level" + levelButton.getText(), frame, gameController);
+                    LevelPreparation.preparePlayableLevel(levelID, frame, gameController);
                 }
             });
 

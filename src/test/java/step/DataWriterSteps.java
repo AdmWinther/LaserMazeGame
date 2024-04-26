@@ -48,7 +48,7 @@ public class DataWriterSteps {
     @Then("I should retrieve the initial level using DataReader")
     public void iShouldRetrieveTheInitialLevelUsingDataReader() {
         LevelBuilder levelBuilder = new LevelBuilder(initialLevel.id());
-        finalLevel = levelBuilder.build();
+        finalLevel = (PlayableLevel) levelBuilder.build();
 
         assertEquals(initialLevel.name(), finalLevel.name());
         assertEquals(initialLevel.width, finalLevel.width);

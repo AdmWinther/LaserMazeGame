@@ -2,6 +2,7 @@ package Vue.MainMenu;
 
 import Controller.GameController;
 import Controller.PlayableLevelController;
+import Model.Classes.Level.LevelID;
 import Model.Classes.Level.PlayableLevel;
 import Vue.Level.LevelPanel;
 import Vue.Level.PlayableLevelPanel;
@@ -19,15 +20,15 @@ public class LevelPreparation {
      * @param gameController The game controller
      * @Author Léonard Amsler - s231715
      */
-    public static void preparePlayableLevel(String levelID, JFrame frame, GameController gameController) {
+    public static void preparePlayableLevel(LevelID levelID, JFrame frame, GameController gameController) {
         prepareLevel(levelID, frame, gameController, false);
     }
 
-    public static void prepareEditableLevel(String levelID, JFrame frame, GameController gameController) {
+    public static void prepareEditableLevel(LevelID levelID, JFrame frame, GameController gameController) {
         prepareLevel(levelID, frame, gameController, true);
     }
 
-    private static void prepareLevel(String levelID, JFrame frame, GameController gameController, boolean editable) {
+    private static void prepareLevel(LevelID levelID, JFrame frame, GameController gameController, boolean editable) {
         gameController.setCurrentLevelID(levelID, editable);
         PlayableLevelController levelController = new PlayableLevelController((PlayableLevel) gameController.getCurrentLevel());
 

@@ -43,7 +43,6 @@ public class Game {
         frame.setIconImage(img.getImage());
 
         gameController = new GameController();
-        gameController.setCurrentLevelID("sandbox-level1", true);
 
         double aspectRatio = INIT_WIDTH / (double) INIT_HEIGHT;
 
