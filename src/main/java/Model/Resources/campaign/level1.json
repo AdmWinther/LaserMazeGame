@@ -1,5 +1,6 @@
 {
   "name": "level_5x5_BoardWithLaserGun@(1,4)_NoTokenTobePlaced",
+  "serialNr": 1,
   "boardSize": {
     "widthX": 5,
     "heightY": 5
@@ -11,6 +12,15 @@
       "orientation": "RIGHT",
       "position": {
         "x": 1,
+        "y": 4
+      }
+    },
+    {
+      "tokenId": "Target01",
+      "type": "Target",
+      "orientation": "LEFT",
+      "position": {
+        "x": 4,
         "y": 4
       }
     }

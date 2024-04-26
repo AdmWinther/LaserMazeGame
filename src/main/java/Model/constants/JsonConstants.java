@@ -9,6 +9,7 @@ public final class JsonConstants {
     /* JSON Attributes */
     public final static String ATTR_TOKEN_ID = "tokenId";
     public final static String ATTR_NAME = "name";
+    public final static String ATTR_SERIALNR = "serialNr";
     public final static String ATTR_BOARD_SIZE = "boardSize";
     public final static String ATTR_WIDTH_X = "widthX";
     public final static String ATTR_HEIGHT_Y = "heightY";
@@ -26,5 +27,6 @@ public final class JsonConstants {
     public final static String VAL_TYPE_LASER_GUN = "LaserGun";
     public final static String VAL_TYPE_ONE_SIDED_MIRROR = "OneSidedMirror";
     public final static String VAL_DOUBLE_SIDED_MIRROR = "DoubleSidedMirror";
+    public final static String VAL_TYPE_SPLITTER = "Splitter";
     public final static String VAL_TYPE_BLOCK = "Block";
 }

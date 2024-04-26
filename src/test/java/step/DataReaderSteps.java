@@ -1,8 +1,8 @@
 package step;
 
-import Model.Classes.Level;
-import Model.Classes.LevelBuilder;
-import Model.Classes.LevelID;
+import Model.Classes.Level.PlayableLevel;
+import Model.Classes.Level.LevelBuilder;
+import Model.Classes.Level.LevelID;
 import Model.Classes.Token.LaserGun;
 import Model.Classes.Token.OneSidedMirror;
 import Model.Classes.Token.OrientedToken;
@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class DataReaderSteps {
     LevelID levelID;
-    Level level;
+    PlayableLevel level;
 
     @Given("I have a level stored with a five-by-five grid, empty, with no token")
     public void iHaveALevelStoredWithAFiveByFiveGridEmptyWithNoToken() {
@@ -29,7 +29,7 @@ public class DataReaderSteps {
     public void iHaveTheLevelWithID(String arg0) {
         levelID = new LevelID(arg0);
         LevelBuilder levelBuilder = new LevelBuilder(levelID);
-        level = levelBuilder.build();
+        level = (PlayableLevel) levelBuilder.build();
     }
 
     @Given("I have a level stored with a ten-by-ten grid, with a LEFT LaserGun at \\(two, three) and a UP Receiver at \\(five, six), with a RIGHT DoubleSidedMirror to place.")
@@ -40,7 +40,7 @@ public class DataReaderSteps {
     @When("I retrieve the level")
     public void iRetrieveTheLevel() {
         LevelBuilder levelBuilder = new LevelBuilder(levelID);
-        level = levelBuilder.build();
+        level = (PlayableLevel) levelBuilder.build();
     }
 
     @Then("The grid should be of size {int} by {int}")

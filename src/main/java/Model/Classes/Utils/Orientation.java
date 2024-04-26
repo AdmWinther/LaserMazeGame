@@ -7,6 +7,11 @@ public enum Orientation {
     UP("UP"),
 
     /**
+     * Right orientation
+     */
+    RIGHT("RIGHT"),
+
+    /**
      * Down orientation
      */
     DOWN("DOWN"),
@@ -14,12 +19,7 @@ public enum Orientation {
     /**
      * Left orientation
      */
-    LEFT("LEFT"),
-
-    /**
-     * Right orientation
-     */
-    RIGHT("RIGHT");
+    LEFT("LEFT");
 
     private final String value;
 

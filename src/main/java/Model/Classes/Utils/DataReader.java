@@ -1,6 +1,6 @@
 package Model.Classes.Utils;
 
-import Model.Classes.LevelID;
+import Model.Classes.Level.LevelID;
 import Model.Classes.Token.*;
 import Model.constants.FilePaths;
 import Model.constants.JsonConstants;
@@ -12,7 +12,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Stream;
 
 public class DataReader {
     /**
@@ -86,6 +90,8 @@ public class DataReader {
                 return new Target(isMovable, orientation);
             case JsonConstants.VAL_DOUBLE_SIDED_MIRROR:
                 return new DoubleSidedMirror(isMovable, orientation);
+            case JsonConstants.VAL_TYPE_SPLITTER:
+                return new Splitter(isMovable, orientation);
             case JsonConstants.VAL_TYPE_ONE_SIDED_MIRROR:
                 return new OneSidedMirror(isMovable, orientation);
             case JsonConstants.VAL_TYPE_BLOCK:
@@ -197,6 +203,43 @@ public class DataReader {
 
         //generate the 2D array of Tokens, named as PlacedTokens
         return createPlacedTokens(jsonArrayPlacedTokens, widthX, heightY);
+    }
+
+    /**
+     * Reads the campaign level IDs
+     *
+     * @return a list of LevelIDs of the campaign levels
+     * @author Hugo Demule
+     */
+    public static List<LevelID> readCampaignLevelIDs() {
+        return readLevelIDs(FilePaths.CAMPAIGN_LEVELS_PATH);
+    }
+
+    /**
+     * Reads the sandbox level IDs
+     *
+     * @return a list of LevelIDs of the sandbox levels
+     * @author Hugo Demule
+     */
+    public static List<LevelID> readSandboxLevelIDs() {
+        return readLevelIDs(FilePaths.SANDBOX_LEVELS_PATH);
+    }
+
+    private static List<LevelID> readLevelIDs(String path) {
+        List<LevelID> levelIDs = new ArrayList<>();
+        try (Stream<Path> paths = Files.walk(Paths.get(path))) {
+            // Create a list of strings that contains all the files names stored at FilePaths.CAMPAIGN_LEVELS_PATH
+            paths.filter(Files::isRegularFile)
+                    .forEach(file -> {
+                        String fileName = file.getFileName().toString();
+                        String fileID = fileName.substring(0, fileName.lastIndexOf('.'));
+                        levelIDs.add(new LevelID(fileID));
+                    });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return levelIDs;
     }
 }
 

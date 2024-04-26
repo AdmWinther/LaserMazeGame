@@ -1,29 +1,31 @@
 package Model.Classes.Laser;
 
+import Model.Classes.SolutionChecker;
 import Model.Classes.Token.LaserGun;
 import Model.Classes.Token.Token;
-import Model.Classes.Token.TokenManager;
 import Model.Classes.Utils.Coordinate;
 import Model.Classes.Utils.Orientation;
+import Model.Classes.Utils.Pair;
+import Model.Interfaces.TokenManager;
 
+import java.util.ArrayList;
 import java.util.Set;
-
 
 public class LaserManager {
 
     private final TokenManager tokenManager;
-    private Orientation laserTipOrientation;
-    private Coordinate laserTipCoordinate;
-    private boolean laserContinue = false;
-
     private final int boardWidth;
     private final int boardHeight;
+    private Laser laser;
+    private Orientation laserTipOrientation;
+    private Coordinate laserTipCoordinate;
+    private boolean laserContinue;
 
     public LaserManager(TokenManager tokenManager, int boardWidth, int boardHeight) {
         this.tokenManager = tokenManager;
-        this.laserContinue = false;
         this.boardWidth = boardWidth;
         this.boardHeight = boardHeight;
+        this.laser = new Laser();
     }
 
     private boolean isCoordinateOnTheBoard(Coordinate coordinate) {
@@ -33,96 +35,123 @@ public class LaserManager {
         return false;
     }
 
-    private Coordinate oneCellInDirectionOfOrientation(Coordinate from) {
-        if (this.laserTipOrientation == Orientation.UP) return new Coordinate(from.x(), from.y() - 1);
-        if (this.laserTipOrientation == Orientation.DOWN) return new Coordinate(from.x(), from.y() + 1);
-        if (this.laserTipOrientation == Orientation.RIGHT) return new Coordinate(from.x() + 1, from.y());
-        if (this.laserTipOrientation == Orientation.LEFT) return new Coordinate(from.x() - 1, from.y());
-        return null;
-    }
-
-    private Coordinate oneCellInDirectionOfOrientation(Coordinate from, Orientation newOrientation) {
-        if (newOrientation == Orientation.UP) return new Coordinate(from.x(), from.y() - 1);
-        if (newOrientation == Orientation.DOWN) return new Coordinate(from.x(), from.y() + 1);
-        if (newOrientation == Orientation.RIGHT) return new Coordinate(from.x() + 1, from.y());
-        if (newOrientation == Orientation.LEFT) return new Coordinate(from.x() - 1, from.y());
-        return null;
-    }
-
-    private LaserFragment continueLaserInSameDirectionOneCell() {
-        if (laserContinue) {
-            Coordinate from = laserTipCoordinate;
-            Coordinate to = oneCellInDirectionOfOrientation(from);
-
-            if (to != null) {
-                if (isCoordinateOnTheBoard(to)) {
-                    this.laserTipCoordinate = to;
-                    return new LaserFragment(from, to);
-                } else {
-                    this.laserContinue = false;
-                }
+    private Coordinate oneCellInDirectionOfOrientation(Coordinate from, Orientation laserTipOrientation) {
+        switch (laserTipOrientation) {
+            case UP -> {
+                return new Coordinate(from.x(), from.y() - 1);
+            }
+            case DOWN -> {
+                return new Coordinate(from.x(), from.y() + 1);
+            }
+            case RIGHT -> {
+                return new Coordinate(from.x() + 1, from.y());
+            }
+            case LEFT -> {
+                return new Coordinate(from.x() - 1, from.y());
             }
         }
         return null;
+    }
+
+    private ArrayList<LaserFragment> continueLaserInSameDirectionOneCell(Coordinate laserTipCoordinate, Orientation laserTipOrientation) {
+
+        Coordinate to = oneCellInDirectionOfOrientation(laserTipCoordinate, laserTipOrientation);
+
+        if (to != null) {
+            if (isCoordinateOnTheBoard(to)) {
+                ArrayList<LaserFragment> fragments = new ArrayList<LaserFragment>();
+                fragments.add(new LaserFragment(laser.getFragmentIndex(), laserTipCoordinate, to));
+                return fragments;
+            } else {
+                return null;
+            }
+        }
+        return null;
+
     }
 
     private LaserFragment generateLaserFragmentFromLaserGun() {
-        LaserGun laserGun = (LaserGun)tokenManager.getTokenAt(tokenManager.findLaserGunPosition());
+        LaserGun laserGun = (LaserGun) tokenManager.getTokenAt(tokenManager.findLaserGunPosition());
         Coordinate laserGunPosition = tokenManager.findLaserGunPosition();
-        this.laserTipOrientation = laserGun.getOrientation();
-        Coordinate laserFragmentTo = oneCellInDirectionOfOrientation(laserGunPosition);
+
+        Coordinate laserFragmentTo = oneCellInDirectionOfOrientation(laserGunPosition, laserGun.getOrientation());
         if (laserFragmentTo != null) {
             if (isCoordinateOnTheBoard(laserFragmentTo)) {    //Check if laser is not shooting out of the board.
-                this.laserContinue = true;
-                this.laserTipCoordinate = laserFragmentTo;
-                return new LaserFragment(laserGunPosition, laserFragmentTo);
+                return new LaserFragment(laser.getFragmentIndex(), laserGunPosition, laserFragmentTo);
             }
         }
         return null;
     }
 
-    private LaserFragment generateTokenLaserPropagation() {
+    private ArrayList<LaserFragment> generateTokenLaserPropagation(Coordinate laserTipCoordinate, Orientation laserTipOrientation) {
         Token tokenInCell = tokenManager.getTokenAt(laserTipCoordinate);
         Set<Orientation> propagatedLaser = tokenInCell.propagateLaser(laserTipOrientation);
+        ArrayList<LaserFragment> fragments = new ArrayList<LaserFragment>();
         for (Orientation propagatedLaserOrientation : propagatedLaser) {
             if (propagatedLaserOrientation == null) {
-                laserContinue = false;
                 return null;
             } else {
                 Coordinate laserFragmentTo = oneCellInDirectionOfOrientation(laserTipCoordinate, propagatedLaserOrientation);
                 if (laserFragmentTo != null) {
                     if (isCoordinateOnTheBoard(laserFragmentTo)) {    //Check if laser is not shooting out of the board.
-                        this.laserContinue = true;
-                        LaserFragment generatedLaserFragment = new LaserFragment(this.laserTipCoordinate, laserFragmentTo);
-                        this.laserTipCoordinate = laserFragmentTo;
-                        this.laserTipOrientation = propagatedLaserOrientation;
-                        return generatedLaserFragment;
+                        fragments.add(new LaserFragment(laser.getFragmentIndex(), laserTipCoordinate, laserFragmentTo));
                     }
                 }
             }
         }
-        return null;
+        return fragments;
+    }
+
+    private ArrayList<LaserFragment> generateNextFragment(int laserBranchIndex) {
+
+        Orientation laserTipOrientation = laser.getLaserTipOrientation(laserBranchIndex);
+        Coordinate laserTipCoordinate = laser.getLaserTipCoordinate(laserBranchIndex);
+        Token tokenAtLaserTipCoordinate = tokenManager.getTokenAt(laserTipCoordinate);
+        ArrayList<LaserFragment> fragments;
+        if (tokenAtLaserTipCoordinate == null) {
+            fragments = continueLaserInSameDirectionOneCell(laserTipCoordinate, laserTipOrientation);
+        } else {
+            fragments = generateTokenLaserPropagation(laserTipCoordinate, laserTipOrientation);
+        }
+        return fragments;
     }
 
     public Laser generateLaser() {
+        this.laser.reset();
 
-        Laser laser = new Laser();
-
-        laser.addFragment(generateLaserFragmentFromLaserGun());   //If laser is not shooting at a wall or a block it generates the first fragment.
-        while (laserContinue) {    //if laserFragments is empty, laser is shooting in the wrong direction.
-            Token tokenAtLaserTipCoordinate = tokenManager.getTokenAt(laserTipCoordinate);
-            LaserFragment fragment;
-            if (tokenAtLaserTipCoordinate == null) {
-                fragment = continueLaserInSameDirectionOneCell();
-            } else {
-                fragment = generateTokenLaserPropagation();
-            }
-            if (fragment == null){
-                return laser;
-            }
-            laser.addFragment(fragment);
-            System.out.println("New laser fragment added: " + fragment);
+        LaserFragment LaserGunFragment = generateLaserFragmentFromLaserGun();
+        if (LaserGunFragment != null) {
+            laser.newLaserBranch(LaserGunFragment);
+            laser.incrementFragmentIndex();
         }
-        return laser;
+
+        while (laser.getLaserBranchCount() > 0) {
+            for (int laserBranchNumber = 0; laserBranchNumber < laser.getLaserBranchCount(); laserBranchNumber++) {
+
+                ArrayList<LaserFragment> fragments = generateNextFragment(laserBranchNumber);
+
+                if (fragments == null || fragments.isEmpty()) {
+                    laser.discontinueBranch(laserBranchNumber);
+                } else {
+                    this.laser.addFragment(laserBranchNumber, fragments.get(0));
+                    if (fragments.size() > 1) {
+                        laser.newLaserBranch(fragments.get(1));
+                        laser.incrementFragmentIndex();
+                    }
+                }
+            }
+            laser.refineBranches();
+            laser.incrementFragmentIndex();
+        }
+        return this.laser;
+    }
+
+    public Pair<Laser, Boolean> checkSolution() {
+        Laser laser = generateLaser();
+        Boolean correctSolution = SolutionChecker.check(this.tokenManager, this.laser);
+        return new Pair<>(laser, correctSolution);
     }
 }
+
+
+

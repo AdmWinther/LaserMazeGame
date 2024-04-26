@@ -1,11 +1,11 @@
 package step;
 
-import Model.Classes.Level;
+import Model.Classes.Level.PlayableLevel;
 import Model.Classes.Token.Token;
 
 
 public class TokenPlacementSteps {
-    Level level;
+    PlayableLevel level;
 
     Token movableToken;
     Token unmovableToken;

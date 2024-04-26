@@ -10,10 +10,10 @@ public class OneSidedMirror extends OrientedToken {
         super(isMovable, orientation);
     }
     /*
-    Situation /. is considered UP       to LEFT
-Situation .\ is considered RIGHT        to UP
-    Situation ./ is considered DOWN     to RIGHT
-    Situation \. is considered LEFT     to DOWN
+    Situation /. is considered LEFT
+    Situation .\ is considered UP
+    Situation ./ is considered RIGHT
+    Situation \. is considered DOWN
     */
 
     @Override
@@ -45,5 +45,10 @@ Situation .\ is considered RIGHT        to UP
             if (incomingLaserOrientation == Orientation.RIGHT) propagatedLaser.add(Orientation.DOWN);
         }
         return propagatedLaser;
+    }
+
+    @Override
+    public Token copy() {
+        return new OneSidedMirror(this.isMovable(), this.getOrientation());
     }
 }

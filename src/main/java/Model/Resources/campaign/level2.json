@@ -1,5 +1,6 @@
 {
-  "name": "level_5x5_BoardWithLaserGun@(1,2)&OneSidedMirror(3,2):Orientation/.",
+  "name": "level_5x5_BoardWithLaserGun@(0,1)&4xOneSidedMirrorMakingSquareAndBlock@(3.0)",
+  "serialNr": 2,
   "boardSize": {
     "widthX": 5,
     "heightY": 5
@@ -10,20 +11,52 @@
       "type": "LaserGun",
       "orientation": "RIGHT",
       "position": {
-        "x": 1,
-        "y": 2
+        "x": 0,
+        "y": 1
       }
     },
     {
       "tokenId": "OSM_23",
       "type": "OneSidedMirror",
-      "orientation": "UP",
+      "orientation": "DOWN",
       "position": {
         "x": 3,
-        "y": 2
+        "y": 1
+      }
+    },
+    {
+      "tokenId": "OSM_27",
+      "type": "OneSidedMirror",
+      "orientation": "LEFT",
+      "position": {
+        "x": 3,
+        "y": 3
+      }
+    },
+    {
+      "tokenId": "OSM_31",
+      "type": "OneSidedMirror",
+      "orientation": "UP",
+      "position": {
+        "x": 1,
+        "y": 3
+      }
+    },
+    {
+      "tokenId": "receiver",
+      "type": "Target",
+      "orientation": "LEFT",
+      "position": {
+        "x": 3,
+        "y": 0
       }
     }
   ],
   "unplacedTokens": [
+    {
+      "tokenId": "OSM_76",
+      "type": "OneSidedMirror",
+      "orientation": "RIGHT"
+    }
   ]
 }

@@ -23,12 +23,24 @@ public class UITokens {
     Map<Pair<String, Orientation>, BufferedImage> orientedTokenImages = new HashMap<>();
     LevelPanel levelPanel;
 
+    /**
+     * Constructor of the UI tokens class
+     *
+     * @param levelPanel      - The level panel
+     * @param levelController - The level controller
+     * @Author Léonard Amsler - s231715
+     */
     public UITokens(LevelPanel levelPanel, LevelController levelController) {
         this.levelController = levelController;
         this.levelPanel = levelPanel;
         setTokenImages();
     }
 
+    /**
+     * Set the token images
+     *
+     * @Author Léonard Amsler - s231715
+     */
     public void setTokenImages() {
 
         try {
@@ -48,7 +60,13 @@ public class UITokens {
             BufferedImage doubleMirrorImageUPDOWN = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tokens/doubleMirror_UD.png")));
             BufferedImage doubleMirrorImageLEFTRIGHT = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tokens/doubleMirror_RL.png")));
 
-            BufferedImage targetImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tokens/target.png")));
+            BufferedImage splitterImageUPDOWN = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tokens/splitter_UD.png")));
+            BufferedImage splitterImageLEFTRIGHT = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tokens/splitter_RL.png")));
+
+            BufferedImage targetImageRIGHT = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tokens/target_RIGHT.png")));
+            BufferedImage targetImageLEFT = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tokens/target_LEFT.png")));
+            BufferedImage targetImageUP = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tokens/target_UP.png")));
+            BufferedImage targetImageDOWN = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tokens/target_DOWN.png")));
 
             // 2. Store the images in the maps
             String beamerClassName = LaserGun.class.getSimpleName();
@@ -72,22 +90,40 @@ public class UITokens {
             orientedTokenImages.put(new Pair<>(doubleMirrorClassName, Orientation.LEFT), doubleMirrorImageLEFTRIGHT);
             orientedTokenImages.put(new Pair<>(doubleMirrorClassName, Orientation.RIGHT), doubleMirrorImageLEFTRIGHT);
 
+            String splitterClassName = Splitter.class.getSimpleName();
+            orientedTokenImages.put(new Pair<>(splitterClassName, Orientation.UP), splitterImageUPDOWN);
+            orientedTokenImages.put(new Pair<>(splitterClassName, Orientation.DOWN), splitterImageUPDOWN);
+            orientedTokenImages.put(new Pair<>(splitterClassName, Orientation.LEFT), splitterImageLEFTRIGHT);
+            orientedTokenImages.put(new Pair<>(splitterClassName, Orientation.RIGHT), splitterImageLEFTRIGHT);
+
             String targetClassName = Target.class.getSimpleName();
-            orientedTokenImages.put(new Pair<>(targetClassName, Orientation.UP), targetImage);
-            orientedTokenImages.put(new Pair<>(targetClassName, Orientation.DOWN), targetImage);
-            orientedTokenImages.put(new Pair<>(targetClassName, Orientation.LEFT), targetImage);
-            orientedTokenImages.put(new Pair<>(targetClassName, Orientation.RIGHT), targetImage);
+            orientedTokenImages.put(new Pair<>(targetClassName, Orientation.UP), targetImageUP);
+            orientedTokenImages.put(new Pair<>(targetClassName, Orientation.DOWN), targetImageDOWN);
+            orientedTokenImages.put(new Pair<>(targetClassName, Orientation.LEFT), targetImageLEFT);
+            orientedTokenImages.put(new Pair<>(targetClassName, Orientation.RIGHT), targetImageRIGHT);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Draw the tokens on the screen
+     *
+     * @param g2d - The 2d graphics object
+     * @Author Léonard Amsler - s231715
+     */
     public void draw(Graphics2D g2d) {
         drawPlacedTokens(g2d);
         drawUnplacedTokens(g2d);
     }
 
+    /**
+     * Draw the placed tokens
+     *
+     * @param g2d - The 2d graphics object
+     * @Author Léonard Amsler - s231715
+     */
     public void drawPlacedTokens(Graphics2D g2d) {
 
         Map<Coordinate, Token> placedTokens = levelController.getPlacedTokens();
@@ -105,6 +141,12 @@ public class UITokens {
 
     }
 
+    /**
+     * Draw the unplaced tokens
+     *
+     * @param g2d - The 2d graphics object
+     * @Author Léonard Amsler - s231715
+     */
     public void drawUnplacedTokens(Graphics2D g2d) {
         // Display the unplaced tokens at the bottom of the screen, centered horizontally
         int tileWidth = levelPanel.tileWidth;
@@ -131,6 +173,17 @@ public class UITokens {
         }
     }
 
+    /**
+     * Draw a token
+     *
+     * @param g2d        - The 2d graphics object
+     * @param token      - The token to draw
+     * @param x          - The x coordinate
+     * @param y          - The y coordinate
+     * @param tileWidth  - The width of the tile
+     * @param tileHeight - The height of the tile
+     * @Author Léonard Amsler - s231715
+     */
     private void drawToken(Graphics2D g2d, Token token, int x, int y, int tileWidth, int tileHeight) {
 
         String tokenClassName = token.getClass().getSimpleName();
@@ -147,6 +200,14 @@ public class UITokens {
         g2d.drawImage(tokenImage, x, y, tileWidth, tileHeight, null);
     }
 
+    /**
+     * Get the unplaced token at the given coordinates
+     *
+     * @param x - The x coordinate
+     * @param y - The y coordinate
+     * @return The unplaced token at the given coordinates
+     * @Author Léonard Amsler - s231715
+     */
     public Token getUnplacedTokenAt(int x, int y) {
         for (Map.Entry<Token, Rectangle2D> entry : unPlacedTokenRectangles.entrySet()) {
             Rectangle2D rectangle = entry.getValue();

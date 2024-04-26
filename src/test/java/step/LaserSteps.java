@@ -1,9 +1,9 @@
 package step;
 
 import Model.Classes.Laser.Laser;
-import Model.Classes.Level;
-import Model.Classes.LevelBuilder;
-import Model.Classes.LevelID;
+import Model.Classes.Level.Level;
+import Model.Classes.Level.LevelBuilder;
+import Model.Classes.Level.LevelID;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

@@ -1,0 +1,53 @@
+{
+  "name": "10x10_OneTokenOnBoard_OneToken",
+  "serialNr": 4,
+  "boardSize": {
+    "widthX": 10,
+    "heightY": 10
+  },
+  "placedTokens": [
+    {
+      "tokenId": "LaserGun_56",
+      "type": "LaserGun",
+      "orientation": "LEFT",
+      "position": {
+        "x": 2,
+        "y": 3
+      }
+    },
+    {
+      "tokenId": "Receiver_strong",
+      "type": "Target",
+      "orientation": "UP",
+      "position": {
+        "x": 5,
+        "y": 6
+      }
+    },
+    {
+      "tokenId": "Block01",
+      "type": "Block",
+      "position": {
+        "x": 5,
+        "y": 4
+      }
+    }
+  ],
+  "unplacedTokens": [
+    {
+      "tokenId": "D_S_Mirror-01",
+      "type": "DoubleSidedMirror",
+      "orientation": "RIGHT"
+    },
+    {
+      "tokenId": "D_S_Mirror-02",
+      "type": "DoubleSidedMirror",
+      "orientation": "UP"
+    },
+    {
+      "tokenId": "D_S_Mirror-03",
+      "type": "DoubleSidedMirror",
+      "orientation": "UP"
+    }
+  ]
+}
