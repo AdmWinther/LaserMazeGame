@@ -2,6 +2,7 @@ package Vue.MainMenu;
 
 import Controller.GameController;
 import Controller.LevelController;
+import Controller.LoginController;
 import Vue.Level.LevelPanel;
 
 import javax.swing.*;
@@ -17,11 +18,11 @@ public class LevelPreparation {
      * @param gameController - The game controller
      * @Author Léonard Amsler - s231715
      */
-    public static void prepareLevel(String levelID, JFrame frame, GameController gameController) {
+    public static void prepareLevel(String levelID, JFrame frame, GameController gameController, LoginController loginController) {
         gameController.setCurrentLevelID(levelID);
         LevelController levelController = new LevelController(gameController.getCurrentLevel());
 
-        LevelPanel levelPanel = new LevelPanel(frame, gameController, levelController);
+        LevelPanel levelPanel = new LevelPanel(frame, gameController, levelController, loginController);
 
         frame.add(levelPanel, "Level");
         showPanel(frame, "Level");

@@ -2,20 +2,18 @@ package Vue.Level;
 
 import Controller.GameController;
 import Controller.LevelController;
+import Controller.LoginController;
 import Vue.Handlers.LevelMouseHandler;
-import Vue.MainMenu.CampaignPanel;
 import Vue.MainMenu.MainMenuPanel;
 import Vue.SoundEffects.Sound;
 
 import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 import static Vue.MainMenu.LevelPreparation.prepareLevel;
 import static Vue.MainMenu.LevelPreparation.showPanel;
@@ -36,6 +34,7 @@ public class LevelPanel extends JPanel implements Runnable {
     // Performance settings
     final int fps = 60;
     final int frameTime = 1000 / fps;
+    private final Clip tada;
     // Level configuration, screen size in tiles
     public int maxCol;
     public int maxRow;
@@ -44,14 +43,12 @@ public class LevelPanel extends JPanel implements Runnable {
     public int screenHeight;
     // Controllers
     public LevelController levelController;
-
+    public LoginController loginController;
     // UI Tiles, Objects and Tokens
     public UIObjects UIObjects;
     public UITokens UITokens;
     public UITiles UITiles;
     public UILaser UILaser;
-
-
     public LevelMouseHandler levelMouseHandler;
     // Offsets, number of pixels to the top left corner of the level board
     public int widthOffset;
@@ -62,12 +59,9 @@ public class LevelPanel extends JPanel implements Runnable {
     public int tileHeight = originalTileSize * VScale;
     // Thread
     Thread gameThread;
-
     JFrame frame;
     GameController gameController;
     private boolean tadaPlayed = false;
-
-    private final Clip tada;
     private Timer timer;
 
 
@@ -77,9 +71,11 @@ public class LevelPanel extends JPanel implements Runnable {
      * @param levelController - The level controller
      * @author Léonard Amsler - s231715
      */
-    public LevelPanel(JFrame frame, GameController gameController, LevelController levelController) {
+    public LevelPanel(JFrame frame, GameController gameController, LevelController levelController, LoginController loginController) {
 
         this.levelController = levelController;
+        this.loginController = loginController;
+
 
         int boardWidth = levelController.getWidth();
         int boardHeight = levelController.getHeight();
@@ -104,7 +100,7 @@ public class LevelPanel extends JPanel implements Runnable {
         levelMouseHandler = new LevelMouseHandler(this, levelController, UITokens);
         addMouseListener(levelMouseHandler);
 
-        this.tada= Sound.levelCompleted();
+        this.tada = Sound.levelCompleted();
 
         this.frame = frame;
         this.gameController = gameController;
@@ -160,8 +156,9 @@ public class LevelPanel extends JPanel implements Runnable {
                 System.out.println("FPS: " + count);
                 count = 0;
             }
-            if(this.levelController.levelComplete()){
-                if(!tadaPlayed) {
+
+            if (this.levelController.levelComplete()) {
+                if (!tadaPlayed) {
                     this.tada.start();
                     this.tadaPlayed = true;
                     this.timer = new Timer("delayAfterLevelCompleted");
@@ -169,17 +166,24 @@ public class LevelPanel extends JPanel implements Runnable {
                         @Override
                         public void run() {
                             gameThread = null;
-                            if(gameController.getCampaignGameMode()){
+                            int currentLevel = levelController.getLevelSerialNr();
+                            int campaignProgression = loginController.getCampaignProgress();
+                            if (gameController.getCampaignGameMode()) {
                                 //if in the campaign mode, it should go to the next level.
-                                prepareLevel("level"+(levelController.getLevelSerialNr()+1), frame, gameController);
-                            } else{
+                                if (currentLevel == campaignProgression + 2) { // +2 because the first progression is -1 and that the first level is level1
+                                    loginController.incrementProgression();
+                                }
+                                prepareLevel("level" + (levelController.getLevelSerialNr() + 1), frame, gameController, loginController);
+                            } else {
                                 //if we are in Random level mode
-                                MainMenuPanel mainMenuPanel = new MainMenuPanel(frame, gameController);
+                                MainMenuPanel mainMenuPanel = new MainMenuPanel(frame, gameController, loginController);
                                 frame.add(mainMenuPanel, "MainMenu");
                                 showPanel(frame, "MainMenu");
                                 frame.pack();
                             }
-                            };
+                        }
+
+                        ;
                     }, 2000);
                 }
 
@@ -247,11 +251,11 @@ public class LevelPanel extends JPanel implements Runnable {
 
     public void exitLevel() {
         gameThread = null;
-        MainMenuPanel mainMenuPanel = new MainMenuPanel(frame, gameController);
-        if(gameController.getCampaignGameMode()){
+        MainMenuPanel mainMenuPanel = new MainMenuPanel(frame, gameController, loginController);
+        if (gameController.getCampaignGameMode()) {
             //if in the campaign mode, it should go to the next level.
             mainMenuPanel.displayCampaignLevels(frame);
-        } else{
+        } else {
             //if we are in Random level mode
             frame.add(mainMenuPanel, "MainMenu");
             showPanel(frame, "MainMenu");

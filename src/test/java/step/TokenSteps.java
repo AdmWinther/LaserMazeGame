@@ -1,10 +1,11 @@
-package java.step;
+package step;
 import Model.Classes.Token.*;
 import Model.Classes.Utils.Orientation;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -33,12 +34,14 @@ public class TokenSteps {
 
     @Then("the laser is not reflected")
     public void theLaserIsNotReflected() {
-        assertTrue(token.propagateLaser(laserGun.getOrientation()).isEmpty());
+        Set<Orientation> set = new HashSet<>();
+        set.add(null);
+        assertEquals(token.propagateLaser(laserGun.getOrientation()), set);
     }
 
     @When("the splitter has a  {string} orientation")
     public void theSplitterHasAOrientation(String o) {
-        //token = new Splitter(true,Orientation.valueOf(o));
+        token = new Splitter(true,Orientation.valueOf(o));
     }
 
     @Given("I have a double sided mirror token with a {string} orientation")
@@ -49,7 +52,7 @@ public class TokenSteps {
 
     @Given("I have a splitter token with a {string} orientation")
     public void iHaveASplitterTokenWithAOrientation(String o) {
-        //token = new Splitter(true, Orientation.valueOf(o));
+        token = new Splitter(true, Orientation.valueOf(o));
     }
 
     @Then("the Laser is propagated {string} and {string}")

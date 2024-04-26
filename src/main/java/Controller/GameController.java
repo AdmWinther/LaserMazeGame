@@ -4,6 +4,8 @@ import Model.Classes.Level;
 import Model.Classes.LevelBuilder;
 import Model.Classes.LevelID;
 
+import java.io.File;
+
 public class GameController {
 
     private LevelBuilder levelBuilder;
@@ -36,7 +38,17 @@ public class GameController {
         this.campaignGameMode = false;
     }
 
-    public boolean getCampaignGameMode(){
+    public boolean getCampaignGameMode() {
         return this.campaignGameMode;
+    }
+
+    public int getMaxCampaignLevel() {
+        // Get the number of json file into the Model/Ressources/campaign folder
+        String Path = "src/main/java/Model/Resources/campaign";
+        File folder = new File(Path);
+        File[] listOfFiles = folder.listFiles();
+        assert listOfFiles != null;
+        System.out.println("Number of files in the campaign folder: " + listOfFiles.length);
+        return listOfFiles.length;
     }
 }

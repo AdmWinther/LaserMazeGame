@@ -1,6 +1,7 @@
 package Vue.MainMenu;
 
 import Controller.GameController;
+import Controller.LoginController;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -11,6 +12,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 import static Vue.MainMenu.LevelPreparation.prepareLevel;
+import static Vue.MainMenu.LevelPreparation.showPanel;
 import static Vue.Utils.ButtonUtil.setButtonTransparent;
 import static Vue.Utils.ImageUtil.resizeImage;
 
@@ -25,6 +27,7 @@ public class CampaignPanel extends JPanel {
     private final JPanel buttons;
     private final JLabel backButton;
     GameController gameController;
+    LoginController loginController;
     private int tileWidth = 16;
     private int tileHeight = 16;
 
@@ -36,7 +39,8 @@ public class CampaignPanel extends JPanel {
      * @Author Léonard Amsler - s231715
      * @Author Nathan Gromb - s231674
      */
-    public CampaignPanel(JFrame frame, GameController gameController) {
+    public CampaignPanel(JFrame frame, GameController gameController, LoginController loginController) {
+        this.loginController = loginController;
         this.gameController = gameController;
         this.frame = frame;
 
@@ -107,6 +111,9 @@ public class CampaignPanel extends JPanel {
      * @Author Nathan Gromb - s231674
      */
     private JPanel getLevelButtons() {
+        int campaignProgression = loginController.getCampaignProgress();
+        campaignProgression += 1; // The user should be able to play the next level
+
         JPanel levelButtonPanel = new JPanel();
         int rows = 4; // TODO depend on amount of campaign levels
         int cols = 4;
@@ -117,19 +124,23 @@ public class CampaignPanel extends JPanel {
         int padding = 50;
         levelButtonPanel.setBorder(BorderFactory.createEmptyBorder(padding, padding, padding, padding));
 
-        BufferedImage image = null;
+        BufferedImage enable_image = null;
+        BufferedImage disable_image = null;
         try {
-            image = ImageIO.read(new File("src/main/java/Vue/Resources/Tiles/boardTile1.png"));
+            enable_image = ImageIO.read(new File("src/main/java/Vue/Resources/Tiles/boardTile1.png"));
+            disable_image = ImageIO.read(new File("src/main/java/Vue/Resources/Tiles/disabled_boardTile.png"));
         } catch (Exception e) {
             System.out.println("Error loading campaign button image");
         }
-        assert image != null;
+        assert enable_image != null;
+        assert disable_image != null;
 
         int scale = 5;
-        image = resizeImage(image, tileWidth * scale, tileHeight * scale);
+        enable_image = resizeImage(enable_image, tileWidth * scale, tileHeight * scale);
+        disable_image = resizeImage(disable_image, tileWidth * scale, tileHeight * scale);
 
         for (int i = 0; i < rows * cols; i++) {
-            ImageIcon scaledIcon = new ImageIcon(image);
+            ImageIcon scaledIcon = new ImageIcon(enable_image);
             JButton levelButton = new JButton(String.valueOf(i + 1), scaledIcon);
 
             levelButton.setHorizontalAlignment(SwingConstants.CENTER);
@@ -142,10 +153,21 @@ public class CampaignPanel extends JPanel {
 
             levelButton.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    if (!levelButton.isEnabled()) {
+                        return;
+                    }
                     System.out.println("Level " + levelButton.getText() + " clicked");
-                    prepareLevel("level" + levelButton.getText(), frame, gameController);
+                    prepareLevel("level" + levelButton.getText(), frame, gameController, loginController);
                 }
             });
+
+            if (i <= campaignProgression) {
+                levelButton.setEnabled(true);
+            } else {
+                levelButton.setEnabled(false);
+                // apply a gray filter to the button
+                levelButton.setDisabledIcon(new ImageIcon(disable_image));
+            }
 
             levelButtonPanel.add(levelButton);
         }
@@ -171,6 +193,7 @@ public class CampaignPanel extends JPanel {
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent e) {
                 frame.getContentPane().remove(CampaignPanel.this);
+                showPanel(frame, "MainMenu");
             }
         });
 
