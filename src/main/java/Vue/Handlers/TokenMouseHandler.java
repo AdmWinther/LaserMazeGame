@@ -54,19 +54,15 @@ public class TokenMouseHandler extends AdaptedMouseHandler implements MouseListe
         int maxHeight = levelController.getHeight();
 
         if (x_coordinate >= 0 && x_coordinate < maxWidth && y_coordinate >= 0 && y_coordinate < maxHeight) {
-            Coordinate laserGunCoordinate = levelController.getLaserGunCoordinate();
             System.out.println("Clicked on: " + x_coordinate + ", " + y_coordinate);
             Coordinate coordinate = new Coordinate(x_coordinate, y_coordinate);
 
-            if (laserGunCoordinate.equals(coordinate)) {
-                levelController.setShouldDisplayLaser(true);
-            } else {
-                Token other = levelController.getTokenAt(coordinate);
+            Token other = levelController.getTokenAt(coordinate);
 
-                if (other != null && other.isMovable() && other instanceof OrientedToken) {
-                    levelController.rotateToken(other);
-                }
+            if (other != null && other.isMovable() && other instanceof OrientedToken) {
+                levelController.rotateToken(other);
             }
+
         }
     }
 

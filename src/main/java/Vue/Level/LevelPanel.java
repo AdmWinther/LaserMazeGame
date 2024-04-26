@@ -4,6 +4,7 @@ import Controller.GameController;
 import Controller.LevelController;
 import Controller.LoginController;
 import Vue.Handlers.LevelMouseHandler;
+import Vue.Handlers.TokenKeyboardHandler;
 import Vue.Handlers.TokenMouseHandler;
 import Vue.Level.UILayers.ExtrasUI;
 import Vue.Level.UILayers.LaserUI;
@@ -48,6 +49,8 @@ public abstract class LevelPanel extends JPanel implements Runnable {
     // Mouse handlers
     public LevelMouseHandler levelMouseHandler;
     public TokenMouseHandler tokenMouseHandler;
+    // Keyboard handler
+    public TokenKeyboardHandler tokenKeyboardHandler;
     // Offsets, number of pixels to the top left corner of the level board
     public int widthOffset;
     public int heightOffset;
@@ -97,7 +100,8 @@ public abstract class LevelPanel extends JPanel implements Runnable {
         tokenMouseHandler = new TokenMouseHandler(this, levelController, tokensUI);
         addMouseListener(tokenMouseHandler);
         addMouseMotionListener(tokenMouseHandler);
-
+        tokenKeyboardHandler = new TokenKeyboardHandler(levelController);
+        addKeyListener(tokenKeyboardHandler);
 
         this.frame = frame;
         this.gameController = gameController;
@@ -172,6 +176,9 @@ public abstract class LevelPanel extends JPanel implements Runnable {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+
+        //TODO this allows the KeyListener to work, is it the right way to do it?
+        requestFocus();
     }
 
     public void drawTiles(Graphics2D g2d) {
