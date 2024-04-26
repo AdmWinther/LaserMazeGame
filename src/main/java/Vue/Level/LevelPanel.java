@@ -5,11 +5,17 @@ import Controller.LevelController;
 import Vue.Handlers.LevelMouseHandler;
 import Vue.MainMenu.CampaignPanel;
 import Vue.MainMenu.MainMenuPanel;
+import Vue.SoundEffects.Sound;
 
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 import static Vue.MainMenu.LevelPreparation.prepareLevel;
 import static Vue.MainMenu.LevelPreparation.showPanel;
@@ -59,6 +65,10 @@ public class LevelPanel extends JPanel implements Runnable {
 
     JFrame frame;
     GameController gameController;
+    private boolean tadaPlayed = false;
+
+    private Clip tada;
+    private Timer timer;
 
 
     /**
@@ -93,6 +103,8 @@ public class LevelPanel extends JPanel implements Runnable {
 
         levelMouseHandler = new LevelMouseHandler(this, levelController, UITokens);
         addMouseListener(levelMouseHandler);
+
+        this.tada= Sound.levelCompleted();
 
         this.frame = frame;
         this.gameController = gameController;
@@ -149,19 +161,31 @@ public class LevelPanel extends JPanel implements Runnable {
                 count = 0;
             }
             if(this.levelController.levelComplete()){
-                gameThread = null;
-                if(gameController.getCampaignGameMode()){
-                    //if in the campaign mode, it should go to the next level.
-                    prepareLevel("level"+(levelController.getLevelSerialNr()+1), frame, gameController);
-                } else{
-                    //if we are in Random level mode
-                    MainMenuPanel mainMenuPanel = new MainMenuPanel(frame, gameController);
-                    frame.add(mainMenuPanel, "MainMenu");
-                    showPanel(frame, "MainMenu");
-                    frame.pack();
+                if(!tadaPlayed) {
+                    this.tada.start();
+                    this.tadaPlayed = true;
+                    this.timer = new Timer("delayAfterLevelCompleted");
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            gameThread = null;
+                            if(gameController.getCampaignGameMode()){
+                                //if in the campaign mode, it should go to the next level.
+                                prepareLevel("level"+(levelController.getLevelSerialNr()+1), frame, gameController);
+                            } else{
+                                //if we are in Random level mode
+                                MainMenuPanel mainMenuPanel = new MainMenuPanel(frame, gameController);
+                                frame.add(mainMenuPanel, "MainMenu");
+                                showPanel(frame, "MainMenu");
+                                frame.pack();
+                            }
+                            };
+                    }, 2000);
                 }
 
-            };
+                this.UIObjects.drawBingo();
+                removeMouseListener(this.levelMouseHandler);
+            }
 
             if (delta >= 1) {
                 repaint();

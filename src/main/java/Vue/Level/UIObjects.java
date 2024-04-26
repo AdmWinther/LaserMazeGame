@@ -42,10 +42,12 @@ public class UIObjects {
             BufferedImage binImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Objects/bin.png")));
             BufferedImage resetImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Objects/reset.png")));
             BufferedImage backImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Objects/back.png")));
+            BufferedImage bingoImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Objects/bingo.png")));
 
             objectImages.put("bin", binImage);
             objectImages.put("reset", resetImage);
             objectImages.put("back", backImage);
+            objectImages.put("bingo", bingoImage);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -60,7 +62,12 @@ public class UIObjects {
      * @Author Léonard Amsler - s231715
      */
     public void placeObject(String objectName, int x, int y) {
-        placedObjects.put(objectName, new Rectangle(x, y, levelPanel.tileWidth, levelPanel.tileHeight));
+        int width = levelPanel.tileWidth;
+        int height = levelPanel.tileHeight;
+        if (objectName.equals("bingo")) {
+            width *= 3;
+        }
+        placedObjects.put(objectName, new Rectangle(x, y, width, height));
     }
 
     /**
@@ -81,6 +88,8 @@ public class UIObjects {
         placeObject("reset", (int) (width - rightPadding), 0);
         // Place back button On the left side of the reset button
         placeObject("back", (int) (width - 2 * rightPadding), 0);
+
+//        placeObject("bingo", (int) (width - 6 * rightPadding), 3);
     }
 
     /**
@@ -97,6 +106,12 @@ public class UIObjects {
             BufferedImage objectImage = objectImages.get(objectName);
             g2d.drawImage(objectImage, (int) rectangle.getX(), (int) rectangle.getY(), (int) rectangle.getWidth(), (int) rectangle.getHeight(), null);
         }
+    }
+
+    public void drawBingo() {
+        int x = Math.floorDiv((levelPanel.maxCol-3) * levelPanel.tileWidth, 2);
+        int y = Math.floorDiv((levelPanel.maxRow-1) * levelPanel.tileHeight, 2);
+        placeObject("bingo", x, y);
     }
 
     /**

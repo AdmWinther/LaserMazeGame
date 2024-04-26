@@ -6,6 +6,7 @@ import Model.Classes.Utils.Coordinate;
 import Vue.Level.LevelPanel;
 import Vue.Level.UITokens;
 import Vue.MainMenu.MainMenuPanel;
+import Vue.SoundEffects.Sound;
 
 import javax.imageio.ImageIO;
 import javax.sound.sampled.*;
@@ -94,22 +95,9 @@ public class LevelMouseHandler implements MouseListener {
 
             if (laserGunCoordinate.equals(coordinate)) {
                 //Add laser shoot sound effect
-
-                URL file = null;
-                try {
-
-//                    BufferedImage binImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Objects/bin.png")));
-
-                    file = new URL("file:./src/main/java/Vue/Resources/Laser/laserShoot.wav");
-                    AudioInputStream ais = AudioSystem.getAudioInputStream(file);
-                    Clip clip = AudioSystem.getClip();
-                    clip.open(ais);
-                    clip.start();
-                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
-                    throw new RuntimeException(ex);
-                }
+                Clip clip = Sound.laserShoot();
+                clip.start();
                 levelController.setShouldDisplayLaser(true);
-
             }
         } else {
             Token token = uiTokens.getUnplacedTokenAt(e.getX(), e.getY());
