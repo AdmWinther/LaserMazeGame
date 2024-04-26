@@ -62,4 +62,9 @@ public class Splitter extends OrientedToken {
         }
         return propagatedLaser;
     }
+
+    @Override
+    public Token copy() {
+        return new Splitter(this.isMovable(), this.getOrientation());
+    }
 }

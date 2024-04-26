@@ -3,7 +3,6 @@ package Vue.Level;
 import Controller.LevelController;
 import Vue.Handlers.LevelMouseHandler;
 import Vue.Handlers.TokenMouseHandler;
-import Vue.Handlers.TokenMouseMotionHandler;
 import Vue.Level.UILayers.ExtrasUI;
 import Vue.Level.UILayers.LaserUI;
 import Vue.Level.UILayers.TilesUI;
@@ -35,14 +34,13 @@ public abstract class LevelPanel extends JPanel implements Runnable {
     public LevelController levelController;
 
     // Objects to draw
-    public ExtrasUI ExtrasUI;
-    public TokensUI TokensUI;
-    public TilesUI TilesUI;
-    public LaserUI LaserUI;
+    public ExtrasUI extrasUI;
+    public TokensUI tokensUI;
+    public TilesUI tilesUI;
+    public LaserUI laserUI;
 
     public LevelMouseHandler levelMouseHandler;
     public TokenMouseHandler tokenMouseHandler;
-    public TokenMouseMotionHandler tokenMouseMotionHandler;
     // Offsets, number of pixels to the top left corner of the level board
     public int widthOffset;
     public int heightOffset;
@@ -79,17 +77,15 @@ public abstract class LevelPanel extends JPanel implements Runnable {
         widthOffset = (this.screenWidth - boardWidth * tileWidth) / 2;
         heightOffset = (this.screenHeight - boardHeight * tileHeight) / 2;
 
-        ExtrasUI = new ExtrasUI(this);
-        TilesUI = new TilesUI(this, levelController);
-        TokensUI = new TokensUI(this, levelController);
-        LaserUI = new LaserUI(this, levelController);
+        tilesUI = new TilesUI(this, levelController);
+        tokensUI = new TokensUI(this, levelController);
+        laserUI = new LaserUI(this, levelController);
 
         levelMouseHandler = new LevelMouseHandler(this, levelController);
         addMouseListener(levelMouseHandler);
-        tokenMouseHandler = new TokenMouseHandler(this, levelController, TokensUI);
+        tokenMouseHandler = new TokenMouseHandler(this, levelController, tokensUI);
         addMouseListener(tokenMouseHandler);
-        tokenMouseMotionHandler = new TokenMouseMotionHandler(TokensUI, tokenMouseHandler);
-        addMouseMotionListener(tokenMouseMotionHandler);
+        addMouseMotionListener(tokenMouseHandler);
 
         setFocusable(true);
         requestFocus();
@@ -161,15 +157,18 @@ public abstract class LevelPanel extends JPanel implements Runnable {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+    }
 
-        Graphics2D g2d = (Graphics2D) g;
+    public void drawTiles(Graphics2D g2d) {
+        tilesUI.draw(g2d);
+    }
 
-        TilesUI.draw(g2d);
-        LaserUI.draw(g2d);
-        ExtrasUI.draw(g2d);
-        TokensUI.draw(g2d);
+    public void drawLasers(Graphics2D g2d) {
+        laserUI.draw(g2d);
+    }
 
-
+    public void drawTokens(Graphics2D g2d) {
+        tokensUI.draw(g2d);
     }
 
     /**
@@ -202,6 +201,10 @@ public abstract class LevelPanel extends JPanel implements Runnable {
 
     public int getFPS() {
         return fps;
+    }
+
+    public ExtrasUI getExtrasUI() {
+        return extrasUI;
     }
 }
 

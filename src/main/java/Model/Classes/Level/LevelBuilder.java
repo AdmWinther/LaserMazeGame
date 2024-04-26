@@ -3,8 +3,9 @@ package Model.Classes.Level;
 import Model.Classes.Token.*;
 import Model.Classes.Utils.DataReader;
 import Model.Interfaces.Builder;
+import Model.Interfaces.Inventory;
+import Model.constants.SandboxInventory;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -58,14 +59,7 @@ public class LevelBuilder implements Builder<Level> {
             Set<Token> unplacedTokens = DataReader.readLevelIDUnplacedTokens(id);
             if (editable) {
                 /* TODO : implement this in another place */
-                Set<Class<? extends Token>> inventory = new HashSet<>(
-                        Set.of(Block.class,
-                                DoubleSidedMirror.class,
-                                LaserGun.class,
-                                OneSidedMirror.class,
-                                Splitter.class,
-                                Target.class)
-                );
+                Inventory inventory = new SandboxInventory();
                 return new EditableLevel(name, placedTokens, unplacedTokens, inventory);
             } else {
                 return new PlayableLevel(name, placedTokens, unplacedTokens);

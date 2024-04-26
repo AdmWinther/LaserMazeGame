@@ -2,12 +2,11 @@ package Model.Classes.Laser;
 
 import Model.Classes.Token.LaserGun;
 import Model.Classes.Token.Token;
-import Model.Classes.Token.TokenManager;
+import Model.Interfaces.TokenManager;
 import Model.Classes.Utils.Coordinate;
 import Model.Classes.Utils.Orientation;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
 
 

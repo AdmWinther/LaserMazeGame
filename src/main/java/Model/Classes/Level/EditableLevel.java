@@ -3,8 +3,9 @@ package Model.Classes.Level;
 import Model.Classes.Laser.Laser;
 import Model.Classes.Laser.LaserManager;
 import Model.Classes.Token.*;
+import Model.Classes.TokenManager.FlexibleTokenManager;
+import Model.Interfaces.Inventory;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public final class EditableLevel extends Level {
@@ -12,7 +13,7 @@ public final class EditableLevel extends Level {
     private final FlexibleTokenManager tokenManager;
     private final LaserManager laserManager;
 
-    public EditableLevel(String name, Token[][] placedTokens, Set<Token> unplacedTokens, Set<Class<? extends Token>> inventory ) {
+    public EditableLevel(String name, Token[][] placedTokens, Set<Token> unplacedTokens, Inventory inventory ) {
         super(name,placedTokens.length,placedTokens[0].length);
         this.tokenManager = new FlexibleTokenManager(placedTokens, unplacedTokens, inventory);
         this.laserManager = new LaserManager(tokenManager, width, height);

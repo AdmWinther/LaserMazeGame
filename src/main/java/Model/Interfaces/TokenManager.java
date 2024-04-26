@@ -1,5 +1,6 @@
-package Model.Classes.Token;
+package Model.Interfaces;
 
+import Model.Classes.Token.Token;
 import Model.Classes.Utils.Coordinate;
 
 import java.util.Set;

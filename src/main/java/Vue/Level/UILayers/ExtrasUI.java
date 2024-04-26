@@ -1,5 +1,8 @@
 package Vue.Level.UILayers;
 
+import Controller.LevelController;
+import Model.Classes.Level.Level;
+import Model.Classes.Token.Token;
 import Vue.Interfaces.Drawable;
 import Vue.Level.LevelPanel;
 
@@ -17,10 +20,17 @@ public class ExtrasUI implements Drawable {
     private final Map<String, Rectangle2D> placedObjects = new HashMap<>();
     private final Map<String, BufferedImage> objectImages = new HashMap<>();
 
-    public ExtrasUI(LevelPanel levelPanel) {
+    public ExtrasUI(LevelPanel levelPanel, boolean init) {
         this.levelPanel = levelPanel;
-        initializeObjectSet();
-        setPlacedObjects();
+
+        if (init) {
+            initializeObjectSet();
+            setPlacedObjects();
+        }
+    }
+
+    public ExtrasUI(LevelPanel levelPanel) {
+        this(levelPanel, true);
     }
 
     /**
@@ -31,10 +41,10 @@ public class ExtrasUI implements Drawable {
      */
     public void initializeObjectSet() {
         try {
-            BufferedImage binImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Objects/bin.png")));
+            BufferedImage chestImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Objects/chest.png")));
             BufferedImage resetImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Objects/reset.png")));
 
-            objectImages.put("bin", binImage);
+            objectImages.put("chest", chestImage);
             objectImages.put("reset", resetImage);
         } catch (Exception e) {
             e.printStackTrace();
@@ -63,8 +73,8 @@ public class ExtrasUI implements Drawable {
         int height = levelPanel.screenHeight;
         double rightPadding = levelPanel.tileWidth * 1.5;
 
-        // Place bin on the right side of the screen
-        placeObject("bin", (int) (width - rightPadding), height / 2 - levelPanel.tileHeight / 2);
+        // Place chest on the right side of the screen
+        placeObject("chest", (int) (width - rightPadding), height / 2 - levelPanel.tileHeight / 2);
 
         rightPadding = levelPanel.tileWidth;
         // Place reset button on the top right corner of the screen
@@ -97,4 +107,27 @@ public class ExtrasUI implements Drawable {
         return placedObjects;
     }
 
+    public Map<String, BufferedImage> getObjectImages() {
+        return objectImages;
+    }
+
+    public void handleTokenDrop(Token token, int x, int y, LevelController controller) {
+        Rectangle2D chest = getPlacedObjects().get("chest");
+        if (chest.contains(x, y)) {
+            controller.transferTokenToUnplacedTokens(token);
+            System.out.println("Removed Token: " + token);
+        }
+    }
+
+    public void handleClick(int x, int y) {
+        Rectangle2D reset = levelPanel.getExtrasUI().getPlacedObjects().get("reset");
+        if (reset.contains(x, y)) {
+            levelPanel.levelController.resetLevel();
+            System.out.println("Reset tokens");
+        }
+    }
+
+    public LevelPanel getLevelPanel() {
+        return levelPanel;
+    }
 }

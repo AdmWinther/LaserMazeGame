@@ -2,9 +2,9 @@ package Model.Classes.Level;
 
 import Model.Classes.Laser.Laser;
 import Model.Classes.Laser.LaserManager;
-import Model.Classes.Token.StrictTokenManager;
+import Model.Classes.TokenManager.StrictTokenManager;
 import Model.Classes.Token.Token;
-import Model.Classes.Token.TokenManager;
+import Model.Interfaces.TokenManager;
 
 import java.util.Set;
 

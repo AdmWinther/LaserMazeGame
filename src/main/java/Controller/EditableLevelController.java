@@ -4,10 +4,8 @@ import Model.Classes.Level.EditableLevel;
 import Model.Classes.Token.Token;
 import Model.Classes.Utils.Coordinate;
 import Model.Classes.Utils.DataWriter;
+import Model.Interfaces.Inventory;
 import Model.constants.FilePaths;
-
-import java.util.HashSet;
-import java.util.Set;
 
 public class EditableLevelController extends LevelController{
 
@@ -37,12 +35,16 @@ public class EditableLevelController extends LevelController{
         return DataWriter.write(level, FilePaths.SANDBOX_LEVELS_PATH);
     }
 
-    public Set<Class<? extends Token>> getInventory() {
-        return new HashSet<>(((EditableLevel) level).tokenManager().getInventory());
+    public Inventory getInventory() {
+        return ((EditableLevel) level).tokenManager().getInventory();
     }
 
     @Override
     public boolean isSandbox() {
         return true;
+    }
+
+    public void removeToken(Token token) {
+        ((EditableLevel) level).tokenManager().removeToken(token);
     }
 }

@@ -16,4 +16,9 @@ public class LaserGun extends OrientedToken {
     public Set<Orientation> propagateLaser(Orientation incomingLaserOrientation) {
         return new HashSet<Orientation>();
     }
+
+    @Override
+    public Token copy() {
+        return new LaserGun(this.isMovable(), this.getOrientation());
+    }
 }

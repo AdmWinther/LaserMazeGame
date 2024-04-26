@@ -4,47 +4,42 @@ import Controller.LevelController;
 import Model.Classes.Token.OrientedToken;
 import Model.Classes.Token.Token;
 import Model.Classes.Utils.Coordinate;
-import Model.constants.MouseConstants;
 import Vue.Level.LevelPanel;
-import Vue.Level.UILayers.TokensUI;
+import Vue.Level.UILayers.TokenDisplay;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.geom.Rectangle2D;
-import java.util.function.DoubleToIntFunction;
+import java.awt.event.MouseMotionListener;
 
 /**
  * This class is responsible for handling the mouse events for the tokens.
  * It handles the token selection, placement and removal.
  *
- * @see TokenMouseMotionHandler
  * @author Nathan Gromb
  * @author Leonard Amsler
  */
-public class TokenMouseHandler implements MouseListener {
-    private static final int CLICK_MOVEMENT_THRESHOLD = MouseConstants.CLICK_MOVEMENT_THRESHOLD;
+public class TokenMouseHandler extends AdaptedMouseHandler implements MouseListener, MouseMotionListener {
+    final LevelController levelController;
+    final LevelPanel levelPanel;
+    final TokenDisplay tokenDisplay;
 
-    private final LevelController levelController;
-    private final LevelPanel levelPanel;
-    private final TokensUI tokensUI;
+    boolean isPressed = false;
+    int startX;
+    int startY;
 
-    private boolean isPressed = false;
-    private int startX;
-    private int startY;
+    Token selectedToken = null;
+    boolean isSelectedPlaced = false;
 
-    private Token selectedToken = null;
-    private boolean isSelectedPlaced = false;
-
-    public TokenMouseHandler(LevelPanel levelPanel, LevelController levelController, TokensUI tokensUI) {
+    public TokenMouseHandler(LevelPanel levelPanel, LevelController levelController, TokenDisplay tokenDisplay) {
         this.levelPanel = levelPanel;
         this.levelController = levelController;
-        this.tokensUI = tokensUI;
+        this.tokenDisplay = tokenDisplay;
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         selectedToken = null;
-        tokensUI.resetDraggedToken();
+        tokenDisplay.resetDraggedToken();
 
         int tileWidth = levelPanel.tileWidth;
         int tileHeight = levelPanel.tileHeight;
@@ -101,8 +96,8 @@ public class TokenMouseHandler implements MouseListener {
                     isSelectedPlaced = true;
                 }
             } else {
-                Token token = tokensUI.getUnplacedTokenAt(startX, startY);
-                System.out.println("Token chosen!" + token);
+                Token token = tokenDisplay.getTokenAt(startX, startY);
+                System.out.println("Token chosen: " + token);
                 if (token != null) {
                     selectedToken = token;
                     isSelectedPlaced = false;
@@ -113,7 +108,7 @@ public class TokenMouseHandler implements MouseListener {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        tokensUI.resetDraggedToken();
+        tokenDisplay.resetDraggedToken();
 
         if (isPressed) {
             isPressed = false;
@@ -121,25 +116,16 @@ public class TokenMouseHandler implements MouseListener {
             int endX = e.getX();
             int endY = e.getY();
 
-            // If the drag is very short, consider it as a click
-            // make sure that mouseClicked has not been called already using e.getClickCount() == 0
-            if (Math.abs(endX - startX) < CLICK_MOVEMENT_THRESHOLD && Math.abs(endY - startY) < CLICK_MOVEMENT_THRESHOLD
-                    && e.getClickCount() == 0) {
+            if (registerDragAsClick(e, startX, startY)) {
                 mouseClicked(e);
-                return;
-            } else if (e.getClickCount() > 1) {
                 return;
             }
 
             int widthOffset = levelPanel.widthOffset;
             int heightOffset = levelPanel.heightOffset;
 
-            double x_coordinate = (endX - widthOffset);
-            double y_coordinate = (endY - heightOffset);
-
-            if (x_coordinate < 0 || y_coordinate < 0) {
-                return;
-            }
+            int x_coordinate = (endX - widthOffset);
+            int y_coordinate = (endY - heightOffset);
 
             int tileWidth = levelPanel.tileWidth;
             int tileHeight = levelPanel.tileHeight;
@@ -154,7 +140,11 @@ public class TokenMouseHandler implements MouseListener {
                 return;
             }
 
-            if (x_coordinate < maxWidth && y_coordinate < maxHeight) {
+            if (x_coordinate < maxWidth && y_coordinate < maxHeight && x_coordinate >= 0 && y_coordinate >= 0) {
+                if (x_coordinate < 0 || y_coordinate < 0) {
+                    return;
+                }
+
                 Coordinate coordinate = new Coordinate((int) x_coordinate, (int) y_coordinate);
                 if (isSelectedPlaced) {
                     Coordinate from = new Coordinate((startX - widthOffset) / tileWidth, (startY - heightOffset) / tileHeight);
@@ -165,11 +155,7 @@ public class TokenMouseHandler implements MouseListener {
                     System.out.println("Placed Token: " + selectedToken + " at " + coordinate);
                 }
             } else {
-                Rectangle2D bin = levelPanel.ExtrasUI.getPlacedObjects().get("bin");
-                if (bin.contains(endX, endY)) {
-                    levelController.transferTokenToUnplacedTokens(selectedToken);
-                    System.out.println("Removed Token: " + selectedToken);
-                }
+                levelPanel.getExtrasUI().handleTokenDrop(selectedToken, endX, endY, levelController);
             }
 
             selectedToken = null;
@@ -186,7 +172,16 @@ public class TokenMouseHandler implements MouseListener {
 
     }
 
-    public Token getSelectedToken() {
-        return selectedToken;
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        if (selectedToken != null) {
+            tokenDisplay.setDraggedToken(selectedToken, e.getX(), e.getY());
+
+        }
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+
     }
 }

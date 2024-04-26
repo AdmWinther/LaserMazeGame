@@ -26,4 +26,9 @@ public final class Block extends Token {
     public Set<Orientation> propagateLaser(Orientation orientation) {
         return Collections.emptySet();
     }
+
+    @Override
+    public Token copy() {
+        return new Block(this.isMovable());
+    }
 }

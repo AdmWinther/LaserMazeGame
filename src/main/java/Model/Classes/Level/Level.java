@@ -2,7 +2,7 @@ package Model.Classes.Level;
 
 import Model.Classes.Laser.Laser;
 import Model.Classes.Laser.LaserManager;
-import Model.Classes.Token.TokenManager;
+import Model.Interfaces.TokenManager;
 
 public abstract class Level {
 

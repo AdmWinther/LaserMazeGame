@@ -1,6 +1,11 @@
-package Model.Classes.Token;
+package Model.Classes.TokenManager;
 
+import Model.Classes.Token.LaserGun;
+import Model.Classes.Token.Target;
+import Model.Classes.Token.Token;
+import Model.Interfaces.TokenManager;
 import Model.Classes.Utils.Coordinate;
+import Model.Interfaces.Inventory;
 
 
 import java.util.HashSet;
@@ -16,7 +21,7 @@ public class FlexibleTokenManager implements TokenManager {
     private final Token[][] placedTokens;
     private final Set<Token> unplacedTokens;
 
-    private Set<Class<? extends Token>> inventory = new HashSet<>();
+    private Inventory inventory;
 
     public FlexibleTokenManager(Token[][] placedTokens, Set<Token> unplacedTokens) {
         if(!correctInput(placedTokens)) throw new IllegalArgumentException();
@@ -24,7 +29,7 @@ public class FlexibleTokenManager implements TokenManager {
         this.unplacedTokens = unplacedTokens;
     }
 
-    public FlexibleTokenManager(Token[][] placedTokens, Set<Token> unplacedTokens, Set<Class<? extends Token>> inventory) {
+    public FlexibleTokenManager(Token[][] placedTokens, Set<Token> unplacedTokens, Inventory inventory) {
         this(placedTokens, unplacedTokens);
         this.inventory = inventory;
     }
@@ -270,8 +275,8 @@ public class FlexibleTokenManager implements TokenManager {
         return placedTokens.clone();
     }
 
-    public Set<Class<? extends Token>> getInventory() {
-        return new HashSet<>(inventory);
+    public Inventory getInventory() {
+        return inventory;
     }
 
     /**
@@ -301,4 +306,28 @@ public class FlexibleTokenManager implements TokenManager {
         return findTypePosition(Target.class);
     }
 
+    public void removeToken(Token token) {
+        if (token == null) return;
+
+        if (unplacedTokens.contains(token)) {
+            removeFromUnplacedTokens(token);
+        } else {
+            Coordinate pos = getTokenCoordinate(token);
+
+            if (pos != null) {
+                removeFromPlacedTokens(pos);
+            }
+        }
+    }
+
+    private Coordinate getTokenCoordinate(Token token) {
+        for (int i = 0; i < placedTokens.length; i++) {
+            for (int j = 0; j < placedTokens[0].length; j++) {
+                if (placedTokens[i][j] == token) {
+                    return new Coordinate(i, j);
+                }
+            }
+        }
+        return null;
+    }
 }

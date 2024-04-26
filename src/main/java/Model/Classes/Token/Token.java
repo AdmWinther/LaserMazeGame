@@ -48,4 +48,6 @@ public abstract class Token implements LaserPropagator {
     public String type(){
         return this.getClass().getSimpleName();
     }
+
+    public abstract Token copy();
 }

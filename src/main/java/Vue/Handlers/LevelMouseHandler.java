@@ -14,7 +14,7 @@ import java.awt.geom.Rectangle2D;
  *
  * @author Léonard Amsler - s231715
  */
-public class LevelMouseHandler implements MouseListener {
+public class LevelMouseHandler extends AdaptedMouseHandler implements MouseListener {
     private static final int CLICK_MOVEMENT_THRESHOLD = MouseConstants.CLICK_MOVEMENT_THRESHOLD;
 
     private final LevelController levelController;
@@ -47,11 +47,7 @@ public class LevelMouseHandler implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         // Check if we have clicked on the reset button
-        Rectangle2D reset = levelPanel.ExtrasUI.getPlacedObjects().get("reset");
-        if (reset.contains(e.getX(), e.getY())) {
-            levelController.resetLevel();
-            System.out.println("Reset tokens");
-        }
+        levelPanel.getExtrasUI().handleClick(e.getX(), e.getY());
     }
 
     /**
@@ -82,10 +78,7 @@ public class LevelMouseHandler implements MouseListener {
         if (isPressed) {
             isPressed = false;
 
-            // If the drag is very short, consider it as a click
-            // make sure that mouseClicked has not been called already using e.getClickCount() == 0
-            if (Math.abs(e.getX() - startX) < CLICK_MOVEMENT_THRESHOLD && Math.abs(e.getY() - startY) < CLICK_MOVEMENT_THRESHOLD
-                && e.getClickCount() == 0) {
+            if (registerDragAsClick(e, startX, startY)) {
                 mouseClicked(e);
             }
         }

@@ -1,5 +1,7 @@
-package Model.Classes.Token;
+package Model.Classes.TokenManager;
 
+import Model.Classes.Token.Token;
+import Model.Interfaces.TokenManager;
 import Model.Classes.Utils.Coordinate;
 import java.util.HashSet;
 import java.util.Set;
