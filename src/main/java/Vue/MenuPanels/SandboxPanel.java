@@ -162,7 +162,7 @@ public class SandboxPanel extends JPanel {
 
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent e) {
-                Sound.playButtonSound(null); // TODO null
+                Sound.playButtonSound();
                 frame.getContentPane().remove(SandboxPanel.this);
                 showPanel(frame, JComponentsNames.FrameID.MAIN_MENU);
             }
@@ -259,7 +259,7 @@ public class SandboxPanel extends JPanel {
 
         newLevelButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Sound.playButtonSound(null); // TODO null
+                Sound.playButtonSound();
                 LevelPreparation.prepareNewEditableLevel(frame, gameController);
             }
         });
@@ -377,7 +377,7 @@ public class SandboxPanel extends JPanel {
         playButton.add(new JLabel(new ImageIcon(playButtonImage)));
         playButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Sound.playButtonSound(null); // TODO null
+                Sound.playButtonSound();
                 LevelPreparation.preparePlayableLevel(levelID, frame, gameController, loginController);
             }
         });
@@ -399,7 +399,7 @@ public class SandboxPanel extends JPanel {
         editButton.add(new JLabel(new ImageIcon(editButtonImage)));
         editButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Sound.playButtonSound(null); // TODO null
+                Sound.playButtonSound();
                 LevelPreparation.prepareEditableLevel(levelID, frame, gameController);
             }
         });
@@ -421,7 +421,7 @@ public class SandboxPanel extends JPanel {
         deleteButton.add(new JLabel(new ImageIcon(deleteButtonImage)));
         deleteButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Sound.playButtonSound(null); // TODO null
+                Sound.playButtonSound();
                 try {
                     DataWriter.delete(levelID);
                 } catch (IOException e) {

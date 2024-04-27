@@ -3,62 +3,80 @@ package Vue.Level.UILayers;
 import Controller.EditableLevelController;
 import Controller.LevelController;
 import Model.Classes.Token.Token;
-import Model.Classes.Utils.Pair;
 import Vue.Level.EditableLevelPanel;
+import Vue.Utils.Position;
 
 import javax.imageio.ImageIO;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.time.Year;
 import java.util.Objects;
 
+/**
+ * UI of the sandbox extras
+ *
+ * @author Nathan Gromb
+ */
 public class SandboxExtrasUI extends ExtrasUI {
-    public SandboxExtrasUI(EditableLevelPanel levelPanel) {
-        super(levelPanel, false);
-        initializeObjectSet();
-        setPlacedObjects();
-    }
+	/**
+	 * Constructor of the sandbox extras UI
+	 *
+	 * @param levelPanel The level panel
+	 * @author Nathan Gromb
+	 */
+	public SandboxExtrasUI(EditableLevelPanel levelPanel) {
+		super(levelPanel, false);
 
-    @Override
-    public void handleTokenDrop(Token token, int x, int y, LevelController controller) {
-        super.handleTokenDrop(token, x, y, controller);
+		loadObjectImages();
+		setPlacedObjects();
+	}
 
-        EditableLevelController editableController = (EditableLevelController) controller;
-        Rectangle2D bin = getPlacedObjects().get("bin");
+	/**
+	 * Initialize the object set
+	 *
+	 * @author Léonard Amsler - s231715
+	 * @author Hussein (Adam)
+	 */
+	public void loadObjectImages() {
+		super.loadObjectImages();
 
-        if (bin.contains(x, y)) {
-            editableController.removeToken(token);
-            System.out.println("Deleted Token: " + token);
-        }
-    }
+		try {
+			BufferedImage binImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Objects/bin.png")));
 
-    /**
-     * Initialize the object set
-     *
-     * @author Léonard Amsler - s231715
-     * @author Hussein (Adam)
-     */
-    public void initializeObjectSet() {
-        super.initializeObjectSet();
+			getObjectImages().put("bin", binImage);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-        try {
-            BufferedImage binImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Objects/bin.png")));
+	/**
+	 * Set the placed objects
+	 *
+	 * @author Léonard Amsler - s231715
+	 */
+	public void setPlacedObjects() {
+		super.setPlacedObjects();
 
-            getObjectImages().put("bin", binImage);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+		Position pos = ((EditableLevelPanel) getLevelPanel()).getBinPosition();
+		placeObject("bin", pos.x(), pos.y());
+	}
 
-    /**
-     * Set the placed objects
-     *
-     * @author Léonard Amsler - s231715
-     */
-    public void setPlacedObjects() {
-        super.setPlacedObjects();
+	/**
+	 * Handle the mouse release while a token is being dragged
+	 *
+	 * @param token      The token being dragged
+	 * @param pos        The position of the mouse
+	 * @param controller The level controller
+	 */
+	@Override
+	public void handleTokenDrop(Token token, Position pos, LevelController controller) {
+		super.handleTokenDrop(token, pos, controller);
 
-        Pair<Integer, Integer> pos = ((EditableLevelPanel) getLevelPanel()).getBinPosition();
-        placeObject("bin", pos.first(), pos.second());
-    }
+		EditableLevelController editableController = (EditableLevelController) controller;
+		Rectangle2D bin = getPlacedObjects().get("bin");
+
+		if (bin.contains(pos.x(), pos.y())) {
+			editableController.removeToken(token);
+			System.out.println("Deleted Token: " + token);
+		}
+	}
 }

@@ -10,7 +10,6 @@ import Vue.Handlers.ButtonHoverHandler;
 import Vue.SoundEffects.Sound;
 
 import javax.imageio.ImageIO;
-import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
@@ -36,7 +35,6 @@ public class MainMenuPanel extends JPanel {
     private final int MAX_HEIGHT = 300;
     GameController gameController;
     LoginController loginController;
-    private Clip campaignButtonClickSound;
 
     /**
      * Constructor of the main menu panel class
@@ -113,7 +111,7 @@ public class MainMenuPanel extends JPanel {
     private JButton logoutButton(JFrame frame) {
         JButton logoutButton = new JButton(JComponentsNames.Label.LOGOUT);
         logoutButton.addActionListener(e -> {
-            Sound.playButtonSound(null);
+            Sound.playButtonSound();
             loginController.logout();
             showPanel(frame, JComponentsNames.FrameID.LOGIN);
         });
@@ -124,38 +122,6 @@ public class MainMenuPanel extends JPanel {
         logoutButton.setHorizontalAlignment(SwingConstants.RIGHT);
 
         return logoutButton;
-    }
-
-    /**
-     * Create the footer panel
-     *
-     * @return JPanel The footer panel
-     * @author Léonard Amsler - s231715
-     * @author Nathan Gromb - s231674
-     * @author Hussein (Adam)
-     */
-    private JPanel footerPanel() {
-
-        // Initialize footer panel
-        JPanel footerPanel = new JPanel();
-        footerPanel.setOpaque(false);
-        footerPanel.setLayout(new BorderLayout());
-
-        // Add footer label
-        JLabel footerLabel = new JLabel(JComponentsNames.Label.FOOTER, SwingConstants.RIGHT);
-        footerLabel.setFont(new Font(Style.Font.COURIER_NEW, Font.PLAIN, Style.FontSize.H3));
-        footerLabel.setForeground(Color.LIGHT_GRAY);
-        footerLabel.setBorder(BorderFactory.createEmptyBorder(Style.Padding.S, Style.Padding.S, Style.Padding.S, Style.Padding.S));
-        footerPanel.add(footerLabel, BorderLayout.EAST);
-
-        // Add login label
-        JLabel loginLabel = new JLabel(JComponentsNames.Label.LOGGED_AS + loginController.getCurrentUsername().username, SwingConstants.LEFT);
-        loginLabel.setFont(new Font(Style.Font.COURIER_NEW, Font.PLAIN, Style.FontSize.H3));
-        loginLabel.setForeground(Color.LIGHT_GRAY);
-        loginLabel.setBorder(BorderFactory.createEmptyBorder(Style.Padding.S, Style.Padding.S, Style.Padding.S, Style.Padding.S));
-        footerPanel.add(loginLabel, BorderLayout.WEST);
-
-        return footerPanel;
     }
 
     /**
@@ -220,17 +186,17 @@ public class MainMenuPanel extends JPanel {
 
         // Add action listeners to buttons
         campaignButton.addActionListener(e -> {
-            Sound.playButtonSound(campaignButtonClickSound);
+            Sound.playButtonSound();
             displayCampaignLevels(frame);
         });
         campaignButton.addMouseListener(new ButtonHoverHandler());
         sandboxButton.addActionListener(e -> {
-            Sound.playButtonSound(campaignButtonClickSound);
+            Sound.playButtonSound();
             displaySandboxLevels(frame);
         });
         sandboxButton.addMouseListener(new ButtonHoverHandler());
         randomButton.addActionListener(e -> {
-            Sound.playButtonSound(campaignButtonClickSound);
+            Sound.playButtonSound();
 
             gameController.turnOffCampaignGameMode();
             LevelID randomLevelID = gameController.getSandboxLevelIDs().get((int) (Math.random() * gameController.getSandboxLevelIDs().size()));
@@ -275,6 +241,38 @@ public class MainMenuPanel extends JPanel {
 
         return buttonPanel;
 
+    }
+
+    /**
+     * Create the footer panel
+     *
+     * @return JPanel The footer panel
+     * @author Léonard Amsler - s231715
+     * @author Nathan Gromb - s231674
+     * @author Hussein (Adam)
+     */
+    private JPanel footerPanel() {
+
+        // Initialize footer panel
+        JPanel footerPanel = new JPanel();
+        footerPanel.setOpaque(false);
+        footerPanel.setLayout(new BorderLayout());
+
+        // Add footer label
+        JLabel footerLabel = new JLabel(JComponentsNames.Label.FOOTER, SwingConstants.RIGHT);
+        footerLabel.setFont(new Font(Style.Font.COURIER_NEW, Font.PLAIN, Style.FontSize.H3));
+        footerLabel.setForeground(Color.LIGHT_GRAY);
+        footerLabel.setBorder(BorderFactory.createEmptyBorder(Style.Padding.S, Style.Padding.S, Style.Padding.S, Style.Padding.S));
+        footerPanel.add(footerLabel, BorderLayout.EAST);
+
+        // Add login label
+        JLabel loginLabel = new JLabel(JComponentsNames.Label.LOGGED_AS + loginController.getCurrentUsername().username, SwingConstants.LEFT);
+        loginLabel.setFont(new Font(Style.Font.COURIER_NEW, Font.PLAIN, Style.FontSize.H3));
+        loginLabel.setForeground(Color.LIGHT_GRAY);
+        loginLabel.setBorder(BorderFactory.createEmptyBorder(Style.Padding.S, Style.Padding.S, Style.Padding.S, Style.Padding.S));
+        footerPanel.add(loginLabel, BorderLayout.WEST);
+
+        return footerPanel;
     }
 
     /**
