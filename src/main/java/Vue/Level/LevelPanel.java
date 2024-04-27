@@ -10,7 +10,7 @@ import Vue.Level.UILayers.ExtrasUI;
 import Vue.Level.UILayers.LaserUI;
 import Vue.Level.UILayers.TilesUI;
 import Vue.Level.UILayers.TokensUI;
-import Vue.MainMenu.MainMenuPanel;
+import Vue.MenuPanels.MainMenuPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +18,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.Timer;
 
-import static Vue.MainMenu.LevelPreparation.showPanel;
+import static Vue.MenuPanels.LevelPreparation.showPanel;
 
 public abstract class LevelPanel extends JPanel implements Runnable {
 
@@ -62,7 +62,7 @@ public abstract class LevelPanel extends JPanel implements Runnable {
     Thread gameThread;
     JFrame frame;
     GameController gameController;
-    private boolean tadaPlayed = false;
+    private final boolean tadaPlayed = false;
     private Timer timer;
 
 

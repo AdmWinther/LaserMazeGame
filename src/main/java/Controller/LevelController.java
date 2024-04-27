@@ -8,19 +8,18 @@ import Model.Classes.Utils.Coordinate;
 import Model.Classes.Utils.Orientation;
 import Model.Classes.Utils.Pair;
 import Vue.Level.LevelPanel;
-import Vue.MainMenu.MainMenuPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 public abstract class LevelController {
 
-    protected Level level;
-    boolean shouldDisplayLaser = false;
     protected final JFrame frame;
+    protected Level level;
     protected LevelPanel levelPanel;
+    boolean shouldDisplayLaser = false;
 
     public LevelController(JFrame frame, LevelPanel levelPanel, Level level) {
         this.frame = frame;
@@ -32,7 +31,7 @@ public abstract class LevelController {
         return level.width;
     }
 
-    public void backToMenu(){
+    public void backToMenu() {
         System.out.println(Arrays.toString(frame.getContentPane().getComponents()));
         frame.getContentPane().remove(levelPanel);
         // show the main menu
@@ -40,7 +39,7 @@ public abstract class LevelController {
         cardLayout.show(frame.getContentPane(), "MainMenu");
     }
 
-    public void setLevelPanel(LevelPanel levelPanel){
+    public void setLevelPanel(LevelPanel levelPanel) {
         this.levelPanel = levelPanel;
     }
 

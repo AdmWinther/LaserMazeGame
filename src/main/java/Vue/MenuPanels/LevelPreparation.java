@@ -1,4 +1,4 @@
-package Vue.MainMenu;
+package Vue.MenuPanels;
 
 import Controller.*;
 import Model.Classes.Level.EditableLevel;

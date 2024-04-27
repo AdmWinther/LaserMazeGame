@@ -1,4 +1,4 @@
-package Vue.MainMenu;
+package Vue.MenuPanels;
 
 import javax.swing.*;
 import java.awt.*;

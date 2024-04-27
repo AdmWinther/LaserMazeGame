@@ -1,4 +1,4 @@
-package Vue.MainMenu;
+package Vue.MenuPanels;
 
 import Controller.GameController;
 import Controller.LoginController;
@@ -18,37 +18,35 @@ import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-import static Vue.MainMenu.LevelPreparation.preparePlayableLevel;
-import static Vue.MainMenu.LevelPreparation.showPanel;
+import static Vue.MenuPanels.LevelPreparation.preparePlayableLevel;
+import static Vue.MenuPanels.LevelPreparation.showPanel;
 import static Vue.Utils.ButtonUtil.setButtonTransparent;
 import static Vue.Utils.ImageUtil.resizeImage;
 
 /**
  * This class is responsible for the main menu panel
  *
- * @Author Léonard Amsler - s231715
- * @Author Hussein (Adam)
+ * @author Léonard Amsler - s231715
+ * @author Nathan Gromb - s231674
+ * @author Hussein (Adam)
+ * @author Hugo Demule
  */
 public class MainMenuPanel extends JPanel {
-
-
     private final int MAX_WIDTH = 200;
     private final int MAX_HEIGHT = 300;
-    Thread mainMenuThread;
     GameController gameController;
     LoginController loginController;
-    private Clip mainMenuClip;
     private Clip campaignButtonClickSound;
-    private boolean isButtonClickSoundStarted;
 
     /**
      * Constructor of the main menu panel class
      *
-     * @param frame          - The frame
-     * @param gameController - The game controller
-     * @Author Léonard Amsler - s231715
-     * @Author Nathan Gromb - s231674
-     * @Author Hussein (Adam)
+     * @param frame           The frame
+     * @param gameController  The game controller
+     * @param loginController The login controller
+     * @author Léonard Amsler - s231715
+     * @author Nathan Gromb - s231674
+     * @author Hussein (Adam)
      */
     public MainMenuPanel(JFrame frame, GameController gameController, LoginController loginController) {
 
@@ -70,22 +68,52 @@ public class MainMenuPanel extends JPanel {
         JPanel topPanel = new JPanel();
         topPanel.setOpaque(false);
         topPanel.setLayout(new BorderLayout());
-
-
         topPanel.setBorder(BorderFactory.createEmptyBorder(Style.Padding.L, Style.Padding.L, Style.Padding.L, Style.Padding.L));
         backgroundPanel.add(topPanel, BorderLayout.NORTH);
 
         // Title label
+        JLabel titleLabel = getTitleLabel();
+        topPanel.add(titleLabel, BorderLayout.SOUTH);
+
+        // Logout button
+        JButton logoutButton = logoutButton(frame);
+        topPanel.add(logoutButton, BorderLayout.NORTH);
+
+        // Button panel
+        JPanel buttonPanel = createButtonPanel(frame);
+        backgroundPanel.add(buttonPanel, BorderLayout.CENTER);
+
+        // Footer panel
+        JPanel footerPanel = footerPanel();
+        backgroundPanel.add(footerPanel, BorderLayout.SOUTH);
+
+        frame.pack();
+    }
+
+    /**
+     * @return the title label
+     * @author Léonard Amsler - s231715
+     * @author Nathan Gromb - s231674
+     * @author Hussein (Adam)
+     */
+    private static JLabel getTitleLabel() {
         JLabel titleLabel = new JLabel(JComponentsNames.Label.LASER_MAZE, SwingConstants.CENTER);
         titleLabel.setFont(new Font(Style.Font.COURIER_NEW, Font.BOLD, Style.FontSize.H1));
         titleLabel.setForeground(Color.LIGHT_GRAY);
-        topPanel.add(titleLabel, BorderLayout.SOUTH);
+        return titleLabel;
+    }
 
-
-        // Logout button
+    /**
+     * @param frame the frame
+     * @return the logout button
+     * @author Léonard Amsler - s231715
+     * @author Nathan Gromb - s231674
+     * @author Hussein (Adam)
+     */
+    private JButton logoutButton(JFrame frame) {
         JButton logoutButton = new JButton(JComponentsNames.Label.LOGOUT);
         logoutButton.addActionListener(e -> {
-            Sound.playButtonSound(null); // TODO null
+            Sound.playButtonSound(null);
             loginController.logout();
             showPanel(frame, JComponentsNames.FrameID.LOGIN);
         });
@@ -95,44 +123,49 @@ public class MainMenuPanel extends JPanel {
         setButtonTransparent(logoutButton);
         logoutButton.setHorizontalAlignment(SwingConstants.RIGHT);
 
+        return logoutButton;
+    }
 
-        topPanel.add(logoutButton, BorderLayout.NORTH);
+    /**
+     * Create the footer panel
+     *
+     * @return JPanel The footer panel
+     * @author Léonard Amsler - s231715
+     * @author Nathan Gromb - s231674
+     * @author Hussein (Adam)
+     */
+    private JPanel footerPanel() {
 
-
-        // Button panel
-        JPanel buttonPanel = createButtonPanel(frame);
-        backgroundPanel.add(buttonPanel, BorderLayout.CENTER);
-
-
-        // Footer label
+        // Initialize footer panel
         JPanel footerPanel = new JPanel();
         footerPanel.setOpaque(false);
         footerPanel.setLayout(new BorderLayout());
 
+        // Add footer label
         JLabel footerLabel = new JLabel(JComponentsNames.Label.FOOTER, SwingConstants.RIGHT);
         footerLabel.setFont(new Font(Style.Font.COURIER_NEW, Font.PLAIN, Style.FontSize.H3));
         footerLabel.setForeground(Color.LIGHT_GRAY);
         footerLabel.setBorder(BorderFactory.createEmptyBorder(Style.Padding.S, Style.Padding.S, Style.Padding.S, Style.Padding.S));
         footerPanel.add(footerLabel, BorderLayout.EAST);
 
+        // Add login label
         JLabel loginLabel = new JLabel(JComponentsNames.Label.LOGGED_AS + loginController.getCurrentUsername().username, SwingConstants.LEFT);
         loginLabel.setFont(new Font(Style.Font.COURIER_NEW, Font.PLAIN, Style.FontSize.H3));
         loginLabel.setForeground(Color.LIGHT_GRAY);
         loginLabel.setBorder(BorderFactory.createEmptyBorder(Style.Padding.S, Style.Padding.S, Style.Padding.S, Style.Padding.S));
         footerPanel.add(loginLabel, BorderLayout.WEST);
 
-        backgroundPanel.add(footerPanel, BorderLayout.SOUTH);
-
-        frame.pack();
+        return footerPanel;
     }
 
     /**
      * Create the button panel
      *
-     * @param frame - The frame
-     * @return JPanel - The button panel
-     * @Author Léonard Amsler - s231715
-     * @Author Nathan Gromb - s231674
+     * @param frame The frame
+     * @return JPanel The button panel
+     * @author Léonard Amsler s231715
+     * @author Nathan Gromb s231674
+     * @author Hussein (Adam)
      */
     private JPanel createButtonPanel(JFrame frame) {
         // Button panel for the three buttons
@@ -247,8 +280,10 @@ public class MainMenuPanel extends JPanel {
     /**
      * Display the campaign levels
      *
-     * @param frame - The frame
-     * @Author Nathan Gromb - s231674
+     * @param frame The frame
+     * @author Léonard Amsler s231715
+     * @author Nathan Gromb s231674
+     * @author Hussein (Adam)
      */
     public void displayCampaignLevels(JFrame frame) {
         gameController.turnOnCampaignGameMode();
@@ -265,6 +300,12 @@ public class MainMenuPanel extends JPanel {
         frame.pack();
     }
 
+    /**
+     * Display the sandbox levels
+     *
+     * @param frame the frame
+     * @author Hugo Demule
+     */
     private void displaySandboxLevels(JFrame frame) {
         SandboxPanel sandboxPanel = new SandboxPanel(frame, gameController, loginController);
         frame.add(sandboxPanel, JComponentsNames.FrameID.SANDBOX_LEVELS);

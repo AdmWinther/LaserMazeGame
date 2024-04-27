@@ -3,14 +3,14 @@ package Vue.LoginMenu;
 import Controller.GameController;
 import Controller.LoginController;
 import Vue.Handlers.ButtonHoverHandler;
-import Vue.MainMenu.ImagePanel;
-import Vue.MainMenu.MainMenuPanel;
+import Vue.MenuPanels.ImagePanel;
+import Vue.MenuPanels.MainMenuPanel;
 import Vue.SoundEffects.Sound;
 
 import javax.swing.*;
 import java.awt.*;
 
-import static Vue.MainMenu.LevelPreparation.showPanel;
+import static Vue.MenuPanels.LevelPreparation.showPanel;
 
 public class LoginMenu extends JPanel {
 

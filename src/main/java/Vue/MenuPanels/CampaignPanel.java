@@ -1,4 +1,4 @@
-package Vue.MainMenu;
+package Vue.MenuPanels;
 
 import Controller.GameController;
 import Controller.LoginController;
@@ -17,8 +17,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
 
-import static Vue.MainMenu.LevelPreparation.preparePlayableLevel;
-import static Vue.MainMenu.LevelPreparation.showPanel;
+import static Vue.MenuPanels.LevelPreparation.preparePlayableLevel;
+import static Vue.MenuPanels.LevelPreparation.showPanel;
 import static Vue.Utils.ImageUtil.resizeImage;
 
 /**

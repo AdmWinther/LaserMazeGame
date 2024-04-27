@@ -1,4 +1,4 @@
-package Vue.MainMenu;
+package Vue.MenuPanels;
 
 import Controller.GameController;
 import Controller.LoginController;
@@ -19,7 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import static Vue.MainMenu.LevelPreparation.showPanel;
+import static Vue.MenuPanels.LevelPreparation.showPanel;
 
 
 public class SandboxPanel extends JPanel {
