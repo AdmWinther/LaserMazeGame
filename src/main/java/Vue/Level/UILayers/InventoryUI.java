@@ -1,55 +1,77 @@
 package Vue.Level.UILayers;
 
 import Controller.EditableLevelController;
-import Model.Classes.Token.*;
-import Model.Classes.Utils.Pair;
+import Model.Classes.Token.Token;
 import Model.Interfaces.Inventory;
 import Vue.Level.LevelPanel;
+import Vue.Utils.Position;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
+/**
+ * UI of the inventory
+ *
+ * @author Nathan Gromb
+ */
 public class InventoryUI extends TokenDisplay {
-    private int binX = 0;
-    private int binY = 0;
+	private final Inventory inventory;
+	private final int size;
 
-    public InventoryUI(LevelPanel levelPanel, EditableLevelController levelController) {
-        super(levelPanel, levelController);
-    }
+	private final int xCoord;
+	private int binYCoord;
 
-    @Override
-    public void draw(Graphics2D g2d) {
-        // Display the unplaced tokens at the left of the screen
-        int tileWidth = levelPanel.tileWidth;
-        int tileHeight = levelPanel.tileHeight;
+	/**
+	 * Constructor of the inventory UI
+	 *
+	 * @param levelPanel      The level panel
+	 * @param levelController The level controller
+	 */
+	public InventoryUI(LevelPanel levelPanel, EditableLevelController levelController) {
+		super(levelPanel, levelController);
 
-        int nbTilesVertical = levelPanel.maxRow;
+		inventory = levelController.getInventory();
+		size = inventory.getItems().size();
 
-        Inventory inventory = ((EditableLevelController) levelController).getInventory();
-        int size = inventory.getItems().size();
+		xCoord = levelPanel.tileWidth / 2;
+	}
 
-        int x = tileWidth/2;
-        binX = x;
+	/**
+	 * Draws the inventory on the screen.
+	 *
+	 * @param g2d object on which to draw
+	 * @author Nathan Gromb
+	 */
+	@Override
+	public void draw(Graphics2D g2d) {
+		int tileWidth = levelPanel.tileWidth;
+		int tileHeight = levelPanel.tileHeight;
 
-        int y = (nbTilesVertical - size) / 2 * tileHeight - tileHeight;
+		int y = (levelPanel.maxRow - size) / 2 * tileHeight - tileHeight;
 
-        rectangles.clear();
+		rectangles.clear();
 
-        for (Token token : inventory.getItems()) {
-            Rectangle2D rect = new Rectangle2D.Double(x, y, tileWidth, tileHeight);
-            rectangles.put(token, rect);
+		// draw a token an increment y to position the next token
+		for (Token token : inventory.getItems()) {
+			Rectangle2D rect = new Rectangle2D.Double(xCoord, y, levelPanel.tileWidth, levelPanel.tileHeight);
+			rectangles.put(token, rect);
 
-            Pair<Integer, Integer> position = getTokenPosition(token, x, y);
-            drawToken(g2d, token, position.first(), position.second(), tileWidth, tileHeight);
+			Position position = getTokenPosition(token, Position.of(xCoord, y));
+			drawToken(g2d, token, position, tileWidth, tileHeight);
 
-            y += tileHeight;
-        }
+			y += tileHeight;
+		}
 
-        binY = y + tileHeight;
+		binYCoord = y + tileHeight;
+	}
 
-    }
-
-    public Pair<Integer, Integer> getBinPosition() {
-        return new Pair<>(binX, binY);
-    }
+	/**
+	 * Returns where the bin should be drawn
+	 *
+	 * @return where the bin should be drawn
+	 * @author Nathan Gromb
+	 */
+	public Position getBinPosition() {
+		return Position.of(xCoord, binYCoord);
+	}
 }

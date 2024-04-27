@@ -3,6 +3,7 @@ package Vue.Handlers;
 import Controller.EditableLevelController;
 import Model.Classes.Token.Token;
 import Vue.Level.UILayers.InventoryUI;
+import Vue.Utils.Position;
 
 import java.awt.event.MouseEvent;
 
@@ -16,8 +17,7 @@ public final class InventoryMouseHandler extends AdaptedMouseHandler {
 	private final InventoryUI tokenDisplay;
 
 	private boolean isPressed = false;
-	private int startX;
-	private int startY;
+	private Position mouseStartPos;
 
 	/**
 	 * Constructor of the InventoryMouseHandler
@@ -29,6 +29,8 @@ public final class InventoryMouseHandler extends AdaptedMouseHandler {
 	public InventoryMouseHandler(EditableLevelController levelController, InventoryUI tokenDisplay) {
 		this.levelController = levelController;
 		this.tokenDisplay = tokenDisplay;
+
+		this.mouseStartPos = Position.of(0, 0);
 	}
 
 	/**
@@ -40,7 +42,7 @@ public final class InventoryMouseHandler extends AdaptedMouseHandler {
 	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		Token token = tokenDisplay.getTokenAtMousePos(e.getX(), e.getY());
+		Token token = tokenDisplay.getTokenAtMousePos(Position.ofEvent(e));
 		if (token != null) {
 			levelController.addToUnplacedTokens(token.copy());
 		}
@@ -56,8 +58,7 @@ public final class InventoryMouseHandler extends AdaptedMouseHandler {
 	public void mousePressed(MouseEvent e) {
 		if (!isPressed) {
 			isPressed = true;
-			startX = e.getX();
-			startY = e.getY();
+			mouseStartPos = Position.ofEvent(e);
 		}
 	}
 
@@ -72,7 +73,7 @@ public final class InventoryMouseHandler extends AdaptedMouseHandler {
 		if (isPressed) {
 			isPressed = false;
 
-			if (registerDragAsClick(e, startX, startY)) {
+			if (registerDragAsClick(e, mouseStartPos)) {
 				mouseClicked(e);
 			}
 		}

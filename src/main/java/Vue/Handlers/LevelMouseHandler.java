@@ -1,6 +1,7 @@
 package Vue.Handlers;
 
 import Vue.Level.LevelPanel;
+import Vue.Utils.Position;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -16,8 +17,7 @@ public class LevelMouseHandler extends AdaptedMouseHandler implements MouseListe
 	private final LevelPanel levelPanel;
 
 	private boolean isPressed = false;
-	private int mouseStartX;
-	private int mouseStartY;
+	private Position mouseStartPos;
 
 
 	/**
@@ -41,7 +41,7 @@ public class LevelMouseHandler extends AdaptedMouseHandler implements MouseListe
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// Check if we have clicked on the reset button
-		levelPanel.getExtrasUI().handleClick(e.getX(), e.getY());
+		levelPanel.getExtrasUI().handleClick(Position.ofEvent(e));
 	}
 
 	/**
@@ -54,8 +54,7 @@ public class LevelMouseHandler extends AdaptedMouseHandler implements MouseListe
 	public void mousePressed(MouseEvent e) {
 		if (!isPressed) {
 			isPressed = true;
-			mouseStartX = e.getX();
-			mouseStartY = e.getY();
+			mouseStartPos = Position.ofEvent(e);
 		}
 	}
 
@@ -71,7 +70,7 @@ public class LevelMouseHandler extends AdaptedMouseHandler implements MouseListe
 		if (isPressed) {
 			isPressed = false;
 
-			if (registerDragAsClick(e, mouseStartX, mouseStartY)) {
+			if (registerDragAsClick(e, mouseStartPos)) {
 				mouseClicked(e);
 			}
 		}

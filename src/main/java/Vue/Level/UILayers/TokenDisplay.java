@@ -6,6 +6,7 @@ import Model.Classes.Utils.Orientation;
 import Model.Classes.Utils.Pair;
 import Vue.Interfaces.Drawable;
 import Vue.Level.LevelPanel;
+import Vue.Utils.Position;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -25,16 +26,20 @@ import java.util.Objects;
 public abstract class TokenDisplay implements Drawable {
 	LevelController levelController;
 	Map<String, BufferedImage> tokenImages = new HashMap<>();
-	Map<Pair<String, Orientation>, BufferedImage> orientedTokenImages = new HashMap<>();
-	Map<Token, Rectangle2D> rectangles = new HashMap<>();
+	Map<Pair<String, Orientation>, BufferedImage> orientedTokenImages;
+	Map<Token, Rectangle2D> rectangles;
 	LevelPanel levelPanel;
 
-	//TODO make this a 3-tuple
-	private Pair<Token, Pair<Integer, Integer>> draggedToken = null;
+	private Pair<Token, Position> draggedToken;
 
 	public TokenDisplay(LevelPanel levelPanel, LevelController levelController) {
 		this.levelController = levelController;
 		this.levelPanel = levelPanel;
+
+		this.orientedTokenImages = new HashMap<>();
+		this.rectangles = new HashMap<>();
+
+		this.draggedToken = null;
 		setTokenImages();
 	}
 
@@ -117,16 +122,11 @@ public abstract class TokenDisplay implements Drawable {
 	 * Sets the token being dragged and its position.
 	 *
 	 * @param token The token being dragged
-	 * @param x     The x position of the mouse
-	 * @param y     The y position of the mouse
+	 * @param pos   The position of the mouse
 	 * @author Nathan Gromb
 	 */
-	public void setDraggedToken(Token token, int x, int y) {
-		draggedToken = new Pair<>(token, new Pair<>(x, y));
-	}
-
-	public Pair<Token, Pair<Integer, Integer>> getDraggedToken() {
-		return draggedToken;
+	public void setDraggedToken(Token token, Position pos) {
+		draggedToken = new Pair<>(token, pos);
 	}
 
 	/**
@@ -143,15 +143,15 @@ public abstract class TokenDisplay implements Drawable {
 	 *
 	 * @author Nathan Gromb
 	 */
-	public Pair<Integer, Integer> getTokenPosition(Token token, int realX, int realY) {
+	public Position getTokenPosition(Token token, Position realPos) {
 		if (isDraggedToken(token)) {
-			int x = draggedToken.second().first();
-			int y = draggedToken.second().second();
+			int x = draggedToken.second().x();
+			int y = draggedToken.second().y();
 
-			return new Pair<>(x - levelPanel.tileWidth / 2, y - levelPanel.tileHeight / 2);
+			return Position.of(x - levelPanel.tileWidth / 2, y - levelPanel.tileHeight / 2);
 		}
 
-		return new Pair<>(realX, realY);
+		return Position.of(realPos.x(), realPos.y());
 	}
 
 	/**
@@ -168,10 +168,10 @@ public abstract class TokenDisplay implements Drawable {
 	 *
 	 * @author Léonard Amsler
 	 */
-	public Token getTokenAtMousePos(int x, int y) {
+	public Token getTokenAtMousePos(Position pos) {
 		for (Map.Entry<Token, Rectangle2D> entry : rectangles.entrySet()) {
 			Rectangle2D rectangle = entry.getValue();
-			if (rectangle.contains(x, y)) {
+			if (rectangle.contains(pos.x(), pos.y())) {
 				return entry.getKey();
 			}
 		}
@@ -183,7 +183,7 @@ public abstract class TokenDisplay implements Drawable {
 	 *
 	 * @author Léonard Amsler
 	 */
-	public void drawToken(Graphics2D g2d, Token token, int x, int y, int tileWidth, int tileHeight) {
+	public void drawToken(Graphics2D g2d, Token token, Position pos, int tileWidth, int tileHeight) {
 
 		String tokenClassName = token.type();
 		boolean isOrientable = token instanceof OrientedToken;
@@ -196,6 +196,6 @@ public abstract class TokenDisplay implements Drawable {
 			tokenImage = tokenImages.get(tokenClassName);
 		}
 
-		g2d.drawImage(tokenImage, x, y, tileWidth, tileHeight, null);
+		g2d.drawImage(tokenImage, pos.x(), pos.y(), tileWidth, tileHeight, null);
 	}
 }

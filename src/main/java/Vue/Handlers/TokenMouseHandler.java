@@ -6,6 +6,7 @@ import Model.Classes.Token.Token;
 import Model.Classes.Utils.Coordinate;
 import Vue.Level.LevelPanel;
 import Vue.Level.UILayers.TokenDisplay;
+import Vue.Utils.Position;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
@@ -23,8 +24,7 @@ public final class TokenMouseHandler extends AdaptedMouseHandler implements Mous
 	private final TokenDisplay tokenDisplay;
 
 	private boolean isPressed;
-	private int mouseStartX;
-	private int mouseStartY;
+	private Position mouseStartPos;
 
 	private Token selectedToken;
 	private boolean isSelectedPlaced;
@@ -58,7 +58,7 @@ public final class TokenMouseHandler extends AdaptedMouseHandler implements Mous
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		if (selectedToken != null) {
-			tokenDisplay.setDraggedToken(selectedToken, e.getX(), e.getY());
+			tokenDisplay.setDraggedToken(selectedToken, Position.ofEvent(e));
 		}
 	}
 
@@ -116,31 +116,29 @@ public final class TokenMouseHandler extends AdaptedMouseHandler implements Mous
 	public void mousePressed(MouseEvent e) {
 		if (!isPressed) {
 			isPressed = true;
-			mouseStartX = e.getX();
-			mouseStartY = e.getY();
+			mouseStartPos = Position.ofEvent(e);
 
-			int boardX = (mouseStartX - levelPanel.widthOffset) / levelPanel.tileWidth;
-			int boardY = (mouseStartY - levelPanel.heightOffset) / levelPanel.tileHeight;
+			int boardX = (mouseStartPos.x() - levelPanel.widthOffset) / levelPanel.tileWidth;
+			int boardY = (mouseStartPos.y() - levelPanel.heightOffset) / levelPanel.tileHeight;
 
 			int boardWidth = levelController.getWidth();
 			int boardHeight = levelController.getHeight();
 
-			selectToken(mouseStartX, mouseStartY, boardX, boardY, boardWidth, boardHeight);
+			selectToken(mouseStartPos, boardX, boardY, boardWidth, boardHeight);
 		}
 	}
 
 	/**
 	 * Method that selects a token given the mouse coordinates (relative to the window and to the board)
 	 *
-	 * @param windowX     the x coordinate of the mouse relative to the window
-	 * @param windowY     the y coordinate of the mouse relative to the window
+	 * @param mousePos    the position of the mouse
 	 * @param boardX      the x coordinate of the mouse in board coordinates
 	 * @param boardY      the y coordinate of the mouse in board coordinates
 	 * @param boardWidth  max board x coordinate
 	 * @param boardHeight max board y coordinate
 	 * @author Nathan Gromb
 	 */
-	private void selectToken(int windowX, int windowY, int boardX, int boardY, int boardWidth, int boardHeight) {
+	private void selectToken(Position mousePos, int boardX, int boardY, int boardWidth, int boardHeight) {
 		// if the press in inside the board
 		if (boardX >= 0 && boardX < boardWidth && boardY >= 0 && boardY < boardHeight) {
 			Coordinate boardCoordinate = new Coordinate(boardX, boardY);
@@ -152,7 +150,7 @@ public final class TokenMouseHandler extends AdaptedMouseHandler implements Mous
 			}
 			// if the press is outside the board (unplaced tokens)
 		} else {
-			Token token = tokenDisplay.getTokenAtMousePos(windowX, windowY);
+			Token token = tokenDisplay.getTokenAtMousePos(mousePos);
 
 			if (token != null) {
 				selectedToken = token;
@@ -177,16 +175,15 @@ public final class TokenMouseHandler extends AdaptedMouseHandler implements Mous
 		if (isPressed) {
 			isPressed = false;
 
-			if (registerDragAsClick(e, mouseStartX, mouseStartY)) {
+			if (registerDragAsClick(e, mouseStartPos)) {
 				mouseClicked(e);
 				return;
 			}
 
-			int mouseEndX = e.getX();
-			int mouseEndY = e.getY();
+			Position mouseEndPos = Position.ofEvent(e);
 
-			int boardX = (mouseEndX - levelPanel.widthOffset) / levelPanel.tileWidth;
-			int boardY = (mouseEndY - levelPanel.heightOffset) / levelPanel.tileHeight;
+			int boardX = (mouseEndPos.x() - levelPanel.widthOffset) / levelPanel.tileWidth;
+			int boardY = (mouseEndPos.y() - levelPanel.heightOffset) / levelPanel.tileHeight;
 
 			if (selectedToken == null) {
 				return;
@@ -198,7 +195,9 @@ public final class TokenMouseHandler extends AdaptedMouseHandler implements Mous
 
 				// if the selected token is already on the board, move it
 				if (isSelectedPlaced) {
-					Coordinate from = new Coordinate((mouseStartX - levelPanel.widthOffset) / levelPanel.tileWidth, (mouseStartY - levelPanel.heightOffset) / levelPanel.tileHeight);
+					int x = (mouseStartPos.x() - levelPanel.widthOffset) / levelPanel.tileWidth;
+					int y = (mouseStartPos.y() - levelPanel.heightOffset) / levelPanel.tileHeight;
+					Coordinate from = new Coordinate(x, y);
 					levelController.moveToken(from, coordinate);
 					// else, place it
 				} else {
@@ -206,7 +205,7 @@ public final class TokenMouseHandler extends AdaptedMouseHandler implements Mous
 				}
 				// if the mouse is released outside the board, pass the responsibility to the extras UI
 			} else {
-				levelPanel.getExtrasUI().handleTokenDrop(selectedToken, mouseEndX, mouseEndY, levelController);
+				levelPanel.getExtrasUI().handleTokenDrop(selectedToken, mouseEndPos, levelController);
 			}
 
 			// the mouse is released, the token is not selected anymore

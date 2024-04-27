@@ -28,188 +28,187 @@ import static Vue.Utils.ImageUtil.resizeImage;
  * @Author Nathan Gromb - s231674
  */
 public class CampaignPanel extends JPanel {
-    private final JFrame frame;
-    private final JPanel buttons;
-    private final JLabel backButton;
-    GameController gameController;
-    LoginController loginController;
-    private int tileWidth = 16;
-    private int tileHeight = 16;
+	private final JFrame frame;
+	private final JPanel buttons;
+	private final JLabel backButton;
+	GameController gameController;
+	LoginController loginController;
+	private int tileWidth = 16;
+	private int tileHeight = 16;
 
-    /**
-     * Constructor of the campaign panel class
-     *
-     * @param frame          - The frame
-     * @param gameController - The game controller
-     * @Author Léonard Amsler - s231715
-     * @Author Nathan Gromb - s231674
-     */
-    public CampaignPanel(JFrame frame, GameController gameController, LoginController loginController) {
-        this.loginController = loginController;
-        this.gameController = gameController;
-        this.frame = frame;
+	/**
+	 * Constructor of the campaign panel class
+	 *
+	 * @param frame          - The frame
+	 * @param gameController - The game controller
+	 * @Author Léonard Amsler - s231715
+	 * @Author Nathan Gromb - s231674
+	 */
+	public CampaignPanel(JFrame frame, GameController gameController, LoginController loginController) {
+		this.loginController = loginController;
+		this.gameController = gameController;
+		this.frame = frame;
 
-        setDoubleBuffered(true);
+		setDoubleBuffered(true);
 
-        setLayout(new BorderLayout());
+		setLayout(new BorderLayout());
 
-        // Background image
-        ImageIcon backgroundImage = new ImageIcon("src/main/java/Vue/Resources/Tiles/background.png");
-        ImagePanel backgroundPanel = new ImagePanel(backgroundImage.getImage());
-        backgroundPanel.setLayout(new BorderLayout());
-        add(backgroundPanel, BorderLayout.CENTER);
+		// Background image
+		ImageIcon backgroundImage = new ImageIcon("src/main/java/Vue/Resources/Tiles/background.png");
+		ImagePanel backgroundPanel = new ImagePanel(backgroundImage.getImage());
+		backgroundPanel.setLayout(new BorderLayout());
+		add(backgroundPanel, BorderLayout.CENTER);
 
-        // Create and add level buttons
-        this.buttons = getLevelButtons();
-        backgroundPanel.add(buttons, BorderLayout.CENTER);
+		// Create and add level buttons
+		this.buttons = getLevelButtons();
+		backgroundPanel.add(buttons, BorderLayout.CENTER);
 
-        this.backButton = getBackButton();
-        backgroundPanel.add(backButton, BorderLayout.SOUTH);
+		this.backButton = getBackButton();
+		backgroundPanel.add(backButton, BorderLayout.SOUTH);
 
+		this.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				resize();
+			}
+		});
+	}
 
-        this.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                resize();
-            }
-        });
-    }
+	/**
+	 * Get the level buttons
+	 *
+	 * @return JPanel - The level buttons
+	 * @Author Léonard Amsler - s231715
+	 * @Author Nathan Gromb - s231674
+	 */
+	private JPanel getLevelButtons() {
+		int campaignProgression = loginController.getCampaignProgress();
+		campaignProgression += 1; // The user should be able to play the next level
 
-    /**
-     * Resize the campaign panel
-     *
-     * @Author Léonard Amsler - s231715
-     * @Author Nathan Gromb - s231674
-     */
-    public void resize() {
+		JPanel levelButtonPanel = new JPanel();
+		int rows = 4; // TODO depend on amount of campaign levels
+		int cols = 4;
+		levelButtonPanel.setLayout(new GridLayout(rows, cols, 0, 0));
 
-        tileWidth = 100;
-        tileHeight = 100;
+		levelButtonPanel.setOpaque(false); // Make the panel transparent
 
-        // Set button sizes and positions
-        for (Component component : buttons.getComponents()) {
-            if (component instanceof JLabel button) {
-                ImageIcon icon = new ImageIcon("src/main/java/Vue/Resources/Tiles/boardTile1.png");
-                ImageIcon scaledIcon = new ImageIcon(icon.getImage().getScaledInstance(tileWidth, tileHeight, Image.SCALE_DEFAULT));
-                button.setIcon(scaledIcon);
-                button.setFont(new Font("MonoSpaced", Font.BOLD, tileWidth / 2));
-            }
-        }
+		int padding = 50;
+		levelButtonPanel.setBorder(BorderFactory.createEmptyBorder(padding, padding, padding, padding));
 
-        // Update back button size and position
-        int backButtonSize = tileWidth / 3 * 2;
+		BufferedImage enable_image = null;
+		BufferedImage disable_image = null;
+		try {
+			enable_image = ImageIO.read(new File("src/main/java/Vue/Resources/Tiles/boardTile1.png"));
+			disable_image = ImageIO.read(new File("src/main/java/Vue/Resources/Tiles/disabled_boardTile.png"));
+		} catch (Exception e) {
+			System.out.println("Error loading campaign button image");
+		}
+		assert enable_image != null;
+		assert disable_image != null;
 
-        // Set the size and position of the back button
-        backButton.setPreferredSize(new Dimension(backButtonSize, backButtonSize));
-        JLabel button = backButton;
-        ImageIcon icon = new ImageIcon("src/main/java/Vue/Resources/Objects/reset.png");
-        ImageIcon scaledIcon = new ImageIcon(icon.getImage().getScaledInstance(backButtonSize, backButtonSize, Image.SCALE_DEFAULT));
-        button.setIcon(scaledIcon);
-        button.setFont(new Font("MonoSpaced", Font.BOLD, tileWidth / 2));
-    }
+		int scale = 5;
+		enable_image = resizeImage(enable_image, tileWidth * scale, tileHeight * scale);
+		disable_image = resizeImage(disable_image, tileWidth * scale, tileHeight * scale);
 
-    /**
-     * Get the level buttons
-     *
-     * @return JPanel - The level buttons
-     * @Author Léonard Amsler - s231715
-     * @Author Nathan Gromb - s231674
-     */
-    private JPanel getLevelButtons() {
-        int campaignProgression = loginController.getCampaignProgress();
-        campaignProgression += 1; // The user should be able to play the next level
+		List<LevelID> levelIDs = DataReader.readCampaignLevelIDs();
 
-        JPanel levelButtonPanel = new JPanel();
-        int rows = 4; // TODO depend on amount of campaign levels
-        int cols = 4;
-        levelButtonPanel.setLayout(new GridLayout(rows, cols, 0, 0));
+		int i = 1;
 
-        levelButtonPanel.setOpaque(false); // Make the panel transparent
+		for (LevelID levelID : levelIDs) {
+			ImageIcon scaledIcon = new ImageIcon(enable_image);
+			JButton levelButton = new JButton(String.valueOf(i++), scaledIcon);
 
-        int padding = 50;
-        levelButtonPanel.setBorder(BorderFactory.createEmptyBorder(padding, padding, padding, padding));
+			levelButton.setHorizontalAlignment(SwingConstants.CENTER);
 
-        BufferedImage enable_image = null;
-        BufferedImage disable_image = null;
-        try {
-            enable_image = ImageIO.read(new File("src/main/java/Vue/Resources/Tiles/boardTile1.png"));
-            disable_image = ImageIO.read(new File("src/main/java/Vue/Resources/Tiles/disabled_boardTile.png"));
-        } catch (Exception e) {
-            System.out.println("Error loading campaign button image");
-        }
-        assert enable_image != null;
-        assert disable_image != null;
+			levelButton.setHorizontalTextPosition(SwingConstants.CENTER);
+			levelButton.setVerticalTextPosition(SwingConstants.CENTER);
+			levelButton.setFont(new Font("MonoSpaced", Font.BOLD, 30));
 
-        int scale = 5;
-        enable_image = resizeImage(enable_image, tileWidth * scale, tileHeight * scale);
-        disable_image = resizeImage(disable_image, tileWidth * scale, tileHeight * scale);
+			ButtonUtil.setButtonTransparent(levelButton);
 
-        List<LevelID> levelIDs = DataReader.readCampaignLevelIDs();
+			levelButton.addMouseListener(new java.awt.event.MouseAdapter() {
+				public void mouseClicked(java.awt.event.MouseEvent evt) {
+					Sound.playButtonSound();
 
-        int i = 1;
+					if (!levelButton.isEnabled()) {
+						return;
+					}
+					preparePlayableLevel(new LevelID("level" + levelButton.getText()), frame, gameController, loginController);
+				}
+			});
+			levelButton.addMouseListener(new ButtonHoverHandler());
 
-        for (LevelID levelID : levelIDs) {
-            ImageIcon scaledIcon = new ImageIcon(enable_image);
-            JButton levelButton = new JButton(String.valueOf(i++), scaledIcon);
+			if (i <= campaignProgression) {
+				levelButton.setEnabled(true);
+			} else {
+				levelButton.setEnabled(false);
+				// apply a gray filter to the button
+				levelButton.setDisabledIcon(new ImageIcon(disable_image));
+			}
 
-            levelButton.setHorizontalAlignment(SwingConstants.CENTER);
+			levelButtonPanel.add(levelButton);
+		}
 
-            levelButton.setHorizontalTextPosition(SwingConstants.CENTER);
-            levelButton.setVerticalTextPosition(SwingConstants.CENTER);
-            levelButton.setFont(new Font("MonoSpaced", Font.BOLD, 30));
+		return levelButtonPanel;
+	}
 
-            ButtonUtil.setButtonTransparent(levelButton);
+	/**
+	 * Get the back button
+	 *
+	 * @return JLabel - The back button
+	 * @Author Nathan Gromb - s231674
+	 */
+	private JLabel getBackButton() {
+		JLabel button = new JLabel();
 
-            levelButton.addMouseListener(new java.awt.event.MouseAdapter() {
-                public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    Sound.playButtonSound(null); // TODO null
+		button.setHorizontalAlignment(SwingConstants.CENTER);
+		button.setVerticalAlignment(SwingConstants.CENTER);
 
-                    if (!levelButton.isEnabled()) {
-                        return;
-                    }
-                    preparePlayableLevel(new LevelID("level" + levelButton.getText()), frame, gameController, loginController);
-                }
-            });
-            levelButton.addMouseListener(new ButtonHoverHandler());
+		int padding = 50;
+		button.setBorder(BorderFactory.createEmptyBorder(padding, padding, padding, padding));
 
-            if (i <= campaignProgression) {
-                levelButton.setEnabled(true);
-            } else {
-                levelButton.setEnabled(false);
-                // apply a gray filter to the button
-                levelButton.setDisabledIcon(new ImageIcon(disable_image));
-            }
+		button.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				Sound.playButtonSound();
+				frame.getContentPane().remove(CampaignPanel.this);
+				showPanel(frame, "MainMenu");
+			}
+		});
+		button.addMouseListener(new ButtonHoverHandler());
 
-            levelButtonPanel.add(levelButton);
-        }
+		return button;
+	}
 
-        return levelButtonPanel;
-    }
+	/**
+	 * Resize the campaign panel
+	 *
+	 * @Author Léonard Amsler - s231715
+	 * @Author Nathan Gromb - s231674
+	 */
+	public void resize() {
 
-    /**
-     * Get the back button
-     *
-     * @return JLabel - The back button
-     * @Author Nathan Gromb - s231674
-     */
-    private JLabel getBackButton() {
-        JLabel button = new JLabel();
+		tileWidth = 100;
+		tileHeight = 100;
 
-        button.setHorizontalAlignment(SwingConstants.CENTER);
-        button.setVerticalAlignment(SwingConstants.CENTER);
+		// Set button sizes and positions
+		for (Component component : buttons.getComponents()) {
+			if (component instanceof JLabel button) {
+				ImageIcon icon = new ImageIcon("src/main/java/Vue/Resources/Tiles/boardTile1.png");
+				ImageIcon scaledIcon = new ImageIcon(icon.getImage().getScaledInstance(tileWidth, tileHeight, Image.SCALE_DEFAULT));
+				button.setIcon(scaledIcon);
+				button.setFont(new Font("MonoSpaced", Font.BOLD, tileWidth / 2));
+			}
+		}
 
-        int padding = 50;
-        button.setBorder(BorderFactory.createEmptyBorder(padding, padding, padding, padding));
+		// Update back button size and position
+		int backButtonSize = tileWidth / 3 * 2;
 
-        button.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent e) {
-                Sound.playButtonSound(null); // TODO null
-                frame.getContentPane().remove(CampaignPanel.this);
-                showPanel(frame, "MainMenu");
-            }
-        });
-        button.addMouseListener(new ButtonHoverHandler());
-
-        return button;
-    }
+		// Set the size and position of the back button
+		backButton.setPreferredSize(new Dimension(backButtonSize, backButtonSize));
+		JLabel button = backButton;
+		ImageIcon icon = new ImageIcon("src/main/java/Vue/Resources/Objects/reset.png");
+		ImageIcon scaledIcon = new ImageIcon(icon.getImage().getScaledInstance(backButtonSize, backButtonSize, Image.SCALE_DEFAULT));
+		button.setIcon(scaledIcon);
+		button.setFont(new Font("MonoSpaced", Font.BOLD, tileWidth / 2));
+	}
 }

@@ -91,7 +91,7 @@ public abstract class LevelPanel extends JPanel implements Runnable {
 		widthOffset = (this.screenWidth - boardWidth * tileWidth) / 2;
 		heightOffset = (this.screenHeight - boardHeight * tileHeight) / 2;
 
-		tilesUI = new TilesUI(this, levelController);
+		tilesUI = new TilesUI(this);
 		tokensUI = new TokensUI(this, levelController);
 		laserUI = new LaserUI(this, levelController);
 
