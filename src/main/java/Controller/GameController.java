@@ -3,8 +3,9 @@ package Controller;
 import Model.Classes.Level.Level;
 import Model.Classes.Level.LevelBuilder;
 import Model.Classes.Level.LevelID;
+import Model.Classes.Utils.DataReader;
 
-import java.io.File;
+import java.util.List;
 
 public class GameController {
 
@@ -47,13 +48,24 @@ public class GameController {
         return this.campaignGameMode;
     }
 
-    public int getMaxCampaignLevel() {
-        // Get the number of json file into the Model/Ressources/campaign folder
-        String Path = "src/main/java/Model/Resources/campaign";
-        File folder = new File(Path);
-        File[] listOfFiles = folder.listFiles();
-        assert listOfFiles != null;
-        System.out.println("Number of files in the campaign folder: " + listOfFiles.length);
-        return listOfFiles.length;
+    /**
+     * Get the list of level IDs for the campaign mode
+     *
+     * @return List of level IDs
+     * @author Hugo Demule
+     */
+    public List<LevelID> getCampaignLevelIDs() {
+        return DataReader.readCampaignLevelIDs();
     }
+
+    /**
+     * Get the list of level IDs for the sandbox mode
+     *
+     * @return List of level IDs
+     * @author Hugo Demule
+     */
+    public List<LevelID> getSandboxLevelIDs() {
+        return DataReader.readSandboxLevelIDs();
+    }
+
 }

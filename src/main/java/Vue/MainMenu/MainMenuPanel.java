@@ -3,6 +3,9 @@ package Vue.MainMenu;
 import Controller.GameController;
 import Controller.LoginController;
 import Model.Classes.Level.LevelID;
+import Vue.Constants.JComponentsNames;
+import Vue.Constants.Style;
+import Vue.Constants.VueFilePaths;
 import Vue.Handlers.ButtonHoverHandler;
 import Vue.SoundEffects.Sound;
 
@@ -28,6 +31,9 @@ import static Vue.Utils.ImageUtil.resizeImage;
  */
 public class MainMenuPanel extends JPanel {
 
+
+    private final int MAX_WIDTH = 200;
+    private final int MAX_HEIGHT = 300;
     Thread mainMenuThread;
     GameController gameController;
     LoginController loginController;
@@ -55,7 +61,7 @@ public class MainMenuPanel extends JPanel {
         setLayout(new BorderLayout());
 
         // Background image
-        ImageIcon backgroundImage = new ImageIcon("src/main/java/Vue/Resources/Tiles/background.png");
+        ImageIcon backgroundImage = new ImageIcon(VueFilePaths.BACKGROUND_IMAGE);
         ImagePanel backgroundPanel = new ImagePanel(backgroundImage.getImage());
         backgroundPanel.setLayout(new BorderLayout());
         add(backgroundPanel, BorderLayout.CENTER);
@@ -66,26 +72,25 @@ public class MainMenuPanel extends JPanel {
         topPanel.setLayout(new BorderLayout());
 
 
-        topPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        topPanel.setBorder(BorderFactory.createEmptyBorder(Style.Padding.L, Style.Padding.L, Style.Padding.L, Style.Padding.L));
         backgroundPanel.add(topPanel, BorderLayout.NORTH);
 
         // Title label
-        JLabel titleLabel = new JLabel("Laser Maze", SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Courier New", Font.BOLD, 30));
+        JLabel titleLabel = new JLabel(JComponentsNames.Label.LASER_MAZE, SwingConstants.CENTER);
+        titleLabel.setFont(new Font(Style.Font.COURIER_NEW, Font.BOLD, Style.FontSize.H1));
         titleLabel.setForeground(Color.LIGHT_GRAY);
         topPanel.add(titleLabel, BorderLayout.SOUTH);
 
 
         // Logout button
-        JButton logoutButton = new JButton("Logout");
+        JButton logoutButton = new JButton(JComponentsNames.Label.LOGOUT);
         logoutButton.addActionListener(e -> {
             Sound.playButtonSound(null); // TODO null
-            System.out.println("Logout button clicked");
             loginController.logout();
-            showPanel(frame, "LoginMenu");
+            showPanel(frame, JComponentsNames.FrameID.LOGIN);
         });
         logoutButton.addMouseListener(new ButtonHoverHandler());
-        logoutButton.setFont(new Font("Courier New", Font.PLAIN, 20));
+        logoutButton.setFont(new Font(Style.Font.COURIER_NEW, Font.PLAIN, Style.FontSize.H2));
         logoutButton.setForeground(Color.LIGHT_GRAY);
         setButtonTransparent(logoutButton);
         logoutButton.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -104,16 +109,16 @@ public class MainMenuPanel extends JPanel {
         footerPanel.setOpaque(false);
         footerPanel.setLayout(new BorderLayout());
 
-        JLabel footerLabel = new JLabel("Made by group 3", SwingConstants.RIGHT);
-        footerLabel.setFont(new Font("Courier New", Font.PLAIN, 10));
+        JLabel footerLabel = new JLabel(JComponentsNames.Label.FOOTER, SwingConstants.RIGHT);
+        footerLabel.setFont(new Font(Style.Font.COURIER_NEW, Font.PLAIN, Style.FontSize.H3));
         footerLabel.setForeground(Color.LIGHT_GRAY);
-        footerLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        footerLabel.setBorder(BorderFactory.createEmptyBorder(Style.Padding.S, Style.Padding.S, Style.Padding.S, Style.Padding.S));
         footerPanel.add(footerLabel, BorderLayout.EAST);
 
-        JLabel loginLabel = new JLabel("Logged in as: " + loginController.getCurrentUsername().username, SwingConstants.LEFT);
-        loginLabel.setFont(new Font("Courier New", Font.PLAIN, 10));
+        JLabel loginLabel = new JLabel(JComponentsNames.Label.LOGGED_AS + loginController.getCurrentUsername().username, SwingConstants.LEFT);
+        loginLabel.setFont(new Font(Style.Font.COURIER_NEW, Font.PLAIN, Style.FontSize.H3));
         loginLabel.setForeground(Color.LIGHT_GRAY);
-        loginLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        loginLabel.setBorder(BorderFactory.createEmptyBorder(Style.Padding.S, Style.Padding.S, Style.Padding.S, Style.Padding.S));
         footerPanel.add(loginLabel, BorderLayout.WEST);
 
         backgroundPanel.add(footerPanel, BorderLayout.SOUTH);
@@ -132,7 +137,7 @@ public class MainMenuPanel extends JPanel {
     private JPanel createButtonPanel(JFrame frame) {
         // Button panel for the three buttons
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(3, 1, 0, 30));
+        buttonPanel.setLayout(new GridLayout(Style.Grid.MainMenu.ROWS, Style.Grid.MainMenu.COLS, 0, Style.Padding.XL));
         buttonPanel.setOpaque(false); // Make the panel transparent
 
         int width = frame.getWidth();
@@ -141,11 +146,11 @@ public class MainMenuPanel extends JPanel {
         int sidePadding = 0;
         int topPadding = 0;
 
-        if (width > 200) {
-            sidePadding = (width - 200) / 2;
+        if (width > MAX_WIDTH) {
+            sidePadding = (width - MAX_WIDTH) / 2;
         }
-        if (height > 300) {
-            topPadding = (height - 300) / 2;
+        if (height > MAX_HEIGHT) {
+            topPadding = (height - MAX_HEIGHT) / 2;
         }
 
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(topPadding, sidePadding, topPadding, sidePadding));
@@ -156,9 +161,9 @@ public class MainMenuPanel extends JPanel {
         BufferedImage sandboxButtonImage = null;
         BufferedImage randomButtonImage = null;
         try {
-            campaignButtonImage = ImageIO.read(new File("src/main/java/Vue/Resources/MenuButtons/campaign.png"));
-            sandboxButtonImage = ImageIO.read(new File("src/main/java/Vue/Resources/MenuButtons/sandbox.png"));
-            randomButtonImage = ImageIO.read(new File("src/main/java/Vue/Resources/MenuButtons/random.png"));
+            campaignButtonImage = ImageIO.read(new File(VueFilePaths.CAMPAIGN_LEVELS_BUTTON));
+            sandboxButtonImage = ImageIO.read(new File(VueFilePaths.SANDBOX_LEVELS_BUTTON));
+            randomButtonImage = ImageIO.read(new File(VueFilePaths.RANDOM_LEVELS_BUTTON));
         } catch (Exception e) {
             System.out.println("Error loading campaign button image");
         }
@@ -182,25 +187,21 @@ public class MainMenuPanel extends JPanel {
 
         // Add action listeners to buttons
         campaignButton.addActionListener(e -> {
-            System.out.println("Campaign button clicked");
             Sound.playButtonSound(campaignButtonClickSound);
             displayCampaignLevels(frame);
         });
         campaignButton.addMouseListener(new ButtonHoverHandler());
         sandboxButton.addActionListener(e -> {
             Sound.playButtonSound(campaignButtonClickSound);
-            System.out.println("Sandbox button clicked");
             displaySandboxLevels(frame);
         });
         sandboxButton.addMouseListener(new ButtonHoverHandler());
         randomButton.addActionListener(e -> {
             Sound.playButtonSound(campaignButtonClickSound);
-            System.out.println("Random button clicked");
 
             gameController.turnOffCampaignGameMode();
-            int maxLevel = gameController.getMaxCampaignLevel();
-            int randomLevel = (int) (Math.random() * maxLevel) + 1;
-            preparePlayableLevel(new LevelID("level" + randomLevel), frame, gameController, loginController);
+            LevelID randomLevelID = gameController.getSandboxLevelIDs().get((int) (Math.random() * gameController.getSandboxLevelIDs().size()));
+            preparePlayableLevel(randomLevelID, frame, gameController, loginController);
         });
         randomButton.addMouseListener(new ButtonHoverHandler());
 
@@ -222,18 +223,17 @@ public class MainMenuPanel extends JPanel {
         this.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                System.out.println("Resized mainmenu");
                 int width = frame.getWidth();
                 int height = frame.getHeight();
 
                 int sidePadding = 0;
                 int topPadding = 0;
 
-                if (width > 200) {
-                    sidePadding = (width - 200) / 2;
+                if (width > MAX_WIDTH) {
+                    sidePadding = (width - MAX_WIDTH) / 2;
                 }
-                if (height > 300) {
-                    topPadding = (height - 300) / 2;
+                if (height > MAX_HEIGHT) {
+                    topPadding = (height - MAX_HEIGHT) / 2;
                 }
                 buttonPanel.setBorder(BorderFactory.createEmptyBorder(topPadding, sidePadding, topPadding, sidePadding));
                 buttonPanel.repaint();
@@ -253,7 +253,7 @@ public class MainMenuPanel extends JPanel {
     public void displayCampaignLevels(JFrame frame) {
         gameController.turnOnCampaignGameMode();
         CampaignPanel campaignPanel = new CampaignPanel(frame, gameController, loginController);
-        frame.add(campaignPanel, "CampaignLevels");
+        frame.add(campaignPanel, JComponentsNames.FrameID.CAMPAIGN_LEVELS);
         frame.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
@@ -261,13 +261,13 @@ public class MainMenuPanel extends JPanel {
             }
         });
 
-        showPanel(frame, "CampaignLevels");
+        showPanel(frame, JComponentsNames.FrameID.CAMPAIGN_LEVELS);
         frame.pack();
     }
 
     private void displaySandboxLevels(JFrame frame) {
         SandboxPanel sandboxPanel = new SandboxPanel(frame, gameController, loginController);
-        frame.add(sandboxPanel, "SandboxLevels");
+        frame.add(sandboxPanel, JComponentsNames.FrameID.SANDBOX_LEVELS);
         frame.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
@@ -275,7 +275,7 @@ public class MainMenuPanel extends JPanel {
             }
         });
 
-        showPanel(frame, "SandboxLevels");
+        showPanel(frame, JComponentsNames.FrameID.SANDBOX_LEVELS);
         frame.pack();
     }
 

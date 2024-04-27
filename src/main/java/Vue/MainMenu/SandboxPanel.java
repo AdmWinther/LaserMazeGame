@@ -187,7 +187,6 @@ public class SandboxPanel extends JPanel {
                 }
             };
             levelPanel.setLayout(new BorderLayout());
-            levelPanel.setPreferredSize(new Dimension(scaledIcon.getIconWidth(), scaledIcon.getIconHeight()));
 
 
             JPanel levelNameContainer = new JPanel();
@@ -200,7 +199,8 @@ public class SandboxPanel extends JPanel {
             try {
                 levelNameString = DataReader.readLevelIDName(levelID);
                 int lengthLimit = 25;
-                if (levelNameString.length() > lengthLimit) levelNameString = levelNameString.substring(0, lengthLimit) + "...";
+                if (levelNameString.length() > lengthLimit)
+                    levelNameString = levelNameString.substring(0, lengthLimit) + "...";
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -263,14 +263,14 @@ public class SandboxPanel extends JPanel {
 
             deleteButton.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Sound.playButtonSound(null); // TODO null
-                System.out.println(levelID.value() + " DELETE");
-                try {
-                    DataWriter.delete(levelID);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                refresh();
+                    Sound.playButtonSound(null); // TODO null
+                    System.out.println(levelID.value() + " DELETE");
+                    try {
+                        DataWriter.delete(levelID);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    refresh();
                 }
             });
             deleteButton.addMouseListener(new ButtonHoverHandler());
@@ -281,7 +281,7 @@ public class SandboxPanel extends JPanel {
         return levelButtonPanel;
     }
 
-    private void refresh(){
+    private void refresh() {
         frame.add(new SandboxPanel(frame, gameController, loginController), "SandboxLevels");
         frame.getContentPane().remove(this);
         frame.revalidate();

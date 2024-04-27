@@ -1,0 +1,17 @@
+{
+    "unplacedTokens": [],
+    "boardSize": {
+        "widthX": 7,
+        "heightY": 7
+    },
+    "name": "Sandbox Level 1",
+    "placedTokens": [{
+        "orientation": "RIGHT",
+        "tokenId": "Splitter_2133657820",
+        "position": {
+            "x": 3,
+            "y": 3
+        },
+        "type": "Splitter"
+    }]
+}
