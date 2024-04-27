@@ -8,7 +8,6 @@ import Vue.Level.LevelPanel;
 import Vue.Level.UILayers.TokenDisplay;
 
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 /**
@@ -18,166 +17,218 @@ import java.awt.event.MouseMotionListener;
  * @author Nathan Gromb
  * @author Leonard Amsler
  */
-public class TokenMouseHandler extends AdaptedMouseHandler implements MouseListener, MouseMotionListener {
-    final LevelController levelController;
-    final LevelPanel levelPanel;
-    final TokenDisplay tokenDisplay;
+public final class TokenMouseHandler extends AdaptedMouseHandler implements MouseMotionListener {
+	private final LevelController levelController;
+	private final LevelPanel levelPanel;
+	private final TokenDisplay tokenDisplay;
 
-    boolean isPressed = false;
-    int startX;
-    int startY;
+	private boolean isPressed;
+	private int mouseStartX;
+	private int mouseStartY;
 
-    Token selectedToken = null;
-    boolean isSelectedPlaced = false;
+	private Token selectedToken;
+	private boolean isSelectedPlaced;
 
-    public TokenMouseHandler(LevelPanel levelPanel, LevelController levelController, TokenDisplay tokenDisplay) {
-        this.levelPanel = levelPanel;
-        this.levelController = levelController;
-        this.tokenDisplay = tokenDisplay;
-    }
+	/**
+	 * Constructor of the TokenMouseHandler
+	 *
+	 * @param levelPanel      the panel of the level
+	 * @param levelController the controller of the level
+	 * @param tokenDisplay    the token display of the level
+	 * @author Nathan Gromb
+	 * @author Leonard Amsler
+	 */
+	public TokenMouseHandler(LevelPanel levelPanel, LevelController levelController, TokenDisplay tokenDisplay) {
+		this.levelPanel = levelPanel;
+		this.levelController = levelController;
+		this.tokenDisplay = tokenDisplay;
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        selectedToken = null;
-        tokenDisplay.resetDraggedToken();
+		this.isPressed = false;
+		this.selectedToken = null;
+		this.isSelectedPlaced = false;
+	}
 
-        int tileWidth = levelPanel.tileWidth;
-        int tileHeight = levelPanel.tileHeight;
+	/**
+	 * Method that handles the mouse drag event
+	 * Sets the UI's dragged token to the selected token
+	 *
+	 * @param e the event to be processed
+	 * @author Nathan Gromb
+	 */
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		if (selectedToken != null) {
+			tokenDisplay.setDraggedToken(selectedToken, e.getX(), e.getY());
+		}
+	}
 
-        int widthOffset = levelPanel.widthOffset;
-        int heightOffset = levelPanel.heightOffset;
+	/**
+	 * Method that handles the mouse move event
+	 *
+	 * @param e the event to be processed
+	 * @author Léonard Amsler
+	 */
+	@Override
+	public void mouseMoved(MouseEvent e) {}
 
-        int x_coordinate = (e.getX() - widthOffset) / tileWidth;
-        int y_coordinate = (e.getY() - heightOffset) / tileHeight;
+	/**
+	 * Method that handles the mouse click event
+	 * If the click is on a token, it rotates it
+	 *
+	 * @param e the event to be processed
+	 * @author Léonard Amsler
+	 * @author Nathan Gromb
+	 */
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		selectedToken = null;
+		tokenDisplay.resetDraggedToken();
 
-        int maxWidth = levelController.getWidth();
-        int maxHeight = levelController.getHeight();
+		int widthOffset = levelPanel.widthOffset;
+		int heightOffset = levelPanel.heightOffset;
 
-        if (x_coordinate >= 0 && x_coordinate < maxWidth && y_coordinate >= 0 && y_coordinate < maxHeight) {
-            System.out.println("Clicked on: " + x_coordinate + ", " + y_coordinate);
-            Coordinate coordinate = new Coordinate(x_coordinate, y_coordinate);
+		int x_coordinate = (e.getX() - widthOffset) / levelPanel.tileWidth;
+		int y_coordinate = (e.getY() - heightOffset) / levelPanel.tileHeight;
 
-            Token other = levelController.getTokenAt(coordinate);
+		int maxWidth = levelController.getWidth();
+		int maxHeight = levelController.getHeight();
 
-            if (other != null && other.isMovable() && other instanceof OrientedToken) {
-                levelController.rotateToken(other);
-            }
+		if (x_coordinate >= 0 && x_coordinate < maxWidth && y_coordinate >= 0 && y_coordinate < maxHeight) {
+			Coordinate coordinate = new Coordinate(x_coordinate, y_coordinate);
 
-        }
-    }
+			Token other = levelController.getTokenAt(coordinate);
 
-    @Override
-    public void mousePressed(MouseEvent e) {
-        if (!isPressed) {
-            isPressed = true;
-            startX = e.getX();
-            startY = e.getY();
-            int tileWidth = levelPanel.tileWidth;
-            int tileHeight = levelPanel.tileHeight;
+			if (other != null && other.isMovable() && other instanceof OrientedToken) {
+				levelController.rotateToken(other);
+			}
+		}
+	}
 
-            int widthOffset = levelPanel.widthOffset;
-            int heightOffset = levelPanel.heightOffset;
+	/**
+	 * Method that handles the mouse press event
+	 * If the press is on a token, it selects it
+	 *
+	 * @param e the event to be processed
+	 * @author Léonard Amsler
+	 * @author Nathan Gromb
+	 */
+	@Override
+	public void mousePressed(MouseEvent e) {
+		if (!isPressed) {
+			isPressed = true;
+			mouseStartX = e.getX();
+			mouseStartY = e.getY();
 
-            int x_coordinate = (startX - widthOffset) / tileWidth;
-            int y_coordinate = (startY - heightOffset) / tileHeight;
+			int boardX = (mouseStartX - levelPanel.widthOffset) / levelPanel.tileWidth;
+			int boardY = (mouseStartY - levelPanel.heightOffset) / levelPanel.tileHeight;
 
-            int maxWidth = levelController.getWidth();
-            int maxHeight = levelController.getHeight();
+			int boardWidth = levelController.getWidth();
+			int boardHeight = levelController.getHeight();
 
-            if (x_coordinate >= 0 && x_coordinate < maxWidth && y_coordinate >= 0 && y_coordinate < maxHeight) {
-                Coordinate coordinate = new Coordinate(x_coordinate, y_coordinate);
-                Token token = levelController.getTokenAt(coordinate);
-                if (token != null && token.isMovable()) {
-                    selectedToken = token;
-                    isSelectedPlaced = true;
-                }
-            } else {
-                Token token = tokenDisplay.getTokenAt(startX, startY);
-                System.out.println("Token chosen: " + token);
-                if (token != null) {
-                    selectedToken = token;
-                    isSelectedPlaced = false;
-                }
-            }
-        }
-    }
+			selectToken(mouseStartX, mouseStartY, boardX, boardY, boardWidth, boardHeight);
+		}
+	}
 
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        tokenDisplay.resetDraggedToken();
+	/**
+	 * Method that selects a token given the mouse coordinates (relative to the window and to the board)
+	 *
+	 * @param windowX     the x coordinate of the mouse relative to the window
+	 * @param windowY     the y coordinate of the mouse relative to the window
+	 * @param boardX      the x coordinate of the mouse in board coordinates
+	 * @param boardY      the y coordinate of the mouse in board coordinates
+	 * @param boardWidth  max board x coordinate
+	 * @param boardHeight max board y coordinate
+	 * @author Nathan Gromb
+	 */
+	private void selectToken(int windowX, int windowY, int boardX, int boardY, int boardWidth, int boardHeight) {
+		// if the press in inside the board
+		if (boardX >= 0 && boardX < boardWidth && boardY >= 0 && boardY < boardHeight) {
+			Coordinate boardCoordinate = new Coordinate(boardX, boardY);
+			Token token = levelController.getTokenAt(boardCoordinate);
 
-        if (isPressed) {
-            isPressed = false;
+			if (token != null && token.isMovable()) {
+				selectedToken = token;
+				isSelectedPlaced = true;
+			}
+			// if the press is outside the board (unplaced tokens)
+		} else {
+			Token token = tokenDisplay.getTokenAtMousePos(windowX, windowY);
 
-            int endX = e.getX();
-            int endY = e.getY();
+			if (token != null) {
+				selectedToken = token;
+				isSelectedPlaced = false;
+			}
+		}
+	}
 
-            if (registerDragAsClick(e, startX, startY)) {
-                mouseClicked(e);
-                return;
-            }
+	/**
+	 * Method that handles the mouse release event
+	 * If the release is on a valid position, it moves the token
+	 * If the release is outside the board, it passes the responsibility to the extras UI
+	 *
+	 * @param e the event to be processed
+	 * @author Léonard Amsler
+	 * @author Nathan Gromb
+	 */
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		tokenDisplay.resetDraggedToken();
 
-            int widthOffset = levelPanel.widthOffset;
-            int heightOffset = levelPanel.heightOffset;
+		if (isPressed) {
+			isPressed = false;
 
-            int x_coordinate = (endX - widthOffset);
-            int y_coordinate = (endY - heightOffset);
+			if (registerDragAsClick(e, mouseStartX, mouseStartY)) {
+				mouseClicked(e);
+				return;
+			}
 
-            int tileWidth = levelPanel.tileWidth;
-            int tileHeight = levelPanel.tileHeight;
+			int mouseEndX = e.getX();
+			int mouseEndY = e.getY();
 
-            x_coordinate /= tileWidth;
-            y_coordinate /= tileHeight;
+			int boardX = (mouseEndX - levelPanel.widthOffset) / levelPanel.tileWidth;
+			int boardY = (mouseEndY - levelPanel.heightOffset) / levelPanel.tileHeight;
 
-            int maxWidth = levelController.getWidth();
-            int maxHeight = levelController.getHeight();
+			if (selectedToken == null) {
+				return;
+			}
 
-            if (selectedToken == null) {
-                return;
-            }
+			// if the mouse is released on the board
+			if (boardX < levelController.getWidth() && boardY < levelController.getHeight() && boardX >= 0 && boardY >= 0) {
+				Coordinate coordinate = new Coordinate(boardX, boardY);
 
-            if (x_coordinate < maxWidth && y_coordinate < maxHeight && x_coordinate >= 0 && y_coordinate >= 0) {
-                if (x_coordinate < 0 || y_coordinate < 0) {
-                    return;
-                }
+				// if the selected token is already on the board, move it
+				if (isSelectedPlaced) {
+					Coordinate from = new Coordinate((mouseStartX - levelPanel.widthOffset) / levelPanel.tileWidth, (mouseStartY - levelPanel.heightOffset) / levelPanel.tileHeight);
+					levelController.moveToken(from, coordinate);
+					// else, place it
+				} else {
+					levelController.transferTokenToPlacedTokens(selectedToken, coordinate);
+				}
+				// if the mouse is released outside the board, pass the responsibility to the extras UI
+			} else {
+				levelPanel.getExtrasUI().handleTokenDrop(selectedToken, mouseEndX, mouseEndY, levelController);
+			}
 
-                Coordinate coordinate = new Coordinate((int) x_coordinate, (int) y_coordinate);
-                if (isSelectedPlaced) {
-                    Coordinate from = new Coordinate((startX - widthOffset) / tileWidth, (startY - heightOffset) / tileHeight);
-                    levelController.moveToken(from, coordinate);
-                    System.out.println("Moved Token: " + selectedToken + " from " + from + " to " + coordinate);
-                } else {
-                    levelController.transferTokenToPlacedTokens(selectedToken, coordinate);
-                    System.out.println("Placed Token: " + selectedToken + " at " + coordinate);
-                }
-            } else {
-                levelPanel.getExtrasUI().handleTokenDrop(selectedToken, endX, endY, levelController);
-            }
+			// the mouse is released, the token is not selected anymore
+			selectedToken = null;
+		}
+	}
 
-            selectedToken = null;
-        }
-    }
+	/**
+	 * Method that handles the mouse enter event
+	 *
+	 * @param e the event to be processed
+	 * @author Nathan Gromb
+	 */
+	@Override
+	public void mouseEntered(MouseEvent e) {}
 
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
-        if (selectedToken != null) {
-            tokenDisplay.setDraggedToken(selectedToken, e.getX(), e.getY());
-
-        }
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-
-    }
+	/**
+	 * Method that handles the mouse exit event
+	 *
+	 * @param e the event to be processed
+	 * @author Nathan Gromb
+	 */
+	@Override
+	public void mouseExited(MouseEvent e) {}
 }
