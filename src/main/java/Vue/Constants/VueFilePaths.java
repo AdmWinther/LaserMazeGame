@@ -10,5 +10,5 @@ public class VueFilePaths {
     public static final String SANDBOX_LIST_NEW_LEVEL_BACKGROUND = "src/main/java/Vue/Resources/MenuButtons/new_level.png";
     public static final String PLAY_BUTTON_ICON = "src/main/java/Vue/Resources/Objects/play.png";
     public static final String EDIT_BUTTON_ICON = "src/main/java/Vue/Resources/Objects/edit.png";
-    public static final String DELETE_BUTTON_ICON = "src/main/java/Vue/Resources/Objects/delete.png";
+    public static final String DELETE_BUTTON_ICON = "src/main/java/Vue/Resources/Objects/bin.png";
 }

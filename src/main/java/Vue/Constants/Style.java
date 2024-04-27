@@ -8,6 +8,8 @@ public class Style {
     }
 
     public static final class Padding {
+
+        public static final int XXL = 50;
         public static final int XL = 30;
         public static final int L = 20;
         public static final int M = 10;
