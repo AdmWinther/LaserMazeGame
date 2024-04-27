@@ -15,7 +15,8 @@ public abstract class Level {
         this.name = name;
         this.height = height;
         this.width = width;
-        this.id = new LevelID(name + "_" + hashCode());
+        String cleanedName = name.replaceAll("[^a-zA-Z0-9]", "-").toLowerCase();
+        this.id = new LevelID(cleanedName);
     }
 
 

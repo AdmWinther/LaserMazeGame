@@ -20,58 +20,39 @@ public class Sound {
             throw new RuntimeException(ex);
         }
     }
-    public static Clip laserShoot(){
+    public static void playLaserShoot(){
         try {
-            URL file  = new URL("file:./src/main/java/Vue/Resources/Sounds/laserShoot.wav");
+            URL file  = new URL(SoundPaths.LASER_EFFECT_PASSES_PATH);
+            loadFile(file).start();
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static Clip getLevelCompleted(){
+        try {
+            URL file  = new URL(SoundPaths.LEVEL_PASSED_SOUND_PATH);
             return loadFile(file);
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static Clip levelCompleted(){
+    public static void playMainMenuTheme(){
         try {
-            URL file  = new URL("file:./src/main/java/Vue/Resources/Sounds/levelCompleted.wav");
-            return loadFile(file);
+            URL file  = new URL(SoundPaths.MAIN_MENU_MUSIC2_PATH);
+            loadFile(file).start();
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static Clip click(){
-        try {
-            URL file  = new URL("file:./src/main/java/Vue/Resources/Sounds/click.wav");
-            return loadFile(file);
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static Clip mainMenuClip(){
-        try {
-            URL file  = new URL("file:./src/main/java/Vue/Resources/Sounds/MainMenu.wav");
-            return loadFile(file);
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static Clip playCampaignButtonSound(Clip clip){
+    public static void playButtonSound(Clip clip){
         if(clip != null) clip=null;
         try {
-            URL file  = new URL(SoundPaths.CAMPAING_BUTTON);
+            URL file  = new URL(SoundPaths.CAMPAIGN_BUTTON);
             clip = loadFile(file);
             clip.start();
-            return clip;
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static Clip getCampaignButtonClickSound() {
-        try {
-            URL file  = new URL(SoundPaths.CAMPAING_BUTTON);
-            return loadFile(file);
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }

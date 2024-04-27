@@ -7,6 +7,7 @@ import Model.Classes.Utils.Coordinate;
 import Model.Classes.Utils.Orientation;
 import Model.Classes.Utils.Pair;
 import Model.Interfaces.TokenManager;
+import Vue.SoundEffects.Sound;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -73,6 +74,10 @@ public class LaserManager {
     private LaserFragment generateLaserFragmentFromLaserGun() {
         LaserGun laserGun = (LaserGun) tokenManager.getTokenAt(tokenManager.findLaserGunPosition());
         Coordinate laserGunPosition = tokenManager.findLaserGunPosition();
+
+        if (laserGun == null) {
+            return null;
+        }
 
         Coordinate laserFragmentTo = oneCellInDirectionOfOrientation(laserGunPosition, laserGun.getOrientation());
         if (laserFragmentTo != null) {

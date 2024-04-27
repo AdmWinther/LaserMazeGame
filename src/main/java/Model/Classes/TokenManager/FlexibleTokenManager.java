@@ -126,7 +126,6 @@ public class FlexibleTokenManager implements TokenManager {
      */
     private boolean correctInput (Token[][] placedTokens) {
         if(placedTokens == null) return true;
-        int t = 0;
         int l = 0;
         for (Token[] row : placedTokens) {
             for (Token token : row) {
@@ -134,13 +133,9 @@ public class FlexibleTokenManager implements TokenManager {
                     placedLaser = true;
                     l++;
                 }
-                if (token instanceof Target) {
-                    placedTarget = true;
-                    t++;
-                }
             }
         }
-        return (l<2 && t<2);
+        return l < 2;
     }
 
     /**

@@ -6,11 +6,20 @@ import Model.Classes.Utils.Coordinate;
 import Model.Classes.Utils.DataWriter;
 import Model.Interfaces.Inventory;
 import Model.constants.FilePaths;
+import Vue.Level.EditableLevelPanel;
+
+import javax.swing.*;
 
 public class EditableLevelController extends LevelController{
 
-    public EditableLevelController(EditableLevel level) {
-        super(level);
+    public EditableLevelController(JFrame frame, EditableLevelPanel levelPanel, EditableLevel level) {
+        super(frame, levelPanel, level);
+    }
+
+    @Override
+    public void backToMenu() {
+        DataWriter.write(level, FilePaths.SANDBOX_LEVELS_PATH);
+        super.backToMenu();
     }
 
     public boolean addToPlacedTokens(Token token, Coordinate coordinate) {

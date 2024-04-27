@@ -3,6 +3,7 @@ package Vue.Game;
 import Controller.GameController;
 import Controller.LoginController;
 import Vue.LoginMenu.LoginMenu;
+import Vue.SoundEffects.Sound;
 
 import javax.swing.*;
 import java.awt.*;
@@ -77,5 +78,6 @@ public class Game {
      */
     public void start() {
         frame.setVisible(true);
+        Sound.playMainMenuTheme();
     }
 }

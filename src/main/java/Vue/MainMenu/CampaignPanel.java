@@ -4,6 +4,8 @@ import Controller.GameController;
 import Controller.LoginController;
 import Model.Classes.Level.LevelID;
 import Model.Classes.Utils.DataReader;
+import Vue.Handlers.ButtonHoverHandler;
+import Vue.SoundEffects.Sound;
 import Vue.Utils.ButtonUtil;
 
 import javax.imageio.ImageIO;
@@ -160,12 +162,15 @@ public class CampaignPanel extends JPanel {
 
             levelButton.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    Sound.playButtonSound(null); // TODO null
+
                     if (!levelButton.isEnabled()) {
                         return;
                     }
                     preparePlayableLevel(new LevelID("level" + levelButton.getText()), frame, gameController, loginController);
                 }
             });
+            levelButton.addMouseListener(new ButtonHoverHandler());
 
             if (i <= campaignProgression) {
                 levelButton.setEnabled(true);
@@ -198,10 +203,12 @@ public class CampaignPanel extends JPanel {
 
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent e) {
+                Sound.playButtonSound(null); // TODO null
                 frame.getContentPane().remove(CampaignPanel.this);
                 showPanel(frame, "MainMenu");
             }
         });
+        button.addMouseListener(new ButtonHoverHandler());
 
         return button;
     }

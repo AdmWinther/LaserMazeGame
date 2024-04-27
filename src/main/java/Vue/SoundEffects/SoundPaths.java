@@ -22,7 +22,7 @@ public class SoundPaths {
     public final static String LEVEL_FAILED_SOUND_PATH = "file:./src/main/java/Model/Resources/sounds/LevelFailed.wav";
     public final static String PLACEMENT_TOKKEN_SOUND_PATH = "file:./src/main/java/Model/Resources/sounds/Placement.wav";
     public final static String MENU_BUTTON_SOUND_PATH = "file:./src/main/java/Model/Resources/sounds/MenuButtonEffect.wav";
-    public final static String CAMPAING_BUTTON = "file:./src/main/java/Model/Resources/sounds/click.wav";
+    public final static String CAMPAIGN_BUTTON = "file:./src/main/java/Model/Resources/sounds/click.wav";
 
 
 

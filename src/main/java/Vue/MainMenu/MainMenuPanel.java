@@ -3,6 +3,7 @@ package Vue.MainMenu;
 import Controller.GameController;
 import Controller.LoginController;
 import Model.Classes.Level.LevelID;
+import Vue.Handlers.ButtonHoverHandler;
 import Vue.SoundEffects.Sound;
 
 import javax.imageio.ImageIO;
@@ -78,10 +79,12 @@ public class MainMenuPanel extends JPanel {
         // Logout button
         JButton logoutButton = new JButton("Logout");
         logoutButton.addActionListener(e -> {
+            Sound.playButtonSound(null); // TODO null
             System.out.println("Logout button clicked");
             loginController.logout();
             showPanel(frame, "LoginMenu");
         });
+        logoutButton.addMouseListener(new ButtonHoverHandler());
         logoutButton.setFont(new Font("Courier New", Font.PLAIN, 20));
         logoutButton.setForeground(Color.LIGHT_GRAY);
         setButtonTransparent(logoutButton);
@@ -180,16 +183,18 @@ public class MainMenuPanel extends JPanel {
         // Add action listeners to buttons
         campaignButton.addActionListener(e -> {
             System.out.println("Campaign button clicked");
-            Sound.playCampaignButtonSound(campaignButtonClickSound);
+            Sound.playButtonSound(campaignButtonClickSound);
             displayCampaignLevels(frame);
         });
+        campaignButton.addMouseListener(new ButtonHoverHandler());
         sandboxButton.addActionListener(e -> {
-            Sound.playCampaignButtonSound(campaignButtonClickSound);
+            Sound.playButtonSound(campaignButtonClickSound);
             System.out.println("Sandbox button clicked");
             displaySandboxLevels(frame);
         });
+        sandboxButton.addMouseListener(new ButtonHoverHandler());
         randomButton.addActionListener(e -> {
-            Sound.playCampaignButtonSound(campaignButtonClickSound);
+            Sound.playButtonSound(campaignButtonClickSound);
             System.out.println("Random button clicked");
 
             gameController.turnOffCampaignGameMode();
@@ -197,6 +202,7 @@ public class MainMenuPanel extends JPanel {
             int randomLevel = (int) (Math.random() * maxLevel) + 1;
             preparePlayableLevel(new LevelID("level" + randomLevel), frame, gameController, loginController);
         });
+        randomButton.addMouseListener(new ButtonHoverHandler());
 
         // Set button to transparent
         setButtonTransparent(campaignButton);

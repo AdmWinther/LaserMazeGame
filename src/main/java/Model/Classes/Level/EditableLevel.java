@@ -16,6 +16,8 @@ public final class EditableLevel extends Level {
     public EditableLevel(String name, Token[][] placedTokens, Set<Token> unplacedTokens, Inventory inventory ) {
         super(name,placedTokens.length,placedTokens[0].length);
         this.tokenManager = new FlexibleTokenManager(placedTokens, unplacedTokens, inventory);
+        tokenManager.setPlacedTokensMovability(true);
+        tokenManager.setUnplacedTokensMovability(true);
         this.laserManager = new LaserManager(tokenManager, width, height);
     }
 

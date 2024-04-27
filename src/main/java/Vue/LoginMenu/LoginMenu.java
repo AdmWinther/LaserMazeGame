@@ -2,8 +2,10 @@ package Vue.LoginMenu;
 
 import Controller.GameController;
 import Controller.LoginController;
+import Vue.Handlers.ButtonHoverHandler;
 import Vue.MainMenu.ImagePanel;
 import Vue.MainMenu.MainMenuPanel;
+import Vue.SoundEffects.Sound;
 
 import javax.swing.*;
 import java.awt.*;
@@ -113,6 +115,8 @@ class LoginPanel extends JPanel {
         // Login button
         JButton loginButton = new JButton("Login");
         loginButton.addActionListener(e -> {
+            Sound.playButtonSound(null); // TODO null
+
             // Check if the username and password are correct
             boolean success = loginController.login(usernameTextField.getText(), new String(passwordTextField.getPassword()));
             if (success) {
@@ -125,6 +129,7 @@ class LoginPanel extends JPanel {
                 JOptionPane.showMessageDialog(frame, "Incorrect username or password", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
+        loginButton.addMouseListener(new ButtonHoverHandler());
 
         loginPanel.add(inputsPanel);
 
@@ -182,6 +187,8 @@ class registerPanel extends JPanel {
         // Register button
         JButton registerButton = new JButton("Register");
         registerButton.addActionListener(e -> {
+            Sound.playButtonSound(null); // TODO null
+
             // Check if the password and confirm password are the same
             if (!new String(passwordTextField.getPassword()).equals(new String(confirmPasswordTextField.getPassword()))) {
                 // Show an error message
@@ -208,6 +215,7 @@ class registerPanel extends JPanel {
                 JOptionPane.showMessageDialog(frame, "Username already exists", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
+        registerButton.addMouseListener(new ButtonHoverHandler());
 
         registerPanel.add(inputsPanel);
 

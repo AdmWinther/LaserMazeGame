@@ -25,7 +25,7 @@ public final class PlayableLevelPanel extends LevelPanel {
         super(frame, gameController, levelController, loginController);
         extrasUI = new ExtrasUI(this);
         animationsUI = new AnimationsUI(this);
-        this.tada = Sound.levelCompleted();
+        this.tada = Sound.getLevelCompleted();
     }
 
     @Override
@@ -61,7 +61,6 @@ public final class PlayableLevelPanel extends LevelPanel {
 
             if (currentTime / 1000 != lastSecond) {
                 lastSecond = (int) (currentTime / 1000);
-                System.out.println("FPS: " + count);
                 count = 0;
             }
 
