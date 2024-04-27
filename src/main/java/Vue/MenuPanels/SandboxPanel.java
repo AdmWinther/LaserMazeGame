@@ -5,9 +5,13 @@ import Controller.LoginController;
 import Model.Classes.Level.LevelID;
 import Model.Classes.Utils.DataReader;
 import Model.Classes.Utils.DataWriter;
+import Vue.Constants.JComponentsNames;
+import Vue.Constants.Style;
+import Vue.Constants.VueFilePaths;
 import Vue.Handlers.ButtonHoverHandler;
 import Vue.SoundEffects.Sound;
 import Vue.Utils.ImageUtil;
+import org.jetbrains.annotations.NotNull;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -34,8 +38,8 @@ public class SandboxPanel extends JPanel {
     /**
      * Constructor of the campaign panel class
      *
-     * @param frame          - The frame
-     * @param gameController - The game controller
+     * @param frame          The frame
+     * @param gameController The game controller
      * @author Hugo Demule
      */
     public SandboxPanel(JFrame frame, GameController gameController, LoginController loginController) {
@@ -104,7 +108,7 @@ public class SandboxPanel extends JPanel {
     /**
      * Get the level buttons
      *
-     * @return JPanel - The level buttons
+     * @return JPanel The level buttons
      * @author Hugo Demule
      */
     private JScrollPane getLevelButtons() {
@@ -132,11 +136,11 @@ public class SandboxPanel extends JPanel {
         BufferedImage deleteButtonImage = null;
         BufferedImage newLevelButtonImage = null;
         try {
-            backgroundLevelList = ImageIO.read(new File("src/main/java/Vue/Resources/MenuButtons/level.png"));
-            playButtonImage = ImageIO.read(new File("src/main/java/Vue/Resources/Objects/play.png"));
-            editButtonImage = ImageIO.read(new File("src/main/java/Vue/Resources/Objects/edit.png"));
-            deleteButtonImage = ImageIO.read(new File("src/main/java/Vue/Resources/Objects/bin.png"));
-            newLevelButtonImage = ImageIO.read(new File("src/main/java/Vue/Resources/MenuButtons/new_level.png"));
+            backgroundLevelList = ImageIO.read(new File(VueFilePaths.SANDBOX_LIST_ITEM_BACKGROUND));
+            playButtonImage = ImageIO.read(new File(VueFilePaths.PLAY_BUTTON_ICON));
+            editButtonImage = ImageIO.read(new File(VueFilePaths.EDIT_BUTTON_ICON));
+            deleteButtonImage = ImageIO.read(new File(VueFilePaths.DELETE_BUTTON_ICON));
+            newLevelButtonImage = ImageIO.read(new File(VueFilePaths.SANDBOX_LIST_NEW_LEVEL_BACKGROUND));
         } catch (Exception e) {
             System.out.println("Error loading campaign button image");
         }
@@ -146,13 +150,15 @@ public class SandboxPanel extends JPanel {
         assert deleteButtonImage != null;
         assert newLevelButtonImage != null;
 
-        int scale = 5;
-        backgroundLevelList = ImageUtil.resizeImage(backgroundLevelList, tileWidth * scale * 8, tileHeight * scale);
-        newLevelButtonImage = ImageUtil.resizeImage(newLevelButtonImage, tileWidth * scale * 8, tileHeight * scale);
-        double resizeFactor = 0.5;
-        playButtonImage = ImageUtil.resizeImage(playButtonImage, (int) (tileWidth * scale * resizeFactor), (int) (tileHeight * scale * resizeFactor));
-        editButtonImage = ImageUtil.resizeImage(editButtonImage, (int) (tileWidth * scale * resizeFactor), (int) (tileHeight * scale * resizeFactor));
-        deleteButtonImage = ImageUtil.resizeImage(deleteButtonImage, (int) (tileWidth * scale * resizeFactor), (int) (tileHeight * scale * resizeFactor));
+        final int SCALE = 5;
+        final double ICON_RESIZE_FACTOR = 0.5;
+        final int LONG_BUTTON_SCALE_FACTOR = 8;
+
+        backgroundLevelList = ImageUtil.resizeImage(backgroundLevelList, tileWidth * SCALE * LONG_BUTTON_SCALE_FACTOR, tileHeight * SCALE);
+        newLevelButtonImage = ImageUtil.resizeImage(newLevelButtonImage, tileWidth * SCALE * LONG_BUTTON_SCALE_FACTOR, tileHeight * SCALE);
+        playButtonImage = ImageUtil.resizeImage(playButtonImage, (int) (tileWidth * SCALE * ICON_RESIZE_FACTOR), (int) (tileHeight * SCALE * ICON_RESIZE_FACTOR));
+        editButtonImage = ImageUtil.resizeImage(editButtonImage, (int) (tileWidth * SCALE * ICON_RESIZE_FACTOR), (int) (tileHeight * SCALE * ICON_RESIZE_FACTOR));
+        deleteButtonImage = ImageUtil.resizeImage(deleteButtonImage, (int) (tileWidth * SCALE * ICON_RESIZE_FACTOR), (int) (tileHeight * SCALE * ICON_RESIZE_FACTOR));
 
         List<LevelID> levelIDs = DataReader.readSandboxLevelIDs();
         System.out.println(levelIDs);
@@ -171,7 +177,6 @@ public class SandboxPanel extends JPanel {
         newLevelButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 Sound.playButtonSound(null); // TODO null
-                System.out.println("NEW LEVEL");
                 LevelPreparation.prepareNewEditableLevel(frame, gameController);
             }
         });
@@ -192,40 +197,36 @@ public class SandboxPanel extends JPanel {
             JPanel levelNameContainer = new JPanel();
             levelNameContainer.setOpaque(false);
             levelNameContainer.setLayout(new BoxLayout(levelNameContainer, BoxLayout.X_AXIS));
-            levelNameContainer.setBorder(BorderFactory.createEmptyBorder(0, 25, 0, 0));
+            levelNameContainer.setBorder(BorderFactory.createEmptyBorder(0, Style.Padding.L, 0, 0));
 
             // add a label with the level name
             String levelNameString = "";
             try {
                 levelNameString = DataReader.readLevelIDName(levelID);
-                int lengthLimit = 25;
-                if (levelNameString.length() > lengthLimit)
-                    levelNameString = levelNameString.substring(0, lengthLimit) + "...";
+                final int LENGTH_LIMIT = 25;
+                if (levelNameString.length() > LENGTH_LIMIT)
+                    levelNameString = levelNameString.substring(0, LENGTH_LIMIT) + "...";
             } catch (Exception e) {
                 e.printStackTrace();
             }
             JLabel levelName = new JLabel(levelNameString);
-            levelName.setFont(new Font("MonoSpaced", Font.BOLD, 25));
+            levelName.setFont(new Font(Style.Font.MONOSPACED, Font.BOLD, Style.FontSize.H2));
             levelNameContainer.add(levelName);
 
 
             JPanel buttonsContainer = new JPanel();
             buttonsContainer.setOpaque(false);
             buttonsContainer.setLayout(new BoxLayout(buttonsContainer, BoxLayout.X_AXIS));
-            buttonsContainer.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 10));
+            buttonsContainer.setBorder(BorderFactory.createEmptyBorder(Style.Padding.S, 0, 0, Style.Padding.M));
 
             // add three buttons stacked to the right of the levelPanel with three different images
-            JPanel playButton = new JPanel();
-            playButton.setOpaque(false);
-            playButton.add(new JLabel(new ImageIcon(playButtonImage)));
+            JPanel playButton = playButton(playButtonImage, levelID);
 
-            JPanel editButton = new JPanel();
-            editButton.setOpaque(false);
-            editButton.add(new JLabel(new ImageIcon(editButtonImage)));
+            JPanel editButton = editButton(editButtonImage, levelID);
 
-            JPanel deleteButton = new JPanel();
-            deleteButton.setOpaque(false);
-            deleteButton.add(new JLabel(new ImageIcon(deleteButtonImage)));
+            JPanel deleteButton = deleteButton(deleteButtonImage, levelID);
+
+            deleteButton.addMouseListener(new ButtonHoverHandler());
 
             buttonsContainer.add(playButton);
             buttonsContainer.add(editButton);
@@ -239,53 +240,72 @@ public class SandboxPanel extends JPanel {
             verticalWrapper.add(buttonsContainer);
             verticalWrapper.add(Box.createVerticalGlue()); // Spacer to push the content to the center
 
-
             levelPanel.add(verticalWrapper, BorderLayout.EAST);
             levelPanel.add(levelNameContainer, BorderLayout.WEST);
-
-            playButton.addMouseListener(new java.awt.event.MouseAdapter() {
-                public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    Sound.playButtonSound(null); // TODO null
-                    System.out.println(levelID.value() + " PLAY");
-                    LevelPreparation.preparePlayableLevel(levelID, frame, gameController, loginController);
-                }
-            });
-            playButton.addMouseListener(new ButtonHoverHandler());
-
-            editButton.addMouseListener(new java.awt.event.MouseAdapter() {
-                public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    Sound.playButtonSound(null); // TODO null
-                    System.out.println(levelID.value() + " EDIT");
-                    LevelPreparation.prepareEditableLevel(levelID, frame, gameController);
-                }
-            });
-            editButton.addMouseListener(new ButtonHoverHandler());
-
-            deleteButton.addMouseListener(new java.awt.event.MouseAdapter() {
-                public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    Sound.playButtonSound(null); // TODO null
-                    System.out.println(levelID.value() + " DELETE");
-                    try {
-                        DataWriter.delete(levelID);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    refresh();
-                }
-            });
-            deleteButton.addMouseListener(new ButtonHoverHandler());
-
             panel.add(levelPanel);
         }
 
         return levelButtonPanel;
     }
 
+    /**
+     * @param deleteButtonImage
+     * @param levelID
+     * @return
+     */
+    private JPanel deleteButton(BufferedImage deleteButtonImage, LevelID levelID) {
+        JPanel deleteButton = new JPanel();
+        deleteButton.setOpaque(false);
+        deleteButton.add(new JLabel(new ImageIcon(deleteButtonImage)));
+        deleteButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Sound.playButtonSound(null); // TODO null
+                try {
+                    DataWriter.delete(levelID);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                refresh();
+            }
+        });
+        return deleteButton;
+    }
+
+    @NotNull
+    private JPanel editButton(BufferedImage editButtonImage, LevelID levelID) {
+        JPanel editButton = new JPanel();
+        editButton.setOpaque(false);
+        editButton.add(new JLabel(new ImageIcon(editButtonImage)));
+        editButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Sound.playButtonSound(null); // TODO null
+                LevelPreparation.prepareEditableLevel(levelID, frame, gameController);
+            }
+        });
+        editButton.addMouseListener(new ButtonHoverHandler());
+        return editButton;
+    }
+
+    @NotNull
+    private JPanel playButton(BufferedImage playButtonImage, LevelID levelID) {
+        JPanel playButton = new JPanel();
+        playButton.setOpaque(false);
+        playButton.add(new JLabel(new ImageIcon(playButtonImage)));
+        playButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Sound.playButtonSound(null); // TODO null
+                LevelPreparation.preparePlayableLevel(levelID, frame, gameController, loginController);
+            }
+        });
+        playButton.addMouseListener(new ButtonHoverHandler());
+        return playButton;
+    }
+
     private void refresh() {
-        frame.add(new SandboxPanel(frame, gameController, loginController), "SandboxLevels");
+        frame.add(new SandboxPanel(frame, gameController, loginController), JComponentsNames.FrameID.SANDBOX_LEVELS);
         frame.getContentPane().remove(this);
         frame.revalidate();
-        showPanel(frame, "SandboxLevels");
+        showPanel(frame, JComponentsNames.FrameID.SANDBOX_LEVELS);
         frame.repaint();
     }
 
@@ -308,7 +328,7 @@ public class SandboxPanel extends JPanel {
             public void mouseClicked(java.awt.event.MouseEvent e) {
                 Sound.playButtonSound(null); // TODO null
                 frame.getContentPane().remove(SandboxPanel.this);
-                showPanel(frame, "MainMenu");
+                showPanel(frame, JComponentsNames.FrameID.MAIN_MENU);
             }
         });
         button.addMouseListener(new ButtonHoverHandler());

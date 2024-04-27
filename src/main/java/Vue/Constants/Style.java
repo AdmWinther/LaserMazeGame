@@ -4,6 +4,7 @@ public class Style {
 
     public static final class Font {
         public static final String COURIER_NEW = "Courier New";
+        public static final String MONOSPACED = "MonoSpaced";
     }
 
     public static final class Padding {
