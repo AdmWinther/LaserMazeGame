@@ -95,7 +95,7 @@ public class Game {
     }
 
     public Dimension getCurrentTileDimension() {
-        int size = getCurrentFrameDimension().width / 15;
+        int size = getCurrentFrameDimension().width / 10;
         return new Dimension(size, size);
     }
 

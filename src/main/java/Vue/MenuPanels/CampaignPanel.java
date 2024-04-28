@@ -112,7 +112,7 @@ public class CampaignPanel extends LevelMenuPanel {
         });
         levelButton.addMouseListener(new ButtonHoverHandler());
 
-        if (buttonNumber <= campaignProgression) {
+        if (buttonNumber <= campaignProgression + 1) {
             levelButton.setEnabled(true);
         } else {
             levelButton.setEnabled(false);
