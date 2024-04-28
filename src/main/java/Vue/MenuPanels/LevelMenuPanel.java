@@ -86,11 +86,16 @@ public abstract class LevelMenuPanel extends JPanel {
     private JLabel getBackButton() {
         JLabel button = new JLabel();
 
+        button.setPreferredSize(gameController.getCurrentTileDimension());
+        ImageIcon icon = new ImageIcon(VueFilePaths.RESET_BUTTON_ICON);
+        ImageIcon scaledIcon = new ImageIcon(icon.getImage().getScaledInstance(gameController.getCurrentTileDimension().width, gameController.getCurrentTileDimension().height, Image.SCALE_DEFAULT));
+        button.setIcon(scaledIcon);
+        button.setFont(new Font(Style.Font.MONOSPACED, Font.BOLD, tileWidth / 2));
+
         button.setHorizontalAlignment(SwingConstants.CENTER);
         button.setVerticalAlignment(SwingConstants.CENTER);
 
-        int padding = 50;
-        button.setBorder(BorderFactory.createEmptyBorder(padding, padding, padding, padding));
+        button.setBorder(BorderFactory.createEmptyBorder(Style.Padding.XXL, Style.Padding.XXL, Style.Padding.XXL, Style.Padding.XXL));
         JPanel thisClass = this;
 
         button.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -114,7 +119,7 @@ public abstract class LevelMenuPanel extends JPanel {
      * @author Nathan Gromb - s231674
      */
     public void resize() {
-
+        /*
         tileWidth = 100;
         tileHeight = 100;
 
@@ -129,15 +134,16 @@ public abstract class LevelMenuPanel extends JPanel {
         }
 
         // Update back button size and position
-        int backButtonSize = tileWidth / 3 * 2;
 
         // Set the size and position of the back button
-        backButton.setPreferredSize(new Dimension(backButtonSize, backButtonSize));
+        backButton.setPreferredSize(gameController.getCurrentTileDimension());
         JLabel button = backButton;
         ImageIcon icon = new ImageIcon(VueFilePaths.RESET_BUTTON_ICON);
-        ImageIcon scaledIcon = new ImageIcon(icon.getImage().getScaledInstance(backButtonSize, backButtonSize, Image.SCALE_DEFAULT));
+        ImageIcon scaledIcon = new ImageIcon(icon.getImage().getScaledInstance(gameController.getCurrentTileDimension().width, gameController.getCurrentTileDimension().height, Image.SCALE_DEFAULT));
         button.setIcon(scaledIcon);
         button.setFont(new Font(Style.Font.MONOSPACED, Font.BOLD, tileWidth / 2));
+
+         */
     }
 
     /**

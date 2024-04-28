@@ -139,21 +139,7 @@ public class MainMenuPanel extends JPanel {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(Style.Grid.MainMenu.ROWS, Style.Grid.MainMenu.COLS, 0, Style.Padding.XL));
         buttonPanel.setOpaque(false); // Make the panel transparent
-
-        int width = frame.getWidth();
-        int height = frame.getHeight();
-
-        int sidePadding = 0;
-        int topPadding = 0;
-
-        if (width > MAX_WIDTH) {
-            sidePadding = (width - MAX_WIDTH) / 2;
-        }
-        if (height > MAX_HEIGHT) {
-            topPadding = (height - MAX_HEIGHT) / 2;
-        }
-
-        buttonPanel.setBorder(BorderFactory.createEmptyBorder(topPadding, sidePadding, topPadding, sidePadding));
+        //buttonPanel.setBorder(BorderFactory.createEmptyBorder(topPadding, sidePadding, topPadding, sidePadding));
 
 
         // Create buttons
@@ -172,10 +158,10 @@ public class MainMenuPanel extends JPanel {
         assert campaignButtonImage != null;
         assert sandboxButtonImage != null;
         assert randomButtonImage != null;
-        int VScale = 4;
-        double HScale = 2.5;
-        int buttonWidth = campaignButtonImage.getWidth() * VScale;
-        int buttonHeight = (int) (campaignButtonImage.getHeight() * HScale);
+        int VScale = 1;
+        int HScale = 3;
+        int buttonWidth = gameController.getCurrentTileDimension().width * HScale;
+        int buttonHeight = gameController.getCurrentTileDimension().height * VScale;
         campaignButtonImage = resizeImage(campaignButtonImage, buttonWidth, buttonHeight);
         sandboxButtonImage = resizeImage(sandboxButtonImage, buttonWidth, buttonHeight);
         randomButtonImage = resizeImage(randomButtonImage, buttonWidth, buttonHeight);
@@ -207,6 +193,7 @@ public class MainMenuPanel extends JPanel {
         randomButton.addMouseListener(new ButtonHoverHandler());
 
         // Set button to transparent
+
         setButtonTransparent(campaignButton);
         setButtonTransparent(sandboxButton);
         setButtonTransparent(randomButton);
@@ -220,26 +207,6 @@ public class MainMenuPanel extends JPanel {
         buttonPanel.add(campaignButton);
         buttonPanel.add(sandboxButton);
         buttonPanel.add(randomButton);
-
-        this.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                int width = frame.getWidth();
-                int height = frame.getHeight();
-
-                int sidePadding = 0;
-                int topPadding = 0;
-
-                if (width > MAX_WIDTH) {
-                    sidePadding = (width - MAX_WIDTH) / 2;
-                }
-                if (height > MAX_HEIGHT) {
-                    topPadding = (height - MAX_HEIGHT) / 2;
-                }
-                buttonPanel.setBorder(BorderFactory.createEmptyBorder(topPadding, sidePadding, topPadding, sidePadding));
-                buttonPanel.repaint();
-            }
-        });
 
         return buttonPanel;
 

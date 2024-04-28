@@ -1,41 +1,9 @@
 {
-    "unplacedTokens": [
-        {
-            "orientation": "DOWN",
-            "tokenId": "OneSidedMirror_650878107",
-            "type": "OneSidedMirror"
-        },
-        {
-            "orientation": "DOWN",
-            "tokenId": "OneSidedMirror_319383147",
-            "type": "OneSidedMirror"
-        },
-        {
-            "orientation": "DOWN",
-            "tokenId": "OneSidedMirror_1696505901",
-            "type": "OneSidedMirror"
-        },
-        {
-            "orientation": "DOWN",
-            "tokenId": "OneSidedMirror_1776025743",
-            "type": "OneSidedMirror"
-        },
-        {
-            "orientation": "DOWN",
-            "tokenId": "OneSidedMirror_50766831",
-            "type": "OneSidedMirror"
-        },
-        {
-            "orientation": "DOWN",
-            "tokenId": "OneSidedMirror_774414950",
-            "type": "OneSidedMirror"
-        },
-        {
-            "orientation": "DOWN",
-            "tokenId": "OneSidedMirror_190106363",
-            "type": "OneSidedMirror"
-        }
-    ],
+    "unplacedTokens": [{
+        "orientation": "RIGHT",
+        "tokenId": "OneSidedMirror_1476098386",
+        "type": "OneSidedMirror"
+    }],
     "boardSize": {
         "widthX": 7,
         "heightY": 7
@@ -43,97 +11,16 @@
     "name": "Sandbox Level 1",
     "placedTokens": [
         {
-            "tokenId": "Block_1204200970",
-            "position": {
-                "x": 0,
-                "y": 0
-            },
-            "type": "Block"
-        },
-        {
-            "orientation": "DOWN",
-            "tokenId": "Target_459952542",
-            "position": {
-                "x": 0,
-                "y": 1
-            },
-            "type": "Target"
-        },
-        {
             "orientation": "RIGHT",
-            "tokenId": "LaserGun_1766761503",
+            "tokenId": "LaserGun_1460486941",
             "position": {
-                "x": 1,
+                "x": 0,
                 "y": 0
             },
             "type": "LaserGun"
         },
         {
-            "tokenId": "Block_1415773430",
-            "position": {
-                "x": 1,
-                "y": 1
-            },
-            "type": "Block"
-        },
-        {
-            "tokenId": "Block_644277894",
-            "position": {
-                "x": 1,
-                "y": 2
-            },
-            "type": "Block"
-        },
-        {
-            "tokenId": "Block_1867097461",
-            "position": {
-                "x": 1,
-                "y": 3
-            },
-            "type": "Block"
-        },
-        {
-            "tokenId": "Block_1933282015",
-            "position": {
-                "x": 1,
-                "y": 4
-            },
-            "type": "Block"
-        },
-        {
-            "tokenId": "Block_813522178",
-            "position": {
-                "x": 1,
-                "y": 5
-            },
-            "type": "Block"
-        },
-        {
-            "tokenId": "Block_557768541",
-            "position": {
-                "x": 2,
-                "y": 1
-            },
-            "type": "Block"
-        },
-        {
-            "tokenId": "Block_67023874",
-            "position": {
-                "x": 2,
-                "y": 5
-            },
-            "type": "Block"
-        },
-        {
-            "tokenId": "Block_750566352",
-            "position": {
-                "x": 3,
-                "y": 1
-            },
-            "type": "Block"
-        },
-        {
-            "tokenId": "Block_1995666952",
+            "tokenId": "Block_1688463717",
             "position": {
                 "x": 3,
                 "y": 3
@@ -141,68 +28,13 @@
             "type": "Block"
         },
         {
-            "tokenId": "Block_568363964",
-            "position": {
-                "x": 3,
-                "y": 5
-            },
-            "type": "Block"
-        },
-        {
-            "tokenId": "Block_1472750886",
-            "position": {
-                "x": 4,
-                "y": 1
-            },
-            "type": "Block"
-        },
-        {
-            "tokenId": "Block_518202932",
-            "position": {
-                "x": 4,
-                "y": 3
-            },
-            "type": "Block"
-        },
-        {
-            "tokenId": "Block_1934442710",
-            "position": {
-                "x": 4,
-                "y": 5
-            },
-            "type": "Block"
-        },
-        {
-            "tokenId": "Block_1448450152",
-            "position": {
-                "x": 5,
-                "y": 1
-            },
-            "type": "Block"
-        },
-        {
-            "tokenId": "Block_1109407441",
-            "position": {
-                "x": 5,
-                "y": 3
-            },
-            "type": "Block"
-        },
-        {
-            "tokenId": "Block_1165322791",
-            "position": {
-                "x": 5,
-                "y": 5
-            },
-            "type": "Block"
-        },
-        {
-            "tokenId": "Block_1546111407",
+            "orientation": "RIGHT",
+            "tokenId": "Target_852888601",
             "position": {
                 "x": 6,
-                "y": 3
+                "y": 6
             },
-            "type": "Block"
+            "type": "Target"
         }
     ]
 }

@@ -43,9 +43,6 @@ public class ImagePanel extends JPanel {
             int width = getWidth();
             int height = getHeight();
             int scale = 3;
-            //int tileWidth = backgroundImage.getWidth(null) * scale;
-            //int tileHeight = backgroundImage.getHeight(null) * scale;
-            System.out.println("Image panel would draw a " + this.tileWidth + "x" + this.tileHeight + " image");
 
             // Draw the background image tiles to fill the panel
             for (int x = 0; x < width; x += tileWidth) {

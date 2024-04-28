@@ -60,9 +60,8 @@ public class CampaignPanel extends LevelMenuPanel {
         BufferedImage disable_image = getImage(VueFilePaths.DISABLED_BOARD_TILE);
 
         // Resize images
-        final int SCALE = 2;
-        enable_image = ImageUtil.resizeImage(enable_image, tileWidth * SCALE, tileHeight * SCALE);
-        disable_image = ImageUtil.resizeImage(disable_image, tileWidth * SCALE, tileHeight * SCALE);
+        enable_image = ImageUtil.resizeImage(enable_image, tileWidth, tileHeight);
+        disable_image = ImageUtil.resizeImage(disable_image, tileWidth, tileHeight);
 
         // Load level IDs
         int nb_levels = DataReader.readCampaignLevelIDs().size();

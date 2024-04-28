@@ -20,8 +20,8 @@ import java.awt.event.ComponentEvent;
  */
 public class Game {
 
-    public final int INIT_WIDTH = 800;
-    public final int INIT_HEIGHT = 600;
+    public final int INIT_WIDTH = 1200;
+    public final int INIT_HEIGHT = 900;
     JFrame frame;
     GameController gameController;
 
@@ -31,7 +31,7 @@ public class Game {
         frame.setLayout(new CardLayout());
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setResizable(true);
+        frame.setResizable(false);
         frame.setTitle(JComponentsNames.Label.LASER_MAZE);
 
         frame.setPreferredSize(new java.awt.Dimension(INIT_WIDTH, INIT_HEIGHT));
@@ -95,7 +95,7 @@ public class Game {
     }
 
     public Dimension getCurrentTileDimension() {
-        int size = getCurrentFrameDimension().width / 20;
+        int size = getCurrentFrameDimension().width / 15;
         return new Dimension(size, size);
     }
 

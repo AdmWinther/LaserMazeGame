@@ -65,22 +65,30 @@ public class SandboxPanel extends LevelMenuPanel {
         BufferedImage newLevelButtonImage = getImage(VueFilePaths.SANDBOX_LIST_NEW_LEVEL_BACKGROUND);
 
         // Resize images
-        final int SCALE = 5;
         final double ICON_RESIZE_FACTOR = 0.5;
         final int LONG_BUTTON_SCALE_FACTOR = 8;
 
-        backgroundLevelList = ImageUtil.resizeImage(backgroundLevelList, tileWidth * SCALE * LONG_BUTTON_SCALE_FACTOR, tileHeight * SCALE);
-        newLevelButtonImage = ImageUtil.resizeImage(newLevelButtonImage, tileWidth * SCALE * LONG_BUTTON_SCALE_FACTOR, tileHeight * SCALE);
-        playButtonImage = ImageUtil.resizeImage(playButtonImage, (int) (tileWidth * SCALE * ICON_RESIZE_FACTOR), (int) (tileHeight * SCALE * ICON_RESIZE_FACTOR));
-        editButtonImage = ImageUtil.resizeImage(editButtonImage, (int) (tileWidth * SCALE * ICON_RESIZE_FACTOR), (int) (tileHeight * SCALE * ICON_RESIZE_FACTOR));
-        deleteButtonImage = ImageUtil.resizeImage(deleteButtonImage, (int) (tileWidth * SCALE * ICON_RESIZE_FACTOR), (int) (tileHeight * SCALE * ICON_RESIZE_FACTOR));
+        backgroundLevelList = ImageUtil.resizeImage(backgroundLevelList, tileWidth * LONG_BUTTON_SCALE_FACTOR, tileHeight);
+        newLevelButtonImage = ImageUtil.resizeImage(newLevelButtonImage, tileWidth * LONG_BUTTON_SCALE_FACTOR, tileHeight);
+        playButtonImage = ImageUtil.resizeImage(playButtonImage, (int) (tileWidth * ICON_RESIZE_FACTOR), (int) (tileHeight * ICON_RESIZE_FACTOR));
+        editButtonImage = ImageUtil.resizeImage(editButtonImage, (int) (tileWidth * ICON_RESIZE_FACTOR), (int) (tileHeight * ICON_RESIZE_FACTOR));
+        deleteButtonImage = ImageUtil.resizeImage(deleteButtonImage, (int) (tileWidth * ICON_RESIZE_FACTOR), (int) (tileHeight * ICON_RESIZE_FACTOR));
 
         // Load level IDs
         List<LevelID> levelIDs = DataReader.readSandboxLevelIDs();
 
         // Add new level button
-        ImageIcon newLevelButtonIcon = new ImageIcon(newLevelButtonImage);
-        JPanel newLevelButton = newLevelButton(newLevelButtonIcon);
+
+        ImageIcon scaledNewLevelIcon = new ImageIcon(newLevelButtonImage);
+        JPanel newLevelButton = levelPanel(scaledNewLevelIcon);
+        newLevelButton.setPreferredSize(new Dimension(tileWidth * LONG_BUTTON_SCALE_FACTOR, tileHeight));
+        newLevelButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Sound.playButtonSound();
+                LevelPreparation.prepareNewEditableLevel(frame, gameController);
+            }
+        });
+        newLevelButton.addMouseListener(new ButtonHoverHandler());
         panel.add(newLevelButton);
 
         // Add level buttons
@@ -90,6 +98,7 @@ public class SandboxPanel extends LevelMenuPanel {
             ImageIcon scaledIcon = new ImageIcon(backgroundLevelList);
 
             JPanel levelPanel = levelPanel(scaledIcon);
+            levelPanel.setPreferredSize(new Dimension(tileWidth * LONG_BUTTON_SCALE_FACTOR, tileHeight));
 
             JPanel levelNameContainer = levelNameContainer(levelID);
 
@@ -123,35 +132,6 @@ public class SandboxPanel extends LevelMenuPanel {
 
         sandboxLevelsList.setBorder(BorderFactory.createEmptyBorder(Style.Padding.XXL, Style.Padding.XXL, Style.Padding.XXL, Style.Padding.XXL));
         return sandboxLevelsList;
-    }
-
-
-    /**
-     * Creates a new level button
-     *
-     * @param newLevelButtonIcon The icon of the new level button
-     * @return JPanel The new level button panel
-     * @author Hugo Demule
-     */
-    private JPanel newLevelButton(ImageIcon newLevelButtonIcon) {
-        JPanel newLevelButton = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                g.drawImage(newLevelButtonIcon.getImage(), 0, 0, null);
-            }
-        };
-        newLevelButton.setPreferredSize(new Dimension(newLevelButtonIcon.getIconWidth(), newLevelButtonIcon.getIconHeight()));
-
-
-        newLevelButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Sound.playButtonSound();
-                LevelPreparation.prepareNewEditableLevel(frame, gameController);
-            }
-        });
-        newLevelButton.addMouseListener(new ButtonHoverHandler());
-        return newLevelButton;
     }
 
     /**
@@ -332,4 +312,5 @@ public class SandboxPanel extends LevelMenuPanel {
         Game.showPanel(frame, JComponentsNames.FrameID.SANDBOX_LEVELS);
         frame.repaint();
     }
+
 }
