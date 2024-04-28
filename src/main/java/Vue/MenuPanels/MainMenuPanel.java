@@ -16,6 +16,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.List;
 
 import static Vue.MenuPanels.LevelPreparation.preparePlayableLevel;
 import static Vue.MenuPanels.LevelPreparation.showPanel;
@@ -199,7 +200,8 @@ public class MainMenuPanel extends JPanel {
             Sound.playButtonSound();
 
             gameController.turnOffCampaignGameMode();
-            LevelID randomLevelID = gameController.getSandboxLevelIDs().get((int) (Math.random() * gameController.getSandboxLevelIDs().size()));
+            List<LevelID> levelIDs = gameController.getCampaignLevelIDs();
+            LevelID randomLevelID = levelIDs.get((int) (Math.random() * levelIDs.size()));
             preparePlayableLevel(randomLevelID, frame, gameController, loginController);
         });
         randomButton.addMouseListener(new ButtonHoverHandler());

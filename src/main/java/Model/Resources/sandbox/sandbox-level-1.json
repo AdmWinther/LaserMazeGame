@@ -1,17 +1,208 @@
 {
-    "unplacedTokens": [],
+    "unplacedTokens": [
+        {
+            "orientation": "DOWN",
+            "tokenId": "OneSidedMirror_552086683",
+            "type": "OneSidedMirror"
+        },
+        {
+            "orientation": "DOWN",
+            "tokenId": "OneSidedMirror_752791355",
+            "type": "OneSidedMirror"
+        },
+        {
+            "orientation": "DOWN",
+            "tokenId": "OneSidedMirror_343850216",
+            "type": "OneSidedMirror"
+        },
+        {
+            "orientation": "DOWN",
+            "tokenId": "OneSidedMirror_1982304369",
+            "type": "OneSidedMirror"
+        },
+        {
+            "orientation": "DOWN",
+            "tokenId": "OneSidedMirror_2143383978",
+            "type": "OneSidedMirror"
+        },
+        {
+            "orientation": "DOWN",
+            "tokenId": "OneSidedMirror_1905919445",
+            "type": "OneSidedMirror"
+        },
+        {
+            "orientation": "DOWN",
+            "tokenId": "OneSidedMirror_2071094205",
+            "type": "OneSidedMirror"
+        }
+    ],
     "boardSize": {
         "widthX": 7,
         "heightY": 7
     },
     "name": "Sandbox Level 1",
-    "placedTokens": [{
-        "orientation": "RIGHT",
-        "tokenId": "Splitter_2133657820",
-        "position": {
-            "x": 3,
-            "y": 3
+    "placedTokens": [
+        {
+            "tokenId": "Block_1595223108",
+            "position": {
+                "x": 0,
+                "y": 0
+            },
+            "type": "Block"
         },
-        "type": "Splitter"
-    }]
+        {
+            "orientation": "DOWN",
+            "tokenId": "Target_889620334",
+            "position": {
+                "x": 0,
+                "y": 1
+            },
+            "type": "Target"
+        },
+        {
+            "orientation": "RIGHT",
+            "tokenId": "LaserGun_227110033",
+            "position": {
+                "x": 1,
+                "y": 0
+            },
+            "type": "LaserGun"
+        },
+        {
+            "tokenId": "Block_1547533022",
+            "position": {
+                "x": 1,
+                "y": 1
+            },
+            "type": "Block"
+        },
+        {
+            "tokenId": "Block_1427463606",
+            "position": {
+                "x": 1,
+                "y": 2
+            },
+            "type": "Block"
+        },
+        {
+            "tokenId": "Block_1118023927",
+            "position": {
+                "x": 1,
+                "y": 3
+            },
+            "type": "Block"
+        },
+        {
+            "tokenId": "Block_281335208",
+            "position": {
+                "x": 1,
+                "y": 4
+            },
+            "type": "Block"
+        },
+        {
+            "tokenId": "Block_532824644",
+            "position": {
+                "x": 1,
+                "y": 5
+            },
+            "type": "Block"
+        },
+        {
+            "tokenId": "Block_1694631441",
+            "position": {
+                "x": 2,
+                "y": 1
+            },
+            "type": "Block"
+        },
+        {
+            "tokenId": "Block_1585255596",
+            "position": {
+                "x": 2,
+                "y": 5
+            },
+            "type": "Block"
+        },
+        {
+            "tokenId": "Block_689182722",
+            "position": {
+                "x": 3,
+                "y": 1
+            },
+            "type": "Block"
+        },
+        {
+            "tokenId": "Block_15792286",
+            "position": {
+                "x": 3,
+                "y": 3
+            },
+            "type": "Block"
+        },
+        {
+            "tokenId": "Block_1123760193",
+            "position": {
+                "x": 3,
+                "y": 5
+            },
+            "type": "Block"
+        },
+        {
+            "tokenId": "Block_834514602",
+            "position": {
+                "x": 4,
+                "y": 1
+            },
+            "type": "Block"
+        },
+        {
+            "tokenId": "Block_1838736946",
+            "position": {
+                "x": 4,
+                "y": 3
+            },
+            "type": "Block"
+        },
+        {
+            "tokenId": "Block_1014071596",
+            "position": {
+                "x": 4,
+                "y": 5
+            },
+            "type": "Block"
+        },
+        {
+            "tokenId": "Block_2046576783",
+            "position": {
+                "x": 5,
+                "y": 1
+            },
+            "type": "Block"
+        },
+        {
+            "tokenId": "Block_1933347555",
+            "position": {
+                "x": 5,
+                "y": 3
+            },
+            "type": "Block"
+        },
+        {
+            "tokenId": "Block_950452233",
+            "position": {
+                "x": 5,
+                "y": 5
+            },
+            "type": "Block"
+        },
+        {
+            "tokenId": "Block_461538293",
+            "position": {
+                "x": 6,
+                "y": 3
+            },
+            "type": "Block"
+        }
+    ]
 }
