@@ -4,147 +4,72 @@ import Controller.GameController;
 import Controller.LoginController;
 import Model.Classes.Level.LevelID;
 import Model.Classes.Utils.DataReader;
+import Vue.Constants.Style;
+import Vue.Constants.VueFilePaths;
 import Vue.Handlers.ButtonHoverHandler;
 import Vue.SoundEffects.Sound;
 import Vue.Utils.ButtonUtil;
+import Vue.Utils.ImageUtil;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.List;
-
-import static Vue.MenuPanels.LevelPreparation.preparePlayableLevel;
-import static Vue.MenuPanels.LevelPreparation.showPanel;
-import static Vue.Utils.ImageUtil.resizeImage;
 
 /**
- * This class is responsible for the campaign panel
+ * This class has the responsibility to display the campaign levels list.
  *
- * @Author Léonard Amsler - s231715
- * @Author Nathan Gromb - s231674
+ * @author Léonard Amsler - s231715
+ * @author Nathan Gromb - s231674
  */
-public class CampaignPanel extends JPanel {
-	private final JFrame frame;
-	private final JPanel buttons;
-	private final JLabel backButton;
-	GameController gameController;
-	LoginController loginController;
-	private int tileWidth = 16;
-	private int tileHeight = 16;
+public class CampaignPanel extends LevelMenuPanel {
 
 	/**
 	 * Constructor of the campaign panel class
 	 *
-	 * @param frame          - The frame
-	 * @param gameController - The game controller
-	 * @Author Léonard Amsler - s231715
-	 * @Author Nathan Gromb - s231674
+	 * @param frame          The frame
+	 * @param gameController The game controller
+	 * @author Léonard Amsler - s231715
+	 * @author Nathan Gromb - s231674
 	 */
 	public CampaignPanel(JFrame frame, GameController gameController, LoginController loginController) {
-		this.loginController = loginController;
-		this.gameController = gameController;
-		this.frame = frame;
-
-		setDoubleBuffered(true);
-
-		setLayout(new BorderLayout());
-
-		// Background image
-		ImageIcon backgroundImage = new ImageIcon("src/main/java/Vue/Resources/Tiles/background.png");
-		ImagePanel backgroundPanel = new ImagePanel(backgroundImage.getImage());
-		backgroundPanel.setLayout(new BorderLayout());
-		add(backgroundPanel, BorderLayout.CENTER);
-
-		// Create and add level buttons
-		this.buttons = getLevelButtons();
-		backgroundPanel.add(buttons, BorderLayout.CENTER);
-
-		this.backButton = getBackButton();
-		backgroundPanel.add(backButton, BorderLayout.SOUTH);
-
-		this.addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent e) {
-				resize();
-			}
-		});
+		super(frame, gameController, loginController);
 	}
+
 
 	/**
 	 * Get the level buttons
 	 *
 	 * @return JPanel - The level buttons
-	 * @Author Léonard Amsler - s231715
-	 * @Author Nathan Gromb - s231674
+	 * @author Léonard Amsler - s231715
+	 * @author Nathan Gromb - s231674
 	 */
-	private JPanel getLevelButtons() {
+	@Override
+	protected JPanel getLevelButtonsList() {
 		int campaignProgression = loginController.getCampaignProgress();
 		campaignProgression += 1; // The user should be able to play the next level
 
 		JPanel levelButtonPanel = new JPanel();
-		int rows = 4; // TODO depend on amount of campaign levels
-		int cols = 4;
-		levelButtonPanel.setLayout(new GridLayout(rows, cols, 0, 0));
+		levelButtonPanel.setLayout(new GridLayout(Style.Grid.CampaignMenu.ROWS, Style.Grid.CampaignMenu.COLS, 0, 0));
 
 		levelButtonPanel.setOpaque(false); // Make the panel transparent
 
-		int padding = 50;
-		levelButtonPanel.setBorder(BorderFactory.createEmptyBorder(padding, padding, padding, padding));
+		levelButtonPanel.setBorder(BorderFactory.createEmptyBorder(Style.Padding.XXL, Style.Padding.XXL, Style.Padding.XXL, Style.Padding.XXL));
 
-		BufferedImage enable_image = null;
-		BufferedImage disable_image = null;
-		try {
-			enable_image = ImageIO.read(new File("src/main/java/Vue/Resources/Tiles/boardTile1.png"));
-			disable_image = ImageIO.read(new File("src/main/java/Vue/Resources/Tiles/disabled_boardTile.png"));
-		} catch (Exception e) {
-			System.out.println("Error loading campaign button image");
-		}
-		assert enable_image != null;
-		assert disable_image != null;
+		BufferedImage enable_image = getImage(VueFilePaths.BOARD_TILE);
+		BufferedImage disable_image = getImage(VueFilePaths.DISABLED_BOARD_TILE);
 
-		int scale = 5;
-		enable_image = resizeImage(enable_image, tileWidth * scale, tileHeight * scale);
-		disable_image = resizeImage(disable_image, tileWidth * scale, tileHeight * scale);
+		// Resize images
+		final int SCALE = 5;
+		enable_image = ImageUtil.resizeImage(enable_image, tileWidth * SCALE, tileHeight * SCALE);
+		disable_image = ImageUtil.resizeImage(disable_image, tileWidth * SCALE, tileHeight * SCALE);
 
-		List<LevelID> levelIDs = DataReader.readCampaignLevelIDs();
+		// Load level IDs
+		int nb_levels = DataReader.readCampaignLevelIDs().size();
 
-		int i = 1;
-
-		for (LevelID levelID : levelIDs) {
+		for (int i = 1; i <= nb_levels; i++) {
 			ImageIcon scaledIcon = new ImageIcon(enable_image);
-			JButton levelButton = new JButton(String.valueOf(i++), scaledIcon);
 
-			levelButton.setHorizontalAlignment(SwingConstants.CENTER);
-
-			levelButton.setHorizontalTextPosition(SwingConstants.CENTER);
-			levelButton.setVerticalTextPosition(SwingConstants.CENTER);
-			levelButton.setFont(new Font("MonoSpaced", Font.BOLD, 30));
-
-			ButtonUtil.setButtonTransparent(levelButton);
-
-			levelButton.addMouseListener(new java.awt.event.MouseAdapter() {
-				public void mouseClicked(java.awt.event.MouseEvent evt) {
-					Sound.playButtonSound();
-
-					if (!levelButton.isEnabled()) {
-						return;
-					}
-					preparePlayableLevel(new LevelID("level" + levelButton.getText()), frame, gameController, loginController);
-				}
-			});
-			levelButton.addMouseListener(new ButtonHoverHandler());
-
-			if (i <= campaignProgression) {
-				levelButton.setEnabled(true);
-			} else {
-				levelButton.setEnabled(false);
-				// apply a gray filter to the button
-				levelButton.setDisabledIcon(new ImageIcon(disable_image));
-			}
+			JButton levelButton = levelButton(campaignProgression, disable_image, i, scaledIcon);
 
 			levelButtonPanel.add(levelButton);
 		}
@@ -153,62 +78,47 @@ public class CampaignPanel extends JPanel {
 	}
 
 	/**
-	 * Get the back button
+	 * Create a level button
 	 *
-	 * @return JLabel - The back button
-	 * @Author Nathan Gromb - s231674
+	 * @param campaignProgression The campaign progression
+	 * @param disable_image       The disabled image
+	 * @param buttonNumber        The button number
+	 * @param scaledIcon          The scaled icon
+	 * @return JButton The level button
+	 * @author Léonard Amsler - s231715
+	 * @author Nathan Gromb - s231674
 	 */
-	private JLabel getBackButton() {
-		JLabel button = new JLabel();
+	private JButton levelButton(int campaignProgression, BufferedImage disable_image, int buttonNumber, ImageIcon scaledIcon) {
+		JButton levelButton = new JButton(String.valueOf(buttonNumber), scaledIcon);
 
-		button.setHorizontalAlignment(SwingConstants.CENTER);
-		button.setVerticalAlignment(SwingConstants.CENTER);
+		levelButton.setHorizontalAlignment(SwingConstants.CENTER);
 
-		int padding = 50;
-		button.setBorder(BorderFactory.createEmptyBorder(padding, padding, padding, padding));
+		levelButton.setHorizontalTextPosition(SwingConstants.CENTER);
+		levelButton.setVerticalTextPosition(SwingConstants.CENTER);
+		levelButton.setFont(new Font(Style.Font.MONOSPACED, Font.BOLD, Style.FontSize.H1));
 
-		button.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseClicked(java.awt.event.MouseEvent e) {
+		ButtonUtil.setButtonTransparent(levelButton);
+
+		levelButton.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseClicked(java.awt.event.MouseEvent evt) {
 				Sound.playButtonSound();
-				frame.getContentPane().remove(CampaignPanel.this);
-				showPanel(frame, "MainMenu");
+
+				if (!levelButton.isEnabled()) {
+					return;
+				}
+				LevelID levelID = gameController.getCampaignLevelIDs().get(buttonNumber - 1);
+				LevelPreparation.preparePlayableLevel(levelID, frame, gameController, loginController);
 			}
 		});
-		button.addMouseListener(new ButtonHoverHandler());
+		levelButton.addMouseListener(new ButtonHoverHandler());
 
-		return button;
-	}
-
-	/**
-	 * Resize the campaign panel
-	 *
-	 * @Author Léonard Amsler - s231715
-	 * @Author Nathan Gromb - s231674
-	 */
-	public void resize() {
-
-		tileWidth = 100;
-		tileHeight = 100;
-
-		// Set button sizes and positions
-		for (Component component : buttons.getComponents()) {
-			if (component instanceof JLabel button) {
-				ImageIcon icon = new ImageIcon("src/main/java/Vue/Resources/Tiles/boardTile1.png");
-				ImageIcon scaledIcon = new ImageIcon(icon.getImage().getScaledInstance(tileWidth, tileHeight, Image.SCALE_DEFAULT));
-				button.setIcon(scaledIcon);
-				button.setFont(new Font("MonoSpaced", Font.BOLD, tileWidth / 2));
-			}
+		if (buttonNumber <= campaignProgression) {
+			levelButton.setEnabled(true);
+		} else {
+			levelButton.setEnabled(false);
+			// apply a gray filter to the button
+			levelButton.setDisabledIcon(new ImageIcon(disable_image));
 		}
-
-		// Update back button size and position
-		int backButtonSize = tileWidth / 3 * 2;
-
-		// Set the size and position of the back button
-		backButton.setPreferredSize(new Dimension(backButtonSize, backButtonSize));
-		JLabel button = backButton;
-		ImageIcon icon = new ImageIcon("src/main/java/Vue/Resources/Objects/reset.png");
-		ImageIcon scaledIcon = new ImageIcon(icon.getImage().getScaledInstance(backButtonSize, backButtonSize, Image.SCALE_DEFAULT));
-		button.setIcon(scaledIcon);
-		button.setFont(new Font("MonoSpaced", Font.BOLD, tileWidth / 2));
+		return levelButton;
 	}
 }

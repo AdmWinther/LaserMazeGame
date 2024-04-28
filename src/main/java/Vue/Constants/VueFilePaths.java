@@ -11,4 +11,7 @@ public class VueFilePaths {
     public static final String PLAY_BUTTON_ICON = "src/main/java/Vue/Resources/Objects/play.png";
     public static final String EDIT_BUTTON_ICON = "src/main/java/Vue/Resources/Objects/edit.png";
     public static final String DELETE_BUTTON_ICON = "src/main/java/Vue/Resources/Objects/bin.png";
+    public static final String RESET_BUTTON_ICON = "src/main/java/Vue/Resources/Objects/reset.png";
+    public static final String BOARD_TILE = "src/main/java/Vue/Resources/Tiles/boardTile1.png";
+    public static final String DISABLED_BOARD_TILE = "src/main/java/Vue/Resources/Tiles/disabled_boardTile.png";
 }

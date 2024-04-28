@@ -27,5 +27,10 @@ public class Style {
             public static final int ROWS = 3;
             public static final int COLS = 1;
         }
+
+        public static final class CampaignMenu {
+            public static final int ROWS = 4;
+            public static final int COLS = 4;
+        }
     }
 }

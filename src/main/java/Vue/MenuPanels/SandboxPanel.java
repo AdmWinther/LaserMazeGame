@@ -12,13 +12,9 @@ import Vue.Handlers.ButtonHoverHandler;
 import Vue.SoundEffects.Sound;
 import Vue.Utils.ImageUtil;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -26,18 +22,11 @@ import static Vue.MenuPanels.LevelPreparation.showPanel;
 
 
 /**
- * The sandbox panel class has the responsibility to display the sandbox levels list and handle the interactions with the user
+ * This class has the responsibility to display the sandbox levels list.
  *
  * @author Hugo Demule
  */
-public class SandboxPanel extends JPanel {
-    private final JFrame frame;
-    private final JScrollPane buttons;
-    private final JLabel backButton;
-    GameController gameController;
-    LoginController loginController;
-    private int tileWidth = 16;
-    private int tileHeight = 16;
+public class SandboxPanel extends LevelMenuPanel {
 
     /**
      * Constructor of the campaign panel class
@@ -47,43 +36,17 @@ public class SandboxPanel extends JPanel {
      * @author Hugo Demule
      */
     public SandboxPanel(JFrame frame, GameController gameController, LoginController loginController) {
-        this.loginController = loginController;
-        this.gameController = gameController;
-        this.frame = frame;
-
-        setDoubleBuffered(true);
-
-        setLayout(new BorderLayout());
-
-        // Background image
-        ImageIcon backgroundImage = new ImageIcon("src/main/java/Vue/Resources/Tiles/background.png");
-        ImagePanel backgroundPanel = new ImagePanel(backgroundImage.getImage());
-        backgroundPanel.setLayout(new BorderLayout());
-        add(backgroundPanel, BorderLayout.CENTER);
-
-        // Create and add level buttons
-        this.buttons = getSandboxLevelsList();
-        backgroundPanel.add(buttons, BorderLayout.CENTER);
-
-        this.backButton = getBackButton();
-        backgroundPanel.add(backButton, BorderLayout.SOUTH);
-
-
-        this.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                resize();
-            }
-        });
+        super(frame, gameController, loginController);
     }
 
     /**
-     * Get the level buttons
+     * Gets the level buttons
      *
-     * @return JPanel The level buttons
+     * @return JScrollPane The level buttons
      * @author Hugo Demule
      */
-    private JScrollPane getSandboxLevelsList() {
+    @Override
+    protected JScrollPane getLevelButtonsList() {
         JPanel panel = new JPanel();
         panel.setOpaque(false);
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
@@ -114,10 +77,8 @@ public class SandboxPanel extends JPanel {
 
         // Load level IDs
         List<LevelID> levelIDs = DataReader.readSandboxLevelIDs();
-        System.out.println(levelIDs);
 
         // Add new level button
-        assert newLevelButtonImage != null;
         ImageIcon newLevelButtonIcon = new ImageIcon(newLevelButtonImage);
         JPanel newLevelButton = newLevelButton(newLevelButtonIcon);
         panel.add(newLevelButton);
@@ -145,67 +106,9 @@ public class SandboxPanel extends JPanel {
         return sandboxLevelsList;
     }
 
-    /**
-     * Get the back button
-     *
-     * @return JLabel - The back button
-     * @author Hugo Demule
-     */
-    private JLabel getBackButton() {
-        JLabel button = new JLabel();
-
-        button.setHorizontalAlignment(SwingConstants.CENTER);
-        button.setVerticalAlignment(SwingConstants.CENTER);
-
-        int padding = 50;
-        button.setBorder(BorderFactory.createEmptyBorder(padding, padding, padding, padding));
-
-        button.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent e) {
-                Sound.playButtonSound();
-                frame.getContentPane().remove(SandboxPanel.this);
-                showPanel(frame, JComponentsNames.FrameID.MAIN_MENU);
-            }
-        });
-        button.addMouseListener(new ButtonHoverHandler());
-
-        return button;
-    }
 
     /**
-     * Resize the campaign panel
-     *
-     * @author Hugo Demule
-     */
-    public void resize() {
-
-        tileWidth = 100;
-        tileHeight = 100;
-
-        // Set button sizes and positions
-        for (Component component : buttons.getComponents()) {
-            if (component instanceof JLabel button) {
-                ImageIcon icon = new ImageIcon("src/main/java/Vue/Resources/Tiles/boardTile1.png");
-                ImageIcon scaledIcon = new ImageIcon(icon.getImage().getScaledInstance(tileWidth, tileHeight, Image.SCALE_DEFAULT));
-                button.setIcon(scaledIcon);
-                button.setFont(new Font("MonoSpaced", Font.BOLD, tileWidth / 2));
-            }
-        }
-
-        // Update back button size and position
-        int backButtonSize = tileWidth / 3 * 2;
-
-        // Set the size and position of the back button
-        backButton.setPreferredSize(new Dimension(backButtonSize, backButtonSize));
-        JLabel button = backButton;
-        ImageIcon icon = new ImageIcon("src/main/java/Vue/Resources/Objects/reset.png");
-        ImageIcon scaledIcon = new ImageIcon(icon.getImage().getScaledInstance(backButtonSize, backButtonSize, Image.SCALE_DEFAULT));
-        button.setIcon(scaledIcon);
-        button.setFont(new Font("MonoSpaced", Font.BOLD, tileWidth / 2));
-    }
-
-    /**
-     * Initialize the sandbox levels list
+     * Initializes the sandbox levels list
      *
      * @param outerPanel The outer panel
      * @return JScrollPane The sandbox levels list
@@ -222,25 +125,9 @@ public class SandboxPanel extends JPanel {
         return sandboxLevelsList;
     }
 
-    /**
-     * Get an image
-     *
-     * @param playButtonIcon The icon of the play button
-     * @return BufferedImage The image of the play button icon
-     * @author Hugo Demule
-     */
-    private static BufferedImage getImage(String playButtonIcon) {
-        BufferedImage playButtonImage = null;
-        try {
-            playButtonImage = ImageIO.read(new File(playButtonIcon));
-        } catch (Exception e) {
-            System.out.println("Error loading campaign button image");
-        }
-        return playButtonImage;
-    }
 
     /**
-     * Create a new level button
+     * Creates a new level button
      *
      * @param newLevelButtonIcon The icon of the new level button
      * @return JPanel The new level button panel
@@ -268,7 +155,7 @@ public class SandboxPanel extends JPanel {
     }
 
     /**
-     * Create a level panel
+     * Creates a level panel
      *
      * @param scaledIcon The scaled icon
      * @return JPanel The level panel
@@ -287,7 +174,7 @@ public class SandboxPanel extends JPanel {
     }
 
     /**
-     * Create a container for the level name
+     * Creates a container for the level name
      *
      * @param levelID The level ID
      * @return JPanel The level name container panel
@@ -316,7 +203,7 @@ public class SandboxPanel extends JPanel {
     }
 
     /**
-     * Create a container for the buttons
+     * Creates a container for the buttons
      *
      * @param playButtonImage   The image of the play button
      * @param editButtonImage   The image of the edit button
@@ -347,7 +234,7 @@ public class SandboxPanel extends JPanel {
     }
 
     /**
-     * Create a wrapper panel with vertical BoxLayout to center buttonsContainer vertically
+     * Creates a wrapper panel with vertical BoxLayout to center buttonsContainer vertically
      *
      * @param buttonsContainer The buttons container panel
      * @return JPanel The vertical wrapper panel
@@ -364,7 +251,7 @@ public class SandboxPanel extends JPanel {
     }
 
     /**
-     * Create a play button
+     * Creates a play button
      *
      * @param playButtonImage The image of the play button
      * @param levelID         The level ID
@@ -386,7 +273,7 @@ public class SandboxPanel extends JPanel {
     }
 
     /**
-     * Create an edit button
+     * Creates an edit button
      *
      * @param editButtonImage The image of the edit button
      * @param levelID         The level ID
@@ -408,7 +295,7 @@ public class SandboxPanel extends JPanel {
     }
 
     /**
-     * Create a delete button
+     * Creates a delete button
      *
      * @param deleteButtonImage The image of the delete button
      * @param levelID           The level ID
@@ -434,7 +321,7 @@ public class SandboxPanel extends JPanel {
     }
 
     /**
-     * Refresh the sandbox panel
+     * Refreshes the sandbox panel
      *
      * @author Hugo Demule
      */
