@@ -17,6 +17,13 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * This class has the responsibility to display the common elements of the level menu panels.
+ *
+ * @author Léonard Amsler - s231715
+ * @author Nathan Gromb - s231674
+ * @author Hugo Demule
+ */
 public abstract class LevelMenuPanel extends JPanel {
     protected final JFrame frame;
     protected final JComponent buttons;
@@ -27,6 +34,15 @@ public abstract class LevelMenuPanel extends JPanel {
     public int tileWidth = 16;
     public int tileHeight = 16;
 
+    /**
+     * Constructor of the campaign panel class
+     *
+     * @param frame           The frame
+     * @param gameController  The game controller
+     * @param loginController The login controller
+     * @author Léonard Amsler - s231715
+     * @author Nathan Gromb - s231674
+     */
     public LevelMenuPanel(JFrame frame, GameController gameController, LoginController loginController) {
         this.frame = frame;
         this.gameController = gameController;
