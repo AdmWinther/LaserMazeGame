@@ -1,9 +1,8 @@
-package Model.constants;
+package Vue.SoundEffects;
 
 public class SoundPaths {
     public final static String MAIN_MENU_MUSIC1_PATH = "file:.src/main/java/Model/Resources/sounds/MainMenu4.wav";
-    public final static String MAIN_MENU_MUSIC_PATH = "file:./src/main/java/Model/Resources/sounds/Theme.wav";
-    public final static String MAIN_MENU_MUSIC2_PATH = "file:./src/main/java/Model/Resources/sounds/GameTime.wav";
+    public final static String MAIN_MENU_MUSIC_PATH = "file:./src/main/java/Vue/Resources/Sounds/MainMenu.wav";
     public final static String TOKKEN_EFFECT_MOVE_PATH2 = "file:./src/main/java/Model/Resources/sounds/Move2.wav";
     public final static String RELOAD_EFFECT_SOUND_PATH = "file:./src/main/java/Model/Resources/sounds/Reload.wav";
     public final static String GAMEOVER_EFFECT_SOUND_PATH = "file:./src/main/java/Model/Resources/sounds/GameOverSound.wav";
@@ -23,19 +22,6 @@ public class SoundPaths {
     public final static String PLACEMENT_TOKKEN_SOUND_PATH = "file:./src/main/java/Model/Resources/sounds/Placement.wav";
     public final static String MENU_BUTTON_SOUND_PATH = "file:./src/main/java/Model/Resources/sounds/MenuButtonEffect.wav";
     public final static String CAMPAIGN_BUTTON = "file:./src/main/java/Model/Resources/sounds/click.wav";
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
