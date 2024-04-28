@@ -59,9 +59,11 @@ public interface TokenManager {
     /** @return the coordinate  position of the laser gun if there's one, null otherwise */
     Coordinate findLaserGunPosition();
 
-    /** @return the coordinate position of the target if there's one, null otherwise */
-    Coordinate findTargetPosition();
+    /** @return the coordinate position of the targets if there are, null otherwise */
+    Set<Coordinate> findTargetPosition();
 
+    /** @return the coordinate position of the checkpoints if there are, null otherwise */
+    Set<Coordinate> findCheckpointsPosition();
 
     /**
      Checks if the specified coordinate is empty.
@@ -69,4 +71,6 @@ public interface TokenManager {
      @return true if the coordinate is empty, false otherwise
      */
     boolean isEmpty(Coordinate coordinate);
+
+
 }

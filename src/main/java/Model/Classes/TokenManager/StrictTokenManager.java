@@ -78,8 +78,13 @@ public class StrictTokenManager implements TokenManager {
     }
 
     @Override
-    public Coordinate findTargetPosition() {
+    public Set<Coordinate> findTargetPosition() {
         return tokenManager.findTargetPosition();
+    }
+
+    @Override
+    public Set<Coordinate> findCheckpointsPosition() {
+        return tokenManager.findCheckpointsPosition();
     }
 
     @Override

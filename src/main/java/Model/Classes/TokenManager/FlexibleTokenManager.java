@@ -1,5 +1,6 @@
 package Model.Classes.TokenManager;
 
+import Model.Classes.Token.Checkpoint;
 import Model.Classes.Token.LaserGun;
 import Model.Classes.Token.Target;
 import Model.Classes.Token.Token;
@@ -8,15 +9,12 @@ import Model.Classes.Utils.Coordinate;
 import Model.Interfaces.Inventory;
 
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 
 public class FlexibleTokenManager implements TokenManager {
 
     boolean placedLaser;
-    boolean placedTarget;
 
     private final Token[][] placedTokens;
     private final Set<Token> unplacedTokens;
@@ -69,9 +67,7 @@ public class FlexibleTokenManager implements TokenManager {
         if (checkAttributes()) return false;
         if (!isEmpty(position)) return false;
         if (placedLaser && token instanceof LaserGun) return false;
-        if (placedTarget && token instanceof Target) return false;
 
-        if (token instanceof Target) placedTarget = true;
         if (token instanceof LaserGun) placedLaser = true;
 
         placedTokens[position.x()][position.y()] = token;
@@ -92,7 +88,6 @@ public class FlexibleTokenManager implements TokenManager {
         Token token = placedTokens[position.x()][position.y()];
         placedTokens[position.x()][position.y()] = null;
 
-        if (token instanceof Target) placedTarget = false;
         if (token instanceof LaserGun) placedLaser = false;
 
         return token;
@@ -279,11 +274,12 @@ public class FlexibleTokenManager implements TokenManager {
      * @param type token type to find
      * @return the Coordinate of that type if found,null if not
      */
-    private Coordinate findTypePosition(Class<? extends Token> type) {
+    private List<Coordinate> findTypePosition(Class<? extends Token> type) {
+        List<Coordinate> coordinates = new ArrayList<>();
         for (int x = 0; x < placedTokens.length; x++) {
             for (int y = 0; y < placedTokens[0].length; y++) {
                 if (placedTokens[x][y] != null && placedTokens[x][y].getClass() == type) {
-                    return new Coordinate(x, y);
+                    coordinates.add(new Coordinate(x, y)) ;
                 }
             }
         }
@@ -293,12 +289,23 @@ public class FlexibleTokenManager implements TokenManager {
 
     @Override
     public Coordinate findLaserGunPosition() {
-        return findTypePosition(LaserGun.class);
+        List<Coordinate> coordinates = findTypePosition(LaserGun.class);
+        if(coordinates!=null) return coordinates.get(0);
+        else return null;
     }
 
     @Override
-    public Coordinate findTargetPosition() {
-        return findTypePosition(Target.class);
+    public Set<Coordinate> findTargetPosition() {
+        List<Coordinate> coordinates = findTypePosition(Target.class);
+        if (coordinates!=null) return new HashSet<>(coordinates);
+        else return null ;
+    }
+
+    @Override
+    public Set<Coordinate> findCheckpointsPosition() {
+        List<Coordinate> coordinates = findTypePosition(Checkpoint.class);
+        if (coordinates!=null) return new HashSet<>(coordinates);
+        else return null ;
     }
 
     public void removeToken(Token token) {
