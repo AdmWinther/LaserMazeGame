@@ -35,6 +35,7 @@ public class LoginMenu extends JPanel {
         final int preferredWidth = 300;
         final int preferredHeight = 200;
 
+
         // Background panel
         ImageIcon backgroundImage = new ImageIcon("src/main/java/Vue/Resources/Tiles/background.png");
         System.out.println(gameController.getCurrentGameFrameDimension());
