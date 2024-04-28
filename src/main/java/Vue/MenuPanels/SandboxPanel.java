@@ -1,6 +1,7 @@
 package Vue.MenuPanels;
 
 import Controller.GameController;
+import Controller.LevelPreparation;
 import Controller.LoginController;
 import Model.Classes.Level.LevelID;
 import Model.Classes.Utils.DataReader;
@@ -8,6 +9,7 @@ import Model.Classes.Utils.DataWriter;
 import Vue.Constants.JComponentsNames;
 import Vue.Constants.Style;
 import Vue.Constants.VueFilePaths;
+import Vue.Game.Game;
 import Vue.Handlers.ButtonHoverHandler;
 import Vue.SoundEffects.Sound;
 import Vue.Utils.ImageUtil;
@@ -17,8 +19,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.List;
-
-import static Vue.MenuPanels.LevelPreparation.showPanel;
 
 
 /**
@@ -329,7 +329,7 @@ public class SandboxPanel extends LevelMenuPanel {
         frame.add(new SandboxPanel(frame, gameController, loginController), JComponentsNames.FrameID.SANDBOX_LEVELS);
         frame.getContentPane().remove(this);
         frame.revalidate();
-        showPanel(frame, JComponentsNames.FrameID.SANDBOX_LEVELS);
+        Game.showPanel(frame, JComponentsNames.FrameID.SANDBOX_LEVELS);
         frame.repaint();
     }
 }

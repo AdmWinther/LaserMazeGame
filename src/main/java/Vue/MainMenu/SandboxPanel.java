@@ -1,13 +1,15 @@
 package Vue.MainMenu;
 
 import Controller.GameController;
+import Controller.LevelPreparation;
 import Controller.LoginController;
 import Model.Classes.Level.LevelID;
 import Model.Classes.Utils.DataReader;
 import Model.Classes.Utils.DataWriter;
+import Vue.Constants.JComponentsNames;
+import Vue.Game.Game;
 import Vue.Handlers.ButtonHoverHandler;
 import Vue.MenuPanels.ImagePanel;
-import Vue.MenuPanels.LevelPreparation;
 import Vue.SoundEffects.Sound;
 import Vue.Utils.ImageUtil;
 
@@ -264,7 +266,7 @@ public class SandboxPanel extends JPanel {
             public void mouseClicked(java.awt.event.MouseEvent e) {
                 Sound.playButtonSound();
                 frame.getContentPane().remove(SandboxPanel.this);
-                LevelPreparation.showPanel(frame, "MainMenu");
+                Game.showPanel(frame, JComponentsNames.FrameID.MAIN_MENU);
             }
         });
         button.addMouseListener(new ButtonHoverHandler());
@@ -305,10 +307,10 @@ public class SandboxPanel extends JPanel {
     }
 
     private void refresh() {
-        frame.add(new SandboxPanel(frame, gameController, loginController), "SandboxLevels");
+        frame.add(new SandboxPanel(frame, gameController, loginController), JComponentsNames.FrameID.SANDBOX_LEVELS);
         frame.getContentPane().remove(this);
         frame.revalidate();
-        LevelPreparation.showPanel(frame, "SandboxLevels");
+        Game.showPanel(frame, JComponentsNames.FrameID.SANDBOX_LEVELS);
         frame.repaint();
     }
 }

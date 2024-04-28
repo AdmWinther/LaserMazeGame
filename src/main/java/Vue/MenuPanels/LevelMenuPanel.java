@@ -5,6 +5,7 @@ import Controller.LoginController;
 import Vue.Constants.JComponentsNames;
 import Vue.Constants.Style;
 import Vue.Constants.VueFilePaths;
+import Vue.Game.Game;
 import Vue.Handlers.ButtonHoverHandler;
 import Vue.SoundEffects.Sound;
 
@@ -91,7 +92,7 @@ public abstract class LevelMenuPanel extends JPanel {
             public void mouseClicked(java.awt.event.MouseEvent e) {
                 Sound.playButtonSound();
                 frame.getContentPane().remove(thisClass);
-                LevelPreparation.showPanel(frame, JComponentsNames.FrameID.MAIN_MENU);
+                Game.showPanel(frame, JComponentsNames.FrameID.MAIN_MENU);
             }
         });
         button.addMouseListener(new ButtonHoverHandler());

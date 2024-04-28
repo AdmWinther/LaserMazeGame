@@ -2,6 +2,7 @@ package Vue.Game;
 
 import Controller.GameController;
 import Controller.LoginController;
+import Vue.Constants.JComponentsNames;
 import Vue.LoginMenu.LoginMenu;
 import Vue.SoundEffects.Sound;
 
@@ -9,8 +10,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-
-import static Vue.MenuPanels.LevelPreparation.showPanel;
 
 /**
  * Main class of the UI
@@ -42,8 +41,8 @@ public class Game {
         gameController = new GameController();
         LoginController loginController = new LoginController();
         LoginMenu loginMenu = new LoginMenu(frame, loginController, gameController);
-        frame.add(loginMenu, "LoginMenu");
-        showPanel(frame, "LoginMenu");
+        frame.add(loginMenu, JComponentsNames.FrameID.LOGIN);
+        showPanel(frame, JComponentsNames.FrameID.LOGIN);
 
         double aspectRatio = INIT_WIDTH / (double) INIT_HEIGHT;
         frame.addComponentListener(new ComponentAdapter() {
@@ -56,6 +55,18 @@ public class Game {
 
         frame.pack();
         frame.setLocationRelativeTo(null);
+    }
+
+    /**
+     * Show a panel
+     *
+     * @param frame     - The frame
+     * @param panelName - The panel name
+     * @author Léonard Amsler - s231715
+     */
+    public static void showPanel(JFrame frame, String panelName) {
+        CardLayout cardLayout = (CardLayout) frame.getContentPane().getLayout();
+        cardLayout.show(frame.getContentPane(), panelName);
     }
 
     /**

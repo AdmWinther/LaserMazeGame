@@ -18,8 +18,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
 
-import static Vue.MenuPanels.LevelPreparation.preparePlayableLevel;
-import static Vue.MenuPanels.LevelPreparation.showPanel;
+import static Controller.LevelPreparation.preparePlayableLevel;
+import static Vue.Game.Game.showPanel;
 import static Vue.Utils.ButtonUtil.setButtonTransparent;
 import static Vue.Utils.ImageUtil.resizeImage;
 
