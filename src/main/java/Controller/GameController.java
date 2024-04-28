@@ -4,17 +4,21 @@ import Model.Classes.Level.Level;
 import Model.Classes.Level.LevelBuilder;
 import Model.Classes.Level.LevelID;
 import Model.Classes.Utils.DataReader;
+import Vue.Game.Game;
 
+import java.awt.*;
 import java.util.List;
 
 public class GameController {
 
+    private final Game game;
     private LevelBuilder levelBuilder;
     private LevelID currentLevelID;
     private Level currentLevel;
     private boolean campaignGameMode = false;
 
-    public GameController() {
+    public GameController(Game game) {
+        this.game = game;
     }
 
     public void setCurrentLevelID(LevelID levelID, boolean editable) {
@@ -66,6 +70,16 @@ public class GameController {
      */
     public List<LevelID> getSandboxLevelIDs() {
         return DataReader.readSandboxLevelIDs();
+    }
+
+    /**
+     * Get the dimension of the current game frame
+     *
+     * @return The dimension of the current game frame
+     * @author Hugo Demule
+     */
+    public Dimension getCurrentGameFrameDimension() {
+        return game.getCurrentFrameDimension();
     }
 
 }

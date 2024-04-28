@@ -19,9 +19,11 @@ public abstract class LevelController {
     protected final JFrame frame;
     protected Level level;
     protected LevelPanel levelPanel;
+    protected GameController gameController;
     boolean shouldDisplayLaser = false;
 
-    public LevelController(JFrame frame, LevelPanel levelPanel, Level level) {
+    public LevelController(GameController gameController, JFrame frame, LevelPanel levelPanel, Level level) {
+        this.gameController = gameController;
         this.frame = frame;
         this.level = level;
         this.levelPanel = levelPanel;
@@ -121,5 +123,15 @@ public abstract class LevelController {
 
     public boolean isSandbox() {
         return false;
+    }
+
+    /**
+     * Get the dimension of the current game frame
+     *
+     * @return The dimension of the current game frame
+     * @author Hugo Demule
+     */
+    public Dimension getCurrentGameFrameDimension() {
+        return gameController.getCurrentGameFrameDimension();
     }
 }

@@ -49,11 +49,11 @@ public class LevelPreparation {
         LevelPanel levelPanel;
 
         if (editable) {
-            levelController = new EditableLevelController(frame, null, (EditableLevel) gameController.getCurrentLevel());
+            levelController = new EditableLevelController(gameController, frame, null, (EditableLevel) gameController.getCurrentLevel());
             levelPanel = new EditableLevelPanel(frame, gameController, (EditableLevelController) levelController, loginController);
             levelController.setLevelPanel(levelPanel);
         } else {
-            levelController = new PlayableLevelController(frame, null, (PlayableLevel) gameController.getCurrentLevel());
+            levelController = new PlayableLevelController(gameController, frame, null, (PlayableLevel) gameController.getCurrentLevel());
             levelPanel = new PlayableLevelPanel(frame, gameController, (PlayableLevelController) levelController, loginController);
             levelController.setLevelPanel(levelPanel);
         }

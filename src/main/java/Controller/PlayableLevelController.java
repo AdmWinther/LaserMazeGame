@@ -7,8 +7,8 @@ import javax.swing.*;
 
 public class PlayableLevelController extends LevelController {
 
-    public PlayableLevelController(JFrame frame, PlayableLevelPanel levelPanel, PlayableLevel level) {
-        super(frame, levelPanel, level);
+    public PlayableLevelController(GameController gameController, JFrame frame, PlayableLevelPanel levelPanel, PlayableLevel level) {
+        super(gameController, frame, levelPanel, level);
     }
 
     @Override
