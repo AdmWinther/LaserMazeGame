@@ -114,7 +114,7 @@ public class SandboxPanel extends LevelMenuPanel {
      * @return JScrollPane The sandbox levels list
      * @author Hugo Demule
      */
-    private static JScrollPane initializeSandboxLevelsList(JPanel outerPanel) {
+    private JScrollPane initializeSandboxLevelsList(JPanel outerPanel) {
         JScrollPane sandboxLevelsList = new JScrollPane(outerPanel);
         sandboxLevelsList.setOpaque(false); // Make the panel transparent
         sandboxLevelsList.getViewport().setOpaque(false);
@@ -240,7 +240,7 @@ public class SandboxPanel extends LevelMenuPanel {
      * @return JPanel The vertical wrapper panel
      * @author Hugo Demule
      */
-    private static JPanel verticalWrapper(JPanel buttonsContainer) {
+    private JPanel verticalWrapper(JPanel buttonsContainer) {
         JPanel verticalWrapper = new JPanel();
         verticalWrapper.setLayout(new BoxLayout(verticalWrapper, BoxLayout.Y_AXIS));
         verticalWrapper.setOpaque(false);
