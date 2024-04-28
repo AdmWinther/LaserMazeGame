@@ -59,7 +59,7 @@ public class MainMenuPanel extends JPanel {
 
         // Background image
         ImageIcon backgroundImage = new ImageIcon(VueFilePaths.BACKGROUND_IMAGE);
-        ImagePanel backgroundPanel = new ImagePanel(backgroundImage.getImage());
+        ImagePanel backgroundPanel = new ImagePanel(backgroundImage.getImage(), gameController.getCurrentTileDimension());
         backgroundPanel.setLayout(new BorderLayout());
         add(backgroundPanel, BorderLayout.CENTER);
 

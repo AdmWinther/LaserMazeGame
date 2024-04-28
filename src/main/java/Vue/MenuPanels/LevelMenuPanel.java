@@ -50,15 +50,16 @@ public abstract class LevelMenuPanel extends JPanel {
         this.loginController = loginController;
 
         // TODO change the tile size depending on the screen size | call gameController.getCurrentGameFrameDimension()
-        this.tileHeight = 16;
-        this.tileWidth = 16;
+
+        this.tileHeight = gameController.getCurrentTileDimension().height;
+        this.tileWidth = gameController.getCurrentTileDimension().width;
 
         setDoubleBuffered(true);
         setLayout(new BorderLayout());
 
         // Background image
         ImageIcon backgroundImage = new ImageIcon(VueFilePaths.BACKGROUND_IMAGE);
-        this.backgroundPanel = new ImagePanel(backgroundImage.getImage());
+        this.backgroundPanel = new ImagePanel(backgroundImage.getImage(), gameController.getCurrentTileDimension());
         this.backgroundPanel.setLayout(new BorderLayout());
         add(backgroundPanel, BorderLayout.CENTER);
 

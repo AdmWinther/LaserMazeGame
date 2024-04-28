@@ -82,4 +82,8 @@ public class GameController {
         return game.getCurrentFrameDimension();
     }
 
+    public Dimension getCurrentTileDimension() {
+        return game.getCurrentTileDimension();
+    }
+
 }

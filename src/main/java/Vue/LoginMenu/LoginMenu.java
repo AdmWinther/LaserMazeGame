@@ -10,11 +10,14 @@ import Vue.SoundEffects.Sound;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 import static Vue.Game.Game.showPanel;
 
 public class LoginMenu extends JPanel {
 
+    private final ImagePanel backgroundPanel;
     Thread mainMenuThread;
     GameController gameController;
     LoginController loginController;
@@ -34,7 +37,9 @@ public class LoginMenu extends JPanel {
 
         // Background panel
         ImageIcon backgroundImage = new ImageIcon("src/main/java/Vue/Resources/Tiles/background.png");
-        ImagePanel backgroundPanel = new ImagePanel(backgroundImage.getImage());
+        System.out.println(gameController.getCurrentGameFrameDimension());
+        // TODO REMOVE THE 40 and 40 to use the gameController.getCurrentGameFrameDimension(), but it is not working since it's 0
+        this.backgroundPanel = new ImagePanel(backgroundImage.getImage(), new Dimension(40, 40));
         backgroundPanel.setLayout(new BorderLayout());
         add(backgroundPanel);
 
@@ -60,6 +65,14 @@ public class LoginMenu extends JPanel {
 
         // Login panel
         LoginPanel loginPanel = new LoginPanel(frame, gameController, loginController);
+
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                resize();
+            }
+        });
+
         loginPanel.setOpaque(false);
         loginPanel.setPreferredSize(new Dimension(preferredWidth, preferredHeight));
         loginRegisterPanel.add(loginPanel);
@@ -77,6 +90,11 @@ public class LoginMenu extends JPanel {
         frame.setMinimumSize(new Dimension(800, 600));
 
         add(backgroundPanel);
+    }
+
+
+    public void resize() {
+        // try to redraw the background image at the good size
     }
 }
 

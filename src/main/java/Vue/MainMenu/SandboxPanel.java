@@ -51,7 +51,7 @@ public class SandboxPanel extends JPanel {
 
         // Background image
         ImageIcon backgroundImage = new ImageIcon("src/main/java/Vue/Resources/Tiles/background.png");
-        ImagePanel backgroundPanel = new ImagePanel(backgroundImage.getImage());
+        ImagePanel backgroundPanel = new ImagePanel(backgroundImage.getImage(), gameController.getCurrentTileDimension());
         backgroundPanel.setLayout(new BorderLayout());
         add(backgroundPanel, BorderLayout.CENTER);
 

@@ -49,6 +49,7 @@ public class Game {
         frame.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
+                // TODO change also if the height changes
                 frame.setSize(frame.getWidth(), (int) (frame.getWidth() / aspectRatio));
             }
         });
@@ -91,6 +92,11 @@ public class Game {
     public void start() {
         frame.setVisible(true);
         Sound.playMainMenuTheme();
+    }
+
+    public Dimension getCurrentTileDimension() {
+        int size = getCurrentFrameDimension().width / 20;
+        return new Dimension(size, size);
     }
 
     /**

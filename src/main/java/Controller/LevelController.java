@@ -134,4 +134,8 @@ public abstract class LevelController {
     public Dimension getCurrentGameFrameDimension() {
         return gameController.getCurrentGameFrameDimension();
     }
+
+    public Dimension getCurrentTileDimension() {
+        return gameController.getCurrentTileDimension();
+    }
 }
