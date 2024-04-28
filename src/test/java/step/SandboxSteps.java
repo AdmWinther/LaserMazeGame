@@ -4,6 +4,8 @@ import Model.Classes.Level.EditableLevel;
 import Model.Classes.Token.*;
 import Model.Classes.Utils.Coordinate;
 import Model.Classes.Utils.Orientation;
+import Model.Interfaces.Inventory;
+import Model.constants.SandboxInventory;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -19,8 +21,7 @@ public class SandboxSteps {
     EditableLevel level;
     Token token;
     Coordinate tokenCoordinate;
-    Set<Class<? extends Token>> inventory = new HashSet<>(Arrays.asList(Block.class,DoubleSidedMirror.class,LaserGun.class,
-            OneSidedMirror.class,Target.class));
+    Inventory inventory = new SandboxInventory();
 
 
     @Given("I have an empty sandbox level with all the possible tokens in my inventory")
