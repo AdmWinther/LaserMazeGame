@@ -20,9 +20,9 @@ import java.io.IOException;
 /**
  * This class has the responsibility to display the common elements of the level menu panels.
  *
+ * @author Hugo Demule
  * @author Léonard Amsler - s231715
  * @author Nathan Gromb - s231674
- * @author Hugo Demule
  */
 public abstract class LevelMenuPanel extends JPanel {
     protected final JFrame frame;
