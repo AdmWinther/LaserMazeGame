@@ -32,8 +32,8 @@ public abstract class LevelMenuPanel extends JPanel {
     protected final GameController gameController;
     protected final LoginController loginController;
     protected final ImagePanel backgroundPanel;
-    public int tileWidth = 16;
-    public int tileHeight = 16;
+    protected int tileWidth;
+    protected int tileHeight;
 
     /**
      * Constructor of the campaign panel class
@@ -48,6 +48,10 @@ public abstract class LevelMenuPanel extends JPanel {
         this.frame = frame;
         this.gameController = gameController;
         this.loginController = loginController;
+
+        // TODO change the tile size depending on the screen size | call gameController.getCurrentGameFrameDimension()
+        this.tileHeight = 16;
+        this.tileWidth = 16;
 
         setDoubleBuffered(true);
         setLayout(new BorderLayout());
