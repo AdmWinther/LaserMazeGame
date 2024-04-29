@@ -76,7 +76,6 @@ public class SandboxExtrasUI extends ExtrasUI {
 
 		if (bin.contains(pos.x(), pos.y())) {
 			editableController.removeToken(token);
-			System.out.println("Deleted Token: " + token);
 		}
 	}
 }
