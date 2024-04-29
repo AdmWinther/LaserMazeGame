@@ -3,6 +3,7 @@ package Vue.Level;
 import Controller.GameController;
 import Controller.LevelController;
 import Controller.LoginController;
+import Vue.Constants.JComponentsNames;
 import Vue.Handlers.LevelMouseHandler;
 import Vue.Handlers.TokenKeyboardHandler;
 import Vue.Handlers.TokenMouseHandler;
@@ -10,7 +11,7 @@ import Vue.Level.UILayers.ExtrasUI;
 import Vue.Level.UILayers.LaserUI;
 import Vue.Level.UILayers.TilesUI;
 import Vue.Level.UILayers.TokensUI;
-import Vue.MainMenu.MainMenuPanel;
+import Vue.MenuPanels.MainMenuPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +19,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.Timer;
 
-import static Vue.MainMenu.LevelPreparation.showPanel;
+import static Vue.Game.Game.showPanel;
 
 public abstract class LevelPanel extends JPanel implements Runnable {
 
@@ -32,6 +33,7 @@ public abstract class LevelPanel extends JPanel implements Runnable {
     // Performance settings
     final int fps = 60;
     final int frameTime = 1000 / fps;
+    private final boolean tadaPlayed = false;
     // Level configuration, screen size in tiles
     public int maxCol;
     public int maxRow;
@@ -62,7 +64,6 @@ public abstract class LevelPanel extends JPanel implements Runnable {
     Thread gameThread;
     JFrame frame;
     GameController gameController;
-    private boolean tadaPlayed = false;
     private Timer timer;
 
 
@@ -91,11 +92,11 @@ public abstract class LevelPanel extends JPanel implements Runnable {
         widthOffset = (this.screenWidth - boardWidth * tileWidth) / 2;
         heightOffset = (this.screenHeight - boardHeight * tileHeight) / 2;
 
-        tilesUI = new TilesUI(this, levelController);
+        tilesUI = new TilesUI(this);
         tokensUI = new TokensUI(this, levelController);
         laserUI = new LaserUI(this, levelController);
 
-        levelMouseHandler = new LevelMouseHandler(this, levelController);
+        levelMouseHandler = new LevelMouseHandler(this);
         addMouseListener(levelMouseHandler);
         tokenMouseHandler = new TokenMouseHandler(this, levelController, tokensUI);
         addMouseListener(tokenMouseHandler);
@@ -110,7 +111,6 @@ public abstract class LevelPanel extends JPanel implements Runnable {
 
         setFocusable(true);
         requestFocus();
-
 
         start();
 
@@ -132,6 +132,33 @@ public abstract class LevelPanel extends JPanel implements Runnable {
         gameThread.start();
     }
 
+    /**
+     * Resize the level panel
+     * This method is called when the window is resized
+     *
+     * @Author Léonard Amsler - s231715
+     */
+    public void resize() {
+        // Get the size of the screen
+        Dimension screenSize = getSize();
+        screenWidth = screenSize.width;
+        screenHeight = screenSize.height;
+
+        // Calculate the new tile size
+        int newTileWidth = screenWidth / maxCol;
+        int newTileHeight = screenHeight / maxRow;
+
+        // Set the new tile size
+        tileWidth = newTileWidth;
+        tileHeight = newTileHeight;
+
+        // Calculate the new offsets
+        int boardWidth = levelController.getWidth();
+        int boardHeight = levelController.getHeight();
+
+        widthOffset = (maxCol - boardWidth) / 2 * tileWidth;
+        heightOffset = (maxRow - boardHeight) / 2 * tileHeight;
+    }
 
     /**
      * Run method of the game thread
@@ -194,34 +221,6 @@ public abstract class LevelPanel extends JPanel implements Runnable {
         tokensUI.draw(g2d);
     }
 
-    /**
-     * Resize the level panel
-     * This method is called when the window is resized
-     *
-     * @Author Léonard Amsler - s231715
-     */
-    public void resize() {
-        // Get the size of the screen
-        Dimension screenSize = getSize();
-        screenWidth = screenSize.width;
-        screenHeight = screenSize.height;
-
-        // Calculate the new tile size
-        int newTileWidth = screenWidth / maxCol;
-        int newTileHeight = screenHeight / maxRow;
-
-        // Set the new tile size
-        tileWidth = newTileWidth;
-        tileHeight = newTileHeight;
-
-        // Calculate the new offsets
-        int boardWidth = levelController.getWidth();
-        int boardHeight = levelController.getHeight();
-
-        widthOffset = (maxCol - boardWidth) / 2 * tileWidth;
-        heightOffset = (maxRow - boardHeight) / 2 * tileHeight;
-    }
-
     public int getFPS() {
         return fps;
     }
@@ -238,8 +237,8 @@ public abstract class LevelPanel extends JPanel implements Runnable {
             mainMenuPanel.displayCampaignLevels(frame);
         } else {
             //if we are in Random level mode
-            frame.add(mainMenuPanel, "MainMenu");
-            showPanel(frame, "MainMenu");
+            frame.add(mainMenuPanel, JComponentsNames.FrameID.MAIN_MENU);
+            showPanel(frame, JComponentsNames.FrameID.MAIN_MENU);
             frame.pack();
         }
     }

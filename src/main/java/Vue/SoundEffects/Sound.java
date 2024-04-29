@@ -1,15 +1,23 @@
 package Vue.SoundEffects;
 
-import Model.constants.SoundPaths;
-
 import javax.sound.sampled.*;
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 public class Sound {
 
-    private static Clip loadFile(URL file){
+    public static void playLaserShoot() {
+        try {
+            URL file = new URL(SoundPaths.LASER_EFFECT_PASSES_PATH);
+            loadFile(file).start();
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static Clip loadFile(URL file) {
         try {
             assert file != null;
             AudioInputStream ais = AudioSystem.getAudioInputStream(file);
@@ -20,38 +28,35 @@ public class Sound {
             throw new RuntimeException(ex);
         }
     }
-    public static void playLaserShoot(){
-        try {
-            URL file  = new URL(SoundPaths.LASER_EFFECT_PASSES_PATH);
-            loadFile(file).start();
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
-    public static Clip getLevelCompleted(){
+    public static Clip getLevelCompleted() {
         try {
-            URL file  = new URL(SoundPaths.LEVEL_PASSED_SOUND_PATH);
+            URL file = new URL(SoundPaths.LEVEL_PASSED_SOUND_PATH);
             return loadFile(file);
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static void playMainMenuTheme(){
+    public static void playMainMenuTheme() {
+        URL file = null;
         try {
-            URL file  = new URL(SoundPaths.MAIN_MENU_MUSIC2_PATH);
-            loadFile(file).start();
+            file = new URL(SoundPaths.MAIN_MENU_MUSIC_PATH);
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
+        Clip clip = loadFile(file);
+        FloatControl gainControl =
+                (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        gainControl.setValue(-30.0f); // Reduce volume by 10 decibels.
+        clip.loop(Clip.LOOP_CONTINUOUSLY);
+        clip.start();
     }
 
-    public static void playButtonSound(Clip clip){
-        if(clip != null) clip=null;
+    public static void playButtonSound() {
         try {
-            URL file  = new URL(SoundPaths.CAMPAIGN_BUTTON);
-            clip = loadFile(file);
+            URL file = new URL(SoundPaths.CAMPAIGN_BUTTON);
+            Clip clip = loadFile(file);
             clip.start();
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);

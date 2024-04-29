@@ -10,16 +10,21 @@ import Vue.Level.EditableLevelPanel;
 
 import javax.swing.*;
 
-public class EditableLevelController extends LevelController{
+public class EditableLevelController extends LevelController {
 
-    public EditableLevelController(JFrame frame, EditableLevelPanel levelPanel, EditableLevel level) {
-        super(frame, levelPanel, level);
+    public EditableLevelController(GameController gameController, JFrame frame, EditableLevelPanel levelPanel, EditableLevel level) {
+        super(gameController, frame, levelPanel, level);
     }
 
     @Override
     public void backToMenu() {
         DataWriter.write(level, FilePaths.SANDBOX_LEVELS_PATH);
         super.backToMenu();
+    }
+
+    @Override
+    public boolean isSandbox() {
+        return true;
     }
 
     public boolean addToPlacedTokens(Token token, Coordinate coordinate) {
@@ -46,11 +51,6 @@ public class EditableLevelController extends LevelController{
 
     public Inventory getInventory() {
         return ((EditableLevel) level).tokenManager().getInventory();
-    }
-
-    @Override
-    public boolean isSandbox() {
-        return true;
     }
 
     public void removeToken(Token token) {

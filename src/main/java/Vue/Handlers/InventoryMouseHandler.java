@@ -2,64 +2,98 @@ package Vue.Handlers;
 
 import Controller.EditableLevelController;
 import Model.Classes.Token.Token;
-import Model.Classes.Utils.Coordinate;
-import Model.constants.MouseConstants;
-import Vue.Level.EditableLevelPanel;
 import Vue.Level.UILayers.InventoryUI;
+import Vue.Utils.Position;
 
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.geom.Rectangle2D;
 
-public class InventoryMouseHandler extends AdaptedMouseHandler implements MouseListener {
-    private final EditableLevelController levelController;
-    private final InventoryUI tokenDisplay;
+/**
+ * Class that handles the mouse events on the inventory's UI
+ *
+ * @author Nathan Gromb
+ */
+public final class InventoryMouseHandler extends AdaptedMouseHandler {
+	private final EditableLevelController levelController;
+	private final InventoryUI tokenDisplay;
 
-    boolean isPressed = false;
-    int startX;
-    int startY;
+	private boolean isPressed = false;
+	private Position mouseStartPos;
 
-    public InventoryMouseHandler(EditableLevelController levelController, InventoryUI tokenDisplay) {
-        this.levelController = levelController;
-        this.tokenDisplay = tokenDisplay;
-    }
+	/**
+	 * Constructor of the InventoryMouseHandler
+	 *
+	 * @param levelController the controller of the level
+	 * @param tokenDisplay    the inventory's UI
+	 * @author Nathan Gromb
+	 */
+	public InventoryMouseHandler(EditableLevelController levelController, InventoryUI tokenDisplay) {
+		this.levelController = levelController;
+		this.tokenDisplay = tokenDisplay;
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        Token token = tokenDisplay.getTokenAt(e.getX(), e.getY());
-        if (token != null) {
-            levelController.addToUnplacedTokens(token.copy());
-        }
-    }
+		this.mouseStartPos = Position.of(0, 0);
+	}
 
-    @Override
-    public void mousePressed(MouseEvent e) {
-        if (!isPressed) {
-            isPressed = true;
-            startX = e.getX();
-            startY = e.getY();
-        }
-    }
+	/**
+	 * Method that handles the mouse click event
+	 * Adds the token to the unplaced tokens if the click is on a token
+	 *
+	 * @param e the event to be processed
+	 * @author Nathan Gromb
+	 */
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		Token token = tokenDisplay.getTokenAtMousePos(Position.ofEvent(e));
+		if (token != null) {
+			levelController.addToUnplacedTokens(token.copy());
+		}
+	}
 
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        if (isPressed) {
-            isPressed = false;
+	/**
+	 * Method that handles the mouse press event
+	 *
+	 * @param e the event to be processed
+	 * @author Nathan Gromb
+	 */
+	@Override
+	public void mousePressed(MouseEvent e) {
+		if (!isPressed) {
+			isPressed = true;
+			mouseStartPos = Position.ofEvent(e);
+		}
+	}
 
-            if (registerDragAsClick(e, startX, startY)) {
-                mouseClicked(e);
-            }
-        }
-    }
+	/**
+	 * Method that handles the mouse release event
+	 *
+	 * @param e the event to be processed
+	 * @author Nathan Gromb
+	 */
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		if (isPressed) {
+			isPressed = false;
 
-    @Override
-    public void mouseEntered(MouseEvent e) {
+			if (registerDragAsClick(e, mouseStartPos)) {
+				mouseClicked(e);
+			}
+		}
+	}
 
-    }
+	/**
+	 * Method that handles the mouse enter event
+	 *
+	 * @param e the event to be processed
+	 * @author Nathan Gromb
+	 */
+	@Override
+	public void mouseEntered(MouseEvent e) {}
 
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
-
+	/**
+	 * Method that handles the mouse exit event
+	 *
+	 * @param e the event to be processed
+	 * @author Nathan Gromb
+	 */
+	@Override
+	public void mouseExited(MouseEvent e) {}
 }

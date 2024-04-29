@@ -1,4 +1,4 @@
-package Vue.MainMenu;
+package Vue.MenuPanels;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,6 +10,8 @@ import java.awt.*;
  */
 public class ImagePanel extends JPanel {
     private final Image backgroundImage;
+    private final int tileWidth;
+    private final int tileHeight;
 
     /**
      * Constructor of the image panel class
@@ -17,8 +19,11 @@ public class ImagePanel extends JPanel {
      * @param backgroundImage - The background image
      * @Author Léonard Amsler - s231715
      */
-    public ImagePanel(Image backgroundImage) {
+    public ImagePanel(Image backgroundImage, Dimension tileDimension) {
         this.backgroundImage = backgroundImage;
+        this.tileWidth = tileDimension.width;
+        this.tileHeight = tileDimension.height;
+        // access to the graphics object
     }
 
     /**
@@ -38,8 +43,6 @@ public class ImagePanel extends JPanel {
             int width = getWidth();
             int height = getHeight();
             int scale = 3;
-            int tileWidth = backgroundImage.getWidth(null) * scale;
-            int tileHeight = backgroundImage.getHeight(null) * scale;
 
             // Draw the background image tiles to fill the panel
             for (int x = 0; x < width; x += tileWidth) {

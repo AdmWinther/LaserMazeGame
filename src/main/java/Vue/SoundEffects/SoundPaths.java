@@ -1,4 +1,4 @@
-package Model.constants;
+package Vue.SoundEffects;
 
 public class SoundPaths {
     public final static String MAIN_MENU_MUSIC1_PATH = "file:.src/main/java/Vue/Resources/Sounds/MainMenu4.wav";

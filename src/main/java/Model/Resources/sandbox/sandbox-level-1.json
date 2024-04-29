@@ -1,0 +1,40 @@
+{
+    "unplacedTokens": [{
+        "orientation": "RIGHT",
+        "tokenId": "OneSidedMirror_1476098386",
+        "type": "OneSidedMirror"
+    }],
+    "boardSize": {
+        "widthX": 7,
+        "heightY": 7
+    },
+    "name": "Sandbox Level 1",
+    "placedTokens": [
+        {
+            "orientation": "RIGHT",
+            "tokenId": "LaserGun_1460486941",
+            "position": {
+                "x": 0,
+                "y": 0
+            },
+            "type": "LaserGun"
+        },
+        {
+            "tokenId": "Block_1688463717",
+            "position": {
+                "x": 3,
+                "y": 3
+            },
+            "type": "Block"
+        },
+        {
+            "orientation": "RIGHT",
+            "tokenId": "Target_852888601",
+            "position": {
+                "x": 6,
+                "y": 6
+            },
+            "type": "Target"
+        }
+    ]
+}

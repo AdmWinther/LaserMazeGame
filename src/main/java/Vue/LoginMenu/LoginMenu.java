@@ -2,18 +2,22 @@ package Vue.LoginMenu;
 
 import Controller.GameController;
 import Controller.LoginController;
+import Vue.Constants.JComponentsNames;
 import Vue.Handlers.ButtonHoverHandler;
-import Vue.MainMenu.ImagePanel;
-import Vue.MainMenu.MainMenuPanel;
+import Vue.MenuPanels.ImagePanel;
+import Vue.MenuPanels.MainMenuPanel;
 import Vue.SoundEffects.Sound;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
-import static Vue.MainMenu.LevelPreparation.showPanel;
+import static Vue.Game.Game.showPanel;
 
 public class LoginMenu extends JPanel {
 
+    private final ImagePanel backgroundPanel;
     Thread mainMenuThread;
     GameController gameController;
     LoginController loginController;
@@ -31,9 +35,12 @@ public class LoginMenu extends JPanel {
         final int preferredWidth = 300;
         final int preferredHeight = 200;
 
+
         // Background panel
         ImageIcon backgroundImage = new ImageIcon("src/main/java/Vue/Resources/Tiles/background.png");
-        ImagePanel backgroundPanel = new ImagePanel(backgroundImage.getImage());
+        System.out.println(gameController.getCurrentGameFrameDimension());
+        // TODO REMOVE THE 40 and 40 to use the gameController.getCurrentGameFrameDimension(), but it is not working since it's 0
+        this.backgroundPanel = new ImagePanel(backgroundImage.getImage(), new Dimension(40, 40));
         backgroundPanel.setLayout(new BorderLayout());
         add(backgroundPanel);
 
@@ -49,7 +56,6 @@ public class LoginMenu extends JPanel {
         titlePanel.add(titleLabel);
         backgroundPanel.add(titlePanel, BorderLayout.NORTH);
 
-
         // Login & Register panel
         JPanel loginRegisterPanel = new JPanel();
         // I want a layout that display the two panels one under the other
@@ -60,6 +66,14 @@ public class LoginMenu extends JPanel {
 
         // Login panel
         LoginPanel loginPanel = new LoginPanel(frame, gameController, loginController);
+
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                resize();
+            }
+        });
+
         loginPanel.setOpaque(false);
         loginPanel.setPreferredSize(new Dimension(preferredWidth, preferredHeight));
         loginRegisterPanel.add(loginPanel);
@@ -80,6 +94,9 @@ public class LoginMenu extends JPanel {
     }
 
 
+    public void resize() {
+        // try to redraw the background image at the good size
+    }
 }
 
 class LoginPanel extends JPanel {
@@ -115,15 +132,15 @@ class LoginPanel extends JPanel {
         // Login button
         JButton loginButton = new JButton("Login");
         loginButton.addActionListener(e -> {
-            Sound.playButtonSound(null); // TODO null
+            Sound.playButtonSound();
 
             // Check if the username and password are correct
             boolean success = loginController.login(usernameTextField.getText(), new String(passwordTextField.getPassword()));
             if (success) {
                 // Show the main menu
                 MainMenuPanel mainMenuPanel = new MainMenuPanel(frame, gameController, loginController);
-                frame.add(mainMenuPanel, "MainMenu");
-                showPanel(frame, "MainMenu");
+                frame.add(mainMenuPanel, JComponentsNames.FrameID.MAIN_MENU);
+                showPanel(frame, JComponentsNames.FrameID.MAIN_MENU);
             } else {
                 // Show an error message
                 JOptionPane.showMessageDialog(frame, "Incorrect username or password", "Error", JOptionPane.ERROR_MESSAGE);
@@ -183,11 +200,10 @@ class registerPanel extends JPanel {
         JPasswordField confirmPasswordTextField = new JPasswordField();
         inputsPanel.add(confirmPasswordTextField);
 
-
         // Register button
         JButton registerButton = new JButton("Register");
         registerButton.addActionListener(e -> {
-            Sound.playButtonSound(null); // TODO null
+            Sound.playButtonSound();
 
             // Check if the password and confirm password are the same
             if (!new String(passwordTextField.getPassword()).equals(new String(confirmPasswordTextField.getPassword()))) {
@@ -208,8 +224,8 @@ class registerPanel extends JPanel {
             if (result) {
                 // Show the main menu
                 MainMenuPanel mainMenuPanel = new MainMenuPanel(frame, gameController, loginController);
-                frame.add(mainMenuPanel, "MainMenu");
-                showPanel(frame, "MainMenu");
+                frame.add(mainMenuPanel, JComponentsNames.FrameID.MAIN_MENU);
+                showPanel(frame, JComponentsNames.FrameID.MAIN_MENU);
             } else {
                 // Show an error message
                 JOptionPane.showMessageDialog(frame, "Username already exists", "Error", JOptionPane.ERROR_MESSAGE);
