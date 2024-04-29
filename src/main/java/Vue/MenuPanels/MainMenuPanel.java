@@ -32,8 +32,8 @@ import static Vue.Utils.ImageUtil.resizeImage;
  * @author Hugo Demule
  */
 public class MainMenuPanel extends JPanel {
-    private final int MAX_WIDTH = 200;
-    private final int MAX_HEIGHT = 300;
+    private final int BORDER_PANEL_WIDTH = 400;
+    private final int BORDER_PANEL_HEIGHT = 600;
     GameController gameController;
     LoginController loginController;
 
@@ -81,6 +81,16 @@ public class MainMenuPanel extends JPanel {
         // Button panel
         JPanel buttonPanel = createButtonPanel(frame);
         backgroundPanel.add(buttonPanel, BorderLayout.CENTER);
+
+        // Left and right empty and transparent panels to center the buttons
+        JPanel leftPanel = new JPanel();
+        JPanel rightPanel = new JPanel();
+        leftPanel.setOpaque(false);
+        rightPanel.setOpaque(false);
+        leftPanel.setPreferredSize(new Dimension(BORDER_PANEL_WIDTH, BORDER_PANEL_HEIGHT));
+        rightPanel.setPreferredSize(new Dimension(BORDER_PANEL_WIDTH, BORDER_PANEL_HEIGHT));
+        backgroundPanel.add(leftPanel, BorderLayout.WEST);
+        backgroundPanel.add(rightPanel, BorderLayout.EAST);
 
         // Footer panel
         JPanel footerPanel = footerPanel();
@@ -192,18 +202,12 @@ public class MainMenuPanel extends JPanel {
         randomButton.addMouseListener(new ButtonHoverHandler());
 
         // Set button to transparent
-        //setButtonTransparent(campaignButton);
-        //setButtonTransparent(sandboxButton);
-        //setButtonTransparent(randomButton);
+        setButtonTransparent(campaignButton);
+        setButtonTransparent(sandboxButton);
+        setButtonTransparent(randomButton);
 
         // Make the button the same size as its icon
         System.out.println("Button size " + campaignButtonImage.getWidth() + " x " + campaignButtonImage.getHeight());
-        campaignButton.setPreferredSize(new Dimension(campaignButtonImage.getWidth(), campaignButtonImage.getHeight()));
-        sandboxButton.setPreferredSize(new Dimension(sandboxButtonImage.getWidth(), sandboxButtonImage.getHeight()));
-        randomButton.setPreferredSize(new Dimension(randomButtonImage.getWidth(), randomButtonImage.getHeight()));
-        campaignButton.setBorder(BorderFactory.createEmptyBorder());
-        sandboxButton.setBorder(BorderFactory.createEmptyBorder());
-        randomButton.setBorder(BorderFactory.createEmptyBorder());
 
         // Make such that we can only click on the icon, now we can click on the empty space around the icon
 
