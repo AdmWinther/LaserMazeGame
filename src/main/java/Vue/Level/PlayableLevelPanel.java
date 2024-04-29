@@ -58,6 +58,7 @@ public final class PlayableLevelPanel extends LevelPanel {
         if(((PlayableLevelController) (this.levelController)).isLevelCompleted() ){
             extrasUI.drawBingo(g2d);
             if(!areActionsForLevelComplitionStarted){
+                animationsUI.confetti();
                 areActionsForLevelComplitionStarted = true;
                 Sound.playLevelCompleted();
                 this.timer = new Timer("delayAfterLevelCompleted");
