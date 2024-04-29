@@ -5,9 +5,7 @@ import Controller.LoginController;
 import Controller.PlayableLevelController;
 import Vue.Level.UILayers.AnimationsUI;
 import Vue.Level.UILayers.ExtrasUI;
-import Vue.SoundEffects.Sound;
 
-import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Timer;
@@ -16,8 +14,8 @@ public final class PlayableLevelPanel extends LevelPanel {
 
     private final AnimationsUI animationsUI;
     private final ExtrasUI extrasUI;
-    private final Clip tada;
-    private boolean tadaPlayed = false;
+    //private final Clip tada;
+    private final boolean tadaPlayed = false;
     private Timer timer;
 
 
@@ -25,23 +23,8 @@ public final class PlayableLevelPanel extends LevelPanel {
         super(frame, gameController, levelController, loginController);
         extrasUI = new ExtrasUI(this);
         animationsUI = new AnimationsUI(this);
-        this.tada = Sound.getLevelCompleted();
-    }
-
-    @Override
-    public void paintComponent(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
-
-        super.paintComponent(g);
-        drawTiles(g2d);
-        drawLasers(g2d);
-        extrasUI.draw(g2d);
-        drawTokens(g2d);
-        animationsUI.draw(g2d);
-    }
-
-    public ExtrasUI getExtrasUI() {
-        return extrasUI;
+        // should use SoundPlayer class
+        //this.tada = Sound.getLevelCompleted();
     }
 
     @Override
@@ -105,5 +88,21 @@ public final class PlayableLevelPanel extends LevelPanel {
                 count++;
             }
         }
+    }
+
+    @Override
+    public void paintComponent(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+
+        super.paintComponent(g);
+        drawTiles(g2d);
+        drawLasers(g2d);
+        extrasUI.draw(g2d);
+        drawTokens(g2d);
+        animationsUI.draw(g2d);
+    }
+
+    public ExtrasUI getExtrasUI() {
+        return extrasUI;
     }
 }

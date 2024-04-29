@@ -6,7 +6,8 @@ import Vue.Constants.JComponentsNames;
 import Vue.Handlers.ButtonHoverHandler;
 import Vue.MenuPanels.ImagePanel;
 import Vue.MenuPanels.MainMenuPanel;
-import Vue.SoundEffects.Sound;
+import Vue.SoundEffects.SoundPaths;
+import Vue.SoundEffects.SoundPlayer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -132,7 +133,7 @@ class LoginPanel extends JPanel {
         // Login button
         JButton loginButton = new JButton("Login");
         loginButton.addActionListener(e -> {
-            Sound.playButtonSound();
+            SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
 
             // Check if the username and password are correct
             boolean success = loginController.login(usernameTextField.getText(), new String(passwordTextField.getPassword()));
@@ -203,7 +204,7 @@ class registerPanel extends JPanel {
         // Register button
         JButton registerButton = new JButton("Register");
         registerButton.addActionListener(e -> {
-            Sound.playButtonSound();
+            SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
 
             // Check if the password and confirm password are the same
             if (!new String(passwordTextField.getPassword()).equals(new String(confirmPasswordTextField.getPassword()))) {

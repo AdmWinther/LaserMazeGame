@@ -11,7 +11,8 @@ import Vue.Constants.Style;
 import Vue.Constants.VueFilePaths;
 import Vue.Game.Game;
 import Vue.Handlers.ButtonHoverHandler;
-import Vue.SoundEffects.Sound;
+import Vue.SoundEffects.SoundPaths;
+import Vue.SoundEffects.SoundPlayer;
 import Vue.Utils.ImageUtil;
 
 import javax.swing.*;
@@ -84,7 +85,7 @@ public class SandboxPanel extends LevelMenuPanel {
         newLevelButton.setPreferredSize(new Dimension(tileWidth * LONG_BUTTON_SCALE_FACTOR, tileHeight));
         newLevelButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Sound.playButtonSound();
+                SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
                 LevelPreparation.prepareNewEditableLevel(frame, gameController);
             }
         });
@@ -244,7 +245,7 @@ public class SandboxPanel extends LevelMenuPanel {
         playButton.add(new JLabel(new ImageIcon(playButtonImage)));
         playButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Sound.playButtonSound();
+                SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
                 LevelPreparation.preparePlayableLevel(levelID, frame, gameController, loginController);
             }
         });
@@ -266,7 +267,7 @@ public class SandboxPanel extends LevelMenuPanel {
         editButton.add(new JLabel(new ImageIcon(editButtonImage)));
         editButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Sound.playButtonSound();
+                SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
                 LevelPreparation.prepareEditableLevel(levelID, frame, gameController);
             }
         });
@@ -288,7 +289,7 @@ public class SandboxPanel extends LevelMenuPanel {
         deleteButton.add(new JLabel(new ImageIcon(deleteButtonImage)));
         deleteButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Sound.playButtonSound();
+                SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
                 try {
                     DataWriter.delete(levelID);
                 } catch (IOException e) {

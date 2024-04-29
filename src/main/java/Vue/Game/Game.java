@@ -5,7 +5,8 @@ import Controller.LoginController;
 import Vue.Constants.JComponentsNames;
 import Vue.Constants.VueFilePaths;
 import Vue.LoginMenu.LoginMenu;
-import Vue.SoundEffects.Sound;
+import Vue.SoundEffects.SoundPaths;
+import Vue.SoundEffects.SoundPlayer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,6 +25,7 @@ public class Game {
     public final int INIT_HEIGHT = 900;
     JFrame frame;
     GameController gameController;
+    SoundPlayer soundPlayer;
 
 
     public Game() {
@@ -46,16 +48,18 @@ public class Game {
         showPanel(frame, JComponentsNames.FrameID.LOGIN);
 
         double aspectRatio = INIT_WIDTH / (double) INIT_HEIGHT;
+
+
         frame.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                // TODO change also if the height changes
                 frame.setSize(frame.getWidth(), (int) (frame.getWidth() / aspectRatio));
             }
         });
 
 
         frame.pack();
+
         frame.setLocationRelativeTo(null);
     }
 
@@ -91,7 +95,7 @@ public class Game {
      */
     public void start() {
         frame.setVisible(true);
-        Sound.playMainMenuTheme();
+        SoundPlayer.play(SoundPaths.MAIN_MENU_MUSIC_PATH);
     }
 
     public Dimension getCurrentTileDimension() {

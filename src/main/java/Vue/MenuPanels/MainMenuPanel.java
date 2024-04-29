@@ -7,7 +7,8 @@ import Vue.Constants.JComponentsNames;
 import Vue.Constants.Style;
 import Vue.Constants.VueFilePaths;
 import Vue.Handlers.ButtonHoverHandler;
-import Vue.SoundEffects.Sound;
+import Vue.SoundEffects.SoundPaths;
+import Vue.SoundEffects.SoundPlayer;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -112,7 +113,7 @@ public class MainMenuPanel extends JPanel {
     private JButton logoutButton(JFrame frame) {
         JButton logoutButton = new JButton(JComponentsNames.Label.LOGOUT);
         logoutButton.addActionListener(e -> {
-            Sound.playButtonSound();
+            SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
             loginController.logout();
             showPanel(frame, JComponentsNames.FrameID.LOGIN);
         });
@@ -173,17 +174,17 @@ public class MainMenuPanel extends JPanel {
 
         // Add action listeners to buttons
         campaignButton.addActionListener(e -> {
-            Sound.playButtonSound();
+            SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
             displayCampaignLevels(frame);
         });
         campaignButton.addMouseListener(new ButtonHoverHandler());
         sandboxButton.addActionListener(e -> {
-            Sound.playButtonSound();
+            SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
             displaySandboxLevels(frame);
         });
         sandboxButton.addMouseListener(new ButtonHoverHandler());
         randomButton.addActionListener(e -> {
-            Sound.playButtonSound();
+            SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
 
             gameController.turnOffCampaignGameMode();
             List<LevelID> levelIDs = gameController.getCampaignLevelIDs();

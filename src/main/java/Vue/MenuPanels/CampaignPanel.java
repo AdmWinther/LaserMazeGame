@@ -8,7 +8,8 @@ import Model.Classes.Utils.DataReader;
 import Vue.Constants.Style;
 import Vue.Constants.VueFilePaths;
 import Vue.Handlers.ButtonHoverHandler;
-import Vue.SoundEffects.Sound;
+import Vue.SoundEffects.SoundPaths;
+import Vue.SoundEffects.SoundPlayer;
 import Vue.Utils.ButtonUtil;
 import Vue.Utils.ImageUtil;
 
@@ -101,7 +102,7 @@ public class CampaignPanel extends LevelMenuPanel {
 
         levelButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Sound.playButtonSound();
+                SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
 
                 if (!levelButton.isEnabled()) {
                     return;
