@@ -137,9 +137,8 @@ public class MainMenuPanel extends JPanel {
     private JPanel createButtonPanel(JFrame frame) {
         // Button panel for the three buttons
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(Style.Grid.MainMenu.ROWS, Style.Grid.MainMenu.COLS, 0, Style.Padding.XL));
+        buttonPanel.setLayout(new GridLayout(Style.Grid.MainMenu.ROWS, Style.Grid.MainMenu.COLS, 0, Style.Padding.M));
         buttonPanel.setOpaque(false); // Make the panel transparent
-        //buttonPanel.setBorder(BorderFactory.createEmptyBorder(topPadding, sidePadding, topPadding, sidePadding));
 
 
         // Create buttons
@@ -193,15 +192,21 @@ public class MainMenuPanel extends JPanel {
         randomButton.addMouseListener(new ButtonHoverHandler());
 
         // Set button to transparent
+        //setButtonTransparent(campaignButton);
+        //setButtonTransparent(sandboxButton);
+        //setButtonTransparent(randomButton);
 
-        setButtonTransparent(campaignButton);
-        setButtonTransparent(sandboxButton);
-        setButtonTransparent(randomButton);
+        // Make the button the same size as its icon
+        System.out.println("Button size " + campaignButtonImage.getWidth() + " x " + campaignButtonImage.getHeight());
+        campaignButton.setPreferredSize(new Dimension(campaignButtonImage.getWidth(), campaignButtonImage.getHeight()));
+        sandboxButton.setPreferredSize(new Dimension(sandboxButtonImage.getWidth(), sandboxButtonImage.getHeight()));
+        randomButton.setPreferredSize(new Dimension(randomButtonImage.getWidth(), randomButtonImage.getHeight()));
+        campaignButton.setBorder(BorderFactory.createEmptyBorder());
+        sandboxButton.setBorder(BorderFactory.createEmptyBorder());
+        randomButton.setBorder(BorderFactory.createEmptyBorder());
 
-        // Remove the blue line around the button
-        campaignButton.setFocusPainted(false);
-        sandboxButton.setFocusPainted(false);
-        randomButton.setFocusPainted(false);
+        // Make such that we can only click on the icon, now we can click on the empty space around the icon
+
 
         // Add buttons to panel
         buttonPanel.add(campaignButton);
