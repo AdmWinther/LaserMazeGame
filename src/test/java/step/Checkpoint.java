@@ -8,6 +8,7 @@ import Model.Classes.Token.LaserGun;
 import Model.Classes.Token.Target;
 import Model.Classes.Token.Token;
 import Model.Classes.Utils.Orientation;
+import Vue.Utils.Position;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -29,49 +30,29 @@ public class Checkpoint {
 	public void aLevelWithALaserGunAndACheckpointOnIts(String arg0) {
 		Token[][] placed = new Token[5][5];
 		laserGun = new LaserGun(false, Orientation.valueOf(arg0));
-		placed[2][2] = laserGun;
+		Position pos = new Position(2, 2);
+		placed[pos.x()][pos.y()] = laserGun;
 
 		Orientation relPos = Orientation.valueOf(arg0);
 
-		int x = 2;
-		int y = 2;
-		switch (relPos) {
-			case UP:
-				y -= 1;
-				break;
-			case DOWN:
-				y += 1;
-				break;
-			case LEFT:
-				x -= 1;
-				break;
-			default:
-				x += 1;
-				break;
-		}
-
 		checkpoint = new Model.Classes.Token.Checkpoint(false, Orientation.valueOf(arg0));
-		placed[x][y] = checkpoint;
-
-		switch (relPos) {
-			case UP:
-				y -= 1;
-				break;
-			case DOWN:
-				y += 1;
-				break;
-			case LEFT:
-				x -= 1;
-				break;
-			default:
-				x += 1;
-				break;
-		}
+		pos = offsetWithOrientation(relPos, pos);
+		placed[pos.x()][pos.y()] = checkpoint;
 
 		target = new Target(false, Orientation.valueOf(arg0));
-		placed[x][y] = target;
+		pos = offsetWithOrientation(relPos, pos);
+		placed[pos.x()][pos.y()] = target;
 
 		level = new PlayableLevel("test", placed, Set.of());
+	}
+
+	private Position offsetWithOrientation(Orientation o, Position p) {
+		return switch (o) {
+			case UP -> new Position(p.x(), p.y() - 1);
+			case DOWN -> new Position(p.x(), p.y() + 1);
+			case LEFT -> new Position(p.x() - 1, p.y());
+			default -> new Position(p.x() + 1, p.y());
+		};
 	}
 
 	@And("the laser gun is facing {string}")

@@ -62,7 +62,7 @@ public class SolutionChecker {
 		boolean laserHitTarget = hitTarget == numTargets;
 		boolean laserHitCheckpoint = hitCheck == numCheckpoint;
 		boolean areAllTokensUsed = tokenManager.getUnplacedTokensSize() == 0;
-		System.out.println(laserHitCheckpoint && laserHitTarget && areAllTokensUsed);
+		
 		return laserHitTarget && laserHitCheckpoint && areAllTokensUsed;
 	}
 
