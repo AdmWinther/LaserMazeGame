@@ -17,9 +17,9 @@ public class Style {
     }
 
     public static final class FontSize {
-        public static final int H1 = 30;
-        public static final int H2 = 20;
-        public static final int H3 = 10;
+        public static final int H1 = 50;
+        public static final int H2 = 35;
+        public static final int H3 = 20;
     }
 
     public static final class Grid {
@@ -31,6 +31,11 @@ public class Style {
         public static final class CampaignMenu {
             public static final int ROWS = 4;
             public static final int COLS = 4;
+        }
+
+        public static final class LoginMenu {
+            public static final int ROWS = 2;
+            public static final int COLS = 2;
         }
     }
 }

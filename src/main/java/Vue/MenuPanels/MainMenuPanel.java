@@ -33,8 +33,6 @@ import static Vue.Utils.ImageUtil.resizeImage;
  * @author Hugo Demule
  */
 public class MainMenuPanel extends JPanel {
-    private final int MAX_WIDTH = 200;
-    private final int MAX_HEIGHT = 300;
     GameController gameController;
     LoginController loginController;
 
@@ -59,7 +57,7 @@ public class MainMenuPanel extends JPanel {
         setLayout(new BorderLayout());
 
         // Background image
-        ImageIcon backgroundImage = new ImageIcon(VueFilePaths.BACKGROUND_IMAGE);
+        ImageIcon backgroundImage = new ImageIcon(VueFilePaths.BACKGROUND_TILE);
         ImagePanel backgroundPanel = new ImagePanel(backgroundImage.getImage(), gameController.getCurrentTileDimension());
         backgroundPanel.setLayout(new BorderLayout());
         add(backgroundPanel, BorderLayout.CENTER);
@@ -159,10 +157,10 @@ public class MainMenuPanel extends JPanel {
         assert campaignButtonImage != null;
         assert sandboxButtonImage != null;
         assert randomButtonImage != null;
-        int VScale = 1;
-        int HScale = 3;
-        int buttonWidth = gameController.getCurrentTileDimension().width * HScale;
-        int buttonHeight = gameController.getCurrentTileDimension().height * VScale;
+        double VScale = 1.5;
+        double HScale = 4.5;
+        int buttonWidth = (int) (gameController.getCurrentTileDimension().width * HScale);
+        int buttonHeight = (int) (gameController.getCurrentTileDimension().height * VScale);
         campaignButtonImage = resizeImage(campaignButtonImage, buttonWidth, buttonHeight);
         sandboxButtonImage = resizeImage(sandboxButtonImage, buttonWidth, buttonHeight);
         randomButtonImage = resizeImage(randomButtonImage, buttonWidth, buttonHeight);

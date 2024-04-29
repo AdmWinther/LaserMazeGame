@@ -4,7 +4,7 @@ import Controller.GameController;
 import Controller.LoginController;
 import Vue.Constants.JComponentsNames;
 import Vue.Constants.VueFilePaths;
-import Vue.LoginMenu.LoginMenu;
+import Vue.MenuPanels.LoginMenu;
 import Vue.SoundEffects.SoundPaths;
 import Vue.SoundEffects.SoundPlayer;
 
@@ -21,8 +21,12 @@ import java.awt.event.ComponentEvent;
  */
 public class Game {
 
-    public final int INIT_WIDTH = 1200;
-    public final int INIT_HEIGHT = 900;
+    // find the OS max width and height for fullscreen
+    public final int INIT_WIDTH = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+    public final int INIT_HEIGHT = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+
+    private final int TILE_WIDTH = INIT_WIDTH / 15;
+    private final int TILE_HEIGHT = INIT_WIDTH / 15;
     JFrame frame;
     GameController gameController;
     SoundPlayer soundPlayer;
@@ -99,8 +103,7 @@ public class Game {
     }
 
     public Dimension getCurrentTileDimension() {
-        int size = getCurrentFrameDimension().width / 10;
-        return new Dimension(size, size);
+        return new Dimension(TILE_WIDTH, TILE_HEIGHT);
     }
 
     /**

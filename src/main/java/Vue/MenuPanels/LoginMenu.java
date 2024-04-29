@@ -1,11 +1,11 @@
-package Vue.LoginMenu;
+package Vue.MenuPanels;
 
 import Controller.GameController;
 import Controller.LoginController;
 import Vue.Constants.JComponentsNames;
+import Vue.Constants.Style;
+import Vue.Constants.VueFilePaths;
 import Vue.Handlers.ButtonHoverHandler;
-import Vue.MenuPanels.ImagePanel;
-import Vue.MenuPanels.MainMenuPanel;
 import Vue.SoundEffects.SoundPaths;
 import Vue.SoundEffects.SoundPlayer;
 
@@ -27,29 +27,26 @@ public class LoginMenu extends JPanel {
         this.gameController = gameController;
         this.loginController = loginController;
 
-        int screenWidth = frame.getWidth();
-        int screenHeight = frame.getHeight();
-        setPreferredSize(new Dimension(screenWidth, screenHeight));
+        final int H_SCALE = 100;
+        final int V_SCALE = 100;
+        final int preferredWidth = gameController.getCurrentTileDimension().width * H_SCALE;
+        final int preferredHeight = gameController.getCurrentTileDimension().height * V_SCALE;
+
+        //setPreferredSize(new Dimension(preferredWidth, preferredHeight));
         setLayout(new BorderLayout());
 
-        final int panelBorder = 46;
-        final int preferredWidth = 300;
-        final int preferredHeight = 200;
-
-
         // Background panel
-        ImageIcon backgroundImage = new ImageIcon("src/main/java/Vue/Resources/Tiles/background.png");
+        ImageIcon backgroundImage = new ImageIcon(VueFilePaths.BACKGROUND_TILE);
         System.out.println(gameController.getCurrentGameFrameDimension());
-        // TODO REMOVE THE 40 and 40 to use the gameController.getCurrentGameFrameDimension(), but it is not working since it's 0
-        this.backgroundPanel = new ImagePanel(backgroundImage.getImage(), new Dimension(40, 40));
+        this.backgroundPanel = new ImagePanel(backgroundImage.getImage(), new Dimension(gameController.getCurrentTileDimension().width, gameController.getCurrentTileDimension().height));
         backgroundPanel.setLayout(new BorderLayout());
         add(backgroundPanel);
 
         // Title label
-        JLabel titleLabel = new JLabel("Laser Maze", SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Courier New", Font.BOLD, 30));
+        JLabel titleLabel = new JLabel(JComponentsNames.Label.LASER_MAZE, SwingConstants.CENTER);
+        titleLabel.setFont(new Font(Style.Font.COURIER_NEW, Font.BOLD, Style.FontSize.H1));
         titleLabel.setForeground(Color.LIGHT_GRAY);
-        titleLabel.setBorder(BorderFactory.createEmptyBorder(panelBorder, 0, panelBorder, 0));
+        titleLabel.setBorder(BorderFactory.createEmptyBorder(Style.Padding.XXL, 0, Style.Padding.XXL, 0));
         // Center the title
         JPanel titlePanel = new JPanel();
         titlePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -63,7 +60,7 @@ public class LoginMenu extends JPanel {
         // When I resize the window, I want the panels to stay centered and with the same vertical space between them
         loginRegisterPanel.setLayout(new BoxLayout(loginRegisterPanel, BoxLayout.Y_AXIS));
         loginRegisterPanel.setOpaque(false);
-        loginRegisterPanel.setBorder(BorderFactory.createEmptyBorder(panelBorder, 0, panelBorder, 0));
+        loginRegisterPanel.setBorder(BorderFactory.createEmptyBorder(Style.Padding.XXL, 0, Style.Padding.XXL, 0));
 
         // Login panel
         LoginPanel loginPanel = new LoginPanel(frame, gameController, loginController);
@@ -109,29 +106,43 @@ class LoginPanel extends JPanel {
 
         //Inputs panel
         JPanel inputsPanel = new JPanel();
-        inputsPanel.setLayout(new GridLayout(2, 2));
+        inputsPanel.setLayout(new GridLayout(Style.Grid.LoginMenu.ROWS, Style.Grid.LoginMenu.COLS));
         inputsPanel.setOpaque(false);
+
+        Dimension resizeDimension = new Dimension(gameController.getCurrentTileDimension().width * 4, (int) (gameController.getCurrentTileDimension().height * 0.5));
+        Dimension resizeDimension2 = new Dimension(resizeDimension.width * 2, resizeDimension.height * 2);
+        Font resizeFont = new Font(Style.Font.MONOSPACED, Font.BOLD, Style.FontSize.H2);
 
         // Username label
         JLabel usernameLabel = new JLabel("Username:");
         usernameLabel.setForeground(Color.LIGHT_GRAY);
+        usernameLabel.setFont(resizeFont);
+        usernameLabel.setPreferredSize(resizeDimension);
         inputsPanel.add(usernameLabel);
 
         // Username text field
         JTextField usernameTextField = new JTextField();
+        usernameTextField.setFont(resizeFont);
+        usernameTextField.setPreferredSize(resizeDimension);
         inputsPanel.add(usernameTextField);
 
         // Password label
         JLabel passwordLabel = new JLabel("Password:");
         passwordLabel.setForeground(Color.LIGHT_GRAY);
+        passwordLabel.setFont(resizeFont);
+        passwordLabel.setPreferredSize(resizeDimension);
         inputsPanel.add(passwordLabel);
 
         // Password text field
         JPasswordField passwordTextField = new JPasswordField();
+        passwordTextField.setFont(resizeFont);
+        passwordTextField.setPreferredSize(resizeDimension);
         inputsPanel.add(passwordTextField);
 
         // Login button
         JButton loginButton = new JButton("Login");
+        loginButton.setPreferredSize(resizeDimension2);
+        loginButton.setFont(resizeFont);
         loginButton.addActionListener(e -> {
             SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
 
@@ -174,35 +185,53 @@ class registerPanel extends JPanel {
         inputsPanel.setLayout(new GridLayout(3, 2));
         inputsPanel.setOpaque(false);
 
+        Dimension resizeDimension = new Dimension(gameController.getCurrentTileDimension().width * 4, (int) (gameController.getCurrentTileDimension().height * 0.5));
+        Dimension resizeDimension2 = new Dimension(resizeDimension.width * 2, resizeDimension.height * 2);
+        Font resizeFont = new Font(Style.Font.MONOSPACED, Font.BOLD, Style.FontSize.H2);
+
         // Username label
         JLabel usernameLabel = new JLabel("Username:");
         usernameLabel.setForeground(Color.LIGHT_GRAY);
+        usernameLabel.setFont(resizeFont);
+        usernameLabel.setPreferredSize(resizeDimension);
         inputsPanel.add(usernameLabel);
 
         // Username text field
         JTextField usernameTextField = new JTextField();
+        usernameTextField.setFont(resizeFont);
+        usernameTextField.setPreferredSize(resizeDimension);
         inputsPanel.add(usernameTextField);
 
         // Password label
         JLabel passwordLabel = new JLabel("Password:");
         passwordLabel.setForeground(Color.LIGHT_GRAY);
+        passwordLabel.setFont(resizeFont);
+        passwordLabel.setPreferredSize(resizeDimension);
         inputsPanel.add(passwordLabel);
 
         // Password text field
         JPasswordField passwordTextField = new JPasswordField();
+        passwordTextField.setFont(resizeFont);
+        passwordTextField.setPreferredSize(resizeDimension);
         inputsPanel.add(passwordTextField);
 
         // Confirm Password label
         JLabel confirmPasswordLabel = new JLabel("Confirm Password:");
         confirmPasswordLabel.setForeground(Color.LIGHT_GRAY);
+        confirmPasswordLabel.setFont(resizeFont);
+        confirmPasswordLabel.setPreferredSize(resizeDimension);
         inputsPanel.add(confirmPasswordLabel);
 
         // Confirm Password text field
         JPasswordField confirmPasswordTextField = new JPasswordField();
+        confirmPasswordTextField.setFont(resizeFont);
+        confirmPasswordTextField.setPreferredSize(resizeDimension);
         inputsPanel.add(confirmPasswordTextField);
 
         // Register button
         JButton registerButton = new JButton("Register");
+        registerButton.setPreferredSize(resizeDimension2);
+        registerButton.setFont(resizeFont);
         registerButton.addActionListener(e -> {
             SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
 

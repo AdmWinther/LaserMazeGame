@@ -83,6 +83,10 @@ public class DataReader {
         return null;
     }
 
+    public static boolean exists(LevelID id) {
+        return findLevelByID(id) != null;
+    }
+
     /**
      * Reads the tokens of a level given its ID
      *

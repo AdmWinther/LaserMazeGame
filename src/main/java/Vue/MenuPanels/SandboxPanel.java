@@ -68,12 +68,13 @@ public class SandboxPanel extends LevelMenuPanel {
         // Resize images
         final double ICON_RESIZE_FACTOR = 0.5;
         final int LONG_BUTTON_SCALE_FACTOR = 8;
+        final double RESIZE_FACTOR = 1.5;
 
-        backgroundLevelList = ImageUtil.resizeImage(backgroundLevelList, tileWidth * LONG_BUTTON_SCALE_FACTOR, tileHeight);
-        newLevelButtonImage = ImageUtil.resizeImage(newLevelButtonImage, tileWidth * LONG_BUTTON_SCALE_FACTOR, tileHeight);
-        playButtonImage = ImageUtil.resizeImage(playButtonImage, (int) (tileWidth * ICON_RESIZE_FACTOR), (int) (tileHeight * ICON_RESIZE_FACTOR));
-        editButtonImage = ImageUtil.resizeImage(editButtonImage, (int) (tileWidth * ICON_RESIZE_FACTOR), (int) (tileHeight * ICON_RESIZE_FACTOR));
-        deleteButtonImage = ImageUtil.resizeImage(deleteButtonImage, (int) (tileWidth * ICON_RESIZE_FACTOR), (int) (tileHeight * ICON_RESIZE_FACTOR));
+        backgroundLevelList = ImageUtil.resizeImage(backgroundLevelList, (int) (tileWidth * LONG_BUTTON_SCALE_FACTOR * RESIZE_FACTOR), (int) (tileHeight * RESIZE_FACTOR));
+        newLevelButtonImage = ImageUtil.resizeImage(newLevelButtonImage, (int) (tileWidth * LONG_BUTTON_SCALE_FACTOR * RESIZE_FACTOR), (int) (tileHeight * RESIZE_FACTOR));
+        playButtonImage = ImageUtil.resizeImage(playButtonImage, (int) (tileWidth * ICON_RESIZE_FACTOR * RESIZE_FACTOR), (int) (tileHeight * ICON_RESIZE_FACTOR * RESIZE_FACTOR));
+        editButtonImage = ImageUtil.resizeImage(editButtonImage, (int) (tileWidth * ICON_RESIZE_FACTOR * RESIZE_FACTOR), (int) (tileHeight * ICON_RESIZE_FACTOR * RESIZE_FACTOR));
+        deleteButtonImage = ImageUtil.resizeImage(deleteButtonImage, (int) (tileWidth * ICON_RESIZE_FACTOR * RESIZE_FACTOR), (int) (tileHeight * ICON_RESIZE_FACTOR * RESIZE_FACTOR));
 
         // Load level IDs
         List<LevelID> levelIDs = DataReader.readSandboxLevelIDs();
@@ -82,7 +83,7 @@ public class SandboxPanel extends LevelMenuPanel {
 
         ImageIcon scaledNewLevelIcon = new ImageIcon(newLevelButtonImage);
         JPanel newLevelButton = levelPanel(scaledNewLevelIcon);
-        newLevelButton.setPreferredSize(new Dimension(tileWidth * LONG_BUTTON_SCALE_FACTOR, tileHeight));
+        newLevelButton.setPreferredSize(new Dimension((int) (tileWidth * LONG_BUTTON_SCALE_FACTOR * RESIZE_FACTOR), (int) (tileHeight * RESIZE_FACTOR)));
         newLevelButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
@@ -99,7 +100,7 @@ public class SandboxPanel extends LevelMenuPanel {
             ImageIcon scaledIcon = new ImageIcon(backgroundLevelList);
 
             JPanel levelPanel = levelPanel(scaledIcon);
-            levelPanel.setPreferredSize(new Dimension(tileWidth * LONG_BUTTON_SCALE_FACTOR, tileHeight));
+            levelPanel.setPreferredSize(new Dimension((int) (tileWidth * LONG_BUTTON_SCALE_FACTOR * RESIZE_FACTOR), (int) (tileHeight * RESIZE_FACTOR)));
 
             JPanel levelNameContainer = levelNameContainer(levelID);
 
@@ -171,7 +172,7 @@ public class SandboxPanel extends LevelMenuPanel {
         String levelNameString = "";
         try {
             levelNameString = DataReader.readLevelIDName(levelID);
-            final int LENGTH_LIMIT = 25;
+            final int LENGTH_LIMIT = 35;
             if (levelNameString.length() > LENGTH_LIMIT)
                 levelNameString = levelNameString.substring(0, LENGTH_LIMIT) + "...";
         } catch (Exception e) {

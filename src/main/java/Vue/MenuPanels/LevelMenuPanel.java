@@ -59,7 +59,7 @@ public abstract class LevelMenuPanel extends JPanel {
         setLayout(new BorderLayout());
 
         // Background image
-        ImageIcon backgroundImage = new ImageIcon(VueFilePaths.BACKGROUND_IMAGE);
+        ImageIcon backgroundImage = new ImageIcon(VueFilePaths.BACKGROUND_TILE);
         this.backgroundPanel = new ImagePanel(backgroundImage.getImage(), gameController.getCurrentTileDimension());
         this.backgroundPanel.setLayout(new BorderLayout());
         add(backgroundPanel, BorderLayout.CENTER);
