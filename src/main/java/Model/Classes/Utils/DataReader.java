@@ -46,6 +46,8 @@ public class DataReader {
 			return jsonLevel;
 		} else if ((jsonLevel = json(FilePaths.SANDBOX_LEVELS_PATH + id.value() + ".json")) != null) {
 			return jsonLevel;
+		} else if ((jsonLevel = json(FilePaths.TEST_LEVELS_PATH + id.value() + ".json")) != null) {
+			return jsonLevel;
 		}
 		return null;
 	}

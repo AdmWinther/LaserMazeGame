@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class DataWriterSteps {
 
-	String parentDirPath = FilePaths.SANDBOX_LEVELS_PATH;
+	String parentDirPath = FilePaths.TEST_LEVELS_PATH;
 	PlayableLevel initialLevel;
 	PlayableLevel finalLevel;
 
@@ -26,7 +26,7 @@ public class DataWriterSteps {
 	public void anEmptyLevelOfSizeX(int widthX, int heightY) {
 		Token[][] placedTokens = new Token[widthX][heightY];
 		Set<Token> unplacedTokens = Set.of();
-		initialLevel = new PlayableLevel("dataWriterStepsEmptyLevel", placedTokens, unplacedTokens);
+		initialLevel = new PlayableLevel("dataWriterTestEmptyLevel", placedTokens, unplacedTokens);
 	}
 
 	@Given("a level of size {int}x{int} with a UP LaserGun in \\({int} {int}) and a DOWN Target in \\({int} {int}), with a DoubleSidedMirror and a SingleSidedMirror to place")
@@ -37,7 +37,7 @@ public class DataWriterSteps {
 
 		Set<Token> unplacedTokens = Set.of(new DoubleSidedMirror(true, Orientation.UP), new OneSidedMirror(true, Orientation.UP));
 
-		initialLevel = new PlayableLevel("dataWriterStepsComplexLevel", placedTokens, unplacedTokens);
+		initialLevel = new PlayableLevel("dataWriterTestComplexLevel", placedTokens, unplacedTokens);
 	}
 
 	@When("I write the level to a file")
