@@ -1,9 +1,5 @@
 {
-    "unplacedTokens": [{
-        "orientation": "RIGHT",
-        "tokenId": "OneSidedMirror_1476098386",
-        "type": "OneSidedMirror"
-    }],
+    "unplacedTokens": [],
     "boardSize": {
         "widthX": 7,
         "heightY": 7
@@ -12,29 +8,30 @@
     "placedTokens": [
         {
             "orientation": "RIGHT",
-            "tokenId": "LaserGun_1460486941",
+            "tokenId": "LaserGun_10010320",
             "position": {
                 "x": 0,
-                "y": 0
+                "y": 5
             },
             "type": "LaserGun"
         },
         {
-            "tokenId": "Block_1688463717",
+            "orientation": "RIGHT",
+            "tokenId": "Checkpoint_786187741",
             "position": {
                 "x": 3,
-                "y": 3
+                "y": 5
             },
-            "type": "Block"
+            "type": "Checkpoint"
         },
         {
             "orientation": "RIGHT",
-            "tokenId": "Target_852888601",
+            "tokenId": "Splitter_1375047026",
             "position": {
-                "x": 6,
-                "y": 6
+                "x": 5,
+                "y": 5
             },
-            "type": "Target"
+            "type": "Splitter"
         }
     ]
 }
