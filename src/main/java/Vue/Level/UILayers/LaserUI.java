@@ -46,7 +46,7 @@ public class LaserUI implements Drawable {
 	/**
 	 * Load the laser images
 	 *
-	 * @Author Léonard Amsler - s231715
+	 * @author Léonard Amsler - s231715
 	 */
 	public void loadLaserImages() {
 		try {

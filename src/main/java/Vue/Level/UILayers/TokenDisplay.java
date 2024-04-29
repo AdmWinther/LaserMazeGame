@@ -74,6 +74,9 @@ public abstract class TokenDisplay implements Drawable {
 			BufferedImage splitterImageLEFTRIGHT = readImage("/Tokens/splitter_RL.png");
 			BufferedImage splitterImageUPDOWN = readImage("/Tokens/splitter_UD.png");
 
+			BufferedImage checkpointLEFTRIGHT = readImage("/Tokens/checkpoint_RL.png");
+			BufferedImage checkpointUPDOWN = readImage("/Tokens/checkpoint_UD.png");
+
 			// 2. Store the images in the maps
 			String beamerClassName = LaserGun.class.getSimpleName();
 			putOrientedTokenImage(beamerImageUP, beamerImageDOWN, beamerImageLEFT, beamerImageRIGHT, beamerClassName);
@@ -92,6 +95,9 @@ public abstract class TokenDisplay implements Drawable {
 
 			String splitterClassName = Splitter.class.getSimpleName();
 			putOrientedTokenImage(splitterImageUPDOWN, splitterImageUPDOWN, splitterImageLEFTRIGHT, splitterImageLEFTRIGHT, splitterClassName);
+
+			String checkpointClassName = Checkpoint.class.getSimpleName();
+			putOrientedTokenImage(checkpointUPDOWN, checkpointUPDOWN, checkpointLEFTRIGHT, checkpointLEFTRIGHT, checkpointClassName);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -111,11 +117,11 @@ public abstract class TokenDisplay implements Drawable {
 	 *
 	 * @author Nathan Gromb
 	 */
-	private void putOrientedTokenImage(BufferedImage beamerImageUP, BufferedImage beamerImageDOWN, BufferedImage beamerImageLEFT, BufferedImage beamerImageRIGHT, String beamerClassName) {
-		orientedTokenImages.put(new Pair<>(beamerClassName, Orientation.UP), beamerImageUP);
-		orientedTokenImages.put(new Pair<>(beamerClassName, Orientation.DOWN), beamerImageDOWN);
-		orientedTokenImages.put(new Pair<>(beamerClassName, Orientation.LEFT), beamerImageLEFT);
-		orientedTokenImages.put(new Pair<>(beamerClassName, Orientation.RIGHT), beamerImageRIGHT);
+	private void putOrientedTokenImage(BufferedImage imageUP, BufferedImage imageDOWN, BufferedImage imageLEFT, BufferedImage imageRIGHT, String className) {
+		orientedTokenImages.put(new Pair<>(className, Orientation.UP), imageUP);
+		orientedTokenImages.put(new Pair<>(className, Orientation.DOWN), imageDOWN);
+		orientedTokenImages.put(new Pair<>(className, Orientation.LEFT), imageLEFT);
+		orientedTokenImages.put(new Pair<>(className, Orientation.RIGHT), imageRIGHT);
 	}
 
 	/**

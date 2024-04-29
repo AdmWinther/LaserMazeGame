@@ -5,5 +5,33 @@
         "heightY": 7
     },
     "name": "Sandbox Level 2",
-    "placedTokens": []
+    "placedTokens": [
+        {
+            "orientation": "RIGHT",
+            "tokenId": "Target_65794864",
+            "position": {
+                "x": 0,
+                "y": 3
+            },
+            "type": "Target"
+        },
+        {
+            "orientation": "RIGHT",
+            "tokenId": "Checkpoint_1520733002",
+            "position": {
+                "x": 5,
+                "y": 2
+            },
+            "type": "Checkpoint"
+        },
+        {
+            "orientation": "UP",
+            "tokenId": "LaserGun_240074299",
+            "position": {
+                "x": 5,
+                "y": 6
+            },
+            "type": "LaserGun"
+        }
+    ]
 }

@@ -1,16 +1,20 @@
-
 Feature: Checkpoint
-  Scenario: finish the level and hitting the checkpoint
-    Given I have a level with a laser gun a target and a checkpoint
-    And I hit the checkpoint before the target
-    When I check the solution
-    Then The laser should propagate from the laser gun
-    And The solution checker should return "true"
 
-
-  Scenario: finish the level without hitting the checkpoint
-    Given I have a level with a laser gun a target and a checkpoint
-    And I don't hit the checkpoint before hitting the target
-    When I check the solution
-    Then The laser should propagate from the laser gun
-    And The solution checker should return "false"
+  Scenario Outline: Shooting the laser at the checkpoint
+    Given a level with a laser gun and a checkpoint and target on its "<relativePos>"
+    And the laser gun is facing "<laserDirection>"
+    And the checkpoint is facing "<checkpointDirection>"
+    And the target is facing "<targetDirection>"
+    When the player shoots the laser
+    And the level is checked for completion
+    Then the level checker returns "<result>"
+    Examples:
+      | relativePos | laserDirection | checkpointDirection | targetDirection | result |
+      | LEFT        | LEFT           | RIGHT               | RIGHT           | true   |
+      | LEFT        | LEFT           | LEFT                | RIGHT           | true   |
+      | RIGHT       | RIGHT          | LEFT                | RIGHT           | false  |
+      | LEFT        | LEFT           | DOWN                | RIGHT           | false  |
+      | LEFT        | LEFT           | UP                  | RIGHT           | false  |
+      | UP          | DOWN           | UP                  | RIGHT           | false  |
+      | UP          | UP             | DOWN                | DOWN            | true   |
+      | UP          | UP             | UP                  | DOWN            | true   |

@@ -1,6 +1,6 @@
 package Vue.Handlers;
 
-import Model.constants.MouseConstants;
+import Model.Constants.MouseConstants;
 import Vue.Utils.Position;
 
 import java.awt.event.MouseEvent;
