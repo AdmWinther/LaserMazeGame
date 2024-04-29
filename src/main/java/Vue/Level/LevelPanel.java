@@ -103,6 +103,8 @@ public abstract class LevelPanel extends JPanel implements Runnable {
         tokenKeyboardHandler = new TokenKeyboardHandler(levelController);
         addKeyListener(tokenKeyboardHandler);
 
+        this.loginController = loginController;
+
         this.frame = frame;
         this.gameController = gameController;
 
@@ -231,7 +233,7 @@ public abstract class LevelPanel extends JPanel implements Runnable {
     public void exitLevel() {
         gameThread = null;
         MainMenuPanel mainMenuPanel = new MainMenuPanel(frame, gameController, loginController);
-        if (gameController.getCampaignGameMode()) {
+        if (gameController.isInCampaignGameMode()) {
             //if in the campaign mode, it should go to the next level.
             mainMenuPanel.displayCampaignLevels(frame);
         } else {

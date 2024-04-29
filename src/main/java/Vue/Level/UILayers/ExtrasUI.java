@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -111,10 +112,10 @@ public class ExtrasUI implements Drawable {
         }
     }
 
-    public void drawBingo() {
+    public void drawBingo(Graphics2D g2d) {
         int x = Math.floorDiv((levelPanel.maxCol-3) * levelPanel.tileWidth, 2);
         int y = Math.floorDiv((levelPanel.maxRow-1) * levelPanel.tileHeight, 2);
-        placeObject("bingo", x, y);
+        g2d.drawImage(objectImages.get("bingo"), x, y, 3* levelPanel.tileWidth, levelPanel.tileHeight, null);
     }
 
     /**

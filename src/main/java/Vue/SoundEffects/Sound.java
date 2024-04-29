@@ -57,4 +57,13 @@ public class Sound {
             throw new RuntimeException(e);
         }
     }
+
+    public static void playLevelCompleted() {
+        try {
+            URL file  = new URL(SoundPaths.LEVEL_PASSED_SOUND_PATH);
+            loadFile(file).start();
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

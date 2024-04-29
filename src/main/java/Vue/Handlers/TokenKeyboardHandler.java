@@ -1,6 +1,7 @@
 package Vue.Handlers;
 
 import Controller.LevelController;
+import Controller.PlayableLevelController;
 import Vue.SoundEffects.Sound;
 
 import java.awt.event.KeyEvent;
@@ -22,7 +23,10 @@ public class TokenKeyboardHandler implements KeyListener {
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             if (levelController.getLaserGunCoordinate() != null) {
-                Sound.playLaserShoot(); // TODO null
+                Sound.playLaserShoot();
+                if(((PlayableLevelController) (this.levelController)).isLevelCompleted() ){
+                    Sound.playLevelCompleted();
+                }
             }
             levelController.setShouldDisplayLaser(true);
         }

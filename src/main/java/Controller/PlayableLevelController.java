@@ -16,8 +16,7 @@ public class PlayableLevelController extends LevelController {
         return false;
     }
 
-    public boolean levelComplete() {
-        // TODO: Implement this method
-        return false;
+    public boolean isLevelCompleted() {
+        return ((PlayableLevel) level).isLevelCompleted();
     }
 }
