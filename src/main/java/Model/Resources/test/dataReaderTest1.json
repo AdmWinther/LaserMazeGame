@@ -1,0 +1,11 @@
+{
+  "boardSize": {
+    "widthX": 5,
+    "heightY": 5
+  },
+  "unplacedTokens": [
+  ],
+  "name": "dataReaderTest1",
+  "placedTokens": [
+  ]
+}

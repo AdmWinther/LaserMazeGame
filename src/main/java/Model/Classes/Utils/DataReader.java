@@ -33,22 +33,24 @@ public class DataReader {
         return level.getString(JsonConstants.ATTR_NAME);
     }
 
-    /**
-     * Finds a level by its ID
-     *
-     * @param id the ID of the level
-     * @return the JSONObject of the level, null if not found
-     * @author Hugo Demule
-     */
-    private static JSONObject findLevelByID(LevelID id) {
-        JSONObject jsonLevel;
-        if ((jsonLevel = json(FilePaths.CAMPAIGN_LEVELS_PATH + id.value() + ".json")) != null) {
-            return jsonLevel;
-        } else if ((jsonLevel = json(FilePaths.SANDBOX_LEVELS_PATH + id.value() + ".json")) != null) {
-            return jsonLevel;
-        }
-        return null;
-    }
+	/**
+	 * Finds a level by its ID
+	 *
+	 * @param id the ID of the level
+	 * @return the JSONObject of the level, null if not found
+	 * @author Hugo Demule
+	 */
+	private static JSONObject findLevelByID(LevelID id) {
+		JSONObject jsonLevel;
+		if ((jsonLevel = json(FilePaths.CAMPAIGN_LEVELS_PATH + id.value() + ".json")) != null) {
+			return jsonLevel;
+		} else if ((jsonLevel = json(FilePaths.SANDBOX_LEVELS_PATH + id.value() + ".json")) != null) {
+			return jsonLevel;
+		} else if ((jsonLevel = json(FilePaths.TEST_LEVELS_PATH + id.value() + ".json")) != null) {
+			return jsonLevel;
+		}
+		return null;
+	}
 
     /**
      * Throws a FileNotFoundException if the JSON object is null
@@ -83,22 +85,18 @@ public class DataReader {
         return null;
     }
 
-    public static boolean exists(LevelID id) {
-        return findLevelByID(id) != null;
-    }
-
-    /**
-     * Reads the tokens of a level given its ID
-     *
-     * @param id the ID of the level
-     * @return the set of tokens of the level
-     * @throws FileNotFoundException if the LevelID is not found in the game data
-     * @author Hugo Demule
-     */
-    public static Set<Token> readLevelIDUnplacedTokens(LevelID id) throws FileNotFoundException {
-        //getting the JSON for level using the level ID
-        JSONObject jsonLevel = findLevelByID(id);
-        requireFileFound(jsonLevel, id.value());
+	/**
+	 * Reads the tokens of a level given its ID
+	 *
+	 * @param id the ID of the level
+	 * @return the set of tokens of the level
+	 * @throws FileNotFoundException if the LevelID is not found in the game data
+	 * @author Hugo Demule
+	 */
+	public static Set<Token> readLevelIDUnplacedTokens(LevelID id) throws FileNotFoundException {
+		//getting the JSON for level using the level ID
+		JSONObject jsonLevel = findLevelByID(id);
+		requireFileFound(jsonLevel, id.value());
 
         //Make a JSONArray of unplaced tokens.
         JSONArray jsonArrayUnplacedTokens = jsonLevel.getJSONArray(JsonConstants.ATTR_UNPLACED_TOKENS);
