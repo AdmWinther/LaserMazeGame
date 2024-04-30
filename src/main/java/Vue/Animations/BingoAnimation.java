@@ -49,9 +49,9 @@ public class BingoAnimation implements Animation {
 	@Override
 	public void draw(Graphics2D g2d) {
 		if (running) {
-			int x = Math.floorDiv((levelPanel.maxCol - 3) * levelPanel.tileWidth, 2);
-			int y = Math.floorDiv((levelPanel.maxRow - 1) * levelPanel.tileHeight, 2);
-			g2d.drawImage(image, x, y, 3 * levelPanel.tileWidth, levelPanel.tileHeight, null);
+			int x = Math.floorDiv((levelPanel.getLevelPanelConfig().getMaxCol() - 3) * levelPanel.getLevelPanelConfig().getTileWidth(), 2);
+			int y = Math.floorDiv((levelPanel.getLevelPanelConfig().getMaxRow() - 1) * levelPanel.getLevelPanelConfig().getTileHeight(), 2);
+			g2d.drawImage(image, x, y, 3 * levelPanel.getLevelPanelConfig().getTileWidth(), levelPanel.getLevelPanelConfig().getTileHeight(), null);
 		}
 
 		duration += 1000 / levelPanel.getFPS();

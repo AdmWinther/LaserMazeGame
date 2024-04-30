@@ -7,7 +7,6 @@ import Model.Classes.Level.LevelID;
 import Model.Classes.Utils.DataReader;
 import Vue.Level.UILayers.AnimationsUI;
 import Vue.Level.UILayers.ExtrasUI;
-import Vue.MenuPanels.MainMenuPanel;
 import Vue.SoundEffects.SoundPaths;
 import Vue.SoundEffects.SoundPlayer;
 import Vue.Utils.FrameUtil;
@@ -36,29 +35,29 @@ public final class PlayableLevelPanel extends LevelPanel {
 	private Timer timer;
 
 
-    /**
-     * Constructor of the PlayableLevelPanel
-     *
-     * @param frame           The frame of the game
-     * @param gameController  The game controller of the game
-     * @param levelController The level controller of the game
-     * @param loginController The login controller of the game
-     * @author Léonard Amsler
-     */
-    public PlayableLevelPanel(JFrame frame, GameController gameController, PlayableLevelController levelController, LoginController loginController) {
-        super(frame, gameController, levelController, loginController);
-        extrasUI = new ExtrasUI(this);
-        animationsUI = new AnimationsUI(this);
-    }
+	/**
+	 * Constructor of the PlayableLevelPanel
+	 *
+	 * @param frame           The frame of the game
+	 * @param gameController  The game controller of the game
+	 * @param levelController The level controller of the game
+	 * @param loginController The login controller of the game
+	 * @author Léonard Amsler
+	 */
+	public PlayableLevelPanel(JFrame frame, GameController gameController, PlayableLevelController levelController, LoginController loginController) {
+		super(frame, gameController, levelController, loginController);
+		extrasUI = new ExtrasUI(this);
+		animationsUI = new AnimationsUI(this);
+	}
 
-    /**
-     * Starts the game thread
-     *
-     * @author Léonard Amsler
-     * @author Hossein (Adam)
-     */
-    @Override
-    public void run() {
+	/**
+	 * Starts the game thread
+	 *
+	 * @author Léonard Amsler
+	 * @author Hossein (Adam)
+	 */
+	@Override
+	public void run() {
 
 		double delta = 0;
 		long lastTime = System.currentTimeMillis();
@@ -67,9 +66,9 @@ public final class PlayableLevelPanel extends LevelPanel {
 		int count = 0;
 		int lastSecond = 0;
 
-		while (gameThread != null) {
+		while (getGameThread() != null) {
 			currentTime = System.currentTimeMillis();
-			delta += (currentTime - lastTime) / (double) frameTime;
+			delta += (currentTime - lastTime) / (double) FRAME_TIME;
 			lastTime = currentTime;
 
 			if (currentTime / 1000 != lastSecond) {
@@ -78,10 +77,10 @@ public final class PlayableLevelPanel extends LevelPanel {
 			}
 
 			//Disable the mouse and keyboard listeners when the level is completed.
-			if (((PlayableLevelController) (this.levelController)).isLevelCompleted()) {
-				removeMouseListener(this.levelMouseHandler);
-				removeMouseListener(this.tokenMouseHandler);
-				removeKeyListener(this.tokenKeyboardHandler);
+			if (((PlayableLevelController) (this.getLevelController())).isLevelCompleted()) {
+				removeMouseListener(this.getLevelMouseHandler());
+				removeMouseListener(this.getTokenMouseHandler());
+				removeKeyListener(this.getTokenKeyboardHandler());
 			}
 
 			if (delta >= 1) {
@@ -92,78 +91,77 @@ public final class PlayableLevelPanel extends LevelPanel {
 		}
 	}
 
-    /**
-     * Paints the components of the level. In case the level is completed, it will display the bingo message and
-     * start the timer to go to the next level or go back to the main menu.
-     *
-     * @param g The graphics object
-     * @author Léonard Amsler
-     * @author Adam Winther
-     * @author Nathan Gromb
-     */
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g;
+	/**
+	 * Paints the components of the level. In case the level is completed, it will display the bingo message and
+	 * start the timer to go to the next level or go back to the main menu.
+	 *
+	 * @param g The graphics object
+	 * @author Léonard Amsler
+	 * @author Adam Winther
+	 * @author Nathan Gromb
+	 */
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		Graphics2D g2d = (Graphics2D) g;
 
-        drawTiles(g2d);
-        drawLasers(g2d);
-        extrasUI.draw(g2d);
-        drawTokens(g2d);
-        animationsUI.draw(g2d);
-        if (((PlayableLevelController) (this.levelController)).isLevelCompleted()) {
-            if (!areActionsForLevelComplitionStarted) {
-                animationsUI.confetti();
-                animationsUI.bingo();
+		drawTiles(g2d);
+		drawLasers(g2d);
+		extrasUI.draw(g2d);
+		drawTokens(g2d);
+		animationsUI.draw(g2d);
+		if (((PlayableLevelController) (this.getLevelController())).isLevelCompleted()) {
+			if (!areActionsForLevelComplitionStarted) {
+				animationsUI.confetti();
+				animationsUI.bingo();
 
+				areActionsForLevelComplitionStarted = true;
+				SoundPlayer.play(SoundPaths.LEVEL_PASSED_SOUND_PATH);
+				this.timer = new Timer("delayAfterLevelCompleted");
+				timer.schedule(new TimerTask() {
+					@Override
+					public void run() {
+						animationsUI.circle(Color.BLACK);
+					}
+				}, 1000);
+				timer.schedule(new TimerTask() {
+					@Override
+					public void run() {
+						setGameThread(null);
 
-                areActionsForLevelComplitionStarted = true;
-                SoundPlayer.play(SoundPaths.LEVEL_PASSED_SOUND_PATH);
-                this.timer = new Timer("delayAfterLevelCompleted");
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        animationsUI.circle(Color.BLACK);
-                    }
-                }, 1000);
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        gameThread = null;
-
-						switch (gameController.getLevelType()) {
+						switch (getGameController().getLevelType()) {
 							case CAMPAIGN:
 								//if in the campaign mode, it should go to the next level.
-								LevelID currentLevelID = gameController.getCurrentLevelID();
+								LevelID currentLevelID = getGameController().getCurrentLevelID();
 
 								List<LevelID> levelIDs = DataReader.readCampaignLevelIDs();
 								int currentLevelIndex = levelIDs.indexOf(currentLevelID);
 								if (currentLevelIndex >= levelIDs.size() - 1) {
-									FrameUtil.removeLevel(frame);
-									FrameUtil.createMainMenuIfNotExists(frame, gameController, loginController);
-									FrameUtil.displayMainMenu(frame);
+									FrameUtil.removeLevel(getFrame());
+									FrameUtil.createMainMenuIfNotExists(getFrame(), getGameController(), getLoginController());
+									FrameUtil.displayMainMenu(getFrame());
 									break;
 								}
 
 								LevelID campaignProgressionLevelID = levelIDs.get(currentLevelIndex + 1);
 								if (currentLevelID.equals(campaignProgressionLevelID)) {
-									loginController.incrementProgression();
+									getLoginController().incrementProgression();
 								}
 								int index = levelIDs.indexOf(currentLevelID);
 								LevelID nextLevelID = levelIDs.get(index + 1);
 
-								PlayableLevelPanel nextLevelPanel = preparePlayableLevel(nextLevelID, frame, gameController, loginController);
+								PlayableLevelPanel nextLevelPanel = preparePlayableLevel(nextLevelID, getFrame(), getGameController(), getLoginController());
 								nextLevelPanel.getAnimationsUI().invertedCircle(Color.BLACK);
 								break;
 							case RANDOM:
-								FrameUtil.removeLevel(frame);
-								FrameUtil.createMainMenuIfNotExists(frame, gameController, loginController);
-								FrameUtil.displayMainMenu(frame);
+								FrameUtil.removeLevel(getFrame());
+								FrameUtil.createMainMenuIfNotExists(getFrame(), getGameController(), getLoginController());
+								FrameUtil.displayMainMenu(getFrame());
 								break;
 							case SANDBOX:
-								FrameUtil.removeLevel(frame);
-								FrameUtil.createSandboxMenuIfNotExists(frame, gameController, loginController);
-								FrameUtil.displaySandboxMenu(frame);
+								FrameUtil.removeLevel(getFrame());
+								FrameUtil.createSandboxMenuIfNotExists(getFrame(), getGameController(), getLoginController());
+								FrameUtil.displaySandboxMenu(getFrame());
 								break;
 						}
 					}
@@ -172,22 +170,22 @@ public final class PlayableLevelPanel extends LevelPanel {
 		}
 	}
 
-    /**
-     * Get the extra UI
-     *
-     * @return The extra UI
-     * @author Nathan Gromb
-     */
-    public ExtrasUI getExtrasUI() {
-        return extrasUI;
-    }
+	/**
+	 * Get the extra UI
+	 *
+	 * @return The extra UI
+	 * @author Nathan Gromb
+	 */
+	public ExtrasUI getExtrasUI() {
+		return extrasUI;
+	}
 
-        /**
-         * Get the animation UI
-         *
-         * @return The animation UI
-         * @author Nathan Gromb
-         */
+	/**
+	 * Get the animation UI
+	 *
+	 * @return The animation UI
+	 * @author Nathan Gromb
+	 */
 	public AnimationsUI getAnimationsUI() {
 		return animationsUI;
 	}
