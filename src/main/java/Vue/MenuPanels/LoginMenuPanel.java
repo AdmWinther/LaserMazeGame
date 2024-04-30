@@ -35,7 +35,7 @@ public class LoginMenuPanel extends JPanel {
         setLayout(new BorderLayout());
 
         // Background panel
-        ImageIcon backgroundImage = new ImageIcon(VueFilePaths.BACKGROUND_TILE);
+        ImageIcon backgroundImage = new ImageIcon(VueFilePaths.Textures.BACKGROUND_TILE);
         this.backgroundPanel = new ImagePanel(backgroundImage.getImage(), new Dimension(gameController.getCurrentTileDimension().width, gameController.getCurrentTileDimension().height));
         backgroundPanel.setLayout(new BorderLayout());
         add(backgroundPanel);

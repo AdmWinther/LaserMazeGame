@@ -56,7 +56,7 @@ public abstract class LevelMenuPanel extends JPanel {
         setLayout(new BorderLayout());
 
         // Background image
-        ImageIcon backgroundImage = new ImageIcon(VueFilePaths.BACKGROUND_TILE);
+        ImageIcon backgroundImage = new ImageIcon(VueFilePaths.Textures.BACKGROUND_TILE);
         this.backgroundPanel = new ImagePanel(backgroundImage.getImage(), gameController.getCurrentTileDimension());
         this.backgroundPanel.setLayout(new BorderLayout());
         add(backgroundPanel, BorderLayout.CENTER);
@@ -78,7 +78,7 @@ public abstract class LevelMenuPanel extends JPanel {
         JLabel button = new JLabel();
 
         button.setPreferredSize(gameController.getCurrentTileDimension());
-        ImageIcon icon = new ImageIcon(VueFilePaths.RESET_BUTTON_ICON);
+        ImageIcon icon = new ImageIcon(VueFilePaths.Icons.RESET_BUTTON_ICON);
         ImageIcon scaledIcon = new ImageIcon(icon.getImage().getScaledInstance(gameController.getCurrentTileDimension().width, gameController.getCurrentTileDimension().height, Image.SCALE_DEFAULT));
         button.setIcon(scaledIcon);
         button.setFont(new Font(Style.Font.MONOSPACED, Font.BOLD, tileWidth / 2));

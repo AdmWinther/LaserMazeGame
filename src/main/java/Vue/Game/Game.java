@@ -15,7 +15,7 @@ import java.awt.event.ComponentEvent;
 
 /**
  * Main class of the UI
- * This is the entry point of the application
+ * This is the entry point of the application.
  * It is responsible for initializing the game.
  *
  * @author Léonard Amsler - s231715
@@ -52,7 +52,7 @@ public class Game {
             }
         });
 
-        ImageIcon img = new ImageIcon(VueFilePaths.GAME_ICON);
+        ImageIcon img = new ImageIcon(VueFilePaths.Icons.GAME_ICON);
         frame.setIconImage(img.getImage());
 
         GameController gameController = new GameController(this);

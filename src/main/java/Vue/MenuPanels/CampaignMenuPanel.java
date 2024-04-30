@@ -59,8 +59,8 @@ public class CampaignMenuPanel extends LevelMenuPanel {
 
         levelButtonPanel.setBorder(BorderFactory.createEmptyBorder(Style.Padding.XXL, Style.Padding.XXL, Style.Padding.XXL, Style.Padding.XXL));
 
-        BufferedImage enable_image = getImage(VueFilePaths.BOARD_TILE);
-        BufferedImage disable_image = getImage(VueFilePaths.DISABLED_BOARD_TILE);
+        BufferedImage enable_image = getImage(VueFilePaths.Buttons.CAMPAIGN_LEVEL);
+        BufferedImage disable_image = getImage(VueFilePaths.Buttons.DISABLED_CAMPAIGN_LEVEL);
 
         // Resize images
         final double RESIZE_FACTOR = 1.5;
@@ -111,7 +111,7 @@ public class CampaignMenuPanel extends LevelMenuPanel {
                     return;
                 }
                 LevelID levelID = gameController.getCampaignLevelIDs().get(buttonNumber - 1);
-                
+
                 preparePlayableLevel(levelID, frame, gameController, loginController);
             }
         });

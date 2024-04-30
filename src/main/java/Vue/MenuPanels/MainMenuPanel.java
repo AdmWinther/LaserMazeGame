@@ -57,7 +57,7 @@ public class MainMenuPanel extends JPanel {
         setLayout(new BorderLayout());
 
         // Background image
-        ImageIcon backgroundImage = new ImageIcon(VueFilePaths.BACKGROUND_TILE);
+        ImageIcon backgroundImage = new ImageIcon(VueFilePaths.Textures.BACKGROUND_TILE);
         ImagePanel backgroundPanel = new ImagePanel(backgroundImage.getImage(), gameController.getCurrentTileDimension());
         backgroundPanel.setLayout(new BorderLayout());
         add(backgroundPanel, BorderLayout.CENTER);
@@ -155,9 +155,9 @@ public class MainMenuPanel extends JPanel {
         BufferedImage sandboxButtonImage = null;
         BufferedImage randomButtonImage = null;
         try {
-            campaignButtonImage = ImageIO.read(new File(VueFilePaths.CAMPAIGN_LEVELS_BUTTON));
-            sandboxButtonImage = ImageIO.read(new File(VueFilePaths.SANDBOX_LEVELS_BUTTON));
-            randomButtonImage = ImageIO.read(new File(VueFilePaths.RANDOM_LEVELS_BUTTON));
+            campaignButtonImage = ImageIO.read(new File(VueFilePaths.Buttons.CAMPAIGN_MENU));
+            sandboxButtonImage = ImageIO.read(new File(VueFilePaths.Buttons.SANDBOX_MENU));
+            randomButtonImage = ImageIO.read(new File(VueFilePaths.Buttons.RANDOM_LEVEL));
         } catch (Exception e) {
             e.printStackTrace();
         }
