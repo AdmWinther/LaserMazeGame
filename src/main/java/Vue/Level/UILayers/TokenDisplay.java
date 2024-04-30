@@ -77,6 +77,8 @@ public abstract class TokenDisplay implements Drawable {
 			BufferedImage checkpointLEFTRIGHT = readImage("/Tokens/checkpoint_RL.png");
 			BufferedImage checkpointUPDOWN = readImage("/Tokens/checkpoint_UD.png");
 
+			BufferedImage unmovableTokenBg = readImage("/Tokens/unmovableTokenBg.png");
+
 			// 2. Store the images in the maps
 			String beamerClassName = LaserGun.class.getSimpleName();
 			putOrientedTokenImage(beamerImageUP, beamerImageDOWN, beamerImageLEFT, beamerImageRIGHT, beamerClassName);
@@ -98,6 +100,8 @@ public abstract class TokenDisplay implements Drawable {
 
 			String checkpointClassName = Checkpoint.class.getSimpleName();
 			putOrientedTokenImage(checkpointUPDOWN, checkpointUPDOWN, checkpointLEFTRIGHT, checkpointLEFTRIGHT, checkpointClassName);
+
+			tokenImages.put("unmovableTokenBg", unmovableTokenBg);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -200,6 +204,11 @@ public abstract class TokenDisplay implements Drawable {
 			tokenImage = orientedTokenImages.get(new Pair<>(tokenClassName, orientation));
 		} else {
 			tokenImage = tokenImages.get(tokenClassName);
+		}
+
+		if (!token.isMovable()) {
+			BufferedImage unmovableOverlay = tokenImages.get("unmovableTokenBg");
+			g2d.drawImage(unmovableOverlay, pos.x(), pos.y(), tileWidth, tileHeight, null);
 		}
 
 		g2d.drawImage(tokenImage, pos.x(), pos.y(), tileWidth, tileHeight, null);

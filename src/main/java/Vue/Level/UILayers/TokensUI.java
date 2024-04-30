@@ -62,6 +62,7 @@ public class TokensUI extends TokenDisplay {
 			int y = heightOffset + coordinate.y() * levelPanel.tileHeight;
 
 			Position position = getTokenPosition(token, Position.of(x, y));
+
 			drawToken(g2d, token, position, levelPanel.tileWidth, levelPanel.tileHeight);
 		}
 	}

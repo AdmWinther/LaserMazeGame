@@ -2,12 +2,12 @@
     "unplacedTokens": [
         {
             "orientation": "UP",
-            "tokenId": "OneSidedMirror_951050903",
+            "tokenId": "OneSidedMirror_1104443373",
             "type": "OneSidedMirror"
         },
         {
             "orientation": "UP",
-            "tokenId": "DoubleSidedMirror_1437654187",
+            "tokenId": "DoubleSidedMirror_2020152163",
             "type": "DoubleSidedMirror"
         }
     ],
@@ -19,7 +19,7 @@
     "placedTokens": [
         {
             "orientation": "UP",
-            "tokenId": "LaserGun_2079179914",
+            "tokenId": "LaserGun_1047087935",
             "position": {
                 "x": 0,
                 "y": 0
@@ -28,7 +28,7 @@
         },
         {
             "orientation": "DOWN",
-            "tokenId": "Target_20049680",
+            "tokenId": "Target_464887938",
             "position": {
                 "x": 4,
                 "y": 4
