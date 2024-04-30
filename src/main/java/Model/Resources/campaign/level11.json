@@ -1,0 +1,166 @@
+{
+  "unplacedTokens": [
+    {
+      "orientation": "LEFT",
+      "tokenId": "OneSidedMirror_1027741063",
+      "type": "OneSidedMirror"
+    },
+    {
+      "orientation": "RIGHT",
+      "tokenId": "Splitter_1278785934",
+      "type": "Splitter"
+    },
+    {
+      "orientation": "LEFT",
+      "tokenId": "Splitter_1419014780",
+      "type": "Splitter"
+    },
+    {
+      "orientation": "DOWN",
+      "tokenId": "Splitter_516879025",
+      "type": "Splitter"
+    }
+  ],
+  "boardSize": {
+    "widthX": 7,
+    "heightY": 7
+  },
+  "name": "level11",
+  "placedTokens": [
+    {
+      "tokenId": "Block_1254342236",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "type": "Block"
+    },
+    {
+      "tokenId": "Block_1298911056",
+      "position": {
+        "x": 0,
+        "y": 1
+      },
+      "type": "Block"
+    },
+    {
+      "orientation": "RIGHT",
+      "tokenId": "Target_1453269127",
+      "position": {
+        "x": 0,
+        "y": 2
+      },
+      "type": "Target"
+    },
+    {
+      "tokenId": "Block_548503994",
+      "position": {
+        "x": 0,
+        "y": 3
+      },
+      "type": "Block"
+    },
+    {
+      "tokenId": "Block_190576561",
+      "position": {
+        "x": 0,
+        "y": 4
+      },
+      "type": "Block"
+    },
+    {
+      "tokenId": "Block_25424630",
+      "position": {
+        "x": 1,
+        "y": 0
+      },
+      "type": "Block"
+    },
+    {
+      "orientation": "DOWN",
+      "tokenId": "Checkpoint_262665699",
+      "position": {
+        "x": 1,
+        "y": 4
+      },
+      "type": "Checkpoint"
+    },
+    {
+      "orientation": "UP",
+      "tokenId": "Target_517434653",
+      "position": {
+        "x": 1,
+        "y": 6
+      },
+      "type": "Target"
+    },
+    {
+      "tokenId": "Block_672391114",
+      "position": {
+        "x": 2,
+        "y": 0
+      },
+      "type": "Block"
+    },
+    {
+      "tokenId": "Block_898603701",
+      "position": {
+        "x": 2,
+        "y": 4
+      },
+      "type": "Block"
+    },
+    {
+      "tokenId": "Block_1507860821",
+      "position": {
+        "x": 3,
+        "y": 0
+      },
+      "type": "Block"
+    },
+    {
+      "orientation": "DOWN",
+      "tokenId": "Target_356970855",
+      "position": {
+        "x": 3,
+        "y": 1
+      },
+      "type": "Target"
+    },
+    {
+      "orientation": "UP",
+      "tokenId": "LaserGun_1513467027",
+      "position": {
+        "x": 3,
+        "y": 6
+      },
+      "type": "LaserGun"
+    },
+    {
+      "tokenId": "Block_1680572281",
+      "position": {
+        "x": 4,
+        "y": 0
+      },
+      "type": "Block"
+    },
+    {
+      "orientation": "DOWN",
+      "tokenId": "Target_1664067267",
+      "position": {
+        "x": 5,
+        "y": 0
+      },
+      "type": "Target"
+    },
+    {
+      "orientation": "DOWN",
+      "tokenId": "Checkpoint_1636527006",
+      "position": {
+        "x": 5,
+        "y": 4
+      },
+      "type": "Checkpoint"
+    }
+  ]
+}

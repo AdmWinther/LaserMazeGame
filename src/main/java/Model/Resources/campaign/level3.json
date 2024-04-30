@@ -1,0 +1,78 @@
+{
+  "unplacedTokens": [
+    {
+      "orientation": "UP",
+      "tokenId": "OneSidedMirror_401625763",
+      "type": "OneSidedMirror"
+    },
+    {
+      "orientation": "UP",
+      "tokenId": "OneSidedMirror_1368884364",
+      "type": "OneSidedMirror"
+    },
+    {
+      "orientation": "UP",
+      "tokenId": "OneSidedMirror_492228202",
+      "type": "OneSidedMirror"
+    }
+  ],
+  "boardSize": {
+    "widthX": 6,
+    "heightY": 6
+  },
+  "name": "level3",
+  "placedTokens": [
+    {
+      "orientation": "RIGHT",
+      "tokenId": "LaserGun_396180261",
+      "position": {
+        "x": 0,
+        "y": 1
+      },
+      "type": "LaserGun"
+    },
+    {
+      "tokenId": "Block_1134517053",
+      "position": {
+        "x": 0,
+        "y": 5
+      },
+      "type": "Block"
+    },
+    {
+      "tokenId": "Block_1560911714",
+      "position": {
+        "x": 2,
+        "y": 2
+      },
+      "type": "Block"
+    },
+    {
+      "orientation": "UP",
+      "tokenId": "Splitter_1237514926",
+      "position": {
+        "x": 2,
+        "y": 3
+      },
+      "type": "Splitter"
+    },
+    {
+      "orientation": "LEFT",
+      "tokenId": "Target_548246552",
+      "position": {
+        "x": 4,
+        "y": 3
+      },
+      "type": "Target"
+    },
+    {
+      "orientation": "LEFT",
+      "tokenId": "Target_835648992",
+      "position": {
+        "x": 4,
+        "y": 4
+      },
+      "type": "Target"
+    }
+  ]
+}
