@@ -17,52 +17,52 @@ import javax.swing.*;
  * @author Léonard Amsler
  * @see LevelController
  */
-public class EditableLevelController extends LevelController {
+public class EditableLevelController extends LevelController<EditableLevelPanel, EditableLevel> {
 
-	/**
-	 * Constructor of the EditableLevelController
-	 *
-	 * @param gameController GameController - The game controller
-	 * @param frame          JFrame - The frame
-	 * @param levelPanel     LevelPanel - The level panel
-	 * @param level          EditableLevel - The level
-	 * @author Hugo Demule (s231675)
-	 */
-	public EditableLevelController(GameController gameController, JFrame frame, EditableLevelPanel levelPanel, EditableLevel level) {
-		super(gameController, frame, levelPanel, level);
-	}
+    /**
+     * Constructor of the EditableLevelController
+     *
+     * @param gameController GameController - The game controller
+     * @param frame          JFrame - The frame
+     * @param levelPanel     LevelPanel - The level panel
+     * @param level          EditableLevel - The level
+     * @author Hugo Demule (s231675)
+     */
+    public EditableLevelController(GameController gameController, JFrame frame, EditableLevelPanel levelPanel, EditableLevel level) {
+        super(gameController, frame, levelPanel, level);
+    }
 
-	/**
-	 * Check if the level is in sandbox mode
-	 *
-	 * @return boolean - True if the level is in sandbox mode, false otherwise
-	 * @author Hugo Demule (s231675)
-	 */
-	@Override
-	public boolean isSandbox() {
-		return true;
-	}
+    /**
+     * Check if the level is in sandbox mode
+     *
+     * @return boolean - True if the level is in sandbox mode, false otherwise
+     * @author Hugo Demule (s231675)
+     */
+    @Override
+    public boolean isSandbox() {
+        return true;
+    }
 
-	/**
-	 * Add a token to the unplaced tokens
-	 *
-	 * @param token Token - The token to add to the unplaced tokens
-	 * @author Hugo Demule (s231675)
-	 */
-	public void addToUnplacedTokens(Token token) {
-		((EditableLevel) level).tokenManager().addToUnplacedTokens(token);
-	}
+    /**
+     * Add a token to the unplaced tokens
+     *
+     * @param token Token - The token to add to the unplaced tokens
+     * @author Hugo Demule (s231675)
+     */
+    public void addToUnplacedTokens(Token token) {
+        level.tokenManager().addToUnplacedTokens(token);
+    }
 
-	/**
-	 * Saves the current level by setting the placed tokens as unmovable and the unplaced tokens as movables
-	 *
-	 * @return True if the level was saved successfully
-	 */
-	public boolean saveLevel() {
-		((EditableLevel) level).tokenManager().setPlacedTokensMovability(false);
-		((EditableLevel) level).tokenManager().setUnplacedTokensMovability(true);
-		return DataWriter.write(level, FilePaths.SANDBOX_LEVELS_PATH);
-	}
+    /**
+     * Saves the current level by setting the placed tokens as unmovable and the unplaced tokens as movables
+     *
+     * @return True if the level was saved successfully
+     */
+    public boolean saveLevel() {
+        level.tokenManager().setPlacedTokensMovability(false);
+        level.tokenManager().setUnplacedTokensMovability(true);
+        return DataWriter.write(level, FilePaths.SANDBOX_LEVELS_PATH);
+    }
 
     /**
      * Get the inventory
@@ -71,16 +71,16 @@ public class EditableLevelController extends LevelController {
      * @author Nathan Gromb
      */
     public Inventory getInventory() {
-        return ((EditableLevel) level).tokenManager().getInventory();
+        return level.tokenManager().getInventory();
     }
 
-	/**
-	 * Remove a token
-	 *
-	 * @param token Token - The token to remove
-	 * @author Nathan Gromb (s231674)
-	 */
-	public void removeToken(Token token) {
-		((EditableLevel) level).tokenManager().removeToken(token);
-	}
+    /**
+     * Remove a token
+     *
+     * @param token Token - The token to remove
+     * @author Nathan Gromb (s231674)
+     */
+    public void removeToken(Token token) {
+        level.tokenManager().removeToken(token);
+    }
 }

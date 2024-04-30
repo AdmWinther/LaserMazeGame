@@ -17,6 +17,7 @@ public class ResourcePaths {
         public static final String BACKGROUND_TILE = "src/main/java/Vue/Resources/Tiles/background.png";
         public static final String SANDBOX_LIST_ITEM_BACKGROUND = "src/main/java/Vue/Resources/MenuButtons/level.png";
         public static final String SANDBOX_LIST_NEW_LEVEL_BACKGROUND = "src/main/java/Vue/Resources/MenuButtons/new_level.png";
+        public static final String UNMOVABLE_OVERLAY = "/Tokens/unmovableTokenBg.png";
     }
 
     /**

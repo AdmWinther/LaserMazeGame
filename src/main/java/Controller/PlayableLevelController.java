@@ -10,7 +10,7 @@ import javax.swing.*;
  *
  * @see LevelController
  */
-public class PlayableLevelController extends LevelController {
+public class PlayableLevelController extends LevelController<PlayableLevelPanel, PlayableLevel> {
 
     /**
      * Constructor of the PlayableLevelController
@@ -43,6 +43,6 @@ public class PlayableLevelController extends LevelController {
      * @author Adam (Hossein) (s240844)
      */
     public boolean isLevelCompleted() {
-        return ((PlayableLevel) level).isLevelCompleted();
+        return level.isLevelCompleted();
     }
 }

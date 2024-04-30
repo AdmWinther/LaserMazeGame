@@ -1,0 +1,86 @@
+{
+    "unplacedTokens": [{
+        "orientation": "RIGHT",
+        "tokenId": "LaserGun_683566605",
+        "type": "LaserGun"
+    }],
+    "boardSize": {
+        "widthX": 7,
+        "heightY": 7
+    },
+    "name": "Sandbox Level | 2024-04-30 15:39:45",
+    "placedTokens": [
+        {
+            "orientation": "RIGHT",
+            "tokenId": "OneSidedMirror_1803059973",
+            "position": {
+                "x": 0,
+                "y": 0
+            },
+            "type": "OneSidedMirror"
+        },
+        {
+            "orientation": "UP",
+            "tokenId": "OneSidedMirror_1967150183",
+            "position": {
+                "x": 0,
+                "y": 3
+            },
+            "type": "OneSidedMirror"
+        },
+        {
+            "orientation": "LEFT",
+            "tokenId": "Splitter_463300905",
+            "position": {
+                "x": 3,
+                "y": 0
+            },
+            "type": "Splitter"
+        },
+        {
+            "orientation": "UP",
+            "tokenId": "Target_886223348",
+            "position": {
+                "x": 3,
+                "y": 2
+            },
+            "type": "Target"
+        },
+        {
+            "orientation": "LEFT",
+            "tokenId": "Target_1128671333",
+            "position": {
+                "x": 3,
+                "y": 3
+            },
+            "type": "Target"
+        },
+        {
+            "orientation": "DOWN",
+            "tokenId": "DoubleSidedMirror_1628532596",
+            "position": {
+                "x": 5,
+                "y": 0
+            },
+            "type": "DoubleSidedMirror"
+        },
+        {
+            "orientation": "DOWN",
+            "tokenId": "Checkpoint_818534541",
+            "position": {
+                "x": 5,
+                "y": 3
+            },
+            "type": "Checkpoint"
+        },
+        {
+            "orientation": "RIGHT",
+            "tokenId": "DoubleSidedMirror_1111415793",
+            "position": {
+                "x": 5,
+                "y": 6
+            },
+            "type": "DoubleSidedMirror"
+        }
+    ]
+}

@@ -25,13 +25,16 @@ import java.util.Objects;
  * @see InventoryUI
  */
 public abstract class TokenDisplay implements Drawable {
-    LevelController levelController;
+	private final static String UNMOVABLE_OVERLAY_KEY = "unmovableTokenBg";
+
+	LevelController levelController;
     Map<String, BufferedImage> tokenImages = new HashMap<>();
     Map<Pair<String, Orientation>, BufferedImage> orientedTokenImages;
     Map<Token, Rectangle2D> rectangles;
     LevelPanel levelPanel;
 
-    private Pair<Token, Position> draggedToken;
+
+	private Pair<Token, Position> draggedToken;
 
     public TokenDisplay(LevelPanel levelPanel, LevelController levelController) {
         this.levelController = levelController;
@@ -78,9 +81,11 @@ public abstract class TokenDisplay implements Drawable {
             BufferedImage checkpointRIGHT_LEFT = readImage(ResourcePaths.Tokens.Checkpoint.RIGHT_LEFT);
             BufferedImage checkpointUP_DOWN = readImage(ResourcePaths.Tokens.Checkpoint.UP_DOWN);
 
-            // 2. Store the images in the maps
-            String beamerClassName = LaserGun.class.getSimpleName();
-            putOrientedTokenImage(beamerImageUP, beamerImageDOWN, beamerImageLEFT, beamerImageRIGHT, beamerClassName);
+			BufferedImage unmovableTokenBg = readImage(ResourcePaths.Textures.UNMOVABLE_OVERLAY);
+
+			// 2. Store the images in the maps
+			String beamerClassName = LaserGun.class.getSimpleName();
+			putOrientedTokenImage(beamerImageUP, beamerImageDOWN, beamerImageLEFT, beamerImageRIGHT, beamerClassName);
 
             String blockerClassName = Block.class.getSimpleName();
             tokenImages.put(blockerClassName, blockerImage);
@@ -97,12 +102,13 @@ public abstract class TokenDisplay implements Drawable {
             String splitterClassName = Splitter.class.getSimpleName();
             putOrientedTokenImage(splitterImageUP_DOWN, splitterImageUP_DOWN, splitterImageRIGHT_LEFT, splitterImageRIGHT_LEFT, splitterClassName);
 
-            String checkpointClassName = Checkpoint.class.getSimpleName();
-            putOrientedTokenImage(checkpointUP_DOWN, checkpointUP_DOWN, checkpointRIGHT_LEFT, checkpointRIGHT_LEFT, checkpointClassName);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+			String checkpointClassName = Checkpoint.class.getSimpleName();
+			putOrientedTokenImage(checkpointUP_DOWN, checkpointUP_DOWN, checkpointRIGHT_LEFT, checkpointRIGHT_LEFT, checkpointClassName);
+			tokenImages.put(UNMOVABLE_OVERLAY_KEY, unmovableTokenBg);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
     /**
      * Utility method to read an image from the resources.
@@ -203,6 +209,11 @@ public abstract class TokenDisplay implements Drawable {
             tokenImage = tokenImages.get(tokenClassName);
         }
 
-        g2d.drawImage(tokenImage, pos.x(), pos.y(), tileWidth, tileHeight, null);
-    }
+		if (!token.isMovable()) {
+			BufferedImage unmovableOverlay = tokenImages.get(UNMOVABLE_OVERLAY_KEY);
+			g2d.drawImage(unmovableOverlay, pos.x(), pos.y(), tileWidth, tileHeight, null);
+		}
+
+		g2d.drawImage(tokenImage, pos.x(), pos.y(), tileWidth, tileHeight, null);
+	}
 }

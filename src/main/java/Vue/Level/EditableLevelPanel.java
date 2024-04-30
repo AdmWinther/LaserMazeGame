@@ -20,7 +20,7 @@ import java.awt.*;
  * @author Nathan Gromb
  * @see LevelPanel
  */
-public final class EditableLevelPanel extends LevelPanel {
+public final class EditableLevelPanel extends LevelPanel<EditableLevelController> {
 
     private final InventoryUI inventoryUI;
     private final AnimationsUI animationsUI;
@@ -89,6 +89,6 @@ public final class EditableLevelPanel extends LevelPanel {
      * @author Hugo Demule
      */
     public boolean saveLevel() {
-        return ((EditableLevelController) levelController).saveLevel();
+        return levelController.saveLevel();
     }
 }

@@ -25,7 +25,7 @@ import java.util.Timer;
  * @author Léonard Amsler
  * @author Nathan Gromb
  */
-public abstract class LevelPanel extends JPanel implements Runnable {
+public abstract class LevelPanel<LevelControllerType extends LevelController> extends JPanel implements Runnable {
 
     // Borders
     public final int horizontalBorder = 2;
@@ -45,7 +45,7 @@ public abstract class LevelPanel extends JPanel implements Runnable {
     public int screenWidth;
     public int screenHeight;
     // Controllers
-    public LevelController levelController;
+    public LevelControllerType levelController;
     public LoginController loginController;
     // Objects to draw
     public ExtrasUI extrasUI;
@@ -77,7 +77,7 @@ public abstract class LevelPanel extends JPanel implements Runnable {
      * @param levelController - The level controller
      * @author Léonard Amsler - s231715
      */
-    public LevelPanel(JFrame frame, GameController gameController, LevelController levelController, LoginController loginController) {
+    public LevelPanel(JFrame frame, GameController gameController, LevelControllerType levelController, LoginController loginController) {
 
         this.levelController = levelController;
 

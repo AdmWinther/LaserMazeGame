@@ -16,7 +16,7 @@ import java.util.*;
  * This class has the responsibility to control the level
  * This is an abstract class that will be extended by PlayableLevelController and EditableLevelController
  */
-public abstract class LevelController {
+public abstract class LevelController<LevelPanelType extends LevelPanel, LevelType extends Level> {
 
     /**
      * The frame
@@ -26,12 +26,12 @@ public abstract class LevelController {
     /**
      * The level
      */
-    protected Level level;
+    protected LevelType level;
 
     /**
      * The level panel
      */
-    protected LevelPanel levelPanel;
+    protected LevelPanelType levelPanel;
 
     /**
      * The game controller
@@ -53,7 +53,7 @@ public abstract class LevelController {
      * @author Hugo Demule (s231675)
      * @author Léonard Amsler (s231715)
      */
-    public LevelController(GameController gameController, JFrame frame, LevelPanel levelPanel, Level level) {
+    public LevelController(GameController gameController, JFrame frame, LevelPanelType levelPanel, LevelType level) {
         this.gameController = gameController;
         this.frame = frame;
         this.level = level;
@@ -78,7 +78,7 @@ public abstract class LevelController {
      * @param levelPanel LevelPanel - The level panel
      * @author Hugo Demule (s231675)
      */
-    public void setLevelPanel(LevelPanel levelPanel) {
+    public void setLevelPanel(LevelPanelType levelPanel) {
         this.levelPanel = levelPanel;
     }
 
@@ -183,7 +183,7 @@ public abstract class LevelController {
     /**
      * Get the laser fragments
      *
-     * @return Set of Pair of Coordinate - The laser fragments
+     * @return Set of pair of Coordinate - The laser fragments
      * @author Léonard Amsler (s231715)
      */
     public Set<Pair<Coordinate, Coordinate>> getLaserFragments() {
