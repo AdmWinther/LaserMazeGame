@@ -10,7 +10,7 @@ import java.awt.geom.Ellipse2D;
 /**
  * Animation that makes the screen fill with a color in a circle shape
  *
- * @Author Nathan Gromb
+ * @author Nathan Gromb
  */
 public class CircleAnimation implements Animation {
 	private static final double SHRINKING_SPEED = 500;

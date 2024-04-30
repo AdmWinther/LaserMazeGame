@@ -8,7 +8,8 @@ import Model.Classes.Utils.DataReader;
 import Vue.Constants.Style;
 import Vue.Constants.VueFilePaths;
 import Vue.Handlers.ButtonHoverHandler;
-import Vue.SoundEffects.Sound;
+import Vue.SoundEffects.SoundPaths;
+import Vue.SoundEffects.SoundPlayer;
 import Vue.Utils.ButtonUtil;
 import Vue.Utils.ImageUtil;
 
@@ -60,8 +61,9 @@ public class CampaignPanel extends LevelMenuPanel {
         BufferedImage disable_image = getImage(VueFilePaths.DISABLED_BOARD_TILE);
 
         // Resize images
-        enable_image = ImageUtil.resizeImage(enable_image, tileWidth, tileHeight);
-        disable_image = ImageUtil.resizeImage(disable_image, tileWidth, tileHeight);
+        final double RESIZE_FACTOR = 1.5;
+        enable_image = ImageUtil.resizeImage(enable_image, (int) (tileWidth * RESIZE_FACTOR), (int) (tileHeight * RESIZE_FACTOR));
+        disable_image = ImageUtil.resizeImage(disable_image, (int) (tileWidth * RESIZE_FACTOR), (int) (tileHeight * RESIZE_FACTOR));
 
         // Load level IDs
         int nb_levels = DataReader.readCampaignLevelIDs().size();
@@ -101,7 +103,7 @@ public class CampaignPanel extends LevelMenuPanel {
 
         levelButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Sound.playButtonSound();
+                SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
 
                 if (!levelButton.isEnabled()) {
                     return;

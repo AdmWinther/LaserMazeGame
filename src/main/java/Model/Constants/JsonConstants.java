@@ -1,4 +1,4 @@
-package Model.constants;
+package Model.Constants;
 
 /**
  * Constants for JSON tokens
@@ -29,4 +29,5 @@ public final class JsonConstants {
     public final static String VAL_DOUBLE_SIDED_MIRROR = "DoubleSidedMirror";
     public final static String VAL_TYPE_SPLITTER = "Splitter";
     public final static String VAL_TYPE_BLOCK = "Block";
+    public final static String VAL_TYPE_CHECKPOINT = "Checkpoint";
 }

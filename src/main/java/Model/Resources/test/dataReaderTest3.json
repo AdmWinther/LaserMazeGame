@@ -1,0 +1,29 @@
+{
+  "boardSize": {
+    "widthX": 5,
+    "heightY": 5
+  },
+  "unplacedTokens": [
+  ],
+  "name": "dataReaderTest3",
+  "placedTokens": [
+    {
+      "orientation": "RIGHT",
+      "tokenId": "LaserGun1",
+      "type": "LaserGun",
+      "position": {
+        "x": 1,
+        "y": 2
+      }
+    },
+    {
+      "orientation": "UP",
+      "tokenId": "Mirror1",
+      "type": "OneSidedMirror",
+      "position": {
+        "x": 3,
+        "y": 2
+      }
+    }
+  ]
+}

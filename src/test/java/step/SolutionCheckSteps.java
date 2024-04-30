@@ -1,47 +1,59 @@
 package step;
 
+import Model.Classes.Level.PlayableLevel;
+import Model.Classes.SolutionChecker;
+import Model.Classes.Token.DoubleSidedMirror;
+import Model.Classes.Token.LaserGun;
+import Model.Classes.Token.Target;
+import Model.Classes.Token.Token;
+import Model.Classes.Utils.Orientation;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.When;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class SolutionCheckSteps {
-    /*Level level;
-    Laser laser;
-    boolean result;
+	Set<Token> unplaced;
+	Token[][] placed;
+	PlayableLevel level;
+	boolean result;
 
-    @Given("I have a level that contains a board with a laser gun and a target")
-    public void iHaveALevelThatContainsABoardWithALaserGunAndATarget() {
-        board = new Board(5, 5);
-        level = new Level(board);
+	@Given("I have a {int} by {int} level")
+	public void iHaveAByLevel(int arg0, int arg1) {
+		unplaced = new HashSet<>();
+		placed = new Token[arg0][arg1];
+	}
 
-        Token laserGun = new LaserGun(true, Orientation.RIGHT);
-        Token target = new Target(true, Orientation.LEFT);
+	@And("the level contains a laser gun at {int}, {int} with orientation {string}")
+	public void theLevelContainsALaserGunAtWithOrientation(int arg0, int arg1, String arg2) {
+		placed[arg0][arg1] = new LaserGun(false, Orientation.valueOf(arg2));
+	}
 
-        level.addToken(laserGun);
-        level.addToken(target);
+	@And("the level contains a target at {int}, {int} with orientation {string}")
+	public void theLevelContainsATargetAtWithOrientation(int arg0, int arg1, String arg2) {
+		placed[arg0][arg1] = new Target(false, Orientation.valueOf(arg2));
+	}
 
-        level.placeToken(laserGun, new Coordinate(0, 0));
-        level.placeToken(target, new Coordinate(4, 0));
+	@And("the level contains a mirror at {int}, {int} with orientation {string}")
+	public void theLevelContainsAMirrorAtMirror_xMirror_yWithOrientation(int arg0, int arg1, String arg2) {
+		placed[arg0][arg1] = new DoubleSidedMirror(false, Orientation.valueOf(arg2));
+	}
 
-    }
+	@When("I start the level and check the solution")
+	public void iStartTheLevelAndCheckTheSolution() {
+		level = new PlayableLevel("solutionCheckTest", placed, unplaced);
 
-    @When("I check the solution")
-    public void iCheckTheSolution() {
-        result = SolutionChecker.check(level);
-    }
+		result = SolutionChecker.check(level);
+	}
 
-    @Then("The laser should propagate from the laser gun")
-    public void theLaserShouldPropagateFromTheLaserGun() {
-        laser = level.laserManager().generateLaser();
-    }
+	@And("The solution checker should return {string}")
+	public void theSolutionCheckerShouldReturn(String arg0) {
+		boolean expected = Boolean.parseBoolean(arg0);
 
-    @And("The solution checker should return {string}")
-    public void andTheSolutionCheckerShouldReturn(String arg0) {
-        boolean expected = Boolean.parseBoolean(arg0);
-
-        assertEquals(expected, result);
-    }
-
-    @And("there is a block in the way of the laser")
-    public void thereIsABlockInTheWayOfTheLaser() {
-        Token block = new Block(false);
-        level.addToken(block);
-        level.placeToken(block, new Coordinate(0, 2));
-    }*/
+		assertEquals(expected, result);
+	}
 }

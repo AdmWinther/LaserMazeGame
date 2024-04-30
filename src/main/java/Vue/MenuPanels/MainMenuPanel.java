@@ -7,7 +7,8 @@ import Vue.Constants.JComponentsNames;
 import Vue.Constants.Style;
 import Vue.Constants.VueFilePaths;
 import Vue.Handlers.ButtonHoverHandler;
-import Vue.SoundEffects.Sound;
+import Vue.SoundEffects.SoundPaths;
+import Vue.SoundEffects.SoundPlayer;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -58,7 +59,7 @@ public class MainMenuPanel extends JPanel {
         setLayout(new BorderLayout());
 
         // Background image
-        ImageIcon backgroundImage = new ImageIcon(VueFilePaths.BACKGROUND_IMAGE);
+        ImageIcon backgroundImage = new ImageIcon(VueFilePaths.BACKGROUND_TILE);
         ImagePanel backgroundPanel = new ImagePanel(backgroundImage.getImage(), gameController.getCurrentTileDimension());
         backgroundPanel.setLayout(new BorderLayout());
         add(backgroundPanel, BorderLayout.CENTER);
@@ -122,7 +123,7 @@ public class MainMenuPanel extends JPanel {
     private JButton logoutButton(JFrame frame) {
         JButton logoutButton = new JButton(JComponentsNames.Label.LOGOUT);
         logoutButton.addActionListener(e -> {
-            Sound.playButtonSound();
+            SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
             loginController.logout();
             showPanel(frame, JComponentsNames.FrameID.LOGIN);
         });
@@ -147,9 +148,8 @@ public class MainMenuPanel extends JPanel {
     private JPanel createButtonPanel(JFrame frame) {
         // Button panel for the three buttons
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(Style.Grid.MainMenu.ROWS, Style.Grid.MainMenu.COLS, 0, Style.Padding.M));
+        buttonPanel.setLayout(new GridLayout(Style.Grid.MainMenu.ROWS, Style.Grid.MainMenu.COLS, 0, Style.Padding.XL));
         buttonPanel.setOpaque(false); // Make the panel transparent
-
 
         // Create buttons
         BufferedImage campaignButtonImage = null;
@@ -160,17 +160,17 @@ public class MainMenuPanel extends JPanel {
             sandboxButtonImage = ImageIO.read(new File(VueFilePaths.SANDBOX_LEVELS_BUTTON));
             randomButtonImage = ImageIO.read(new File(VueFilePaths.RANDOM_LEVELS_BUTTON));
         } catch (Exception e) {
-            System.out.println("Error loading campaign button image");
+            e.printStackTrace();
         }
 
         // Resize button image such that they fit the button
         assert campaignButtonImage != null;
         assert sandboxButtonImage != null;
         assert randomButtonImage != null;
-        int VScale = 1;
-        int HScale = 3;
-        int buttonWidth = gameController.getCurrentTileDimension().width * HScale;
-        int buttonHeight = gameController.getCurrentTileDimension().height * VScale;
+        double VScale = 1.5;
+        double HScale = 4.5;
+        int buttonWidth = (int) (gameController.getCurrentTileDimension().width * HScale);
+        int buttonHeight = (int) (gameController.getCurrentTileDimension().height * VScale);
         campaignButtonImage = resizeImage(campaignButtonImage, buttonWidth, buttonHeight);
         sandboxButtonImage = resizeImage(sandboxButtonImage, buttonWidth, buttonHeight);
         randomButtonImage = resizeImage(randomButtonImage, buttonWidth, buttonHeight);
@@ -182,17 +182,17 @@ public class MainMenuPanel extends JPanel {
 
         // Add action listeners to buttons
         campaignButton.addActionListener(e -> {
-            Sound.playButtonSound();
+            SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
             displayCampaignLevels(frame);
         });
         campaignButton.addMouseListener(new ButtonHoverHandler());
         sandboxButton.addActionListener(e -> {
-            Sound.playButtonSound();
+            SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
             displaySandboxLevels(frame);
         });
         sandboxButton.addMouseListener(new ButtonHoverHandler());
         randomButton.addActionListener(e -> {
-            Sound.playButtonSound();
+            SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
 
             gameController.turnOffCampaignGameMode();
             List<LevelID> levelIDs = gameController.getCampaignLevelIDs();
@@ -206,14 +206,12 @@ public class MainMenuPanel extends JPanel {
         setButtonTransparent(sandboxButton);
         setButtonTransparent(randomButton);
 
-
         // Add buttons to panel
         buttonPanel.add(campaignButton);
         buttonPanel.add(sandboxButton);
         buttonPanel.add(randomButton);
 
         return buttonPanel;
-
     }
 
     /**
@@ -290,6 +288,4 @@ public class MainMenuPanel extends JPanel {
         showPanel(frame, JComponentsNames.FrameID.SANDBOX_LEVELS);
         frame.pack();
     }
-
-
 }
