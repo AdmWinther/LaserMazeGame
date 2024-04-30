@@ -7,13 +7,10 @@ import Model.Classes.Token.Token;
 import Model.Classes.Utils.Coordinate;
 import Model.Classes.Utils.Orientation;
 import Model.Classes.Utils.Pair;
-import Vue.Constants.JComponentsNames;
 import Vue.Level.LevelPanel;
 
 import javax.swing.*;
 import java.util.*;
-
-import static Vue.Game.Game.showPanel;
 
 public abstract class LevelController {
 
@@ -119,17 +116,4 @@ public abstract class LevelController {
         return false;
     }
 
-    public void backToCampaignMenu() {
-        System.out.println("Back to campaign menu");
-        System.out.println("All cards: " + Arrays.toString(frame.getContentPane().getComponents()));
-        showPanel(frame, JComponentsNames.FrameID.CAMPAIGN_LEVELS);
-    }
-
-    public void backToSandboxMenu() {
-        showPanel(frame, JComponentsNames.FrameID.SANDBOX_LEVELS);
-    }
-
-    public void backToMainMenu() {
-        showPanel(frame, JComponentsNames.FrameID.MAIN_MENU);
-    }
 }

@@ -16,15 +16,21 @@ public class EditableLevelController extends LevelController {
         super(gameController, frame, levelPanel, level);
     }
 
-    @Override
-    public void backToCampaignMenu() {
-        DataWriter.write(level, FilePaths.SANDBOX_LEVELS_PATH);
-        super.backToCampaignMenu();
-    }
 
     @Override
     public boolean isSandbox() {
         return true;
+    }
+
+    /**
+     * Saves the current level by setting the placed tokens as unmovable and the unplaced tokens as movables
+     *
+     * @return True if the level was saved successfully
+     */
+    public boolean saveLevel() {
+        ((EditableLevel) level).tokenManager().setPlacedTokensMovability(false);
+        ((EditableLevel) level).tokenManager().setUnplacedTokensMovability(true);
+        return DataWriter.write(level, FilePaths.SANDBOX_LEVELS_PATH);
     }
 
     public boolean addToPlacedTokens(Token token, Coordinate coordinate) {
@@ -41,12 +47,6 @@ public class EditableLevelController extends LevelController {
 
     public boolean removeFromUnplacedTokens(Token token) {
         return ((EditableLevel) level).tokenManager().removeFromUnplacedTokens(token);
-    }
-
-    public boolean saveLevel() {
-        ((EditableLevel) level).tokenManager().setPlacedTokensMovability(false);
-        ((EditableLevel) level).tokenManager().setUnplacedTokensMovability(true);
-        return DataWriter.write(level, FilePaths.SANDBOX_LEVELS_PATH);
     }
 
     public Inventory getInventory() {
