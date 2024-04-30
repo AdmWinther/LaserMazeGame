@@ -1,0 +1,305 @@
+{
+  "unplacedTokens": [
+    {
+      "orientation": "RIGHT",
+      "tokenId": "OneSidedMirror_1330835043",
+      "type": "OneSidedMirror"
+    },
+    {
+      "orientation": "DOWN",
+      "tokenId": "Splitter_808806855",
+      "type": "Splitter"
+    },
+    {
+      "orientation": "RIGHT",
+      "tokenId": "Splitter_1620554949",
+      "type": "Splitter"
+    },
+    {
+      "orientation": "RIGHT",
+      "tokenId": "Splitter_453473",
+      "type": "Splitter"
+    },
+    {
+      "orientation": "DOWN",
+      "tokenId": "OneSidedMirror_563311067",
+      "type": "OneSidedMirror"
+    },
+    {
+      "orientation": "LEFT",
+      "tokenId": "OneSidedMirror_1385496126",
+      "type": "OneSidedMirror"
+    },
+    {
+      "orientation": "RIGHT",
+      "tokenId": "OneSidedMirror_1369852153",
+      "type": "OneSidedMirror"
+    }
+  ],
+  "boardSize": {
+    "widthX": 7,
+    "heightY": 7
+  },
+  "name": "level05",
+  "placedTokens": [
+    {
+      "tokenId": "Block_1831706089",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "type": "Block"
+    },
+    {
+      "tokenId": "Block_1368091995",
+      "position": {
+        "x": 0,
+        "y": 1
+      },
+      "type": "Block"
+    },
+    {
+      "orientation": "UP",
+      "tokenId": "LaserGun_746270753",
+      "position": {
+        "x": 0,
+        "y": 3
+      },
+      "type": "LaserGun"
+    },
+    {
+      "orientation": "RIGHT",
+      "tokenId": "OneSidedMirror_694250570",
+      "position": {
+        "x": 0,
+        "y": 4
+      },
+      "type": "OneSidedMirror"
+    },
+    {
+      "orientation": "UP",
+      "tokenId": "Target_1031905701",
+      "position": {
+        "x": 0,
+        "y": 6
+      },
+      "type": "Target"
+    },
+    {
+      "tokenId": "Block_268789741",
+      "position": {
+        "x": 1,
+        "y": 0
+      },
+      "type": "Block"
+    },
+    {
+      "tokenId": "Block_1296737492",
+      "position": {
+        "x": 1,
+        "y": 3
+      },
+      "type": "Block"
+    },
+    {
+      "tokenId": "Block_1642576903",
+      "position": {
+        "x": 1,
+        "y": 5
+      },
+      "type": "Block"
+    },
+    {
+      "tokenId": "Block_268351149",
+      "position": {
+        "x": 1,
+        "y": 6
+      },
+      "type": "Block"
+    },
+    {
+      "tokenId": "Block_1190620023",
+      "position": {
+        "x": 2,
+        "y": 0
+      },
+      "type": "Block"
+    },
+    {
+      "tokenId": "Block_1902843781",
+      "position": {
+        "x": 2,
+        "y": 2
+      },
+      "type": "Block"
+    },
+    {
+      "tokenId": "Block_416441061",
+      "position": {
+        "x": 2,
+        "y": 3
+      },
+      "type": "Block"
+    },
+    {
+      "tokenId": "Block_30231359",
+      "position": {
+        "x": 2,
+        "y": 6
+      },
+      "type": "Block"
+    },
+    {
+      "tokenId": "Block_2012878680",
+      "position": {
+        "x": 3,
+        "y": 0
+      },
+      "type": "Block"
+    },
+    {
+      "orientation": "RIGHT",
+      "tokenId": "Splitter_1861203279",
+      "position": {
+        "x": 3,
+        "y": 5
+      },
+      "type": "Splitter"
+    },
+    {
+      "orientation": "UP",
+      "tokenId": "OneSidedMirror_96015015",
+      "position": {
+        "x": 3,
+        "y": 6
+      },
+      "type": "OneSidedMirror"
+    },
+    {
+      "tokenId": "Block_1824796270",
+      "position": {
+        "x": 4,
+        "y": 0
+      },
+      "type": "Block"
+    },
+    {
+      "orientation": "DOWN",
+      "tokenId": "Checkpoint_103622494",
+      "position": {
+        "x": 4,
+        "y": 1
+      },
+      "type": "Checkpoint"
+    },
+    {
+      "orientation": "RIGHT",
+      "tokenId": "DoubleSidedMirror_275156116",
+      "position": {
+        "x": 4,
+        "y": 2
+      },
+      "type": "DoubleSidedMirror"
+    },
+    {
+      "orientation": "LEFT",
+      "tokenId": "OneSidedMirror_16978872",
+      "position": {
+        "x": 4,
+        "y": 6
+      },
+      "type": "OneSidedMirror"
+    },
+    {
+      "orientation": "RIGHT",
+      "tokenId": "OneSidedMirror_28170418",
+      "position": {
+        "x": 5,
+        "y": 0
+      },
+      "type": "OneSidedMirror"
+    },
+    {
+      "tokenId": "Block_71617771",
+      "position": {
+        "x": 5,
+        "y": 4
+      },
+      "type": "Block"
+    },
+    {
+      "tokenId": "Block_368119167",
+      "position": {
+        "x": 5,
+        "y": 5
+      },
+      "type": "Block"
+    },
+    {
+      "tokenId": "Block_1805283309",
+      "position": {
+        "x": 5,
+        "y": 6
+      },
+      "type": "Block"
+    },
+    {
+      "orientation": "LEFT",
+      "tokenId": "Target_65349412",
+      "position": {
+        "x": 6,
+        "y": 0
+      },
+      "type": "Target"
+    },
+    {
+      "tokenId": "Block_811302639",
+      "position": {
+        "x": 6,
+        "y": 1
+      },
+      "type": "Block"
+    },
+    {
+      "orientation": "LEFT",
+      "tokenId": "Target_1030420198",
+      "position": {
+        "x": 6,
+        "y": 2
+      },
+      "type": "Target"
+    },
+    {
+      "tokenId": "Block_1794464589",
+      "position": {
+        "x": 6,
+        "y": 3
+      },
+      "type": "Block"
+    },
+    {
+      "tokenId": "Block_1252489948",
+      "position": {
+        "x": 6,
+        "y": 4
+      },
+      "type": "Block"
+    },
+    {
+      "tokenId": "Block_514986497",
+      "position": {
+        "x": 6,
+        "y": 5
+      },
+      "type": "Block"
+    },
+    {
+      "tokenId": "Block_744783285",
+      "position": {
+        "x": 6,
+        "y": 6
+      },
+      "type": "Block"
+    }
+  ]
+}

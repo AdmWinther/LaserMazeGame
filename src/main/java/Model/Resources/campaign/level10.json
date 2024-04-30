@@ -1,0 +1,228 @@
+{
+  "unplacedTokens": [
+    {
+      "orientation": "DOWN",
+      "tokenId": "Splitter_481897418",
+      "type": "Splitter"
+    },
+    {
+      "orientation": "UP",
+      "tokenId": "Splitter_828493829",
+      "type": "Splitter"
+    },
+    {
+      "orientation": "DOWN",
+      "tokenId": "Splitter_996924254",
+      "type": "Splitter"
+    }
+  ],
+  "boardSize": {
+    "widthX": 7,
+    "heightY": 7
+  },
+  "name": "level10",
+  "placedTokens": [
+    {
+      "orientation": "RIGHT",
+      "tokenId": "DoubleSidedMirror_1542469094",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "type": "DoubleSidedMirror"
+    },
+    {
+      "orientation": "UP",
+      "tokenId": "Target_1516717800",
+      "position": {
+        "x": 0,
+        "y": 6
+      },
+      "type": "Target"
+    },
+    {
+      "tokenId": "Block_1628012824",
+      "position": {
+        "x": 1,
+        "y": 1
+      },
+      "type": "Block"
+    },
+    {
+      "tokenId": "Block_1757564276",
+      "position": {
+        "x": 1,
+        "y": 2
+      },
+      "type": "Block"
+    },
+    {
+      "tokenId": "Block_141690498",
+      "position": {
+        "x": 1,
+        "y": 3
+      },
+      "type": "Block"
+    },
+    {
+      "tokenId": "Block_524455019",
+      "position": {
+        "x": 1,
+        "y": 4
+      },
+      "type": "Block"
+    },
+    {
+      "tokenId": "Block_854515674",
+      "position": {
+        "x": 1,
+        "y": 5
+      },
+      "type": "Block"
+    },
+    {
+      "tokenId": "Block_1220386078",
+      "position": {
+        "x": 1,
+        "y": 6
+      },
+      "type": "Block"
+    },
+    {
+      "orientation": "UP",
+      "tokenId": "OneSidedMirror_1539910446",
+      "position": {
+        "x": 2,
+        "y": 3
+      },
+      "type": "OneSidedMirror"
+    },
+    {
+      "orientation": "RIGHT",
+      "tokenId": "Target_530395010",
+      "position": {
+        "x": 2,
+        "y": 6
+      },
+      "type": "Target"
+    },
+    {
+      "tokenId": "Block_1005323266",
+      "position": {
+        "x": 3,
+        "y": 1
+      },
+      "type": "Block"
+    },
+    {
+      "orientation": "LEFT",
+      "tokenId": "OneSidedMirror_1969613022",
+      "position": {
+        "x": 3,
+        "y": 6
+      },
+      "type": "OneSidedMirror"
+    },
+    {
+      "tokenId": "Block_1734819079",
+      "position": {
+        "x": 4,
+        "y": 1
+      },
+      "type": "Block"
+    },
+    {
+      "tokenId": "Block_301002582",
+      "position": {
+        "x": 4,
+        "y": 2
+      },
+      "type": "Block"
+    },
+    {
+      "orientation": "RIGHT",
+      "tokenId": "Checkpoint_270407652",
+      "position": {
+        "x": 4,
+        "y": 3
+      },
+      "type": "Checkpoint"
+    },
+    {
+      "tokenId": "Block_1322229733",
+      "position": {
+        "x": 4,
+        "y": 4
+      },
+      "type": "Block"
+    },
+    {
+      "tokenId": "Block_1490240309",
+      "position": {
+        "x": 4,
+        "y": 5
+      },
+      "type": "Block"
+    },
+    {
+      "tokenId": "Block_728551828",
+      "position": {
+        "x": 4,
+        "y": 6
+      },
+      "type": "Block"
+    },
+    {
+      "orientation": "DOWN",
+      "tokenId": "OneSidedMirror_1261257258",
+      "position": {
+        "x": 5,
+        "y": 0
+      },
+      "type": "OneSidedMirror"
+    },
+    {
+      "orientation": "DOWN",
+      "tokenId": "DoubleSidedMirror_2033179677",
+      "position": {
+        "x": 5,
+        "y": 5
+      },
+      "type": "DoubleSidedMirror"
+    },
+    {
+      "tokenId": "Block_1000858342",
+      "position": {
+        "x": 5,
+        "y": 6
+      },
+      "type": "Block"
+    },
+    {
+      "orientation": "LEFT",
+      "tokenId": "Target_1980392567",
+      "position": {
+        "x": 6,
+        "y": 1
+      },
+      "type": "Target"
+    },
+    {
+      "orientation": "LEFT",
+      "tokenId": "LaserGun_1356834133",
+      "position": {
+        "x": 6,
+        "y": 5
+      },
+      "type": "LaserGun"
+    },
+    {
+      "tokenId": "Block_1424743802",
+      "position": {
+        "x": 6,
+        "y": 6
+      },
+      "type": "Block"
+    }
+  ]
+}

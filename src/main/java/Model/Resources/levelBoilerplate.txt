@@ -1,0 +1,39 @@
+{
+  "name": [String],
+  "boardSize": {
+    "widthX": [int],
+    "heightY": [int]
+  },
+  "placedTokens": [
+    {
+      "tokenId": [String],
+      "type": "Receiver"
+            | "LaserGun"
+            | "OneSidedMirror"
+            | "DoubleSidedMirror"
+            | "Block",
+      ("orientation"): "RIGHT"
+                     | "LEFT"
+                     | "UP"
+                     | "DOWN",
+      "position": {
+        "x": [int],
+        "y": [int]
+      }
+    }
+  ],
+  "unplacedTokens": [
+    {
+      "tokenId": [String],
+      "type": "Receiver"
+            | "LaserGun"
+            | "OneSidedMirror"
+            | "DoubleSidedMirror"
+            | "Block",
+      ("orientation"): "RIGHT"
+                     | "LEFT"
+                     | "UP"
+                     | "DOWN"
+    }
+  ]
+}
