@@ -5,7 +5,7 @@ package Vue.Constants;
  *
  * @author Hugo Demule
  */
-public class VueFilePaths {
+public class ResourcePaths {
 
     /**
      * Class that stores the paths of the textures

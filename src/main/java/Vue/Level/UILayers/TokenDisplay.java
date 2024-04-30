@@ -4,7 +4,7 @@ import Controller.LevelController;
 import Model.Classes.Token.*;
 import Model.Classes.Utils.Orientation;
 import Model.Classes.Utils.Pair;
-import Vue.Constants.VueFilePaths;
+import Vue.Constants.ResourcePaths;
 import Vue.Interfaces.Drawable;
 import Vue.Level.LevelPanel;
 import Vue.Utils.Position;
@@ -52,31 +52,31 @@ public abstract class TokenDisplay implements Drawable {
     private void setTokenImages() {
         try {
             // 1. Load the images for the tokens
-            BufferedImage beamerImageUP = readImage(VueFilePaths.Tokens.LaserGun.UP);
-            BufferedImage beamerImageDOWN = readImage(VueFilePaths.Tokens.LaserGun.DOWN);
-            BufferedImage beamerImageLEFT = readImage(VueFilePaths.Tokens.LaserGun.LEFT);
-            BufferedImage beamerImageRIGHT = readImage(VueFilePaths.Tokens.LaserGun.RIGHT);
+            BufferedImage beamerImageUP = readImage(ResourcePaths.Tokens.LaserGun.UP);
+            BufferedImage beamerImageDOWN = readImage(ResourcePaths.Tokens.LaserGun.DOWN);
+            BufferedImage beamerImageLEFT = readImage(ResourcePaths.Tokens.LaserGun.LEFT);
+            BufferedImage beamerImageRIGHT = readImage(ResourcePaths.Tokens.LaserGun.RIGHT);
 
-            BufferedImage blockerImage = readImage(VueFilePaths.Tokens.BLOCK);
+            BufferedImage blockerImage = readImage(ResourcePaths.Tokens.BLOCK);
 
-            BufferedImage mirrorImageUP = readImage(VueFilePaths.Tokens.Mirror.UP);
-            BufferedImage mirrorImageDOWN = readImage(VueFilePaths.Tokens.Mirror.DOWN);
-            BufferedImage mirrorImageLEFT = readImage(VueFilePaths.Tokens.Mirror.LEFT);
-            BufferedImage mirrorImageRIGHT = readImage(VueFilePaths.Tokens.Mirror.RIGHT);
+            BufferedImage mirrorImageUP = readImage(ResourcePaths.Tokens.Mirror.UP);
+            BufferedImage mirrorImageDOWN = readImage(ResourcePaths.Tokens.Mirror.DOWN);
+            BufferedImage mirrorImageLEFT = readImage(ResourcePaths.Tokens.Mirror.LEFT);
+            BufferedImage mirrorImageRIGHT = readImage(ResourcePaths.Tokens.Mirror.RIGHT);
 
-            BufferedImage doubleMirrorImageUP_DOWN = readImage(VueFilePaths.Tokens.DoubleMirror.UP_DOWN);
-            BufferedImage doubleMirrorImageRIGHT_LEFT = readImage(VueFilePaths.Tokens.DoubleMirror.RIGHT_LEFT);
+            BufferedImage doubleMirrorImageUP_DOWN = readImage(ResourcePaths.Tokens.DoubleMirror.UP_DOWN);
+            BufferedImage doubleMirrorImageRIGHT_LEFT = readImage(ResourcePaths.Tokens.DoubleMirror.RIGHT_LEFT);
 
-            BufferedImage targetImageUP = readImage(VueFilePaths.Tokens.Target.UP);
-            BufferedImage targetImageDOWN = readImage(VueFilePaths.Tokens.Target.DOWN);
-            BufferedImage targetImageLEFT = readImage(VueFilePaths.Tokens.Target.LEFT);
-            BufferedImage targetImageRIGHT = readImage(VueFilePaths.Tokens.Target.RIGHT);
+            BufferedImage targetImageUP = readImage(ResourcePaths.Tokens.Target.UP);
+            BufferedImage targetImageDOWN = readImage(ResourcePaths.Tokens.Target.DOWN);
+            BufferedImage targetImageLEFT = readImage(ResourcePaths.Tokens.Target.LEFT);
+            BufferedImage targetImageRIGHT = readImage(ResourcePaths.Tokens.Target.RIGHT);
 
-            BufferedImage splitterImageUP_DOWN = readImage(VueFilePaths.Tokens.Splitter.UP_DOWN);
-            BufferedImage splitterImageRIGHT_LEFT = readImage(VueFilePaths.Tokens.Splitter.RIGHT_LEFT);
+            BufferedImage splitterImageUP_DOWN = readImage(ResourcePaths.Tokens.Splitter.UP_DOWN);
+            BufferedImage splitterImageRIGHT_LEFT = readImage(ResourcePaths.Tokens.Splitter.RIGHT_LEFT);
 
-            BufferedImage checkpointRIGHT_LEFT = readImage(VueFilePaths.Tokens.Checkpoint.RIGHT_LEFT);
-            BufferedImage checkpointUP_DOWN = readImage(VueFilePaths.Tokens.Checkpoint.UP_DOWN);
+            BufferedImage checkpointRIGHT_LEFT = readImage(ResourcePaths.Tokens.Checkpoint.RIGHT_LEFT);
+            BufferedImage checkpointUP_DOWN = readImage(ResourcePaths.Tokens.Checkpoint.UP_DOWN);
 
             // 2. Store the images in the maps
             String beamerClassName = LaserGun.class.getSimpleName();

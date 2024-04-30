@@ -4,7 +4,7 @@ import Controller.GameController;
 import Controller.LoginController;
 import Vue.Constants.JComponentsNames;
 import Vue.Constants.Style;
-import Vue.Constants.VueFilePaths;
+import Vue.Constants.ResourcePaths;
 import Vue.Handlers.ButtonHoverHandler;
 import Vue.SoundEffects.SoundPaths;
 import Vue.SoundEffects.SoundPlayer;
@@ -35,7 +35,7 @@ public class LoginMenuPanel extends JPanel {
         setLayout(new BorderLayout());
 
         // Background panel
-        ImageIcon backgroundImage = new ImageIcon(VueFilePaths.Textures.BACKGROUND_TILE);
+        ImageIcon backgroundImage = new ImageIcon(ResourcePaths.Textures.BACKGROUND_TILE);
         this.backgroundPanel = new ImagePanel(backgroundImage.getImage(), new Dimension(gameController.getCurrentTileDimension().width, gameController.getCurrentTileDimension().height));
         backgroundPanel.setLayout(new BorderLayout());
         add(backgroundPanel);

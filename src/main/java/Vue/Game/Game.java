@@ -3,7 +3,7 @@ package Vue.Game;
 import Controller.GameController;
 import Controller.LoginController;
 import Vue.Constants.JComponentsNames;
-import Vue.Constants.VueFilePaths;
+import Vue.Constants.ResourcePaths;
 import Vue.SoundEffects.SoundPaths;
 import Vue.SoundEffects.SoundPlayer;
 import Vue.Utils.FrameUtil;
@@ -52,7 +52,7 @@ public class Game {
             }
         });
 
-        ImageIcon img = new ImageIcon(VueFilePaths.Icons.GAME_ICON);
+        ImageIcon img = new ImageIcon(ResourcePaths.Icons.GAME_ICON);
         frame.setIconImage(img.getImage());
 
         GameController gameController = new GameController(this);

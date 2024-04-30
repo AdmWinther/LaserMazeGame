@@ -4,8 +4,8 @@ import Controller.GameController;
 import Controller.LoginController;
 import Model.Classes.Level.LevelID;
 import Vue.Constants.JComponentsNames;
+import Vue.Constants.ResourcePaths;
 import Vue.Constants.Style;
-import Vue.Constants.VueFilePaths;
 import Vue.Handlers.ButtonHoverHandler;
 import Vue.SoundEffects.SoundPaths;
 import Vue.SoundEffects.SoundPlayer;
@@ -57,7 +57,7 @@ public class MainMenuPanel extends JPanel {
         setLayout(new BorderLayout());
 
         // Background image
-        ImageIcon backgroundImage = new ImageIcon(VueFilePaths.Textures.BACKGROUND_TILE);
+        ImageIcon backgroundImage = new ImageIcon(ResourcePaths.Textures.BACKGROUND_TILE);
         ImagePanel backgroundPanel = new ImagePanel(backgroundImage.getImage(), gameController.getCurrentTileDimension());
         backgroundPanel.setLayout(new BorderLayout());
         add(backgroundPanel, BorderLayout.CENTER);
@@ -155,9 +155,9 @@ public class MainMenuPanel extends JPanel {
         BufferedImage sandboxButtonImage = null;
         BufferedImage randomButtonImage = null;
         try {
-            campaignButtonImage = ImageIO.read(new File(VueFilePaths.Buttons.CAMPAIGN_MENU));
-            sandboxButtonImage = ImageIO.read(new File(VueFilePaths.Buttons.SANDBOX_MENU));
-            randomButtonImage = ImageIO.read(new File(VueFilePaths.Buttons.RANDOM_LEVEL));
+            campaignButtonImage = ImageIO.read(new File(ResourcePaths.Buttons.CAMPAIGN_MENU));
+            sandboxButtonImage = ImageIO.read(new File(ResourcePaths.Buttons.SANDBOX_MENU));
+            randomButtonImage = ImageIO.read(new File(ResourcePaths.Buttons.RANDOM_LEVEL));
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -4,8 +4,8 @@ import Controller.GameController;
 import Controller.LoginController;
 import Model.Classes.Level.LevelID;
 import Model.Classes.Utils.DataReader;
+import Vue.Constants.ResourcePaths;
 import Vue.Constants.Style;
-import Vue.Constants.VueFilePaths;
 import Vue.Handlers.ButtonHoverHandler;
 import Vue.SoundEffects.SoundPaths;
 import Vue.SoundEffects.SoundPlayer;
@@ -59,8 +59,8 @@ public class CampaignMenuPanel extends LevelMenuPanel {
 
         levelButtonPanel.setBorder(BorderFactory.createEmptyBorder(Style.Padding.XXL, Style.Padding.XXL, Style.Padding.XXL, Style.Padding.XXL));
 
-        BufferedImage enable_image = getImage(VueFilePaths.Buttons.CAMPAIGN_LEVEL);
-        BufferedImage disable_image = getImage(VueFilePaths.Buttons.DISABLED_CAMPAIGN_LEVEL);
+        BufferedImage enable_image = getImage(ResourcePaths.Buttons.CAMPAIGN_LEVEL);
+        BufferedImage disable_image = getImage(ResourcePaths.Buttons.DISABLED_CAMPAIGN_LEVEL);
 
         // Resize images
         final double RESIZE_FACTOR = 1.5;
