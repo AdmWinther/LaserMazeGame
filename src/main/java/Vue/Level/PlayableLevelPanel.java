@@ -8,7 +8,8 @@ import Model.Classes.Utils.DataReader;
 import Vue.Level.UILayers.AnimationsUI;
 import Vue.Level.UILayers.ExtrasUI;
 import Vue.MenuPanels.MainMenuPanel;
-import Vue.SoundEffects.Sound;
+import Vue.SoundEffects.SoundPaths;
+import Vue.SoundEffects.SoundPlayer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +20,14 @@ import java.util.TimerTask;
 import static Controller.LevelPreparation.preparePlayableLevel;
 import static Vue.Game.Game.showPanel;
 
-
+/**
+ * This class has the responsibility to control the playable level panel and extends the functionalities of the level panel.
+ *
+ * @author Hossein (Adam)
+ * @author Léonard Amsler
+ * @author Nathan Gromb
+ * @see LevelPanel
+ */
 public final class PlayableLevelPanel extends LevelPanel {
 
     private final AnimationsUI animationsUI;
@@ -28,6 +36,15 @@ public final class PlayableLevelPanel extends LevelPanel {
     private Timer timer;
 
 
+    /**
+     * Constructor of the PlayableLevelPanel
+     *
+     * @param frame           The frame of the game
+     * @param gameController  The game controller of the game
+     * @param levelController The level controller of the game
+     * @param loginController The login controller of the game
+     * @author Léonard Amsler
+     */
     public PlayableLevelPanel(JFrame frame, GameController gameController, PlayableLevelController levelController, LoginController loginController) {
         super(frame, gameController, levelController, loginController);
         extrasUI = new ExtrasUI(this);
@@ -37,7 +54,8 @@ public final class PlayableLevelPanel extends LevelPanel {
     /**
      * Starts the game thread
      *
-     * @Author Léonard Amsler, Adam Winther
+     * @author Léonard Amsler
+     * @author Hossein (Adam)
      */
     @Override
     public void run() {
@@ -79,14 +97,15 @@ public final class PlayableLevelPanel extends LevelPanel {
      * start the timer to go to the next level or go back to the main menu.
      *
      * @param g The graphics object
-     * @Author Léonard Amsler, Adam Winther, Nathan Gromb
+     * @author Léonard Amsler
+     * @author Adam Winther
+     * @author Nathan Gromb
      */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
 
-        super.paintComponent(g);
         drawTiles(g2d);
         drawLasers(g2d);
         extrasUI.draw(g2d);
@@ -99,7 +118,7 @@ public final class PlayableLevelPanel extends LevelPanel {
 
 
                 areActionsForLevelComplitionStarted = true;
-                Sound.playLevelCompleted();
+                SoundPlayer.play(SoundPaths.LEVEL_PASSED_SOUND_PATH);
                 this.timer = new Timer("delayAfterLevelCompleted");
                 timer.schedule(new TimerTask() {
                     @Override
@@ -139,6 +158,12 @@ public final class PlayableLevelPanel extends LevelPanel {
         }
     }
 
+    /**
+     * Get the extra UI
+     *
+     * @return The extra UI
+     * @author Nathan Gromb
+     */
     public ExtrasUI getExtrasUI() {
         return extrasUI;
     }

@@ -5,7 +5,8 @@ import Model.Classes.Token.Token;
 import Vue.Interfaces.Drawable;
 import Vue.Level.EditableLevelPanel;
 import Vue.Level.LevelPanel;
-import Vue.SoundEffects.Sound;
+import Vue.SoundEffects.SoundPaths;
+import Vue.SoundEffects.SoundPlayer;
 import Vue.Utils.Position;
 
 import javax.imageio.ImageIO;
@@ -174,13 +175,13 @@ public class ExtrasUI implements Drawable {
     public void handleClick(Position pos) {
         Rectangle2D reset = placedObjects.get("reset");
         if (reset.contains(pos.x(), pos.y())) {
-            Sound.playButtonSound();
+            SoundPlayer.play(SoundPaths.BUTTON_CLICK);
             levelPanel.levelController.resetLevel();
         }
 
         Rectangle2D back = placedObjects.get("back");
         if (back.contains(pos.x(), pos.y())) {
-            Sound.playButtonSound();
+            SoundPlayer.play(SoundPaths.BUTTON_CLICK);
             if (levelPanel instanceof EditableLevelPanel) {
                 ((EditableLevelPanel) levelPanel).saveLevel();
             }

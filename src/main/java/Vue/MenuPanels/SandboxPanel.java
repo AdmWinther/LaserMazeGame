@@ -41,35 +41,6 @@ public class SandboxPanel extends LevelMenuPanel {
     }
 
     /**
-     * Creates a container for the level name
-     *
-     * @param levelID The level ID
-     * @return JPanel The level name container panel
-     * @author Hugo Demule
-     */
-    private static JPanel levelNameContainer(LevelID levelID) {
-        JPanel levelNameContainer = new JPanel();
-        levelNameContainer.setOpaque(false);
-        levelNameContainer.setLayout(new BoxLayout(levelNameContainer, BoxLayout.X_AXIS));
-        levelNameContainer.setBorder(BorderFactory.createEmptyBorder(0, Style.Padding.L, 0, 0));
-
-        // add a label with the level name
-        String levelNameString = "";
-        try {
-            levelNameString = DataReader.readLevelIDName(levelID);
-            final int LENGTH_LIMIT = 35;
-            if (levelNameString.length() > LENGTH_LIMIT)
-                levelNameString = levelNameString.substring(0, LENGTH_LIMIT) + "...";
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        JLabel levelName = new JLabel(levelNameString);
-        levelName.setFont(new Font(Style.Font.MONOSPACED, Font.BOLD, Style.FontSize.H3));
-        levelNameContainer.add(levelName);
-        return levelNameContainer;
-    }
-
-    /**
      * Gets the level buttons
      *
      * @return JScrollPane The level buttons
@@ -77,6 +48,7 @@ public class SandboxPanel extends LevelMenuPanel {
      */
     @Override
     protected JScrollPane getLevelButtonsList() {
+        // Create a panel with BoxLayout to stack the level buttons vertically
         JPanel panel = new JPanel();
         panel.setOpaque(false);
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
@@ -109,17 +81,8 @@ public class SandboxPanel extends LevelMenuPanel {
         List<LevelID> levelIDs = DataReader.readSandboxLevelIDs();
 
         // Add new level button
-
         ImageIcon scaledNewLevelIcon = new ImageIcon(newLevelButtonImage);
-        JPanel newLevelButton = levelPanel(scaledNewLevelIcon);
-        newLevelButton.setPreferredSize(new Dimension((int) (tileWidth * LONG_BUTTON_SCALE_FACTOR * RESIZE_FACTOR), (int) (tileHeight * RESIZE_FACTOR)));
-        newLevelButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
-                LevelPreparation.prepareNewEditableLevel(frame, gameController);
-            }
-        });
-        newLevelButton.addMouseListener(new ButtonHoverHandler());
+        JPanel newLevelButton = newLevelButton(LONG_BUTTON_SCALE_FACTOR, RESIZE_FACTOR, scaledNewLevelIcon);
         panel.add(newLevelButton);
 
         // Add level buttons
@@ -165,6 +128,28 @@ public class SandboxPanel extends LevelMenuPanel {
     }
 
     /**
+     * Gets the new level button
+     *
+     * @param LONG_BUTTON_SCALE_FACTOR The long button scale factor
+     * @param RESIZE_FACTOR            The resize factor
+     * @param scaledNewLevelIcon       The scaled new level icon
+     * @return JPanel The new level button panel
+     * @author Hugo Demule
+     */
+    private JPanel newLevelButton(int LONG_BUTTON_SCALE_FACTOR, double RESIZE_FACTOR, ImageIcon scaledNewLevelIcon) {
+        JPanel newLevelButton = levelPanel(scaledNewLevelIcon);
+        newLevelButton.setPreferredSize(new Dimension((int) (tileWidth * LONG_BUTTON_SCALE_FACTOR * RESIZE_FACTOR), (int) (tileHeight * RESIZE_FACTOR)));
+        newLevelButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                SoundPlayer.play(SoundPaths.BUTTON_CLICK);
+                LevelPreparation.prepareNewEditableLevel(frame, gameController);
+            }
+        });
+        newLevelButton.addMouseListener(new ButtonHoverHandler());
+        return newLevelButton;
+    }
+
+    /**
      * Creates a level panel
      *
      * @param scaledIcon The scaled icon
@@ -181,6 +166,35 @@ public class SandboxPanel extends LevelMenuPanel {
         };
         levelPanel.setLayout(new BorderLayout());
         return levelPanel;
+    }
+
+    /**
+     * Creates a container for the level name
+     *
+     * @param levelID The level ID
+     * @return JPanel The level name container panel
+     * @author Hugo Demule
+     */
+    private static JPanel levelNameContainer(LevelID levelID) {
+        JPanel levelNameContainer = new JPanel();
+        levelNameContainer.setOpaque(false);
+        levelNameContainer.setLayout(new BoxLayout(levelNameContainer, BoxLayout.X_AXIS));
+        levelNameContainer.setBorder(BorderFactory.createEmptyBorder(0, Style.Padding.L, 0, 0));
+
+        // add a label with the level name
+        String levelNameString = "";
+        try {
+            levelNameString = DataReader.readLevelIDName(levelID);
+            final int LENGTH_LIMIT = 35;
+            if (levelNameString.length() > LENGTH_LIMIT)
+                levelNameString = levelNameString.substring(0, LENGTH_LIMIT) + "...";
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        JLabel levelName = new JLabel(levelNameString);
+        levelName.setFont(new Font(Style.Font.MONOSPACED, Font.BOLD, Style.FontSize.H3));
+        levelNameContainer.add(levelName);
+        return levelNameContainer;
     }
 
     /**
@@ -245,7 +259,7 @@ public class SandboxPanel extends LevelMenuPanel {
         playButton.add(new JLabel(new ImageIcon(playButtonImage)));
         playButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
+                SoundPlayer.play(SoundPaths.BUTTON_CLICK);
                 LevelPreparation.preparePlayableLevel(levelID, frame, gameController, loginController);
             }
         });
@@ -267,7 +281,7 @@ public class SandboxPanel extends LevelMenuPanel {
         editButton.add(new JLabel(new ImageIcon(editButtonImage)));
         editButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
+                SoundPlayer.play(SoundPaths.BUTTON_CLICK);
                 LevelPreparation.prepareEditableLevel(levelID, frame, gameController);
             }
         });
@@ -289,7 +303,7 @@ public class SandboxPanel extends LevelMenuPanel {
         deleteButton.add(new JLabel(new ImageIcon(deleteButtonImage)));
         deleteButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
+                SoundPlayer.play(SoundPaths.BUTTON_CLICK);
                 try {
                     DataWriter.delete(levelID);
                 } catch (IOException e) {

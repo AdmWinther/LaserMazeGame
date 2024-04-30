@@ -22,6 +22,12 @@ import java.util.Timer;
 
 import static Vue.Game.Game.showPanel;
 
+/**
+ * This class has the responsibility to control the level panel.
+ *
+ * @author Léonard Amsler
+ * @author Nathan Gromb
+ */
 public abstract class LevelPanel extends JPanel implements Runnable {
 
     // Borders
@@ -209,26 +215,61 @@ public abstract class LevelPanel extends JPanel implements Runnable {
         requestFocus();
     }
 
+    /**
+     * Draw the tiles on the screen
+     *
+     * @param g2d The 2d graphics object
+     * @author Nathan Gromb
+     */
     public void drawTiles(Graphics2D g2d) {
         tilesUI.draw(g2d);
     }
 
+    /**
+     * Draw the lasers on the screen
+     *
+     * @param g2d The 2d graphics object
+     * @author Nathan Gromb
+     */
     public void drawLasers(Graphics2D g2d) {
         laserUI.draw(g2d);
     }
 
+    /**
+     * Draw the tokens on the screen
+     *
+     * @param g2d The 2d graphics object
+     * @author Nathan Gromb
+     */
     public void drawTokens(Graphics2D g2d) {
         tokensUI.draw(g2d);
     }
 
+    /**
+     * Get the frames per second
+     *
+     * @return The frames per second of the game engine
+     * @author Nathan Gromb
+     */
     public int getFPS() {
         return fps;
     }
 
+    /**
+     * Get the extras UIs
+     *
+     * @return The extras UIs of the level panel
+     * @author Nathan Gromb
+     */
     public ExtrasUI getExtrasUI() {
         return extrasUI;
     }
 
+    /**
+     * Exits the level
+     *
+     * @author Léonard Amsler
+     */
     public void exitLevel() {
         if (gameController.isInCampaignGameMode()) {
             displayCampaignMenu(frame);
@@ -237,6 +278,12 @@ public abstract class LevelPanel extends JPanel implements Runnable {
         }
     }
 
+    /**
+     * Display the campaign menu
+     *
+     * @param frame The frame
+     * @author Léonard Amsler
+     */
     public void displayCampaignMenu(JFrame frame) {
         gameController.turnOnCampaignGameMode();
         CampaignPanel campaignPanel = new CampaignPanel(frame, gameController, loginController);
@@ -245,6 +292,12 @@ public abstract class LevelPanel extends JPanel implements Runnable {
         frame.pack();
     }
 
+    /**
+     * Display the sandbox menu
+     *
+     * @param frame The frame
+     * @author Léonard Amsler
+     */
     public void displaySandboxMenu(JFrame frame) {
         gameController.turnOffCampaignGameMode();
         SandboxPanel sandboxPanel = new SandboxPanel(frame, gameController, loginController);

@@ -14,8 +14,10 @@ import java.awt.*;
 /**
  * Main class of the UI
  * This is the entry point of the application
+ * It is responsible for initializing the game.
  *
  * @author Léonard Amsler - s231715
+ * @author Hugo Demule
  */
 public class Game {
 
@@ -92,6 +94,12 @@ public class Game {
         SoundPlayer.play(SoundPaths.MAIN_MENU_MUSIC_PATH, true);
     }
 
+    /**
+     * Get the current tile dimension
+     *
+     * @return The current tile dimension
+     * @author Hugo Demule
+     */
     public Dimension getCurrentTileDimension() {
         return new Dimension(TILE_WIDTH, TILE_HEIGHT);
     }

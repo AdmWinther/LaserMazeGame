@@ -200,7 +200,7 @@ class LoginPanel extends JPanel {
         loginButton.setPreferredSize(resizeDimension2);
         loginButton.setFont(resizeFont);
         loginButton.addActionListener(e -> {
-            SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
+            SoundPlayer.play(SoundPaths.BUTTON_CLICK);
 
             // Check if the username and password are correct
             boolean success = loginController.login(usernameTextField.getText(), new String(passwordTextField.getPassword()));
@@ -298,7 +298,7 @@ class RegisterPanel extends JPanel {
         registerButton.setPreferredSize(resizeDimension2);
         registerButton.setFont(resizeFont);
         registerButton.addActionListener(e -> {
-            SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
+            SoundPlayer.play(SoundPaths.BUTTON_CLICK);
 
             // Check if the password and confirm password are the same
             if (!new String(passwordTextField.getPassword()).equals(new String(confirmPasswordTextField.getPassword()))) {

@@ -92,7 +92,7 @@ public abstract class LevelMenuPanel extends JPanel {
 
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent e) {
-                SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
+                SoundPlayer.play(SoundPaths.BUTTON_CLICK);
                 frame.getContentPane().remove(thisClass);
                 Game.showPanel(frame, JComponentsNames.FrameID.MAIN_MENU);
             }

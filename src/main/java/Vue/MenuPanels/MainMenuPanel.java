@@ -121,7 +121,7 @@ public class MainMenuPanel extends JPanel {
     private JButton logoutButton(JFrame frame) {
         JButton logoutButton = new JButton(JComponentsNames.Label.LOGOUT);
         logoutButton.addActionListener(e -> {
-            SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
+            SoundPlayer.play(SoundPaths.BUTTON_CLICK);
             loginController.logout();
             showPanel(frame, JComponentsNames.FrameID.LOGIN);
         });
@@ -180,7 +180,7 @@ public class MainMenuPanel extends JPanel {
 
         // Add action listeners to buttons
         campaignButton.addActionListener(e -> {
-            SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
+            SoundPlayer.play(SoundPaths.BUTTON_CLICK);
             this.gameController.turnOnCampaignGameMode();
 
             // If the campaign panel is already created, just display it
@@ -201,7 +201,7 @@ public class MainMenuPanel extends JPanel {
         campaignButton.addMouseListener(new ButtonHoverHandler());
 
         sandboxButton.addActionListener(e -> {
-            SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
+            SoundPlayer.play(SoundPaths.BUTTON_CLICK);
             this.gameController.turnOffCampaignGameMode();
 
             // If the sandbox panel is already created, just display it
@@ -222,7 +222,7 @@ public class MainMenuPanel extends JPanel {
         sandboxButton.addMouseListener(new ButtonHoverHandler());
 
         randomButton.addActionListener(e -> {
-            SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
+            SoundPlayer.play(SoundPaths.BUTTON_CLICK);
 
             gameController.turnOffCampaignGameMode();
             List<LevelID> levelIDs = gameController.getCampaignLevelIDs();

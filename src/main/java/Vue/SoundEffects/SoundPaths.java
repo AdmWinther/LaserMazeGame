@@ -22,5 +22,5 @@ public class SoundPaths {
     public final static String LEVEL_FAILED_SOUND_PATH = "file:./src/main/java/Vue/Resources/Sounds/LevelFailed.wav";
     public final static String PLACEMENT_TOKKEN_SOUND_PATH = "file:./src/main/java/Vue/Resources/Sounds/Placement.wav";
     public final static String MENU_BUTTON_SOUND_PATH = "file:./src/main/java/Vue/Resources/Sounds/MenuButtonEffect.wav";
-    public final static String CAMPAIGN_BUTTON = "file:./src/main/java/Vue/Resources/Sounds/click.wav";
+    public final static String BUTTON_CLICK = "file:./src/main/java/Vue/Resources/Sounds/click.wav";
 }

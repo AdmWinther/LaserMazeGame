@@ -104,7 +104,7 @@ public class CampaignPanel extends LevelMenuPanel {
 
         levelButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
+                SoundPlayer.play(SoundPaths.BUTTON_CLICK);
 
                 if (!levelButton.isEnabled()) {
                     return;

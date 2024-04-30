@@ -12,6 +12,9 @@ import javax.swing.*;
 /**
  * This class has the responsibility to control the editable level
  *
+ * @author Hugo Demule
+ * @author Nathan Gromb
+ * @author Léonard Amsler
  * @see LevelController
  */
 public class EditableLevelController extends LevelController {
@@ -61,6 +64,12 @@ public class EditableLevelController extends LevelController {
         return DataWriter.write(level, FilePaths.SANDBOX_LEVELS_PATH);
     }
 
+    /**
+     * Get the inventory
+     *
+     * @return Inventory - The inventory
+     * @author Nathan Gromb
+     */
     public Inventory getInventory() {
         return ((EditableLevel) level).tokenManager().getInventory();
     }
