@@ -12,7 +12,7 @@ import java.util.Set;
  * EditableLevel class.
  * EditableLevel is a subclass of the Level class. EditableLevel is used in the sandbox.
  *
- * @author Hugo De Lemos, Lin Mounan
+ * @author Hugo Demule, Lina Mounan
  */
 public final class EditableLevel extends Level {
 
@@ -27,7 +27,7 @@ public final class EditableLevel extends Level {
      * @param placedTokens   a 2D array of placed tokens.
      * @param unplacedTokens a set of unplaced tokens.
      * @param inventory      the inventory of the level.
-     * @author Hugo De Lemos, Lina Mounan
+     * @author Hugo Demule, Lina Mounan
      */
     public EditableLevel(String name, Token[][] placedTokens, Set<Token> unplacedTokens, Inventory inventory) {
         super(name, placedTokens.length, placedTokens[0].length);

@@ -5,6 +5,7 @@ import Model.Classes.Token.LaserGun;
 import Model.Classes.Token.OneSidedMirror;
 import Model.Classes.Token.Target;
 import Model.Classes.Token.Token;
+import Model.Classes.TokenManager.FlexibleTokenManager;
 import Model.Classes.Utils.Coordinate;
 import Model.Classes.Utils.Orientation;
 import Model.Constants.SandboxInventory;
@@ -151,4 +152,24 @@ public class SandboxSteps {
 		Token[][] placedTokens = level.tokenManager().getPlacedTokens();
 		assertEquals(1, Arrays.stream(placedTokens).flatMap(Arrays::stream).filter(t -> t instanceof Target).count());
 	}
+
+	@When("I move the mirror token in the deck")
+	public void iMoveTheMirrorTokenInTheDeck() {
+		token = level.tokenManager().getTokenAt(tokenCoordinate);
+		level.tokenManager().transferTokenToUnplacedTokens(token);
+	}
+
+	@When("I remove the mirror at \\({int} {int})")
+	public void iRemoveTheMirrorAt(int arg0, int arg1) {
+		token = level.tokenManager().getTokenAt(tokenCoordinate);
+		level.tokenManager().removeToken(token);
+	}
+
+
+	@When("I reset the level")
+	public void iResetTheLevel() {
+		level.reset();
+	}
+
+
 }

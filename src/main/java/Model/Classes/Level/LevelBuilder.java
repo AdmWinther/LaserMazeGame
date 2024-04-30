@@ -5,7 +5,7 @@ import Model.Classes.Utils.DataReader;
 import Model.Constants.SandboxInventory;
 import Model.Interfaces.Builder;
 import Model.Interfaces.Inventory;
-import org.jetbrains.annotations.NotNull;
+
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -100,7 +100,6 @@ public class LevelBuilder implements Builder<Level> {
      * @return a string with the filename with the current date and time
      * @author Adam Winther
      */
-    @NotNull
     private static String generateFilenameWithTimestamp() {
         // get current data and precise time
         String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());

@@ -16,7 +16,7 @@ import java.util.Set;
  * Contains a TokenManager and a LaserManager.
  * Contains a method to check if the level is completed.
  *
- * @Author Hugo De Lemos, Lin Mounan
+ * @Author Hugo Demule, Lina Mounan
  */
 public final class PlayableLevel extends Level {
 
@@ -29,7 +29,7 @@ public final class PlayableLevel extends Level {
      *
      * @param placedTokens   the tokens that are already placed on the board
      * @param unplacedTokens the tokens that are not placed on the board
-     * @author Hugo De Lemos, Lina Mounan
+     * @author Hugo Demule, Lina Mounan
      */
     public PlayableLevel(String name, Token[][] placedTokens, Set<Token> unplacedTokens) {
         super(name, placedTokens.length, placedTokens[0].length);
