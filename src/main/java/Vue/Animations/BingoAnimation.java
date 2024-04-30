@@ -10,56 +10,54 @@ import java.util.Objects;
 
 public class BingoAnimation implements Animation {
 
-	private final LevelPanel levelPanel;
-	private final BufferedImage image;
-	private final int maxDuration;
+    private static final int MAX_DURATION = 2000;
+    private final LevelPanel levelPanel;
+    private final BufferedImage image;
 
-	private boolean running = false;
-	private int duration = 0;
+    private boolean running = false;
+    private int duration = 0;
 
-	public BingoAnimation(LevelPanel levelPanel, int maxDuration) {
-		this.levelPanel = levelPanel;
-		this.maxDuration = maxDuration * 1000;
+    public BingoAnimation(LevelPanel levelPanel) {
+        this.levelPanel = levelPanel;
 
-		BufferedImage loadedImage;
-		try {
-			loadedImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Objects/bingo.png")));
-		} catch (Exception e) {
-			loadedImage = null;
-			e.printStackTrace();
-		}
+        BufferedImage loadedImage;
+        try {
+            loadedImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Objects/bingo.png")));
+        } catch (Exception e) {
+            loadedImage = null;
+            e.printStackTrace();
+        }
 
-		this.image = loadedImage;
-	}
+        this.image = loadedImage;
+    }
 
-	@Override
-	public void start() {
-		running = true;
-	}
+    @Override
+    public void start() {
+        running = true;
+    }
 
-	@Override
-	public void stop() {
-		running = false;
-	}
+    @Override
+    public void stop() {
+        running = false;
+    }
 
-	@Override
-	public boolean isRunning() {
-		return running;
-	}
+    @Override
+    public boolean isRunning() {
+        return running;
+    }
 
-	@Override
-	public void draw(Graphics2D g2d) {
-		if (running) {
-			int x = Math.floorDiv((levelPanel.maxCol - 3) * levelPanel.tileWidth, 2);
-			int y = Math.floorDiv((levelPanel.maxRow - 1) * levelPanel.tileHeight, 2);
+    @Override
+    public void draw(Graphics2D g2d) {
+        if (running) {
+            int x = Math.floorDiv((levelPanel.maxCol - 3) * levelPanel.tileWidth, 2);
+            int y = Math.floorDiv((levelPanel.maxRow - 1) * levelPanel.tileHeight, 2);
+            g2d.drawImage(image, x, y, 3 * levelPanel.tileWidth, levelPanel.tileHeight, null);
+        }
 
-			g2d.drawImage(image, x, y, null);
-		}
+        duration += 1000 / levelPanel.getFPS();
 
-		duration += 1000 / levelPanel.getFPS();
-
-		if (duration > maxDuration) {
-			stop();
-		}
-	}
+        if (duration > MAX_DURATION) {
+            stop();
+        }
+    }
 }

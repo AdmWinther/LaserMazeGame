@@ -1,8 +1,8 @@
 package Vue.Level.UILayers;
 
+import Vue.Animations.BingoAnimation;
 import Vue.Animations.CircleAnimation;
 import Vue.Animations.ConfettiAnimation;
-import Vue.Animations.LevelCompletedAnimation;
 import Vue.Interfaces.Animation;
 import Vue.Interfaces.Drawable;
 import Vue.Level.LevelPanel;
@@ -92,21 +92,10 @@ public class AnimationsUI implements Drawable {
 		circle.start();
 	}
 
-	/**
-	 * Start the level completed animation
-	 *
-	 * @author Nathan Gromb
-	 */
-	public void levelCompleted() {
-		if (delay < LEVEL_COMPLETED_DELAY) {
-			return;
-		}
+	public void bingo() {
+		Animation bingo = new BingoAnimation(levelPanel);
+		queue.add(bingo);
 
-		delay = 0;
-
-		Animation levelCompleted = new LevelCompletedAnimation(this);
-		queue.add(levelCompleted);
-
-		levelCompleted.start();
+		bingo.start();
 	}
 }

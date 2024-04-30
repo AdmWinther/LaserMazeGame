@@ -116,18 +116,6 @@ public class ExtrasUI implements Drawable {
     }
 
     /**
-     * Draw the bingo object on the screen
-     *
-     * @param g2d The 2d graphics object
-     * @Author Adam
-     */
-    public void drawBingo(Graphics2D g2d) {
-        int x = Math.floorDiv((levelPanel.maxCol - 3) * levelPanel.tileWidth, 2);
-        int y = Math.floorDiv((levelPanel.maxRow - 1) * levelPanel.tileHeight, 2);
-        g2d.drawImage(objectImages.get("bingo"), x, y, 3 * levelPanel.tileWidth, levelPanel.tileHeight, null);
-    }
-
-    /**
      * Draw the objects on the screen
      *
      * @param g2d - The 2d graphics object

@@ -35,68 +35,6 @@ public final class PlayableLevelPanel extends LevelPanel {
     }
 
     /**
-     * Paints the components of the level. In case the level is completed, it will display the bingo message and
-     * start the timer to go to the next level or go back to the main menu.
-     *
-     * @param g The graphics object
-     * @Author Léonard Amsler, Adam Winther, Nathan Gromb
-     */
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g;
-
-        super.paintComponent(g);
-        drawTiles(g2d);
-        drawLasers(g2d);
-        extrasUI.draw(g2d);
-        drawTokens(g2d);
-        animationsUI.draw(g2d);
-        if (((PlayableLevelController) (this.levelController)).isLevelCompleted()) {
-            extrasUI.drawBingo(g2d);
-            if (!areActionsForLevelComplitionStarted) {
-                animationsUI.confetti();
-                areActionsForLevelComplitionStarted = true;
-                Sound.playLevelCompleted();
-                this.timer = new Timer("delayAfterLevelCompleted");
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        gameThread = null;
-                        if (gameController.isInCampaignGameMode()) {
-
-                            //if in the campaign mode, it should go to the next level.
-                            int campaignProgression = loginController.getCampaignProgress();
-                            LevelID currentLevel = gameController.getCurrentLevelID();
-                            LevelID campaignProgressionLevelID = DataReader.readCampaignLevelIDs().get(campaignProgression - 1);
-                            if (currentLevel.equals(campaignProgressionLevelID)) {
-                                loginController.incrementProgression();
-                            }
-                            List<LevelID> levelIDs = DataReader.readCampaignLevelIDs();
-                            int index = levelIDs.indexOf(currentLevel);
-                            LevelID nextLevelID = levelIDs.get(index + 1);
-                            preparePlayableLevel(nextLevelID, frame, gameController, loginController);
-
-                        } else {
-                            //if we are in Random level mode
-                            MainMenuPanel mainMenuPanel = new MainMenuPanel(frame, gameController, loginController);
-                            frame.add(mainMenuPanel, "MainMenu");
-                            showPanel(frame, "MainMenu");
-                            frame.pack();
-                        }
-                    }
-
-                    ;
-                }, 2000);
-            }
-        }
-    }
-
-    public ExtrasUI getExtrasUI() {
-        return extrasUI;
-    }
-
-    /**
      * Starts the game thread
      *
      * @Author Léonard Amsler, Adam Winther
@@ -134,5 +72,74 @@ public final class PlayableLevelPanel extends LevelPanel {
                 count++;
             }
         }
+    }
+
+    /**
+     * Paints the components of the level. In case the level is completed, it will display the bingo message and
+     * start the timer to go to the next level or go back to the main menu.
+     *
+     * @param g The graphics object
+     * @Author Léonard Amsler, Adam Winther, Nathan Gromb
+     */
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g;
+
+        super.paintComponent(g);
+        drawTiles(g2d);
+        drawLasers(g2d);
+        extrasUI.draw(g2d);
+        drawTokens(g2d);
+        animationsUI.draw(g2d);
+        if (((PlayableLevelController) (this.levelController)).isLevelCompleted()) {
+            if (!areActionsForLevelComplitionStarted) {
+                animationsUI.confetti();
+                animationsUI.bingo();
+
+
+                areActionsForLevelComplitionStarted = true;
+                Sound.playLevelCompleted();
+                this.timer = new Timer("delayAfterLevelCompleted");
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        animationsUI.circle(Color.BLACK);
+                    }
+                }, 1000);
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        gameThread = null;
+                        if (gameController.isInCampaignGameMode()) {
+
+                            //if in the campaign mode, it should go to the next level.
+                            int campaignProgression = loginController.getCampaignProgress();
+                            LevelID currentLevel = gameController.getCurrentLevelID();
+                            LevelID campaignProgressionLevelID = DataReader.readCampaignLevelIDs().get(campaignProgression - 1);
+                            if (currentLevel.equals(campaignProgressionLevelID)) {
+                                loginController.incrementProgression();
+                            }
+                            List<LevelID> levelIDs = DataReader.readCampaignLevelIDs();
+                            int index = levelIDs.indexOf(currentLevel);
+                            LevelID nextLevelID = levelIDs.get(index + 1);
+                            preparePlayableLevel(nextLevelID, frame, gameController, loginController);
+
+                        } else {
+                            //if we are in Random level mode
+                            MainMenuPanel mainMenuPanel = new MainMenuPanel(frame, gameController, loginController);
+                            frame.add(mainMenuPanel, "MainMenu");
+                            showPanel(frame, "MainMenu");
+                            frame.pack();
+                        }
+                    }
+
+                }, 4000);
+            }
+        }
+    }
+
+    public ExtrasUI getExtrasUI() {
+        return extrasUI;
     }
 }
