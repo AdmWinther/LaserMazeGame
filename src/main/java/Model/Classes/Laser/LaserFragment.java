@@ -36,7 +36,6 @@ public class LaserFragment {
 		}
 		this.from = from;
 		this.to = to;
-		//todo: remove index
 	}
 
 	/**
@@ -46,16 +45,6 @@ public class LaserFragment {
 	 * @author Adam Winther
 	 */
 	public Orientation getOrientation() {
-		//todo: remove this part of the method. It is duplicate of the getFragmentOrientation method.
-		//        if (from.x() == to.x() && from.y() == to.y() - 1) {
-		//            return Orientation.DOWN;
-		//        } else if (from.x() == to.x() && from.y() == to.y() + 1) {
-		//            return Orientation.UP;
-		//        } else if (from.x() == to.x() - 1 && from.y() == to.y()) {
-		//            return Orientation.RIGHT;
-		//        } else {
-		//            return Orientation.LEFT;
-		//        }
 		return getFragmentOrientation(this);
 	}
 

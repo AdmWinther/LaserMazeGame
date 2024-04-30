@@ -4,6 +4,11 @@
       "orientation": "RIGHT",
       "tokenId": "OneSidedMirror_449219174",
       "type": "OneSidedMirror"
+    },
+    {
+      "orientation": "LEFT",
+      "tokenId": "Splitter_1433032112",
+      "type": "Splitter"
     }
   ],
   "boardSize": {
@@ -37,15 +42,6 @@
         "y": 6
       },
       "type": "Target"
-    },
-    {
-      "orientation": "LEFT",
-      "tokenId": "Splitter_1433032112",
-      "position": {
-        "x": 1,
-        "y": 0
-      },
-      "type": "Splitter"
     },
     {
       "orientation": "UP",

@@ -15,7 +15,6 @@ import java.util.Random;
 public class ConfettiAnimation implements Animation {
 
 	private static final int BURST_SIZE = 30;
-	// TODO turn this into seconds or milliseconds
 	private static final int BURST_DELAY = 5;
 	private static final int BURSTS = 3;
 

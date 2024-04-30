@@ -2,11 +2,6 @@
   "unplacedTokens": [
     {
       "orientation": "RIGHT",
-      "tokenId": "OneSidedMirror_345025668",
-      "type": "OneSidedMirror"
-    },
-    {
-      "orientation": "RIGHT",
       "tokenId": "Splitter_1530594801",
       "type": "Splitter"
     },

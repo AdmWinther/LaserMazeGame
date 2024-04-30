@@ -143,7 +143,7 @@ public final class PlayableLevelPanel extends LevelPanel {
 									break;
 								}
 
-								LevelID campaignProgressionLevelID = levelIDs.get(currentLevelIndex);
+								LevelID campaignProgressionLevelID = levelIDs.get(getLoginController().getCampaignProgress() - 1);
 								if (currentLevelID.equals(campaignProgressionLevelID)) {
 									getLoginController().incrementProgression();
 								}

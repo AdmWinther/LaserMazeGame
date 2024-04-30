@@ -12,10 +12,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class DataReader {
@@ -198,7 +195,6 @@ public class DataReader {
 				JSONObject coordinate = jsonToken.getJSONObject(JsonConstants.ATTR_POSITION);
 				int x = coordinate.getInt(JsonConstants.ATTR_X);
 				int y = coordinate.getInt(JsonConstants.ATTR_Y);
-				//todo: Make sure x and y are on the board
 				placedTokens[x][y] = token;
 			}
 		}
@@ -213,7 +209,10 @@ public class DataReader {
 	 * @author Hugo Demule
 	 */
 	public static List<LevelID> readCampaignLevelIDs() {
-		return readLevelIDs(FilePaths.CAMPAIGN_LEVELS_PATH);
+
+		List<LevelID> levelIDs = readLevelIDs(FilePaths.CAMPAIGN_LEVELS_PATH);
+		levelIDs.sort(Comparator.comparing(LevelID::value));
+		return levelIDs;
 	}
 
 	private static List<LevelID> readLevelIDs(String path) {
