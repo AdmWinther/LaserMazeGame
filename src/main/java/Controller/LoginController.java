@@ -88,4 +88,8 @@ public class LoginController {
     public void incrementProgression() {
         CampaignProgression.saveProgression(current_username.username, getCampaignProgress() + 1);
     }
+
+    public String getUsername() {
+        return current_username.username;
+    }
 }

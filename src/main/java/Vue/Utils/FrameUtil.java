@@ -133,4 +133,25 @@ public class FrameUtil {
         removeSandBoxPanel(frame);
         createSandboxMenuIfNotExists(frame, gameController, loginController);
     }
+
+    public static void refreshCampaignMenu(JFrame frame, GameController gameController, LoginController loginController) {
+        removeCampaignMenu(frame);
+        createCampaignMenuIfNotExists(frame, gameController, loginController);
+    }
+
+    public static void removeMainMenu(JFrame frame) {
+        for (Component component : frame.getContentPane().getComponents()) {
+            if (component.getName().equals(JComponentsNames.FrameID.MAIN_MENU)) {
+                frame.remove(component);
+            }
+        }
+    }
+
+    public static void removeCampaignMenu(JFrame frame) {
+        for (Component component : frame.getContentPane().getComponents()) {
+            if (component.getName().equals(JComponentsNames.FrameID.CAMPAIGN_MENU)) {
+                frame.remove(component);
+            }
+        }
+    }
 }

@@ -273,6 +273,7 @@ public abstract class LevelPanel<LevelControllerType extends LevelController> ex
         switch (gameController.getLevelType()) {
             case CAMPAIGN -> {
                 FrameUtil.createCampaignMenuIfNotExists(frame, gameController, loginController);
+                FrameUtil.refreshCampaignMenu(frame, gameController, loginController);
                 FrameUtil.displayCampaignMenu(frame);
             }
             case SANDBOX -> {

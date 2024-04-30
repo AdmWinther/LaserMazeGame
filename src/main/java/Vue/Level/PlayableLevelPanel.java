@@ -140,11 +140,12 @@ public final class PlayableLevelPanel extends LevelPanel {
                                 if (currentLevelIndex >= levelIDs.size() - 1) {
                                     FrameUtil.removeLevel(frame);
                                     FrameUtil.createMainMenuIfNotExists(frame, gameController, loginController);
+                                    FrameUtil.refreshCampaignMenu(frame, gameController, loginController);
                                     FrameUtil.displayMainMenu(frame);
                                     break;
                                 }
 
-                                LevelID campaignProgressionLevelID = levelIDs.get(currentLevelIndex + 1);
+                                LevelID campaignProgressionLevelID = levelIDs.get(currentLevelIndex);
                                 if (currentLevelID.equals(campaignProgressionLevelID)) {
                                     loginController.incrementProgression();
                                 }

@@ -124,6 +124,8 @@ public class MainMenuPanel extends JPanel {
             SoundPlayer.play(SoundPaths.BUTTON_CLICK);
             loginController.logout();
             FrameUtil.createLoginMenuIfNotExists(frame, loginController, gameController);
+            FrameUtil.removeMainMenu(frame);
+            FrameUtil.removeCampaignMenu(frame);
             FrameUtil.displayLoginMenu(frame);
         });
         logoutButton.addMouseListener(new ButtonHoverHandler());
