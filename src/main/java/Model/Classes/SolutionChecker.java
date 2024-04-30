@@ -26,6 +26,7 @@ public class SolutionChecker {
 	 * @return True if the laser hits all the targets and checkpoints, false otherwise
 	 * @author
 	 */
+	@SuppressWarnings("JavadocDeclaration")
 	public static Boolean check(TokenManager tokenManager, Laser laser) {
 		Set<Coordinate> targetPos = tokenManager.findTargetPosition();
 		Set<Coordinate> checkpointsPos = tokenManager.findCheckpointsPosition();
@@ -70,7 +71,7 @@ public class SolutionChecker {
 		boolean laserHitTarget = hitTarget == numTargets;
 		boolean laserHitCheckpoint = hitCheck == numCheckpoint;
 		boolean areAllTokensUsed = tokenManager.getUnplacedTokensSize() == 0;
-		
+
 		return laserHitTarget && laserHitCheckpoint && areAllTokensUsed;
 	}
 
@@ -93,7 +94,7 @@ public class SolutionChecker {
 	/**
 	 * Checks if the orientation of the laser is correct for the checkpoint
 	 *
-	 * @param checkOrientation  The orientation of the checkpoint
+	 * @param checkOrientation The orientation of the checkpoint
 	 * @param laserOrientation The orientation of the laser
 	 * @return True if the orientation of the laser is correct for the checkpoint, false otherwise
 	 */

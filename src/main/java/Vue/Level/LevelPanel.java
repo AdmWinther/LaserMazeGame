@@ -16,7 +16,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.util.Timer;
 
 
 /**
@@ -25,7 +24,7 @@ import java.util.Timer;
  * @author Léonard Amsler
  * @author Nathan Gromb
  */
-public abstract class LevelPanel <LevelControllerType extends LevelController> extends JPanel implements Runnable {
+public abstract class LevelPanel<LevelControllerType extends LevelController> extends JPanel implements Runnable {
 	// Performance settings
 	public static final int FPS = 60;
 	public static final int FRAME_TIME = 1000 / FPS;
@@ -58,13 +57,13 @@ public abstract class LevelPanel <LevelControllerType extends LevelController> e
 	// Thread
 	private Thread gameThread;
 
-    /**
-     * Constructor of the level panel class
-     *
-     * @param levelController - The level controller
-     * @author Léonard Amsler - s231715
-     */
-    public LevelPanel(JFrame frame, GameController gameController, LevelControllerType levelController, LoginController loginController) {
+	/**
+	 * Constructor of the level panel class
+	 *
+	 * @param levelController - The level controller
+	 * @author Léonard Amsler - s231715
+	 */
+	public LevelPanel(JFrame frame, GameController gameController, LevelControllerType levelController, LoginController loginController) {
 
 		this.levelController = levelController;
 
@@ -252,23 +251,23 @@ public abstract class LevelPanel <LevelControllerType extends LevelController> e
 	public void exitLevel() {
 		FrameUtil.removeLevel(frame);
 
-        switch (gameController.getLevelType()) {
-            case CAMPAIGN -> {
-                FrameUtil.createCampaignMenuIfNotExists(frame, gameController, loginController);
-                FrameUtil.refreshCampaignMenu(frame, gameController, loginController);
-                FrameUtil.displayCampaignMenu(frame);
-            }
-            case SANDBOX -> {
-                FrameUtil.createSandboxMenuIfNotExists(frame, gameController, loginController);
-                FrameUtil.refreshSandboxMenu(frame, gameController, loginController);
-                FrameUtil.displaySandboxMenu(frame);
-            }
-            case RANDOM -> {
-                FrameUtil.createMainMenuIfNotExists(frame, gameController, loginController);
-                FrameUtil.displayMainMenu(frame);
-            }
-        }
-    }
+		switch (gameController.getLevelType()) {
+			case CAMPAIGN -> {
+				FrameUtil.createCampaignMenuIfNotExists(frame, gameController, loginController);
+				FrameUtil.refreshCampaignMenu(frame, gameController, loginController);
+				FrameUtil.displayCampaignMenu(frame);
+			}
+			case SANDBOX -> {
+				FrameUtil.createSandboxMenuIfNotExists(frame, gameController, loginController);
+				FrameUtil.refreshSandboxMenu(frame, gameController, loginController);
+				FrameUtil.displaySandboxMenu(frame);
+			}
+			case RANDOM -> {
+				FrameUtil.createMainMenuIfNotExists(frame, gameController, loginController);
+				FrameUtil.displayMainMenu(frame);
+			}
+		}
+	}
 
 	public LevelPanelConfig getLevelPanelConfig() {
 		return levelPanelConfig;

@@ -125,7 +125,7 @@ public class DataReader {
 	 * @author Hugo Demule
 	 */
 	private static Token createToken(JSONObject jsonToken, boolean isMovable) {
-		TokenID id = new TokenID(jsonToken.getString(JsonConstants.ATTR_TOKEN_ID)); // Useless for now
+		new TokenID(jsonToken.getString(JsonConstants.ATTR_TOKEN_ID));// Useless for now
 
 		String type = jsonToken.getString(JsonConstants.ATTR_TOKEN_TYPE);
 		Orientation orientation = jsonToken.has(JsonConstants.ATTR_ORIENTATION) ? Orientation.valueOf(jsonToken.getString(JsonConstants.ATTR_ORIENTATION)) : null;

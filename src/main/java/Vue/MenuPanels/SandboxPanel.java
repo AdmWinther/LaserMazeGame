@@ -58,12 +58,12 @@ public class SandboxPanel extends LevelMenuPanel {
 
 		JScrollPane sandboxLevelsList = initializeSandboxLevelsList(outerPanel);
 
-        // Load images
-        BufferedImage backgroundLevelList = getImage(ResourcePaths.Textures.SANDBOX_LIST_ITEM_BACKGROUND);
-        BufferedImage playButtonImage = getImage(ResourcePaths.Icons.PLAY_BUTTON_ICON);
-        BufferedImage editButtonImage = getImage(ResourcePaths.Icons.EDIT_BUTTON_ICON);
-        BufferedImage deleteButtonImage = getImage(ResourcePaths.Icons.DELETE_BUTTON_ICON);
-        BufferedImage newLevelButtonImage = getImage(ResourcePaths.Textures.SANDBOX_LIST_NEW_LEVEL_BACKGROUND);
+		// Load images
+		BufferedImage backgroundLevelList = getImage(ResourcePaths.Textures.SANDBOX_LIST_ITEM_BACKGROUND);
+		BufferedImage playButtonImage = getImage(ResourcePaths.Icons.PLAY_BUTTON_ICON);
+		BufferedImage editButtonImage = getImage(ResourcePaths.Icons.EDIT_BUTTON_ICON);
+		BufferedImage deleteButtonImage = getImage(ResourcePaths.Icons.DELETE_BUTTON_ICON);
+		BufferedImage newLevelButtonImage = getImage(ResourcePaths.Textures.SANDBOX_LIST_NEW_LEVEL_BACKGROUND);
 
 		// Resize images
 		final double ICON_RESIZE_FACTOR = 0.5;
@@ -81,7 +81,7 @@ public class SandboxPanel extends LevelMenuPanel {
 
 		// Add new level button
 		ImageIcon scaledNewLevelIcon = new ImageIcon(newLevelButtonImage);
-		JPanel newLevelButton = newLevelButton(LONG_BUTTON_SCALE_FACTOR, RESIZE_FACTOR, scaledNewLevelIcon);
+		JPanel newLevelButton = newLevelButton(scaledNewLevelIcon);
 		panel.add(newLevelButton);
 
 		// Add level buttons
@@ -129,15 +129,13 @@ public class SandboxPanel extends LevelMenuPanel {
 	/**
 	 * Gets the new level button
 	 *
-	 * @param LONG_BUTTON_SCALE_FACTOR The long button scale factor
-	 * @param RESIZE_FACTOR            The resize factor
-	 * @param scaledNewLevelIcon       The scaled new level icon
+	 * @param scaledNewLevelIcon The scaled new level icon
 	 * @return JPanel The new level button panel
 	 * @author Hugo Demule
 	 */
-	private JPanel newLevelButton(int LONG_BUTTON_SCALE_FACTOR, double RESIZE_FACTOR, ImageIcon scaledNewLevelIcon) {
+	private JPanel newLevelButton(ImageIcon scaledNewLevelIcon) {
 		JPanel newLevelButton = levelPanel(scaledNewLevelIcon);
-		newLevelButton.setPreferredSize(new Dimension((int) (tileWidth * LONG_BUTTON_SCALE_FACTOR * RESIZE_FACTOR), (int) (tileHeight * RESIZE_FACTOR)));
+		newLevelButton.setPreferredSize(new Dimension((int) (tileWidth * 8 * 1.5), (int) (tileHeight * 1.5)));
 		newLevelButton.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
 				SoundPlayer.play(SoundPaths.BUTTON_CLICK);

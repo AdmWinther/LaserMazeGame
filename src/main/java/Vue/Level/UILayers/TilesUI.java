@@ -63,9 +63,9 @@ public class TilesUI implements Drawable {
 
 		int maxRow = levelPanel.getLevelPanelConfig().getMaxRow();
 		int maxCol = levelPanel.getLevelPanelConfig().getMaxCol();
-		int horizontalBorder = levelPanel.HORIZONTAL_BORDER;
-		int verticalBorder = levelPanel.VERTICAL_BORDER;
-		int wallThickness = levelPanel.WALL_THICKNESS;
+		int horizontalBorder = LevelPanel.HORIZONTAL_BORDER;
+		int verticalBorder = LevelPanel.VERTICAL_BORDER;
+		int wallThickness = LevelPanel.WALL_THICKNESS;
 
 		// Load map, set border and randomize the background tile
 		for (int i = 0; i < maxRow + 1; i++) {
