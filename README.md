@@ -21,7 +21,7 @@ Right-click on the `pom.xml` file again and select `Maven -> Reload Project`.
 
 Open your project structure by pressing `Ctrl + Alt + Shift + S` and navigate to `File -> Project Structure`.
 Under `Project` set the `Project SDK` to a version containing `18` and set the `Project language level` to `18`.
-Under `Modules`, make sure to keep only the LazerMaze module and other potential ones.
+Under `Modules`, make sure to keep only the LazerMaze module and delete the other potential ones.
 Under `Modules` again set the `src/main/java` folder as `Sources`, the `src/test/java` folder as `Tests` as the `src/main/java/Vue/Resources` folder as `Resources`.
 
 ### 5. Run the project
