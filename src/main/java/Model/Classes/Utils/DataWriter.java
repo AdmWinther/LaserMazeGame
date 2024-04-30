@@ -79,6 +79,14 @@ public class DataWriter {
 		jsonLevel.put(JsonConstants.ATTR_UNPLACED_TOKENS, unplacedTokensJson);
 	}
 
+	/**
+	 * Creates a JSONArray of placed tokens
+	 *
+	 * @param placedTokens The 2D array of placed tokens
+	 * @return The JSONArray of placed tokens
+	 * @param placedTokens
+	 * @return
+	 */
 	private static JSONArray createPlacedTokensJson(Token[][] placedTokens) {
 		JSONArray placedTokensJson = new JSONArray();
 		for (int x = 0; x < placedTokens.length; x++) {
@@ -108,6 +116,12 @@ public class DataWriter {
 		return placedTokensJson;
 	}
 
+	/**
+	 * Creates a JSONArray of unplaced tokens
+	 *
+	 * @param unplacedTokens The set of unplaced tokens
+	 * @return The JSONArray of unplaced tokens
+	 */
 	private static JSONArray createUnplacedTokensJson(Set<Token> unplacedTokens) {
 		JSONArray unplacedTokensJson = new JSONArray();
 		for (Token token : unplacedTokens) {
@@ -124,6 +138,12 @@ public class DataWriter {
 		return unplacedTokensJson;
 	}
 
+	/**
+	 * Gets the orientation of a token
+	 *
+	 * @param token The token
+	 * @return The orientation of the token
+	 */
 	private static Orientation getOrientation(Token token) {
 		if (token instanceof OrientedToken) {
 			return ((OrientedToken) token).getOrientation();

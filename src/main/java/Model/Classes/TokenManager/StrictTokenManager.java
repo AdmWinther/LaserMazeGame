@@ -6,11 +6,19 @@ import Model.Classes.Utils.Coordinate;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Class that represents a strict token manager
+ * This class is used for levels when the laserMaze must be solved.
+ */
 
 public class StrictTokenManager implements TokenManager {
+    /*
+     * This class is a wrapper for the FlexibleTokenManager
+     * The aim is to hide those methods of the FlexibleTokenManager that can be used to modify the tokens
+     * Therefore, it only exposes the methods that are needed to solve the laserMaze
+     */
 
     private final FlexibleTokenManager tokenManager;
-
 
 
     public StrictTokenManager(Token[][] placedTokens, Set<Token> unplacedTokens) {

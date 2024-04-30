@@ -10,7 +10,9 @@ import Model.Interfaces.TokenManager;
 
 import java.util.*;
 
-
+/**
+ * Class that is used as token manager for a sandbox level in level edit mode.
+ */
 public class FlexibleTokenManager implements TokenManager {
 
     private final Token[][] placedTokens;
@@ -23,6 +25,13 @@ public class FlexibleTokenManager implements TokenManager {
         this.inventory = inventory;
     }
 
+    /**
+     * Constructor of the FlexibleTokenManager
+     *
+     * @param placedTokens  the placed tokens in the level
+     * @param unplacedTokens the unplaced tokens in the level
+     * @author Nathan Gromb, Hugo Demule
+     */
     public FlexibleTokenManager(Token[][] placedTokens, Set<Token> unplacedTokens) {
         if (!correctInput(placedTokens))
             throw new IllegalArgumentException();
@@ -44,6 +53,7 @@ public class FlexibleTokenManager implements TokenManager {
      *
      * @param placedTokens given placed tokens in the level
      * @return true if the level has at most one target and one laser
+     * @author Nathat Gromb
      */
     private boolean correctInput(Token[][] placedTokens) {
         if (placedTokens == null)
@@ -65,6 +75,7 @@ public class FlexibleTokenManager implements TokenManager {
      *
      * @param type token type to find
      * @return the Coordinate of that type if found,null if not
+     * @author Hugo Demule
      */
     private List<Coordinate> findTypePosition(Class<? extends Token> type) {
         List<Coordinate> coordinates = new ArrayList<>();
@@ -84,6 +95,9 @@ public class FlexibleTokenManager implements TokenManager {
 
     /**
      * Set all placed tokens to unmovable
+     * @author Hugo Demule
+     * @param movability must be true if the token is movable, false otherwise
+     * @author Hugo Demule
      */
     public void setPlacedTokensMovability(boolean movability) {
         for (Token[] row : placedTokens) {
@@ -97,6 +111,9 @@ public class FlexibleTokenManager implements TokenManager {
 
     /**
      * Set all unplaced tokens to movable
+     * @author Hugo Demule
+     * @param movability must be true if the token is movable, false otherwise
+     * @author Hugo Demule
      */
     public void setUnplacedTokensMovability(boolean movability) {
         for (Token token : unplacedTokens) {
@@ -110,6 +127,7 @@ public class FlexibleTokenManager implements TokenManager {
      * @param token    the token to place
      * @param position the given position
      * @return true if the token has been placed successfully, false otherwise
+     * @author Nathan Gromb
      */
     public boolean addToPlacedTokens(Token token, Coordinate position) {
         if (Objects.isNull(token))
@@ -138,6 +156,7 @@ public class FlexibleTokenManager implements TokenManager {
      *
      * @param position The position to be checked.
      * @return True if the position is out of bounds, false otherwise.
+     * @author Nathan Gromb
      */
     public boolean checkBounds(Coordinate position) {
         if (position == null)
@@ -193,6 +212,12 @@ public class FlexibleTokenManager implements TokenManager {
         }
     }
 
+    /**
+     * Transfer a token from the placed tokens to the unplaced tokens
+     *
+     * @param position the position of the token to transfer
+     * @return true if the token has been transferred, false otherwise
+     */
     @Override
     public boolean transferTokenToPlacedTokens(Token token, Coordinate position) {
         if (checkAttributes())
@@ -208,6 +233,12 @@ public class FlexibleTokenManager implements TokenManager {
         return true;
     }
 
+    /**
+     * Transfer a token from the unplaced tokens to the placed tokens
+     *
+     * @param position the position of the token that must be transferred
+     * @return true if the token has been transferred, false otherwise
+     */
     @Override
     public boolean transferTokenToUnplacedTokens(Coordinate position) {
         if (checkAttributes())
@@ -222,6 +253,12 @@ public class FlexibleTokenManager implements TokenManager {
         return unplacedTokens.add(token);
     }
 
+    /**
+     * Transfer a token from the placed tokens to the unplaced tokens
+     *
+     * @param token the token to be transferred
+     * @return true if the token has been transferred, false otherwise
+     */
     @Override
     public boolean transferTokenToUnplacedTokens(Token token) {
         if (checkAttributes())
@@ -240,6 +277,13 @@ public class FlexibleTokenManager implements TokenManager {
         return false;
     }
 
+    /**
+     * Move a token from a position to another
+     *
+     * @param from the position of the token to move
+     * @param to   the position where the token should be moved
+     * @return true if the token has been moved, false otherwise
+     */
     @Override
     public boolean moveToken(Coordinate from, Coordinate to) {
         if (checkAttributes()) {
@@ -262,6 +306,12 @@ public class FlexibleTokenManager implements TokenManager {
         return true;
     }
 
+    /**
+     * Get the token at the given position
+     *
+     * @param position the coordinate of the token
+     * @return the token at the given coordinate, null if there is no token at this position
+     */
     @Override
     public Token getTokenAt(Coordinate position) {
         if (checkAttributes())
@@ -271,6 +321,10 @@ public class FlexibleTokenManager implements TokenManager {
         return placedTokens[position.x()][position.y()];
     }
 
+    /** Generate a copy of the placed tokens array
+     *
+     * @return a copy of the placed tokens array
+     */
     @Override
     public Token[][] getPlacedTokens() {
         // return a copy of the placedTokens array
@@ -286,11 +340,20 @@ public class FlexibleTokenManager implements TokenManager {
         return new HashSet<>(unplacedTokens);
     }
 
+    /**
+     * Get the size of the unplaced tokens set
+     *
+     * @return the size of the unplaced tokens set
+     */
     @Override
     public int getUnplacedTokensSize() {
         return unplacedTokens.size();
     }
 
+    /**
+     * Get the location of the laser gun
+     * @return Coordinate of the laserGun, null if there is no laserGun
+     */
     @Override
     public Coordinate findLaserGunPosition() {
         List<Coordinate> coordinates = findTypePosition(LaserGun.class);
@@ -300,6 +363,10 @@ public class FlexibleTokenManager implements TokenManager {
             return null;
     }
 
+    /**
+     * Get the location of the target
+     * @return Coordinate of the target, null if there is no target
+     */
     @Override
     public Set<Coordinate> findTargetPosition() {
         List<Coordinate> coordinates = findTypePosition(Target.class);
@@ -309,6 +376,10 @@ public class FlexibleTokenManager implements TokenManager {
             return null;
     }
 
+    /**
+     * Get the location of the checkpoints
+     * @return a set Coordinates which are the coordinates of the checkpoints, or null if there is no checkpoint
+     */
     @Override
     public Set<Coordinate> findCheckpointsPosition() {
         List<Coordinate> coordinates = findTypePosition(Checkpoint.class);
@@ -318,15 +389,31 @@ public class FlexibleTokenManager implements TokenManager {
             return null;
     }
 
+    /**
+     * Check if the given position is empty
+     *
+     * @param position the position to check
+     * @return true if the position is empty, false otherwise
+     */
     @Override
     public boolean isEmpty(Coordinate position) {
         return placedTokens[position.x()][position.y()] == null;
     }
 
+    /**
+     * Get the inventory of the level
+     *
+     * @return the inventory of the level
+     */
     public Inventory getInventory() {
         return inventory;
     }
 
+    /**
+     * removes a token, if it is in the set of unplaced tokens, or in the placed tokens it will be removed.
+     *
+     * @param token the token to be removed
+     */
     public void removeToken(Token token) {
         if (token == null)
             return;
@@ -356,6 +443,12 @@ public class FlexibleTokenManager implements TokenManager {
         return unplacedTokens.remove(token);
     }
 
+    /**
+     * Get the coordinate of a token
+     *
+     * @param token the token to get the coordinate
+     * @return the coordinate of the token, null if the token is not in the placed tokens
+     */
     private Coordinate getTokenCoordinate(Token token) {
         for (int i = 0; i < placedTokens.length; i++) {
             for (int j = 0; j < placedTokens[0].length; j++) {
@@ -386,9 +479,6 @@ public class FlexibleTokenManager implements TokenManager {
             placedLaser = false;
 
         placedTokens[position.x()][position.y()] = null;
-
-        if (token instanceof LaserGun)
-            placedLaser = false;
 
         return token;
     }
