@@ -59,13 +59,13 @@ public class TilesUI implements Drawable {
 	 */
 	private void setLevelTiles() {
 
-		levelTiles = new String[levelPanel.maxRow + 1][levelPanel.maxCol + 1];
+		levelTiles = new String[levelPanel.getLevelPanelConfig().getMaxRow() + 1][levelPanel.getLevelPanelConfig().getMaxCol() + 1];
 
-		int maxRow = levelPanel.maxRow;
-		int maxCol = levelPanel.maxCol;
-		int horizontalBorder = levelPanel.horizontalBorder;
-		int verticalBorder = levelPanel.verticalBorder;
-		int wallThickness = levelPanel.wallThickness;
+		int maxRow = levelPanel.getLevelPanelConfig().getMaxRow();
+		int maxCol = levelPanel.getLevelPanelConfig().getMaxCol();
+		int horizontalBorder = levelPanel.HORIZONTAL_BORDER;
+		int verticalBorder = levelPanel.VERTICAL_BORDER;
+		int wallThickness = levelPanel.WALL_THICKNESS;
 
 		// Load map, set border and randomize the background tile
 		for (int i = 0; i < maxRow + 1; i++) {
@@ -87,12 +87,12 @@ public class TilesUI implements Drawable {
 	 * @param g2d - The 2d graphics object
 	 */
 	public void draw(Graphics2D g2d) {
-		for (int row = 0; row < levelPanel.maxRow + 1; row++) {
-			for (int col = 0; col < levelPanel.maxCol + 1; col++) {
+		for (int row = 0; row < levelPanel.getLevelPanelConfig().getMaxRow() + 1; row++) {
+			for (int col = 0; col < levelPanel.getLevelPanelConfig().getMaxCol() + 1; col++) {
 				String tileName = levelTiles[row][col];
-				int x = col * levelPanel.tileWidth;
-				int y = row * levelPanel.tileHeight;
-				g2d.drawImage(tileImages.get(tileName), x, y, levelPanel.tileWidth, levelPanel.tileHeight, null);
+				int x = col * levelPanel.getLevelPanelConfig().getTileWidth();
+				int y = row * levelPanel.getLevelPanelConfig().getTileHeight();
+				g2d.drawImage(tileImages.get(tileName), x, y, levelPanel.getLevelPanelConfig().getTileWidth(), levelPanel.getLevelPanelConfig().getTileHeight(), null);
 			}
 		}
 	}

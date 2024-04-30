@@ -89,6 +89,6 @@ public final class EditableLevelPanel extends LevelPanel<EditableLevelController
      * @author Hugo Demule
      */
     public boolean saveLevel() {
-        return levelController.saveLevel();
+        return getLevelController().saveLevel();
     }
 }

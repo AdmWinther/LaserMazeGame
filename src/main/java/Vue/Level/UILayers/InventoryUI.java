@@ -33,7 +33,7 @@ public class InventoryUI extends TokenDisplay {
 		inventory = levelController.getInventory();
 		size = inventory.getItems().size();
 
-		xCoord = levelPanel.tileWidth / 2;
+		xCoord = levelPanel.getLevelPanelConfig().getTileWidth() / 2;
 	}
 
 	/**
@@ -44,16 +44,16 @@ public class InventoryUI extends TokenDisplay {
 	 */
 	@Override
 	public void draw(Graphics2D g2d) {
-		int tileWidth = levelPanel.tileWidth;
-		int tileHeight = levelPanel.tileHeight;
+		int tileWidth = levelPanel.getLevelPanelConfig().getTileWidth();
+		int tileHeight = levelPanel.getLevelPanelConfig().getTileHeight();
 
-		int y = (levelPanel.maxRow - size) / 2 * tileHeight - tileHeight;
+		int y = (levelPanel.getLevelPanelConfig().getMaxRow() - size) / 2 * tileHeight - tileHeight;
 
 		rectangles.clear();
 
 		// draw a token an increment y to position the next token
 		for (Token token : inventory.getItems()) {
-			Rectangle2D rect = new Rectangle2D.Double(xCoord, y, levelPanel.tileWidth, levelPanel.tileHeight);
+			Rectangle2D rect = new Rectangle2D.Double(xCoord, y, levelPanel.getLevelPanelConfig().getTileWidth(), levelPanel.getLevelPanelConfig().getTileHeight());
 			rectangles.put(token, rect);
 
 			Position position = getTokenPosition(token, Position.of(xCoord, y));

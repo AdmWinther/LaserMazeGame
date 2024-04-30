@@ -161,8 +161,8 @@ public abstract class TokenDisplay implements Drawable {
             int x = draggedToken.second().x();
             int y = draggedToken.second().y();
 
-            return Position.of(x - levelPanel.tileWidth / 2, y - levelPanel.tileHeight / 2);
-        }
+			return Position.of(x - levelPanel.getLevelPanelConfig().getTileWidth() / 2, y - levelPanel.getLevelPanelConfig().getTileHeight() / 2);
+		}
 
         return Position.of(realPos.x(), realPos.y());
     }
