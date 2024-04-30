@@ -1,0 +1,87 @@
+{
+    "unplacedTokens": [
+        {
+            "orientation": "RIGHT",
+            "tokenId": "Target_873692790",
+            "type": "Target"
+        },
+        {
+            "orientation": "RIGHT",
+            "tokenId": "OneSidedMirror_1378090804",
+            "type": "OneSidedMirror"
+        },
+        {
+            "orientation": "RIGHT",
+            "tokenId": "OneSidedMirror_1530488690",
+            "type": "OneSidedMirror"
+        },
+        {
+            "orientation": "RIGHT",
+            "tokenId": "Target_795171705",
+            "type": "Target"
+        },
+        {
+            "orientation": "RIGHT",
+            "tokenId": "OneSidedMirror_1651690494",
+            "type": "OneSidedMirror"
+        }
+    ],
+    "boardSize": {
+        "widthX": 7,
+        "heightY": 7
+    },
+    "name": "Sandbox Level | 2024-04-30 11:41:48",
+    "placedTokens": [
+        {
+            "orientation": "RIGHT",
+            "tokenId": "LaserGun_314365164",
+            "position": {
+                "x": 0,
+                "y": 2
+            },
+            "type": "LaserGun"
+        },
+        {
+            "orientation": "RIGHT",
+            "tokenId": "DoubleSidedMirror_930167140",
+            "position": {
+                "x": 1,
+                "y": 0
+            },
+            "type": "DoubleSidedMirror"
+        },
+        {
+            "tokenId": "Block_729197454",
+            "position": {
+                "x": 3,
+                "y": 2
+            },
+            "type": "Block"
+        },
+        {
+            "tokenId": "Block_108795211",
+            "position": {
+                "x": 4,
+                "y": 1
+            },
+            "type": "Block"
+        },
+        {
+            "orientation": "DOWN",
+            "tokenId": "Splitter_1284966387",
+            "position": {
+                "x": 4,
+                "y": 4
+            },
+            "type": "Splitter"
+        },
+        {
+            "tokenId": "Block_1922284252",
+            "position": {
+                "x": 5,
+                "y": 0
+            },
+            "type": "Block"
+        }
+    ]
+}

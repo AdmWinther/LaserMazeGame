@@ -1,0 +1,89 @@
+{
+    "unplacedTokens": [
+        {
+            "orientation": "RIGHT",
+            "tokenId": "OneSidedMirror_1624316658",
+            "type": "OneSidedMirror"
+        },
+        {
+            "orientation": "RIGHT",
+            "tokenId": "OneSidedMirror_1696319907",
+            "type": "OneSidedMirror"
+        },
+        {
+            "orientation": "RIGHT",
+            "tokenId": "OneSidedMirror_1968866578",
+            "type": "OneSidedMirror"
+        },
+        {
+            "orientation": "RIGHT",
+            "tokenId": "OneSidedMirror_643194077",
+            "type": "OneSidedMirror"
+        },
+        {
+            "orientation": "RIGHT",
+            "tokenId": "OneSidedMirror_234424133",
+            "type": "OneSidedMirror"
+        }
+    ],
+    "boardSize": {
+        "widthX": 7,
+        "heightY": 7
+    },
+    "name": "Sandbox Level | 2024-04-30 12:03:25",
+    "placedTokens": [
+        {
+            "orientation": "RIGHT",
+            "tokenId": "LaserGun_1876742459",
+            "position": {
+                "x": 0,
+                "y": 2
+            },
+            "type": "LaserGun"
+        },
+        {
+            "orientation": "DOWN",
+            "tokenId": "Target_1759189736",
+            "position": {
+                "x": 0,
+                "y": 3
+            },
+            "type": "Target"
+        },
+        {
+            "tokenId": "Block_921117935",
+            "position": {
+                "x": 2,
+                "y": 4
+            },
+            "type": "Block"
+        },
+        {
+            "orientation": "DOWN",
+            "tokenId": "Splitter_144621651",
+            "position": {
+                "x": 3,
+                "y": 4
+            },
+            "type": "Splitter"
+        },
+        {
+            "orientation": "RIGHT",
+            "tokenId": "Checkpoint_29527410",
+            "position": {
+                "x": 5,
+                "y": 0
+            },
+            "type": "Checkpoint"
+        },
+        {
+            "orientation": "LEFT",
+            "tokenId": "Target_830393336",
+            "position": {
+                "x": 6,
+                "y": 4
+            },
+            "type": "Target"
+        }
+    ]
+}
