@@ -206,11 +206,6 @@ public class MainMenuPanel extends JPanel {
         setButtonTransparent(sandboxButton);
         setButtonTransparent(randomButton);
 
-        // Make the button the same size as its icon
-        System.out.println("Button size " + campaignButtonImage.getWidth() + " x " + campaignButtonImage.getHeight());
-
-        // Make such that we can only click on the icon, now we can click on the empty space around the icon
-
 
         // Add buttons to panel
         buttonPanel.add(campaignButton);
