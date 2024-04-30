@@ -79,6 +79,12 @@ public class DataWriter {
 		jsonLevel.put(JsonConstants.ATTR_UNPLACED_TOKENS, unplacedTokensJson);
 	}
 
+	/**
+	 * Creates a JSONArray of placed tokens
+	 *
+	 * @param placedTokens The 2D array of placed tokens
+	 * @return The JSONArray of placed tokens
+	 */
 	private static JSONArray createPlacedTokensJson(Token[][] placedTokens) {
 		JSONArray placedTokensJson = new JSONArray();
 		for (int x = 0; x < placedTokens.length; x++) {
@@ -108,6 +114,12 @@ public class DataWriter {
 		return placedTokensJson;
 	}
 
+	/**
+	 * Creates a JSONArray of unplaced tokens
+	 *
+	 * @param unplacedTokens The set of unplaced tokens
+	 * @return The JSONArray of unplaced tokens
+	 */
 	private static JSONArray createUnplacedTokensJson(Set<Token> unplacedTokens) {
 		JSONArray unplacedTokensJson = new JSONArray();
 		for (Token token : unplacedTokens) {
@@ -124,6 +136,12 @@ public class DataWriter {
 		return unplacedTokensJson;
 	}
 
+	/**
+	 * Gets the orientation of a token
+	 *
+	 * @param token The token
+	 * @return The orientation of the token
+	 */
 	private static Orientation getOrientation(Token token) {
 		if (token instanceof OrientedToken) {
 			return ((OrientedToken) token).getOrientation();
@@ -135,17 +153,14 @@ public class DataWriter {
 	 * Deletes a level from the default directory (SANDBOX_LEVELS_PATH)
 	 *
 	 * @param levelID The ID of the level to be deleted
-	 * @return True if the level was deleted successfully, false otherwise
 	 * @throws IOException if the file does not exist
 	 */
-	public static boolean delete(LevelID levelID) throws IOException {
+	public static void delete(LevelID levelID) throws IOException {
 		if (Files.exists(Path.of(FilePaths.SANDBOX_LEVELS_PATH + levelID.value() + ".json"))) {
 			Files.delete(Path.of(FilePaths.SANDBOX_LEVELS_PATH + levelID.value() + ".json"));
 		} else if (Files.exists(Path.of(FilePaths.CAMPAIGN_LEVELS_PATH + levelID.value() + ".json"))) {
 			Files.delete(Path.of(FilePaths.CAMPAIGN_LEVELS_PATH + levelID.value() + ".json"));
 		} else {
-			return false;
 		}
-		return true;
 	}
 }

@@ -3,7 +3,6 @@ package Vue.Level;
 import Controller.GameController;
 import Controller.LevelController;
 import Controller.LoginController;
-import Vue.Constants.JComponentsNames;
 import Vue.Handlers.LevelMouseHandler;
 import Vue.Handlers.TokenKeyboardHandler;
 import Vue.Handlers.TokenMouseHandler;
@@ -11,248 +10,320 @@ import Vue.Level.UILayers.ExtrasUI;
 import Vue.Level.UILayers.LaserUI;
 import Vue.Level.UILayers.TilesUI;
 import Vue.Level.UILayers.TokensUI;
-import Vue.MenuPanels.CampaignPanel;
-import Vue.MenuPanels.SandboxPanel;
+import Vue.Utils.FrameUtil;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.util.Timer;
-
-import static Vue.Game.Game.showPanel;
-
-public abstract class LevelPanel extends JPanel implements Runnable {
-
-    // Borders
-    public final int horizontalBorder = 2;
-    public final int verticalBorder = 1;
-    public final int wallThickness = 1;
-    // Level configuration, screen size in tiles
-    // Tile size settings
-    final int originalTileSize = 16;
-    // Performance settings
-    final int fps = 60;
-    final int frameTime = 1000 / fps;
-    private final boolean tadaPlayed = false;
-    // Level configuration, screen size in tiles
-    public int maxCol;
-    public int maxRow;
-    // Screen size in pixels
-    public int screenWidth;
-    public int screenHeight;
-    // Controllers
-    public LevelController levelController;
-    public LoginController loginController;
-    // Objects to draw
-    public ExtrasUI extrasUI;
-    public TokensUI tokensUI;
-    public TilesUI tilesUI;
-    public LaserUI laserUI;
-    // Mouse handlers
-    public LevelMouseHandler levelMouseHandler;
-    public TokenMouseHandler tokenMouseHandler;
-    // Keyboard handler
-    public TokenKeyboardHandler tokenKeyboardHandler;
-    // Offsets, number of pixels to the top left corner of the level board
-    public int widthOffset;
-    public int heightOffset;
-    int HScale = 3;
-    public int tileWidth = originalTileSize * HScale;
-    int VScale = 3;
-    public int tileHeight = originalTileSize * VScale;
-    // Thread
-    Thread gameThread;
-    JFrame frame;
-    GameController gameController;
-    private Timer timer;
 
 
-    /**
-     * Constructor of the level panel class
-     *
-     * @param levelController - The level controller
-     * @author Léonard Amsler - s231715
-     */
-    public LevelPanel(JFrame frame, GameController gameController, LevelController levelController, LoginController loginController) {
+/**
+ * This class has the responsibility to control the level panel.
+ *
+ * @author Léonard Amsler
+ * @author Nathan Gromb
+ */
+public abstract class LevelPanel<LevelControllerType extends LevelController> extends JPanel implements Runnable {
+	// Performance settings
+	public static final int FPS = 60;
+	public static final int FRAME_TIME = 1000 / FPS;
+	// Borders
+	public static final int HORIZONTAL_BORDER = 2;
+	public static final int VERTICAL_BORDER = 1;
+	public static final int WALL_THICKNESS = 1;
+	// Tile size settings
+	public static final int ORIGINAL_TILE_SIZE = 16;
+	// Scale
+	public static final int SCALE = 3;
 
-        this.levelController = levelController;
+	// Config
+	private final LevelPanelConfig levelPanelConfig = new LevelPanelConfig();
+	private final TokensUI tokensUI;
+	private final TilesUI tilesUI;
+	private final LaserUI laserUI;
+	// Mouse handlers
+	private final LevelMouseHandler levelMouseHandler;
+	private final TokenMouseHandler tokenMouseHandler;
+	// Keyboard handler
+	private final TokenKeyboardHandler tokenKeyboardHandler;
+	// Controllers
+	private LevelControllerType levelController;
+	private LoginController loginController;
+	// Objects to draw
+	private ExtrasUI extrasUI;
+	private JFrame frame;
+	private GameController gameController;
+	// Thread
+	private Thread gameThread;
 
-        int boardWidth = levelController.getWidth();
-        int boardHeight = levelController.getHeight();
+	/**
+	 * Constructor of the level panel class
+	 *
+	 * @param levelController - The level controller
+	 * @author Léonard Amsler - s231715
+	 */
+	public LevelPanel(JFrame frame, GameController gameController, LevelControllerType levelController, LoginController loginController) {
 
-        this.maxCol = boardWidth + 2 * (horizontalBorder + wallThickness);
-        this.maxRow = boardHeight + 2 * (verticalBorder + wallThickness);
+		this.levelController = levelController;
 
-        this.screenWidth = maxCol * tileWidth;
-        this.screenHeight = maxRow * tileHeight;
+		int boardWidth = levelController.getWidth();
+		int boardHeight = levelController.getHeight();
 
-        setPreferredSize(new Dimension(screenWidth, screenHeight));
-        setDoubleBuffered(true);
+		this.levelPanelConfig.setMaxCol(boardWidth + 2 * (HORIZONTAL_BORDER + WALL_THICKNESS));
+		this.levelPanelConfig.setMaxRow(boardHeight + 2 * (VERTICAL_BORDER + WALL_THICKNESS));
 
-        widthOffset = (this.screenWidth - boardWidth * tileWidth) / 2;
-        heightOffset = (this.screenHeight - boardHeight * tileHeight) / 2;
+		this.levelPanelConfig.setScreenWidth(levelPanelConfig.getMaxCol() * levelPanelConfig.getTileWidth());
+		this.levelPanelConfig.setScreenHeight(levelPanelConfig.getMaxRow() * levelPanelConfig.getTileHeight());
 
-        tilesUI = new TilesUI(this);
-        tokensUI = new TokensUI(this, levelController);
-        laserUI = new LaserUI(this, levelController);
+		setPreferredSize(new Dimension(levelPanelConfig.getScreenWidth(), levelPanelConfig.getScreenHeight()));
+		setDoubleBuffered(true);
 
-        levelMouseHandler = new LevelMouseHandler(this);
-        addMouseListener(levelMouseHandler);
-        tokenMouseHandler = new TokenMouseHandler(this, levelController, tokensUI);
-        addMouseListener(tokenMouseHandler);
-        addMouseMotionListener(tokenMouseHandler);
-        tokenKeyboardHandler = new TokenKeyboardHandler(levelController);
-        addKeyListener(tokenKeyboardHandler);
+		levelPanelConfig.setWidthOffset((this.levelPanelConfig.getScreenWidth() - boardWidth * levelPanelConfig.getTileWidth()) / 2);
+		levelPanelConfig.setHeightOffset((this.levelPanelConfig.getScreenHeight() - boardHeight * levelPanelConfig.getTileHeight()) / 2);
 
-        this.loginController = loginController;
-        this.frame = frame;
-        this.gameController = gameController;
+		tilesUI = new TilesUI(this);
+		tokensUI = new TokensUI(this, levelController);
+		laserUI = new LaserUI(this, levelController);
 
-        setFocusable(true);
-        requestFocus();
+		levelMouseHandler = new LevelMouseHandler(this);
+		addMouseListener(levelMouseHandler);
+		tokenMouseHandler = new TokenMouseHandler(this, levelController, tokensUI);
+		addMouseListener(tokenMouseHandler);
+		addMouseMotionListener(tokenMouseHandler);
+		tokenKeyboardHandler = new TokenKeyboardHandler(levelController);
+		addKeyListener(tokenKeyboardHandler);
 
-        start();
+		this.loginController = loginController;
+		this.frame = frame;
+		this.gameController = gameController;
 
-        this.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                resize();
-            }
-        });
-    }
+		setFocusable(true);
+		requestFocus();
 
-    /**
-     * Start the game thread
-     *
-     * @author Léonard Amsler - s231715
-     */
-    public void start() {
-        gameThread = new Thread(this);
-        gameThread.start();
-    }
+		start();
 
-    /**
-     * Resize the level panel
-     * This method is called when the window is resized
-     *
-     * @author Léonard Amsler - s231715
-     */
-    public void resize() {
-        // Get the size of the screen
-        Dimension screenSize = getSize();
-        screenWidth = screenSize.width;
-        screenHeight = screenSize.height;
+		this.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				resize();
+			}
+		});
+	}
 
-        // Calculate the new tile size
-        int newTileWidth = screenWidth / maxCol;
-        int newTileHeight = screenHeight / maxRow;
+	/**
+	 * Start the game thread
+	 *
+	 * @author Léonard Amsler - s231715
+	 */
+	public void start() {
+		gameThread = new Thread(this);
+		gameThread.start();
+	}
 
-        // Set the new tile size
-        tileWidth = newTileWidth;
-        tileHeight = newTileHeight;
+	/**
+	 * Resize the level panel
+	 * This method is called when the window is resized
+	 *
+	 * @author Léonard Amsler - s231715
+	 */
+	public void resize() {
+		// Get the size of the screen
+		Dimension screenSize = getSize();
+		levelPanelConfig.setScreenWidth(screenSize.width);
+		levelPanelConfig.setScreenHeight(screenSize.height);
 
-        // Calculate the new offsets
-        int boardWidth = levelController.getWidth();
-        int boardHeight = levelController.getHeight();
+		// Calculate the new tile size
+		int newTileWidth = levelPanelConfig.getScreenWidth() / levelPanelConfig.getMaxCol();
+		int newTileHeight = levelPanelConfig.getScreenHeight() / levelPanelConfig.getMaxRow();
 
-        widthOffset = (maxCol - boardWidth) / 2 * tileWidth;
-        heightOffset = (maxRow - boardHeight) / 2 * tileHeight;
-    }
+		// Set the new tile size
+		levelPanelConfig.setTileWidth(newTileWidth);
+		levelPanelConfig.setTileHeight(newTileHeight);
 
-    /**
-     * Run method of the game thread
-     * It is the game engine, it will update the game state and repaint the screen at a fixed frame rate
-     * It follows the delta time pattern: <a href="https://en.wikipedia.org/wiki/Delta_timing"> description of the pattern </a>
-     *
-     * @author Léonard Amsler - s231715
-     */
-    @Override
-    public void run() {
+		// Calculate the new offsets
+		int boardWidth = levelController.getWidth();
+		int boardHeight = levelController.getHeight();
 
-        double delta = 0;
-        long lastTime = System.currentTimeMillis();
-        long currentTime;
+		levelPanelConfig.setWidthOffset((levelPanelConfig.getMaxCol() - boardWidth) / 2 * levelPanelConfig.getTileWidth());
+		levelPanelConfig.setHeightOffset((levelPanelConfig.getMaxRow() - boardHeight) / 2 * levelPanelConfig.getTileHeight());
+	}
 
-        int count = 0;
-        int lastSecond = 0;
+	/**
+	 * Run method of the game thread
+	 * It is the game engine, it will update the game state and repaint the screen at a fixed frame rate
+	 * It follows the delta time pattern: <a href="https://en.wikipedia.org/wiki/Delta_timing"> description of the pattern </a>
+	 *
+	 * @author Léonard Amsler - s231715
+	 */
+	@Override
+	public void run() {
 
-        while (gameThread != null) {
-            currentTime = System.currentTimeMillis();
-            delta += (currentTime - lastTime) / (double) frameTime;
-            lastTime = currentTime;
+		double delta = 0;
+		long lastTime = System.currentTimeMillis();
+		long currentTime;
 
-            if (currentTime / 1000 != lastSecond) {
-                lastSecond = (int) (currentTime / 1000);
-                count = 0;
-            }
+		int lastSecond = 0;
 
-            if (delta >= 1) {
-                repaint();
-                delta--;
-                count++;
-            }
-        }
-    }
+		while (gameThread != null) {
+			currentTime = System.currentTimeMillis();
+			delta += (currentTime - lastTime) / (double) FRAME_TIME;
+			lastTime = currentTime;
 
-    /**
-     * Paint the component
-     *
-     * @param g - The graphics object
-     * @author Léonard Amsler - s231715
-     */
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
+			if (currentTime / 1000 != lastSecond) {
+				lastSecond = (int) (currentTime / 1000);
+			}
 
-        //TODO this allows the KeyListener to work, is it the right way to do it?
-        requestFocus();
-    }
+			if (delta >= 1) {
+				repaint();
+				delta--;
+			}
+		}
+	}
 
-    public void drawTiles(Graphics2D g2d) {
-        tilesUI.draw(g2d);
-    }
+	/**
+	 * Paint the component
+	 *
+	 * @param g - The graphics object
+	 * @author Léonard Amsler - s231715
+	 */
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		requestFocus();
+	}
 
-    public void drawLasers(Graphics2D g2d) {
-        laserUI.draw(g2d);
-    }
+	/**
+	 * Draw the tiles on the screen
+	 *
+	 * @param g2d The 2d graphics object
+	 * @author Nathan Gromb
+	 */
+	public void drawTiles(Graphics2D g2d) {
+		tilesUI.draw(g2d);
+	}
 
-    public void drawTokens(Graphics2D g2d) {
-        tokensUI.draw(g2d);
-    }
+	/**
+	 * Draw the lasers on the screen
+	 *
+	 * @param g2d The 2d graphics object
+	 * @author Nathan Gromb
+	 */
+	public void drawLasers(Graphics2D g2d) {
+		laserUI.draw(g2d);
+	}
 
-    public int getFPS() {
-        return fps;
-    }
+	/**
+	 * Draw the tokens on the screen
+	 *
+	 * @param g2d The 2d graphics object
+	 * @author Nathan Gromb
+	 */
+	public void drawTokens(Graphics2D g2d) {
+		tokensUI.draw(g2d);
+	}
 
-    public ExtrasUI getExtrasUI() {
-        return extrasUI;
-    }
+	/**
+	 * Get the frames per second
+	 *
+	 * @return The frames per second of the game engine
+	 * @author Nathan Gromb
+	 */
+	public int getFPS() {
+		return FPS;
+	}
 
-    public void exitLevel() {
-        if (gameController.isInCampaignGameMode()) {
-            displayCampaignMenu(frame);
-        } else {
-            displaySandboxMenu(frame);
-        }
-    }
+	/**
+	 * Get the extras UIs
+	 *
+	 * @return The extras UIs of the level panel
+	 * @author Nathan Gromb
+	 */
+	public ExtrasUI getExtrasUI() {
+		return extrasUI;
+	}
 
-    public void displayCampaignMenu(JFrame frame) {
-        gameController.turnOnCampaignGameMode();
-        CampaignPanel campaignPanel = new CampaignPanel(frame, gameController, loginController);
-        frame.add(campaignPanel, JComponentsNames.FrameID.CAMPAIGN_LEVELS);
-        showPanel(frame, JComponentsNames.FrameID.CAMPAIGN_LEVELS);
-        frame.pack();
-    }
+	/**
+	 * Exits the level
+	 *
+	 * @author Léonard Amsler
+	 */
+	public void exitLevel() {
+		FrameUtil.removeLevel(frame);
 
-    public void displaySandboxMenu(JFrame frame) {
-        gameController.turnOffCampaignGameMode();
-        SandboxPanel sandboxPanel = new SandboxPanel(frame, gameController, loginController);
-        frame.add(sandboxPanel, JComponentsNames.FrameID.SANDBOX_LEVELS);
-        showPanel(frame, JComponentsNames.FrameID.SANDBOX_LEVELS);
-        frame.pack();
-    }
+		switch (gameController.getLevelType()) {
+			case CAMPAIGN -> {
+				FrameUtil.createCampaignMenuIfNotExists(frame, gameController, loginController);
+				FrameUtil.refreshCampaignMenu(frame, gameController, loginController);
+				FrameUtil.displayCampaignMenu(frame);
+			}
+			case SANDBOX -> {
+				FrameUtil.createSandboxMenuIfNotExists(frame, gameController, loginController);
+				FrameUtil.refreshSandboxMenu(frame, gameController, loginController);
+				FrameUtil.displaySandboxMenu(frame);
+			}
+			case RANDOM -> {
+				FrameUtil.createMainMenuIfNotExists(frame, gameController, loginController);
+				FrameUtil.displayMainMenu(frame);
+			}
+		}
+	}
 
+	public LevelPanelConfig getLevelPanelConfig() {
+		return levelPanelConfig;
+	}
+
+	public LevelControllerType getLevelController() {
+		return levelController;
+	}
+
+	public void setLevelController(LevelControllerType levelController) {
+		this.levelController = levelController;
+	}
+
+	public LoginController getLoginController() {
+		return loginController;
+	}
+
+	public void setLoginController(LoginController loginController) {
+		this.loginController = loginController;
+	}
+
+	public LevelMouseHandler getLevelMouseHandler() {
+		return levelMouseHandler;
+	}
+
+	public TokenMouseHandler getTokenMouseHandler() {
+		return tokenMouseHandler;
+	}
+
+	public TokenKeyboardHandler getTokenKeyboardHandler() {
+		return tokenKeyboardHandler;
+	}
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
+	}
+
+	public GameController getGameController() {
+		return gameController;
+	}
+
+	public void setGameController(GameController gameController) {
+		this.gameController = gameController;
+	}
+
+	public Thread getGameThread() {
+		return gameThread;
+	}
+
+	public void setGameThread(Thread gameThread) {
+		this.gameThread = gameThread;
+	}
 }
 
 

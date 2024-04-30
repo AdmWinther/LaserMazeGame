@@ -3,10 +3,10 @@ package Vue.Game;
 import Controller.GameController;
 import Controller.LoginController;
 import Vue.Constants.JComponentsNames;
-import Vue.Constants.VueFilePaths;
-import Vue.MenuPanels.LoginMenu;
+import Vue.Constants.ResourcePaths;
 import Vue.SoundEffects.SoundPaths;
 import Vue.SoundEffects.SoundPlayer;
+import Vue.Utils.FrameUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,21 +15,23 @@ import java.awt.event.ComponentEvent;
 
 /**
  * Main class of the UI
- * This is the entry point of the application
+ * This is the entry point of the application.
+ * It is responsible for initializing the game.
  *
  * @author Léonard Amsler - s231715
+ * @author Hugo Demule
  */
 public class Game {
 
 	// find the OS max width and height for fullscreen
+	public final double SCREEN_RATIO = 8.0 / 6;
 	public final int INIT_HEIGHT = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.9);
-	public final int INIT_WIDTH = INIT_HEIGHT * 800 / 600;
+	public final int INIT_WIDTH = (int) (INIT_HEIGHT * SCREEN_RATIO);
 
 
 	private final int TILE_WIDTH = INIT_WIDTH / 15;
 	private final int TILE_HEIGHT = INIT_WIDTH / 15;
-	JFrame frame;
-	GameController gameController;
+	final JFrame frame;
 	SoundPlayer soundPlayer;
 
 
@@ -40,20 +42,9 @@ public class Game {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
 		frame.setTitle(JComponentsNames.Label.LASER_MAZE);
-
 		frame.setPreferredSize(new java.awt.Dimension(INIT_WIDTH, INIT_HEIGHT));
 
-		ImageIcon img = new ImageIcon(VueFilePaths.GAME_ICON);
-		frame.setIconImage(img.getImage());
-
-		gameController = new GameController(this);
-		LoginController loginController = new LoginController();
-		LoginMenu loginMenu = new LoginMenu(frame, loginController, gameController);
-		frame.add(loginMenu, JComponentsNames.FrameID.LOGIN);
-		showPanel(frame, JComponentsNames.FrameID.LOGIN);
-
 		double aspectRatio = INIT_WIDTH / (double) INIT_HEIGHT;
-
 		frame.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
@@ -61,22 +52,19 @@ public class Game {
 			}
 		});
 
-		frame.pack();
+		ImageIcon img = new ImageIcon(ResourcePaths.Icons.GAME_ICON);
+		frame.setIconImage(img.getImage());
 
+		GameController gameController = new GameController(this);
+		LoginController loginController = new LoginController();
+
+		FrameUtil.createLoginMenuIfNotExists(frame, loginController, gameController);
+		FrameUtil.displayLoginMenu(frame);
+
+		frame.pack();
 		frame.setLocationRelativeTo(null);
 	}
 
-	/**
-	 * Shows a panel
-	 *
-	 * @param frame     The frame
-	 * @param panelName The panel name
-	 * @author Léonard Amsler - s231715
-	 */
-	public static void showPanel(JFrame frame, String panelName) {
-		CardLayout cardLayout = (CardLayout) frame.getContentPane().getLayout();
-		cardLayout.show(frame.getContentPane(), panelName);
-	}
 
 	/**
 	 * Entry point of the application
@@ -101,17 +89,13 @@ public class Game {
 		SoundPlayer.play(SoundPaths.MAIN_MENU_MUSIC_PATH, true);
 	}
 
-	public Dimension getCurrentTileDimension() {
-		return new Dimension(TILE_WIDTH, TILE_HEIGHT);
-	}
-
 	/**
-	 * Get the current size of the frame
+	 * Get the current tile dimension
 	 *
-	 * @return The current size of the frame
+	 * @return The current tile dimension
 	 * @author Hugo Demule
 	 */
-	public Dimension getCurrentFrameDimension() {
-		return frame.getSize();
+	public Dimension getCurrentTileDimension() {
+		return new Dimension(TILE_WIDTH, TILE_HEIGHT);
 	}
 }

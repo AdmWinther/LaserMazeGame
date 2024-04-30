@@ -5,6 +5,7 @@ import Model.Classes.Utils.DataReader;
 import Model.Constants.SandboxInventory;
 import Model.Interfaces.Builder;
 import Model.Interfaces.Inventory;
+import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,29 +19,39 @@ import java.util.Set;
  * @see PlayableLevel
  */
 public class LevelBuilder implements Builder<Level> {
-    private LevelID id;
+	private LevelID id;
+
+	/**
+	 * Creates a new LevelBuilder with a given ID
+	 *
+	 * @param id the ID of the level
+	 * @author Hugo Demule
+	 */
+	public LevelBuilder(LevelID id) {
+		this.id = id;
+	}
+
+	/**
+	 * Sets the ID of the level
+	 *
+	 * @param id the ID of the level
+	 * @author Hugo Demule
+	 */
+	public void setID(LevelID id) {
+		this.id = id;
+	}
+
 
     /**
-     * Creates a new LevelBuilder with a given ID
-     *
-     * @param id the ID of the level
+     * Builds the level from the ID
+     * It is an overload of the build(Boolean b) method that assumes the level is not editable.
+     * Identical to build(false)
+     * @return the level built from the ID or returns null if there was an error
+     * @throws IllegalArgumentException if the levelID is NEW_LEVEL, but it is not editable
+     * @see PlayableLevel
+     * @see EditableLevel
      * @author Hugo Demule
      */
-    public LevelBuilder(LevelID id) {
-        this.id = id;
-    }
-
-    /**
-     * Sets the ID of the level
-     *
-     * @param id the ID of the level
-     * @author Hugo Demule
-     */
-    public void setID(LevelID id) {
-        this.id = id;
-    }
-
-
     @Override
     public Level build() {
         return build(false);
@@ -51,6 +62,7 @@ public class LevelBuilder implements Builder<Level> {
      *
      * @param editable the type of the level to build (true for EditableLevel, false for PlayableLevel)
      * @return the level built from the ID or null if there was an error
+     * @throws IllegalArgumentException if the levelID is NEW_LEVEL, but it is not editable
      * @author Hugo Demule
      * @see PlayableLevel
      * @see EditableLevel
@@ -58,15 +70,11 @@ public class LevelBuilder implements Builder<Level> {
     @Override
     public Level build(boolean editable) {
 
-        if (id.equals(LevelID.NEW_LEVEL)) {
-            if (!editable)
-                throw new IllegalArgumentException("Cannot build a new empty playable level.");
+		if (id.equals(LevelID.NEW_LEVEL)) {
+			if (!editable)
+				throw new IllegalArgumentException("Cannot build a new empty playable level.");
 
-            // get current data and precise time
-            String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-            String currentTime = new SimpleDateFormat("HH:mm:ss").format(new Date());
-
-            String fileName = "Sandbox Level | " + currentDate + " " + currentTime;
+            String fileName = generateFilenameWithTimestamp();
             return new EditableLevel(fileName, new Token[7][7], new HashSet<>(), new SandboxInventory());
         }
 
@@ -84,5 +92,20 @@ public class LevelBuilder implements Builder<Level> {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * Generates a filename with the current date and time
+     *
+     * @return a string with the filename with the current date and time
+     * @author Adam Winther
+     */
+    @NotNull
+    private static String generateFilenameWithTimestamp() {
+        // get current data and precise time
+        String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        String currentTime = new SimpleDateFormat("HH:mm:ss").format(new Date());
+
+        return "Sandbox Level | " + currentDate + " " + currentTime;
     }
 }

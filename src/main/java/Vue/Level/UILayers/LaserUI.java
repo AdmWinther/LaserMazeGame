@@ -99,10 +99,10 @@ public class LaserUI implements Drawable {
 		Coordinate start = laserFragment.first();
 		Coordinate end = laserFragment.second();
 
-		int startX = start.x() * levelPanel.tileWidth + levelPanel.widthOffset;
-		int startY = start.y() * levelPanel.tileHeight + levelPanel.heightOffset;
-		int endX = end.x() * levelPanel.tileWidth + levelPanel.widthOffset;
-		int endY = end.y() * levelPanel.tileHeight + levelPanel.heightOffset;
+		int startX = start.x() * levelPanel.getLevelPanelConfig().getTileWidth() + levelPanel.getLevelPanelConfig().getWidthOffset();
+		int startY = start.y() * levelPanel.getLevelPanelConfig().getTileHeight() + levelPanel.getLevelPanelConfig().getHeightOffset();
+		int endX = end.x() * levelPanel.getLevelPanelConfig().getTileWidth() + levelPanel.getLevelPanelConfig().getWidthOffset();
+		int endY = end.y() * levelPanel.getLevelPanelConfig().getTileHeight() + levelPanel.getLevelPanelConfig().getHeightOffset();
 
 		int minX = Math.min(startX, endX);
 		int minY = Math.min(startY, endY);
@@ -113,11 +113,11 @@ public class LaserUI implements Drawable {
 		// Place at the center of the tile
 
 		if (startX == endX) { // Vertical laser
-			minY += levelPanel.tileHeight / 2;
-			g2d.drawImage(laserImages.get("laser_vertical"), minX, minY, levelPanel.tileWidth, height, null);
+			minY += levelPanel.getLevelPanelConfig().getTileHeight() / 2;
+			g2d.drawImage(laserImages.get("laser_vertical"), minX, minY, levelPanel.getLevelPanelConfig().getTileWidth(), height, null);
 		} else { // Horizontal laser
-			minX += levelPanel.tileWidth / 2;
-			g2d.drawImage(laserImages.get("laser_horizontal"), minX, minY, width, levelPanel.tileHeight, null);
+			minX += levelPanel.getLevelPanelConfig().getTileWidth() / 2;
+			g2d.drawImage(laserImages.get("laser_horizontal"), minX, minY, width, levelPanel.getLevelPanelConfig().getTileHeight(), null);
 		}
 	}
 }

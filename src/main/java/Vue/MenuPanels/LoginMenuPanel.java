@@ -3,27 +3,25 @@ package Vue.MenuPanels;
 import Controller.GameController;
 import Controller.LoginController;
 import Vue.Constants.JComponentsNames;
+import Vue.Constants.ResourcePaths;
 import Vue.Constants.Style;
-import Vue.Constants.VueFilePaths;
 import Vue.Handlers.ButtonHoverHandler;
 import Vue.SoundEffects.SoundPaths;
 import Vue.SoundEffects.SoundPlayer;
+import Vue.Utils.FrameUtil;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
-import static Vue.Game.Game.showPanel;
+public class LoginMenuPanel extends JPanel {
 
-public class LoginMenu extends JPanel {
-
-	private final ImagePanel backgroundPanel;
+	final GameController gameController;
+	final LoginController loginController;
 	Thread mainMenuThread;
-	GameController gameController;
-	LoginController loginController;
 
-	public LoginMenu(JFrame frame, LoginController loginController, GameController gameController) {
+	public LoginMenuPanel(JFrame frame, LoginController loginController, GameController gameController) {
 		this.gameController = gameController;
 		this.loginController = loginController;
 
@@ -36,8 +34,8 @@ public class LoginMenu extends JPanel {
 		setLayout(new BorderLayout());
 
 		// Background panel
-		ImageIcon backgroundImage = new ImageIcon(VueFilePaths.BACKGROUND_TILE);
-		this.backgroundPanel = new ImagePanel(backgroundImage.getImage(), new Dimension(gameController.getCurrentTileDimension().width, gameController.getCurrentTileDimension().height));
+		ImageIcon backgroundImage = new ImageIcon(ResourcePaths.Textures.BACKGROUND_TILE);
+		ImagePanel backgroundPanel = new ImagePanel(backgroundImage.getImage(), new Dimension(gameController.getCurrentTileDimension().width, gameController.getCurrentTileDimension().height));
 		backgroundPanel.setLayout(new BorderLayout());
 		add(backgroundPanel);
 
@@ -143,19 +141,17 @@ class LoginPanel extends JPanel {
 		loginButton.setPreferredSize(resizeDimension2);
 		loginButton.setFont(resizeFont);
 		loginButton.addActionListener(e -> {
-			SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
+			SoundPlayer.play(SoundPaths.BUTTON_CLICK);
 
 			// Check if the username and password are correct
 			boolean success = loginController.login(usernameTextField.getText(), new String(passwordTextField.getPassword()));
-			if (success) {
-				// Show the main menu
-				MainMenuPanel mainMenuPanel = new MainMenuPanel(frame, gameController, loginController);
-				frame.add(mainMenuPanel, JComponentsNames.FrameID.MAIN_MENU);
-				showPanel(frame, JComponentsNames.FrameID.MAIN_MENU);
-			} else {
-				// Show an error message
+			if (!success) {
 				JOptionPane.showMessageDialog(frame, "Incorrect username or password", "Error", JOptionPane.ERROR_MESSAGE);
+				return;
 			}
+
+			FrameUtil.createMainMenuIfNotExists(frame, gameController, loginController);
+			FrameUtil.displayMainMenu(frame);
 		});
 		loginButton.addMouseListener(new ButtonHoverHandler());
 
@@ -232,7 +228,7 @@ class registerPanel extends JPanel {
 		registerButton.setPreferredSize(resizeDimension2);
 		registerButton.setFont(resizeFont);
 		registerButton.addActionListener(e -> {
-			SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
+			SoundPlayer.play(SoundPaths.BUTTON_CLICK);
 
 			// Check if the password and confirm password are the same
 			if (!new String(passwordTextField.getPassword()).equals(new String(confirmPasswordTextField.getPassword()))) {
@@ -242,7 +238,7 @@ class registerPanel extends JPanel {
 			}
 
 			// Check that the username is not empty and the password is not empty
-			if (usernameTextField.getText().equals("") || new String(passwordTextField.getPassword()).equals("")) {
+			if (usernameTextField.getText().isEmpty() || new String(passwordTextField.getPassword()).isEmpty()) {
 				// Show an error message
 				JOptionPane.showMessageDialog(frame, "Username or password cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);
 				return;
@@ -250,15 +246,15 @@ class registerPanel extends JPanel {
 
 			// Register the user
 			boolean result = loginController.register(usernameTextField.getText(), new String(passwordTextField.getPassword()));
-			if (result) {
-				// Show the main menu
-				MainMenuPanel mainMenuPanel = new MainMenuPanel(frame, gameController, loginController);
-				frame.add(mainMenuPanel, JComponentsNames.FrameID.MAIN_MENU);
-				showPanel(frame, JComponentsNames.FrameID.MAIN_MENU);
-			} else {
+			if (!result) {
 				// Show an error message
 				JOptionPane.showMessageDialog(frame, "Username already exists", "Error", JOptionPane.ERROR_MESSAGE);
+				return;
 			}
+
+			// Go to the main menu
+			FrameUtil.createMainMenuIfNotExists(frame, gameController, loginController);
+			FrameUtil.displayMainMenu(frame);
 		});
 		registerButton.addMouseListener(new ButtonHoverHandler());
 

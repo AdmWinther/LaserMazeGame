@@ -8,28 +8,22 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * Animation that makes the screen fill with confetti, starting from a given point
+ * This class is responsible for the animation that makes the screen fill with confetti, starting from a given point
  *
  * @author Nathan Gromb
  */
 public class ConfettiAnimation implements Animation {
 
 	private static final int BURST_SIZE = 30;
-	// TODO turn this into seconds or milliseconds
 	private static final int BURST_DELAY = 5;
 	private static final int BURSTS = 3;
 
-	/**
-	 * Maximum speed of the confetti
-	 * The minimum speed is half of this value
-	 */
+	//Maximum speed of the confetti The minimum speed is half of this value
 	private static final int CONFETTI_MAX_SPEED = 10;
 
 	private final LevelPanel levelPanel;
 	private final ArrayList<Confetti> confettiList;
 	private final Random random;
-	private final int x;
-	private final int y;
 	private boolean running = false;
 	private int duration = 0;
 
@@ -38,8 +32,6 @@ public class ConfettiAnimation implements Animation {
 	}
 
 	public ConfettiAnimation(LevelPanel levelPanel, int x, int y) {
-		this.x = x;
-		this.y = y;
 		this.levelPanel = levelPanel;
 		this.confettiList = new ArrayList<>();
 		this.random = new Random();

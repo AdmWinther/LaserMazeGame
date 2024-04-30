@@ -8,6 +8,18 @@ import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * A class that manages the login and registration of users
+ * It reads and writes to the Login.txt file
+ * The Login.txt file contains the username and password of the users
+ * The password is hashed
+ * The Login.txt file is in the format:
+ * username:hashed_password
+ * username:hashed_password
+ * username:hashed_password
+ * @see CampaignProgression
+ * @author Leonard Amsler
+ */
 public class LoginManager {
 
     public static final int SUCCESS = 0;
@@ -21,23 +33,38 @@ public class LoginManager {
     // user2:3857820374534652374
     // user3:1234567890123456789
 
+    /**
+     * An overload for the register method, while the username and password are strings
+     * @author Leonard Amsler
+     */
     public static int register(String username, String password) {
         return register(new UserName(username), new Password(password.hashCode()));
     }
 
+    /**
+     * An overload for the checkLogin method, while the username and password are strings
+     * @author Leonard Amsler
+     */
     public static int checkLogin(String username, String password) {
         return checkLogin(new UserName(username), new Password(password.hashCode()));
     }
 
+    /**
+     * Register a new user to the Login.txt file
+     * @param username of type UserName
+     * @param password of type Password
+     * @return SUCCESS if the user was successfully registered.
+     * @author Leonard Amsler
+     */
     private static int checkLogin(UserName username, Password password) {
         // Get the file, read the file, check if the username and password match
         int output = INCORRECT_LOGIN;
 
-        try (InputStream is = new FileInputStream(path.toString())) {
+        try (InputStream inputStream = new FileInputStream(path.toString())) {
 
-            byte[] buffer = new byte[is.available()];
+            byte[] buffer = new byte[inputStream.available()];
 
-            is.read(buffer);
+            inputStream.read(buffer);
 
             String fileContent = new String(buffer);
 
@@ -59,6 +86,13 @@ public class LoginManager {
         return output;
     }
 
+    /**
+     * Register a new user to the Login.txt file
+     * @param username of type UserName
+     * @param password of type Password
+     * @return SUCCESS if the user was successfully registered.
+     * @author Leonard Amsler
+     */
     private static int register(UserName username, Password password) {
         int output = INCORRECT_REGISTER;
 

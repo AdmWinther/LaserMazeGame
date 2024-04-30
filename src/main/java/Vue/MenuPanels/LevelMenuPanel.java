@@ -2,19 +2,16 @@ package Vue.MenuPanels;
 
 import Controller.GameController;
 import Controller.LoginController;
-import Vue.Constants.JComponentsNames;
+import Vue.Constants.ResourcePaths;
 import Vue.Constants.Style;
-import Vue.Constants.VueFilePaths;
-import Vue.Game.Game;
 import Vue.Handlers.ButtonHoverHandler;
 import Vue.SoundEffects.SoundPaths;
 import Vue.SoundEffects.SoundPlayer;
+import Vue.Utils.FrameUtil;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -33,8 +30,8 @@ public abstract class LevelMenuPanel extends JPanel {
 	protected final GameController gameController;
 	protected final LoginController loginController;
 	protected final ImagePanel backgroundPanel;
-	protected int tileWidth;
-	protected int tileHeight;
+	protected final int tileWidth;
+	protected final int tileHeight;
 
 	/**
 	 * Constructor of the campaign panel class
@@ -49,9 +46,7 @@ public abstract class LevelMenuPanel extends JPanel {
 		this.frame = frame;
 		this.gameController = gameController;
 		this.loginController = loginController;
-
-		// TODO change the tile size depending on the screen size | call gameController.getCurrentGameFrameDimension()
-
+		
 		this.tileHeight = gameController.getCurrentTileDimension().height;
 		this.tileWidth = gameController.getCurrentTileDimension().width;
 
@@ -59,7 +54,7 @@ public abstract class LevelMenuPanel extends JPanel {
 		setLayout(new BorderLayout());
 
 		// Background image
-		ImageIcon backgroundImage = new ImageIcon(VueFilePaths.BACKGROUND_TILE);
+		ImageIcon backgroundImage = new ImageIcon(ResourcePaths.Textures.BACKGROUND_TILE);
 		this.backgroundPanel = new ImagePanel(backgroundImage.getImage(), gameController.getCurrentTileDimension());
 		this.backgroundPanel.setLayout(new BorderLayout());
 		add(backgroundPanel, BorderLayout.CENTER);
@@ -69,13 +64,6 @@ public abstract class LevelMenuPanel extends JPanel {
 
 		this.buttons = getLevelButtonsList();
 		this.backgroundPanel.add(buttons, BorderLayout.CENTER);
-
-		this.addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent e) {
-				resize();
-			}
-		});
 	}
 
 	/**
@@ -88,7 +76,7 @@ public abstract class LevelMenuPanel extends JPanel {
 		JLabel button = new JLabel();
 
 		button.setPreferredSize(gameController.getCurrentTileDimension());
-		ImageIcon icon = new ImageIcon(VueFilePaths.RESET_BUTTON_ICON);
+		ImageIcon icon = new ImageIcon(ResourcePaths.Icons.RESET_BUTTON_ICON);
 		ImageIcon scaledIcon = new ImageIcon(icon.getImage().getScaledInstance(gameController.getCurrentTileDimension().width, gameController.getCurrentTileDimension().height, Image.SCALE_DEFAULT));
 		button.setIcon(scaledIcon);
 		button.setFont(new Font(Style.Font.MONOSPACED, Font.BOLD, tileWidth / 2));
@@ -97,13 +85,12 @@ public abstract class LevelMenuPanel extends JPanel {
 		button.setVerticalAlignment(SwingConstants.CENTER);
 
 		button.setBorder(BorderFactory.createEmptyBorder(Style.Padding.XXL, Style.Padding.XXL, Style.Padding.XXL, Style.Padding.XXL));
-		JPanel thisClass = this;
 
 		button.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseClicked(java.awt.event.MouseEvent e) {
-				SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
-				frame.getContentPane().remove(thisClass);
-				Game.showPanel(frame, JComponentsNames.FrameID.MAIN_MENU);
+				SoundPlayer.play(SoundPaths.BUTTON_CLICK);
+				FrameUtil.createMainMenuIfNotExists(frame, gameController, loginController);
+				FrameUtil.displayMainMenu(frame);
 			}
 		});
 		button.addMouseListener(new ButtonHoverHandler());
@@ -112,40 +99,6 @@ public abstract class LevelMenuPanel extends JPanel {
 	}
 
 	protected abstract JComponent getLevelButtonsList();
-
-	/**
-	 * Resizes the campaign panel
-	 *
-	 * @author Léonard Amsler - s231715
-	 * @author Nathan Gromb - s231674
-	 */
-	public void resize() {
-        /*
-        tileWidth = 100;
-        tileHeight = 100;
-
-        // Set button sizes and positions
-        for (Component component : buttons.getComponents()) {
-            if (component instanceof JLabel button) {
-                ImageIcon icon = new ImageIcon(VueFilePaths.BOARD_TILE);
-                ImageIcon scaledIcon = new ImageIcon(icon.getImage().getScaledInstance(tileWidth, tileHeight, Image.SCALE_DEFAULT));
-                button.setIcon(scaledIcon);
-                button.setFont(new Font(Style.Font.MONOSPACED, Font.BOLD, tileWidth / 2));
-            }
-        }
-
-        // Update back button size and position
-
-        // Set the size and position of the back button
-        backButton.setPreferredSize(gameController.getCurrentTileDimension());
-        JLabel button = backButton;
-        ImageIcon icon = new ImageIcon(VueFilePaths.RESET_BUTTON_ICON);
-        ImageIcon scaledIcon = new ImageIcon(icon.getImage().getScaledInstance(gameController.getCurrentTileDimension().width, gameController.getCurrentTileDimension().height, Image.SCALE_DEFAULT));
-        button.setIcon(scaledIcon);
-        button.setFont(new Font(Style.Font.MONOSPACED, Font.BOLD, tileWidth / 2));
-
-         */
-	}
 
 	/**
 	 * Get the image

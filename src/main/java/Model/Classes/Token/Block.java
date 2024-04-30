@@ -6,9 +6,8 @@ import java.util.Collections;
 import java.util.Set;
 
 /**
- * Block is a class that represents a block token in the game.
- * It blocks any lazer that hits it.
- * A block can never be moved.
+ * A class that represents a block token in the game.
+ * It blocks any laser that hits it.
  */
 public final class Block extends Token {
 
@@ -22,11 +21,20 @@ public final class Block extends Token {
         super(movable);
     }
 
+    /**
+     * Propagate the laser.
+     * @param orientation the orientation of the incoming laser
+     * @return an empty set cause the laser is blocked
+     */
     @Override
     public Set<Orientation> propagateLaser(Orientation orientation) {
         return Collections.emptySet();
     }
 
+    /**
+     * Copy the block.
+     * @return a new block
+     */
     @Override
     public Token copy() {
         return new Block(this.isMovable());

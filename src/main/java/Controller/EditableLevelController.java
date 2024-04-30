@@ -12,9 +12,12 @@ import javax.swing.*;
 /**
  * This class has the responsibility to control the editable level
  *
+ * @author Hugo Demule
+ * @author Nathan Gromb
+ * @author Léonard Amsler
  * @see LevelController
  */
-public class EditableLevelController extends LevelController {
+public class EditableLevelController extends LevelController<EditableLevelPanel, EditableLevel> {
 
     /**
      * Constructor of the EditableLevelController
@@ -47,7 +50,7 @@ public class EditableLevelController extends LevelController {
      * @author Hugo Demule (s231675)
      */
     public void addToUnplacedTokens(Token token) {
-        ((EditableLevel) level).tokenManager().addToUnplacedTokens(token);
+        level.tokenManager().addToUnplacedTokens(token);
     }
 
     /**
@@ -56,13 +59,19 @@ public class EditableLevelController extends LevelController {
      * @return True if the level was saved successfully
      */
     public boolean saveLevel() {
-        ((EditableLevel) level).tokenManager().setPlacedTokensMovability(false);
-        ((EditableLevel) level).tokenManager().setUnplacedTokensMovability(true);
+        level.tokenManager().setPlacedTokensMovability(false);
+        level.tokenManager().setUnplacedTokensMovability(true);
         return DataWriter.write(level, FilePaths.SANDBOX_LEVELS_PATH);
     }
 
+    /**
+     * Get the inventory
+     *
+     * @return Inventory - The inventory
+     * @author Nathan Gromb
+     */
     public Inventory getInventory() {
-        return ((EditableLevel) level).tokenManager().getInventory();
+        return level.tokenManager().getInventory();
     }
 
     /**
@@ -72,6 +81,6 @@ public class EditableLevelController extends LevelController {
      * @author Nathan Gromb (s231674)
      */
     public void removeToken(Token token) {
-        ((EditableLevel) level).tokenManager().removeToken(token);
+        level.tokenManager().removeToken(token);
     }
 }

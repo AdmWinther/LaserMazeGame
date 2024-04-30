@@ -84,11 +84,11 @@ public final class TokenMouseHandler extends AdaptedMouseHandler implements Mous
 		selectedToken = null;
 		tokenDisplay.resetDraggedToken();
 
-		int widthOffset = levelPanel.widthOffset;
-		int heightOffset = levelPanel.heightOffset;
+		int widthOffset = levelPanel.getLevelPanelConfig().getWidthOffset();
+		int heightOffset = levelPanel.getLevelPanelConfig().getHeightOffset();
 
-		int x_coordinate = (e.getX() - widthOffset) / levelPanel.tileWidth;
-		int y_coordinate = (e.getY() - heightOffset) / levelPanel.tileHeight;
+		int x_coordinate = (e.getX() - widthOffset) / levelPanel.getLevelPanelConfig().getTileWidth();
+		int y_coordinate = (e.getY() - heightOffset) / levelPanel.getLevelPanelConfig().getTileHeight();
 
 		int maxWidth = levelController.getWidth();
 		int maxHeight = levelController.getHeight();
@@ -118,8 +118,8 @@ public final class TokenMouseHandler extends AdaptedMouseHandler implements Mous
 			isPressed = true;
 			mouseStartPos = Position.ofEvent(e);
 
-			int boardX = (mouseStartPos.x() - levelPanel.widthOffset) / levelPanel.tileWidth;
-			int boardY = (mouseStartPos.y() - levelPanel.heightOffset) / levelPanel.tileHeight;
+			int boardX = (mouseStartPos.x() - levelPanel.getLevelPanelConfig().getWidthOffset()) / levelPanel.getLevelPanelConfig().getTileWidth();
+			int boardY = (mouseStartPos.y() - levelPanel.getLevelPanelConfig().getHeightOffset()) / levelPanel.getLevelPanelConfig().getTileHeight();
 
 			int boardWidth = levelController.getWidth();
 			int boardHeight = levelController.getHeight();
@@ -182,8 +182,8 @@ public final class TokenMouseHandler extends AdaptedMouseHandler implements Mous
 
 			Position mouseEndPos = Position.ofEvent(e);
 
-			int boardX = (mouseEndPos.x() - levelPanel.widthOffset) / levelPanel.tileWidth;
-			int boardY = (mouseEndPos.y() - levelPanel.heightOffset) / levelPanel.tileHeight;
+			int boardX = (mouseEndPos.x() - levelPanel.getLevelPanelConfig().getWidthOffset()) / levelPanel.getLevelPanelConfig().getTileWidth();
+			int boardY = (mouseEndPos.y() - levelPanel.getLevelPanelConfig().getHeightOffset()) / levelPanel.getLevelPanelConfig().getTileHeight();
 
 			if (selectedToken == null) {
 				return;
@@ -195,8 +195,8 @@ public final class TokenMouseHandler extends AdaptedMouseHandler implements Mous
 
 				// if the selected token is already on the board, move it
 				if (isSelectedPlaced) {
-					int x = (mouseStartPos.x() - levelPanel.widthOffset) / levelPanel.tileWidth;
-					int y = (mouseStartPos.y() - levelPanel.heightOffset) / levelPanel.tileHeight;
+					int x = (mouseStartPos.x() - levelPanel.getLevelPanelConfig().getWidthOffset()) / levelPanel.getLevelPanelConfig().getTileWidth();
+					int y = (mouseStartPos.y() - levelPanel.getLevelPanelConfig().getHeightOffset()) / levelPanel.getLevelPanelConfig().getTileHeight();
 					Coordinate from = new Coordinate(x, y);
 					levelController.moveToken(from, coordinate);
 					// else, place it

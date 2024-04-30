@@ -51,18 +51,19 @@ public class TokensUI extends TokenDisplay {
 
 		Map<Coordinate, Token> placedTokens = levelController.getPlacedTokens();
 
-		int widthOffset = levelPanel.widthOffset;
-		int heightOffset = levelPanel.heightOffset;
+		int widthOffset = levelPanel.getLevelPanelConfig().getWidthOffset();
+		int heightOffset = levelPanel.getLevelPanelConfig().getHeightOffset();
 
 		for (Map.Entry<Coordinate, Token> entry : placedTokens.entrySet()) {
 			Coordinate coordinate = entry.getKey();
 			Token token = entry.getValue();
 
-			int x = widthOffset + coordinate.x() * levelPanel.tileWidth;
-			int y = heightOffset + coordinate.y() * levelPanel.tileHeight;
+			int x = widthOffset + coordinate.x() * levelPanel.getLevelPanelConfig().getTileWidth();
+			int y = heightOffset + coordinate.y() * levelPanel.getLevelPanelConfig().getTileHeight();
 
 			Position position = getTokenPosition(token, Position.of(x, y));
-			drawToken(g2d, token, position, levelPanel.tileWidth, levelPanel.tileHeight);
+
+			drawToken(g2d, token, position, levelPanel.getLevelPanelConfig().getTileWidth(), levelPanel.getLevelPanelConfig().getTileHeight());
 		}
 	}
 
@@ -74,14 +75,14 @@ public class TokensUI extends TokenDisplay {
 	 */
 	private void drawUnplacedTokens(Graphics2D g2d) {
 		// Display the unplaced tokens at the bottom of the screen, centered horizontally
-		int tileWidth = levelPanel.tileWidth;
-		int tileHeight = levelPanel.tileHeight;
+		int tileWidth = levelPanel.getLevelPanelConfig().getTileWidth();
+		int tileHeight = levelPanel.getLevelPanelConfig().getTileHeight();
 
 		Set<Token> unplacedTokens = levelController.getUnplacedTokens();
 
 		int size = unplacedTokens.size();
-		int x = (levelPanel.maxCol - size) / 2 * tileWidth;
-		int y = levelPanel.maxRow * tileHeight - tileHeight;
+		int x = (levelPanel.getLevelPanelConfig().getMaxCol() - size) / 2 * tileWidth;
+		int y = levelPanel.getLevelPanelConfig().getMaxRow() * tileHeight - tileHeight;
 
 		rectangles.clear();
 

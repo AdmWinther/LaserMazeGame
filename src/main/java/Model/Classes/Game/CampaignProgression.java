@@ -8,8 +8,16 @@ import java.nio.file.Paths;
 
 public class CampaignProgression {
 
+    // Path to the file that contains the progression for each user
     private static final Path path = Paths.get("src/main/java/Model/Resources/campaignProgression.txt");
 
+    /**
+     * Save the progression of a user
+     *
+     * @param username the username of the user
+     * @param level    the level of the user
+     * @Author Leonhard Amsler
+     */
     public static void saveProgression(String username, int level) {
         // Get the file, read the file, check if the username and password match
         try (InputStream is = new FileInputStream(path.toString())) {
@@ -45,6 +53,13 @@ public class CampaignProgression {
         }
     }
 
+    /**
+     * Get the progression of a user
+     *
+     * @param username the username of the user
+     * @return the progression of the user as an integer.
+     * @Author Leonhard Amsler
+     */
     public static int getProgression(String username) {
         // Get the file, read the file, check if the username and password match
         int output = -1;
@@ -73,6 +88,12 @@ public class CampaignProgression {
         return output;
     }
 
+    /**
+     * Reset the progression of a user
+     *
+     * @param username the username of the user
+     * @Author Leonhard Amsler
+     */
     public static void resetProgression(String username) {
         try (InputStream is = new FileInputStream(path.toString())) {
 
@@ -101,6 +122,11 @@ public class CampaignProgression {
         }
     }
 
+    /**
+     * Reset the progression of all users. After reset, the user level will be 0.
+     *
+     * @Author Leonhard Amsler
+     */
     public static void resetAllProgression() {
         try (FileOutputStream os = new FileOutputStream(path.toString())) {
             os.write(("").getBytes());

@@ -4,6 +4,7 @@ import Controller.LevelController;
 import Model.Classes.Token.*;
 import Model.Classes.Utils.Orientation;
 import Model.Classes.Utils.Pair;
+import Vue.Constants.ResourcePaths;
 import Vue.Interfaces.Drawable;
 import Vue.Level.LevelPanel;
 import Vue.Utils.Position;
@@ -24,11 +25,14 @@ import java.util.Objects;
  * @see InventoryUI
  */
 public abstract class TokenDisplay implements Drawable {
-	LevelController levelController;
-	Map<String, BufferedImage> tokenImages = new HashMap<>();
-	Map<Pair<String, Orientation>, BufferedImage> orientedTokenImages;
-	Map<Token, Rectangle2D> rectangles;
-	LevelPanel levelPanel;
+	private final static String UNMOVABLE_OVERLAY_KEY = "unmovableTokenBg";
+
+	final LevelController levelController;
+	final Map<String, BufferedImage> tokenImages = new HashMap<>();
+	final Map<Pair<String, Orientation>, BufferedImage> orientedTokenImages;
+	final Map<Token, Rectangle2D> rectangles;
+	final LevelPanel levelPanel;
+
 
 	private Pair<Token, Position> draggedToken;
 
@@ -51,31 +55,33 @@ public abstract class TokenDisplay implements Drawable {
 	private void setTokenImages() {
 		try {
 			// 1. Load the images for the tokens
-			BufferedImage beamerImageUP = readImage("/Tokens/lasergun_UP.png");
-			BufferedImage beamerImageDOWN = readImage("/Tokens/lasergun_DOWN.png");
-			BufferedImage beamerImageLEFT = readImage("/Tokens/lasergun_LEFT.png");
-			BufferedImage beamerImageRIGHT = readImage("/Tokens/lasergun_RIGHT.png");
+			BufferedImage beamerImageUP = readImage(ResourcePaths.Tokens.LaserGun.UP);
+			BufferedImage beamerImageDOWN = readImage(ResourcePaths.Tokens.LaserGun.DOWN);
+			BufferedImage beamerImageLEFT = readImage(ResourcePaths.Tokens.LaserGun.LEFT);
+			BufferedImage beamerImageRIGHT = readImage(ResourcePaths.Tokens.LaserGun.RIGHT);
 
-			BufferedImage blockerImage = readImage("/Tokens/block.png");
+			BufferedImage blockerImage = readImage(ResourcePaths.Tokens.BLOCK);
 
-			BufferedImage mirrorImageUP = readImage("/Tokens/mirror_UP.png");
-			BufferedImage mirrorImageDOWN = readImage("/Tokens/mirror_DOWN.png");
-			BufferedImage mirrorImageLEFT = readImage("/Tokens/mirror_LEFT.png");
-			BufferedImage mirrorImageRIGHT = readImage("/Tokens/mirror_RIGHT.png");
+			BufferedImage mirrorImageUP = readImage(ResourcePaths.Tokens.Mirror.UP);
+			BufferedImage mirrorImageDOWN = readImage(ResourcePaths.Tokens.Mirror.DOWN);
+			BufferedImage mirrorImageLEFT = readImage(ResourcePaths.Tokens.Mirror.LEFT);
+			BufferedImage mirrorImageRIGHT = readImage(ResourcePaths.Tokens.Mirror.RIGHT);
 
-			BufferedImage doubleMirrorImageUPDOWN = readImage("/Tokens/doubleMirror_UD.png");
-			BufferedImage doubleMirrorImageLEFTRIGHT = readImage("/Tokens/doubleMirror_RL.png");
+			BufferedImage doubleMirrorImageUP_DOWN = readImage(ResourcePaths.Tokens.DoubleMirror.UP_DOWN);
+			BufferedImage doubleMirrorImageRIGHT_LEFT = readImage(ResourcePaths.Tokens.DoubleMirror.RIGHT_LEFT);
 
-			BufferedImage targetImageUP = readImage("/Tokens/target_UP.png");
-			BufferedImage targetImageDOWN = readImage("/Tokens/target_DOWN.png");
-			BufferedImage targetImageLEFT = readImage("/Tokens/target_LEFT.png");
-			BufferedImage targetImageRIGHT = readImage("/Tokens/target_RIGHT.png");
+			BufferedImage targetImageUP = readImage(ResourcePaths.Tokens.Target.UP);
+			BufferedImage targetImageDOWN = readImage(ResourcePaths.Tokens.Target.DOWN);
+			BufferedImage targetImageLEFT = readImage(ResourcePaths.Tokens.Target.LEFT);
+			BufferedImage targetImageRIGHT = readImage(ResourcePaths.Tokens.Target.RIGHT);
 
-			BufferedImage splitterImageLEFTRIGHT = readImage("/Tokens/splitter_RL.png");
-			BufferedImage splitterImageUPDOWN = readImage("/Tokens/splitter_UD.png");
+			BufferedImage splitterImageUP_DOWN = readImage(ResourcePaths.Tokens.Splitter.UP_DOWN);
+			BufferedImage splitterImageRIGHT_LEFT = readImage(ResourcePaths.Tokens.Splitter.RIGHT_LEFT);
 
-			BufferedImage checkpointLEFTRIGHT = readImage("/Tokens/checkpoint_RL.png");
-			BufferedImage checkpointUPDOWN = readImage("/Tokens/checkpoint_UD.png");
+			BufferedImage checkpointRIGHT_LEFT = readImage(ResourcePaths.Tokens.Checkpoint.RIGHT_LEFT);
+			BufferedImage checkpointUP_DOWN = readImage(ResourcePaths.Tokens.Checkpoint.UP_DOWN);
+
+			BufferedImage unmovableTokenBg = readImage(ResourcePaths.Textures.UNMOVABLE_OVERLAY);
 
 			// 2. Store the images in the maps
 			String beamerClassName = LaserGun.class.getSimpleName();
@@ -88,16 +94,17 @@ public abstract class TokenDisplay implements Drawable {
 			putOrientedTokenImage(mirrorImageUP, mirrorImageDOWN, mirrorImageLEFT, mirrorImageRIGHT, mirrorClassName);
 
 			String doubleMirrorClassName = DoubleSidedMirror.class.getSimpleName();
-			putOrientedTokenImage(doubleMirrorImageUPDOWN, doubleMirrorImageUPDOWN, doubleMirrorImageLEFTRIGHT, doubleMirrorImageLEFTRIGHT, doubleMirrorClassName);
+			putOrientedTokenImage(doubleMirrorImageUP_DOWN, doubleMirrorImageUP_DOWN, doubleMirrorImageRIGHT_LEFT, doubleMirrorImageRIGHT_LEFT, doubleMirrorClassName);
 
 			String targetClassName = Target.class.getSimpleName();
 			putOrientedTokenImage(targetImageUP, targetImageDOWN, targetImageLEFT, targetImageRIGHT, targetClassName);
 
 			String splitterClassName = Splitter.class.getSimpleName();
-			putOrientedTokenImage(splitterImageUPDOWN, splitterImageUPDOWN, splitterImageLEFTRIGHT, splitterImageLEFTRIGHT, splitterClassName);
+			putOrientedTokenImage(splitterImageUP_DOWN, splitterImageUP_DOWN, splitterImageRIGHT_LEFT, splitterImageRIGHT_LEFT, splitterClassName);
 
 			String checkpointClassName = Checkpoint.class.getSimpleName();
-			putOrientedTokenImage(checkpointUPDOWN, checkpointUPDOWN, checkpointLEFTRIGHT, checkpointLEFTRIGHT, checkpointClassName);
+			putOrientedTokenImage(checkpointUP_DOWN, checkpointUP_DOWN, checkpointRIGHT_LEFT, checkpointRIGHT_LEFT, checkpointClassName);
+			tokenImages.put(UNMOVABLE_OVERLAY_KEY, unmovableTokenBg);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -154,7 +161,7 @@ public abstract class TokenDisplay implements Drawable {
 			int x = draggedToken.second().x();
 			int y = draggedToken.second().y();
 
-			return Position.of(x - levelPanel.tileWidth / 2, y - levelPanel.tileHeight / 2);
+			return Position.of(x - levelPanel.getLevelPanelConfig().getTileWidth() / 2, y - levelPanel.getLevelPanelConfig().getTileHeight() / 2);
 		}
 
 		return Position.of(realPos.x(), realPos.y());
@@ -200,6 +207,11 @@ public abstract class TokenDisplay implements Drawable {
 			tokenImage = orientedTokenImages.get(new Pair<>(tokenClassName, orientation));
 		} else {
 			tokenImage = tokenImages.get(tokenClassName);
+		}
+
+		if (!token.isMovable()) {
+			BufferedImage unmovableOverlay = tokenImages.get(UNMOVABLE_OVERLAY_KEY);
+			g2d.drawImage(unmovableOverlay, pos.x(), pos.y(), tileWidth, tileHeight, null);
 		}
 
 		g2d.drawImage(tokenImage, pos.x(), pos.y(), tileWidth, tileHeight, null);

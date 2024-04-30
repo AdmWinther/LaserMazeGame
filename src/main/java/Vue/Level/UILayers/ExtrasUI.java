@@ -5,7 +5,9 @@ import Model.Classes.Token.Token;
 import Vue.Interfaces.Drawable;
 import Vue.Level.EditableLevelPanel;
 import Vue.Level.LevelPanel;
-import Vue.SoundEffects.Sound;
+import Vue.SoundEffects.SoundPaths;
+import Vue.SoundEffects.SoundPlayer;
+import Vue.Utils.FrameUtil;
 import Vue.Utils.Position;
 
 import javax.imageio.ImageIO;
@@ -25,7 +27,7 @@ import java.util.Objects;
  */
 public class ExtrasUI implements Drawable {
 
-    private final LevelPanel levelPanel;
+    public final LevelPanel levelPanel;
     private final Map<String, Rectangle2D> placedObjects;
     private final Map<String, BufferedImage> objectImages;
 
@@ -86,14 +88,14 @@ public class ExtrasUI implements Drawable {
      * @author Léonard Amsler - s231715
      */
     public void setPlacedObjects() {
-        int width = levelPanel.screenWidth;
-        int height = levelPanel.screenHeight;
-        double rightPadding = levelPanel.tileWidth * 1.5;
+        int width = levelPanel.getLevelPanelConfig().getScreenWidth();
+        int height = levelPanel.getLevelPanelConfig().getScreenHeight();
+        double rightPadding = levelPanel.getLevelPanelConfig().getTileWidth() * 1.5;
 
         // Place chest on the right side of the screen
-        placeObject("chest", (int) (width - rightPadding), height / 2 - levelPanel.tileHeight / 2);
+        placeObject("chest", (int) (width - rightPadding), height / 2 - levelPanel.getLevelPanelConfig().getTileHeight() / 2);
 
-        rightPadding = levelPanel.tileWidth;
+        rightPadding = levelPanel.getLevelPanelConfig().getTileWidth();
         // Place reset button in the top right corner of the screen
         placeObject("reset", (int) (width - rightPadding), 0);
         // Place back button On the left side of the reset button
@@ -109,22 +111,10 @@ public class ExtrasUI implements Drawable {
      * @author Léonard Amsler - s231715
      */
     public void placeObject(String objectName, int x, int y) {
-        int width = levelPanel.tileWidth;
-        int height = levelPanel.tileHeight;
+        int width = levelPanel.getLevelPanelConfig().getTileWidth();
+        int height = levelPanel.getLevelPanelConfig().getTileHeight();
 
         placedObjects.put(objectName, new Rectangle(x, y, width, height));
-    }
-
-    /**
-     * Draw the bingo object on the screen
-     *
-     * @param g2d The 2d graphics object
-     * @Author Adam
-     */
-    public void drawBingo(Graphics2D g2d) {
-        int x = Math.floorDiv((levelPanel.maxCol - 3) * levelPanel.tileWidth, 2);
-        int y = Math.floorDiv((levelPanel.maxRow - 1) * levelPanel.tileHeight, 2);
-        g2d.drawImage(objectImages.get("bingo"), x, y, 3 * levelPanel.tileWidth, levelPanel.tileHeight, null);
     }
 
     /**
@@ -186,15 +176,17 @@ public class ExtrasUI implements Drawable {
     public void handleClick(Position pos) {
         Rectangle2D reset = placedObjects.get("reset");
         if (reset.contains(pos.x(), pos.y())) {
-            Sound.playButtonSound();
-            levelPanel.levelController.resetLevel();
+            SoundPlayer.play(SoundPaths.BUTTON_CLICK);
+            levelPanel.getLevelController().resetLevel();
         }
 
         Rectangle2D back = placedObjects.get("back");
         if (back.contains(pos.x(), pos.y())) {
-            Sound.playButtonSound();
+            SoundPlayer.play(SoundPaths.BUTTON_CLICK);
             if (levelPanel instanceof EditableLevelPanel) {
                 ((EditableLevelPanel) levelPanel).saveLevel();
+                FrameUtil.createSandboxMenuIfNotExists(levelPanel.getFrame(), levelPanel.getGameController(), levelPanel.getLoginController());
+                FrameUtil.refreshSandboxMenu(levelPanel.getFrame(), levelPanel.getGameController(), levelPanel.getLoginController());
             }
             levelPanel.exitLevel();
         }

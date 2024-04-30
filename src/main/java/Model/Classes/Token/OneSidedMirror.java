@@ -5,6 +5,9 @@ import Model.Classes.Utils.Orientation;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Class that represents a one-sided mirror token
+ */
 public class OneSidedMirror extends OrientedToken {
     public OneSidedMirror(boolean isMovable, Orientation orientation) {
         super(isMovable, orientation);
@@ -16,6 +19,12 @@ public class OneSidedMirror extends OrientedToken {
     Situation \. is considered DOWN
     */
 
+    /**
+     * Propagates the laser. Gives the direction of the laser after hitting the token
+     * @return a set of Orientation as propagation of the laser
+     * @param incomingLaserOrientation the orientation of the incoming laser
+     * @author Adam Winther
+     */
     @Override
     public Set<Orientation> propagateLaser(Orientation incomingLaserOrientation) {
         HashSet<Orientation> propagatedLaser = new HashSet<Orientation>();
@@ -47,6 +56,12 @@ public class OneSidedMirror extends OrientedToken {
         return propagatedLaser;
     }
 
+    /**
+     * Method that returns a copy of the One-Sided Mirror token
+     *
+     * @return a copy of the One-Sided Mirror token
+     * @author Nathan Gromb
+     */
     @Override
     public Token copy() {
         return new OneSidedMirror(this.isMovable(), this.getOrientation());
