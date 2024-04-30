@@ -5,6 +5,7 @@ import Model.Classes.Level.LevelBuilder;
 import Model.Classes.Level.LevelID;
 import Model.Classes.Utils.DataReader;
 import Vue.Game.Game;
+import Vue.Level.LevelType;
 
 import java.awt.*;
 import java.util.List;
@@ -32,9 +33,9 @@ public class GameController {
     private Level currentLevel;
 
     /**
-     * Is in campaign game mode
+     * The level type
      */
-    private boolean isInCampaignGameMode = false;
+    private LevelType levelType;
 
     /**
      * Constructor of the GameController
@@ -87,29 +88,28 @@ public class GameController {
     /**
      * Turn on the campaign game mode
      *
-     * @author Adam Hossein (s240844)
+     * @author Léonard Amsler (s231715)
      */
     public void turnOnCampaignGameMode() {
-        this.isInCampaignGameMode = true;
+        this.levelType = LevelType.CAMPAIGN;
     }
 
     /**
-     * Turn off the campaign game mode
+     * Turn on the sandbox game mode
      *
-     * @author Adam Hossein (s240844)
+     * @author Léonard Amsler (s231715)
      */
-    public void turnOffCampaignGameMode() {
-        this.isInCampaignGameMode = false;
+    public void turnOnSandboxGameMode() {
+        this.levelType = LevelType.SANDBOX;
     }
 
     /**
-     * Check if the game is in campaign game mode
+     * Turn on the random game mode
      *
-     * @return boolean - True if the game is in campaign game mode, false otherwise
-     * @author Adam Hossein (s240844)
+     * @Author Léonard Amsler (s231715)
      */
-    public boolean isInCampaignGameMode() {
-        return this.isInCampaignGameMode;
+    public void turnOnRandomGameMode() {
+        this.levelType = LevelType.RANDOM;
     }
 
     /**
@@ -132,4 +132,7 @@ public class GameController {
         return game.getCurrentTileDimension();
     }
 
+    public LevelType getLevelType() {
+        return levelType;
+    }
 }

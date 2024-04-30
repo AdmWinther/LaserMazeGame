@@ -1,0 +1,20 @@
+{
+    "unplacedTokens": [
+        {
+            "orientation": "RIGHT",
+            "tokenId": "OneSidedMirror_2054499685",
+            "type": "OneSidedMirror"
+        },
+        {
+            "orientation": "RIGHT",
+            "tokenId": "Checkpoint_2126295147",
+            "type": "Checkpoint"
+        }
+    ],
+    "boardSize": {
+        "widthX": 7,
+        "heightY": 7
+    },
+    "name": "Sandbox Level | 2024-04-30 13:47:57",
+    "placedTokens": []
+}

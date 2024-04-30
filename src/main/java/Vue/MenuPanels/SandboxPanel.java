@@ -6,13 +6,12 @@ import Controller.LoginController;
 import Model.Classes.Level.LevelID;
 import Model.Classes.Utils.DataReader;
 import Model.Classes.Utils.DataWriter;
-import Vue.Constants.JComponentsNames;
 import Vue.Constants.Style;
 import Vue.Constants.VueFilePaths;
-import Vue.Game.Game;
 import Vue.Handlers.ButtonHoverHandler;
 import Vue.SoundEffects.SoundPaths;
 import Vue.SoundEffects.SoundPlayer;
+import Vue.Utils.FrameUtil;
 import Vue.Utils.ImageUtil;
 
 import javax.swing.*;
@@ -295,22 +294,9 @@ public class SandboxPanel extends LevelMenuPanel {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                refresh();
+                FrameUtil.refreshSandboxMenu(frame, gameController, loginController);
             }
         });
         return deleteButton;
-    }
-
-    /**
-     * Refreshes the sandbox panel
-     *
-     * @author Hugo Demule
-     */
-    public void refresh() {
-        frame.add(new SandboxPanel(frame, gameController, loginController), JComponentsNames.FrameID.SANDBOX_LEVELS);
-        frame.getContentPane().remove(this);
-        frame.revalidate();
-        Game.showPanel(frame, JComponentsNames.FrameID.SANDBOX_LEVELS);
-        frame.repaint();
     }
 }

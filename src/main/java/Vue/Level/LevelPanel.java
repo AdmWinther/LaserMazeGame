@@ -3,7 +3,6 @@ package Vue.Level;
 import Controller.GameController;
 import Controller.LevelController;
 import Controller.LoginController;
-import Vue.Constants.JComponentsNames;
 import Vue.Handlers.LevelMouseHandler;
 import Vue.Handlers.TokenKeyboardHandler;
 import Vue.Handlers.TokenMouseHandler;
@@ -11,16 +10,13 @@ import Vue.Level.UILayers.ExtrasUI;
 import Vue.Level.UILayers.LaserUI;
 import Vue.Level.UILayers.TilesUI;
 import Vue.Level.UILayers.TokensUI;
-import Vue.MenuPanels.CampaignPanel;
-import Vue.MenuPanels.SandboxPanel;
+import Vue.Utils.FrameUtil;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.Timer;
-
-import static Vue.Game.Game.showPanel;
 
 public abstract class LevelPanel extends JPanel implements Runnable {
 
@@ -57,14 +53,14 @@ public abstract class LevelPanel extends JPanel implements Runnable {
     // Offsets, number of pixels to the top left corner of the level board
     public int widthOffset;
     public int heightOffset;
+    public JFrame frame;
+    public GameController gameController;
     int HScale = 3;
     public int tileWidth = originalTileSize * HScale;
     int VScale = 3;
     public int tileHeight = originalTileSize * VScale;
     // Thread
     Thread gameThread;
-    JFrame frame;
-    GameController gameController;
     private Timer timer;
 
 
@@ -230,27 +226,23 @@ public abstract class LevelPanel extends JPanel implements Runnable {
     }
 
     public void exitLevel() {
-        if (gameController.isInCampaignGameMode()) {
-            displayCampaignMenu(frame);
-        } else {
-            displaySandboxMenu(frame);
+        FrameUtil.removeLevel(frame);
+
+        switch (gameController.getLevelType()) {
+            case CAMPAIGN -> {
+                FrameUtil.createCampaignMenuIfNotExists(frame, gameController, loginController);
+                FrameUtil.displayCampaignMenu(frame);
+            }
+            case SANDBOX -> {
+                FrameUtil.createSandboxMenuIfNotExists(frame, gameController, loginController);
+                FrameUtil.refreshSandboxMenu(frame, gameController, loginController);
+                FrameUtil.displaySandboxMenu(frame);
+            }
+            case RANDOM -> {
+                FrameUtil.createMainMenuIfNotExists(frame, gameController, loginController);
+                FrameUtil.displayMainMenu(frame);
+            }
         }
-    }
-
-    public void displayCampaignMenu(JFrame frame) {
-        gameController.turnOnCampaignGameMode();
-        CampaignPanel campaignPanel = new CampaignPanel(frame, gameController, loginController);
-        frame.add(campaignPanel, JComponentsNames.FrameID.CAMPAIGN_LEVELS);
-        showPanel(frame, JComponentsNames.FrameID.CAMPAIGN_LEVELS);
-        frame.pack();
-    }
-
-    public void displaySandboxMenu(JFrame frame) {
-        gameController.turnOffCampaignGameMode();
-        SandboxPanel sandboxPanel = new SandboxPanel(frame, gameController, loginController);
-        frame.add(sandboxPanel, JComponentsNames.FrameID.SANDBOX_LEVELS);
-        showPanel(frame, JComponentsNames.FrameID.SANDBOX_LEVELS);
-        frame.pack();
     }
 
 }

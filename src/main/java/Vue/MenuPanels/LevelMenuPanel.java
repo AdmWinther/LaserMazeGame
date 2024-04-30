@@ -9,10 +9,13 @@ import Vue.Game.Game;
 import Vue.Handlers.ButtonHoverHandler;
 import Vue.SoundEffects.SoundPaths;
 import Vue.SoundEffects.SoundPlayer;
+import Vue.Utils.FrameUtil;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -93,8 +96,8 @@ public abstract class LevelMenuPanel extends JPanel {
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent e) {
                 SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
-                frame.getContentPane().remove(thisClass);
-                Game.showPanel(frame, JComponentsNames.FrameID.MAIN_MENU);
+                FrameUtil.createMainMenuIfNotExists(frame, gameController, loginController);
+                FrameUtil.displayMainMenu(frame);
             }
         });
         button.addMouseListener(new ButtonHoverHandler());

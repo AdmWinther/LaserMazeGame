@@ -4,10 +4,10 @@ import Model.Classes.Level.EditableLevel;
 import Model.Classes.Level.LevelID;
 import Model.Classes.Level.PlayableLevel;
 import Vue.Constants.JComponentsNames;
-import Vue.Game.Game;
 import Vue.Level.EditableLevelPanel;
 import Vue.Level.LevelPanel;
 import Vue.Level.PlayableLevelPanel;
+import Vue.Utils.FrameUtil;
 
 import javax.swing.*;
 
@@ -25,7 +25,7 @@ public class LevelPreparation {
      * @author Léonard Amsler - s231715
      */
     public static void preparePlayableLevel(LevelID levelID, JFrame frame, GameController gameController, LoginController loginController) {
-        prepareLevel(levelID, frame, gameController, false, loginController, JComponentsNames.FrameID.CAMPAIGN_LEVELS);
+        prepareLevel(levelID, frame, gameController, false, loginController);
     }
 
     /**
@@ -36,10 +36,9 @@ public class LevelPreparation {
      * @param gameController  The game controller
      * @param editable        Is the level editable
      * @param loginController The login controller
-     * @param frameID         The frame ID
      * @author Léonard Amsler - s231715
      */
-    private static void prepareLevel(LevelID levelID, JFrame frame, GameController gameController, boolean editable, LoginController loginController, String frameID) {
+    private static void prepareLevel(LevelID levelID, JFrame frame, GameController gameController, boolean editable, LoginController loginController) {
         gameController.setCurrentLevelID(levelID, editable);
 
         LevelController levelController;
@@ -55,9 +54,8 @@ public class LevelPreparation {
             levelController.setLevelPanel(levelPanel);
         }
 
-        frame.add(levelPanel, frameID);
-        Game.showPanel(frame, frameID);
-        frame.pack();
+        FrameUtil.addLevelPanel(frame, levelPanel, JComponentsNames.FrameID.LEVEL);
+        FrameUtil.displayLevel(frame, JComponentsNames.FrameID.LEVEL);
     }
 
     /**
@@ -80,7 +78,7 @@ public class LevelPreparation {
      * @author Hugo Demule (s231675)
      */
     public static void prepareEditableLevel(LevelID levelID, JFrame frame, GameController gameController) {
-        prepareLevel(levelID, frame, gameController, true, null, JComponentsNames.FrameID.SANDBOX_LEVELS);
+        prepareLevel(levelID, frame, gameController, true, null);
     }
 
 }

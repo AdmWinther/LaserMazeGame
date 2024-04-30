@@ -6,9 +6,9 @@ public class JComponentsNames {
     public static final class FrameID {
         public static final String LOGIN = "LoginMenu";
         public static final String MAIN_MENU = "MainMenu";
-        public static final String CAMPAIGN_LEVELS = "CampaignLevels";
-        public static final String SANDBOX_LEVELS = "SandboxLevels";
-
+        public static final String CAMPAIGN_MENU = "CampaignMenu";
+        public static final String SANDBOX_MENU = "SandboxMenu";
+        public static final String LEVEL = "Level";
     }
 
     public static final class Label {
