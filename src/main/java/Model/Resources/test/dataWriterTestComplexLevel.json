@@ -2,13 +2,13 @@
     "unplacedTokens": [
         {
             "orientation": "UP",
-            "tokenId": "DoubleSidedMirror_1026871825",
-            "type": "DoubleSidedMirror"
+            "tokenId": "OneSidedMirror_1433666880",
+            "type": "OneSidedMirror"
         },
         {
             "orientation": "UP",
-            "tokenId": "OneSidedMirror_2109798150",
-            "type": "OneSidedMirror"
+            "tokenId": "DoubleSidedMirror_938545229",
+            "type": "DoubleSidedMirror"
         }
     ],
     "boardSize": {
@@ -19,7 +19,7 @@
     "placedTokens": [
         {
             "orientation": "UP",
-            "tokenId": "LaserGun_1867139015",
+            "tokenId": "LaserGun_2001223946",
             "position": {
                 "x": 0,
                 "y": 0
@@ -28,7 +28,7 @@
         },
         {
             "orientation": "DOWN",
-            "tokenId": "Target_182531396",
+            "tokenId": "Target_1946645411",
             "position": {
                 "x": 4,
                 "y": 4

@@ -417,7 +417,6 @@ public class FlexibleTokenManager implements TokenManager {
     public void removeToken(Token token) {
         if (token == null)
             return;
-
         if (unplacedTokens.contains(token)) {
             removeFromUnplacedTokens(token);
         } else {

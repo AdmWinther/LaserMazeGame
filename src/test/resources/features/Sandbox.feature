@@ -40,6 +40,22 @@ Feature: Creating a level in sandbox mode
     Then the board should still contain one laser gun
     And the deck should be empty
 
+  Scenario: Move token from board to deck
+    Given I have a sandbox level and a mirror token placed at (0 0)
+    When I move the mirror token in the deck
+    Then the board should be empty
+    And the deck should contain the mirror
+
+  Scenario: Removing token from the board
+    Given I have a sandbox level and a mirror token placed at (0 0)
+    When I remove the mirror at (0 0)
+    Then the board should be empty
+
+    Scenario: Reseting the level:
+      Given I have a sandbox level and a mirror token placed at (0 0)
+      When I reset the level
+      Then the board should be empty
+      And the deck should contain the mirror
 
 
 
