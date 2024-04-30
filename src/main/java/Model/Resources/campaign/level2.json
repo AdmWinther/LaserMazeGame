@@ -2,33 +2,51 @@
   "unplacedTokens": [
     {
       "orientation": "UP",
-      "tokenId": "DoubleSidedMirror_1389133897",
-      "type": "DoubleSidedMirror"
+      "tokenId": "LaserGun_664223387",
+      "type": "LaserGun"
     }
   ],
   "boardSize": {
     "widthX": 6,
     "heightY": 6
   },
-  "name": "beginner_1",
+  "name": "level2",
   "placedTokens": [
     {
-      "orientation": "DOWN",
-      "tokenId": "LaserGun_2129789493",
+      "orientation": "RIGHT",
+      "tokenId": "OneSidedMirror_317574433",
       "position": {
-        "x": 1,
-        "y": 1
+        "x": 0,
+        "y": 4
       },
-      "type": "LaserGun"
+      "type": "OneSidedMirror"
+    },
+    {
+      "orientation": "UP",
+      "tokenId": "OneSidedMirror_885284298",
+      "position": {
+        "x": 0,
+        "y": 5
+      },
+      "type": "OneSidedMirror"
     },
     {
       "orientation": "LEFT",
-      "tokenId": "Target_317574433",
+      "tokenId": "Target_2129789493",
       "position": {
-        "x": 4,
-        "y": 4
+        "x": 1,
+        "y": 5
       },
       "type": "Target"
+    },
+    {
+      "orientation": "DOWN",
+      "tokenId": "OneSidedMirror_1389133897",
+      "position": {
+        "x": 5,
+        "y": 4
+      },
+      "type": "OneSidedMirror"
     }
   ]
 }
