@@ -113,17 +113,26 @@ public final class PlayableLevelPanel extends LevelPanel {
 						switch (gameController.getLevelType()) {
 							case CAMPAIGN:
 								//if in the campaign mode, it should go to the next level.
-								int campaignProgression = loginController.getCampaignProgress();
-								LevelID currentLevel = gameController.getCurrentLevelID();
-								LevelID campaignProgressionLevelID = DataReader.readCampaignLevelIDs().get(campaignProgression - 1);
-								if (currentLevel.equals(campaignProgressionLevelID)) {
+								LevelID currentLevelID = gameController.getCurrentLevelID();
+
+								List<LevelID> levelIDs = DataReader.readCampaignLevelIDs();
+								int currentLevelIndex = levelIDs.indexOf(currentLevelID);
+								if (currentLevelIndex >= levelIDs.size() - 1) {
+									FrameUtil.removeLevel(frame);
+									FrameUtil.createMainMenuIfNotExists(frame, gameController, loginController);
+									FrameUtil.displayMainMenu(frame);
+									break;
+								}
+
+								LevelID campaignProgressionLevelID = levelIDs.get(currentLevelIndex + 1);
+								if (currentLevelID.equals(campaignProgressionLevelID)) {
 									loginController.incrementProgression();
 								}
-								List<LevelID> levelIDs = DataReader.readCampaignLevelIDs();
-								int index = levelIDs.indexOf(currentLevel);
+								int index = levelIDs.indexOf(currentLevelID);
 								LevelID nextLevelID = levelIDs.get(index + 1);
-								FrameUtil.removeLevel(frame);
-								preparePlayableLevel(nextLevelID, frame, gameController, loginController);
+
+								PlayableLevelPanel nextLevelPanel = preparePlayableLevel(nextLevelID, frame, gameController, loginController);
+								nextLevelPanel.getAnimationsUI().invertedCircle(Color.BLACK);
 								break;
 							case RANDOM:
 								FrameUtil.removeLevel(frame);
@@ -137,12 +146,16 @@ public final class PlayableLevelPanel extends LevelPanel {
 								break;
 						}
 					}
-				}, 4000);
+				}, 3000);
 			}
 		}
 	}
 
 	public ExtrasUI getExtrasUI() {
 		return extrasUI;
+	}
+
+	public AnimationsUI getAnimationsUI() {
+		return animationsUI;
 	}
 }

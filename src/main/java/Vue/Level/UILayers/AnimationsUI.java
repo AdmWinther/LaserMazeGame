@@ -86,7 +86,14 @@ public class AnimationsUI implements Drawable {
 	 * @author Nathan Gromb
 	 */
 	public void circle(Color color) {
-		Animation circle = new CircleAnimation(levelPanel, color);
+		Animation circle = new CircleAnimation(levelPanel, color, false);
+		queue.add(circle);
+
+		circle.start();
+	}
+
+	public void invertedCircle(Color color) {
+		Animation circle = new CircleAnimation(levelPanel, color, true);
 		queue.add(circle);
 
 		circle.start();
