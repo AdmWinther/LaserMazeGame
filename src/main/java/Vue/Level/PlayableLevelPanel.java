@@ -7,8 +7,8 @@ import Model.Classes.Level.LevelID;
 import Model.Classes.Utils.DataReader;
 import Vue.Level.UILayers.AnimationsUI;
 import Vue.Level.UILayers.ExtrasUI;
-import Vue.MenuPanels.MainMenuPanel;
 import Vue.SoundEffects.Sound;
+import Vue.Utils.FrameUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +17,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import static Controller.LevelPreparation.preparePlayableLevel;
-import static Vue.Game.Game.showPanel;
 
 
 public final class PlayableLevelPanel extends LevelPanel {
@@ -63,26 +62,32 @@ public final class PlayableLevelPanel extends LevelPanel {
                     @Override
                     public void run() {
                         gameThread = null;
-                        if (gameController.isInCampaignGameMode()) {
 
-                            //if in the campaign mode, it should go to the next level.
-                            int campaignProgression = loginController.getCampaignProgress();
-                            LevelID currentLevel = gameController.getCurrentLevelID();
-                            LevelID campaignProgressionLevelID = DataReader.readCampaignLevelIDs().get(campaignProgression - 1);
-                            if (currentLevel.equals(campaignProgressionLevelID)) {
-                                loginController.incrementProgression();
-                            }
-                            List<LevelID> levelIDs = DataReader.readCampaignLevelIDs();
-                            int index = levelIDs.indexOf(currentLevel);
-                            LevelID nextLevelID = levelIDs.get(index + 1);
-                            preparePlayableLevel(nextLevelID, frame, gameController, loginController);
-
-                        } else {
-                            //if we are in Random level mode
-                            MainMenuPanel mainMenuPanel = new MainMenuPanel(frame, gameController, loginController);
-                            frame.add(mainMenuPanel, "MainMenu");
-                            showPanel(frame, "MainMenu");
-                            frame.pack();
+                        switch (gameController.getLevelType()) {
+                            case CAMPAIGN:
+                                //if in the campaign mode, it should go to the next level.
+                                int campaignProgression = loginController.getCampaignProgress();
+                                LevelID currentLevel = gameController.getCurrentLevelID();
+                                LevelID campaignProgressionLevelID = DataReader.readCampaignLevelIDs().get(campaignProgression - 1);
+                                if (currentLevel.equals(campaignProgressionLevelID)) {
+                                    loginController.incrementProgression();
+                                }
+                                List<LevelID> levelIDs = DataReader.readCampaignLevelIDs();
+                                int index = levelIDs.indexOf(currentLevel);
+                                LevelID nextLevelID = levelIDs.get(index + 1);
+                                FrameUtil.removeLevel(frame);
+                                preparePlayableLevel(nextLevelID, frame, gameController, loginController);
+                                break;
+                            case RANDOM:
+                                FrameUtil.removeLevel(frame);
+                                FrameUtil.createMainMenuIfNotExists(frame, gameController, loginController);
+                                FrameUtil.displayMainMenu(frame);
+                                break;
+                            case SANDBOX:
+                                FrameUtil.removeLevel(frame);
+                                FrameUtil.createSandboxMenuIfNotExists(frame, gameController, loginController);
+                                FrameUtil.displaySandboxMenu(frame);
+                                break;
                         }
                     }
 

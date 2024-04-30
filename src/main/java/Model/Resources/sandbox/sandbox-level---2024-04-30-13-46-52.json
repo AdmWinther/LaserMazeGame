@@ -1,0 +1,20 @@
+{
+    "unplacedTokens": [
+        {
+            "orientation": "RIGHT",
+            "tokenId": "Splitter_1574355727",
+            "type": "Splitter"
+        },
+        {
+            "orientation": "RIGHT",
+            "tokenId": "Target_1100940626",
+            "type": "Target"
+        }
+    ],
+    "boardSize": {
+        "widthX": 7,
+        "heightY": 7
+    },
+    "name": "Sandbox Level | 2024-04-30 13:46:52",
+    "placedTokens": []
+}

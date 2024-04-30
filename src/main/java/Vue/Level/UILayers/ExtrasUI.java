@@ -6,6 +6,7 @@ import Vue.Interfaces.Drawable;
 import Vue.Level.EditableLevelPanel;
 import Vue.Level.LevelPanel;
 import Vue.SoundEffects.Sound;
+import Vue.Utils.FrameUtil;
 import Vue.Utils.Position;
 
 import javax.imageio.ImageIO;
@@ -25,7 +26,7 @@ import java.util.Objects;
  */
 public class ExtrasUI implements Drawable {
 
-    private final LevelPanel levelPanel;
+    public final LevelPanel levelPanel;
     private final Map<String, Rectangle2D> placedObjects;
     private final Map<String, BufferedImage> objectImages;
 
@@ -195,6 +196,7 @@ public class ExtrasUI implements Drawable {
             Sound.playButtonSound();
             if (levelPanel instanceof EditableLevelPanel) {
                 ((EditableLevelPanel) levelPanel).saveLevel();
+                FrameUtil.createSandboxMenuIfNotExists(levelPanel.frame, levelPanel.gameController, levelPanel.loginController);
             }
             levelPanel.exitLevel();
         }
