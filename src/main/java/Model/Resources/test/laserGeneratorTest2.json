@@ -1,11 +1,11 @@
 {
   "boardSize": {
-    "widthX": 7,
-    "heightY": 7
+    "widthX": 3,
+    "heightY": 3
   },
   "unplacedTokens": [
   ],
-  "name": "Sandbox Level | 2024-04-29 18:36:11",
+  "name": "laserGeneratorTest1",
   "placedTokens": [
     {
       "type": "LaserGun",
@@ -17,20 +17,11 @@
       }
     },
     {
-      "type": "Splitter",
-      "tokenId": "Splitter_26378",
+      "type": "DoubleSidedMirror",
+      "tokenId": "DoubleSidedMirror_1047087936",
       "orientation": "DOWN",
       "position": {
-        "x": 3,
-        "y": 0
-      }
-    },
-    {
-      "type": "DoubleSidedMirror",
-      "tokenId": "DoubleSidedMirror_26378",
-      "orientation": "UP",
-      "position": {
-        "x": 6,
+        "x": 2,
         "y": 0
       }
     }
