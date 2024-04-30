@@ -176,6 +176,10 @@ public class FlexibleTokenManager implements TokenManager {
         return !(token instanceof LaserGun) || !placedLaser;
     }
 
+    /**
+     * Reset the flexible token manager of the level
+     * In flexible token manager reset will transfer all placed tokens to the unplaced tokens
+     */
     @Override
     public void reset() {
         for (int i = 0; i < placedTokens.length; i++) {

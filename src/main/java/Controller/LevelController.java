@@ -31,7 +31,7 @@ public abstract class LevelController {
     }
 
     public int getWidth() {
-        return level.width;
+        return level.getWidth();
     }
 
 
@@ -40,7 +40,7 @@ public abstract class LevelController {
     }
 
     public int getHeight() {
-        return level.height;
+        return level.getHeight();
     }
 
     public Set<Token> getUnplacedTokens() {

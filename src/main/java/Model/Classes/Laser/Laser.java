@@ -51,11 +51,20 @@ public class Laser {
      * @author Adam Winther
      */
     public void addFragment(int laserBranchNumber, LaserFragment fragment) {
-        fragments.add(fragment);
-
         Orientation orientation = LaserFragment.getFragmentOrientation(fragment);
-        Coordinate coordinate = fragment.to();
-        this.laserBranches.set(laserBranchNumber, new LaserBranch(coordinate, orientation, true));
+        boolean continueBranch;
+
+        //check if the fragment is already in the list.
+        if (this.containsFragment(fragment)) {
+            //if the fragment is already in the list, discontinue the branch.
+            continueBranch = false;
+        } else {
+            fragments.add(fragment);
+            //if the fragment is not in the list, continue the branch.
+            continueBranch = true;
+        }
+
+        this.laserBranches.set(laserBranchNumber, new LaserBranch(fragment.to(), orientation, continueBranch));
     }
 
     /**
