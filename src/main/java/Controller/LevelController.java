@@ -252,5 +252,4 @@ public abstract class LevelController {
     public boolean isSandbox() {
         return false;
     }
-    
 }

@@ -1,0 +1,58 @@
+{
+    "unplacedTokens": [
+        {
+            "orientation": "RIGHT",
+            "tokenId": "OneSidedMirror_1292836712",
+            "type": "OneSidedMirror"
+        },
+        {
+            "orientation": "RIGHT",
+            "tokenId": "OneSidedMirror_416595167",
+            "type": "OneSidedMirror"
+        },
+        {
+            "orientation": "RIGHT",
+            "tokenId": "OneSidedMirror_667894516",
+            "type": "OneSidedMirror"
+        },
+        {
+            "orientation": "RIGHT",
+            "tokenId": "OneSidedMirror_305355261",
+            "type": "OneSidedMirror"
+        }
+    ],
+    "boardSize": {
+        "widthX": 7,
+        "heightY": 7
+    },
+    "name": "Sandbox Level | 2024-04-30 11:01:35",
+    "placedTokens": [
+        {
+            "orientation": "RIGHT",
+            "tokenId": "LaserGun_1019713174",
+            "position": {
+                "x": 0,
+                "y": 3
+            },
+            "type": "LaserGun"
+        },
+        {
+            "orientation": "RIGHT",
+            "tokenId": "Checkpoint_13096511",
+            "position": {
+                "x": 3,
+                "y": 4
+            },
+            "type": "Checkpoint"
+        },
+        {
+            "orientation": "LEFT",
+            "tokenId": "Target_1681886809",
+            "position": {
+                "x": 6,
+                "y": 3
+            },
+            "type": "Target"
+        }
+    ]
+}

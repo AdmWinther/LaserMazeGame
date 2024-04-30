@@ -1,0 +1,20 @@
+{
+  "boardSize": {
+    "widthX": 4,
+    "heightY": 4
+  },
+  "unplacedTokens": [
+  ],
+  "name": "laserGeneratorTest1",
+  "placedTokens": [
+    {
+      "type": "LaserGun",
+      "tokenId": "LaserGun_1047087935",
+      "orientation": "RIGHT",
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    }
+  ]
+}

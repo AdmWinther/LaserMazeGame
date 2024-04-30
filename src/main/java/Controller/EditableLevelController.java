@@ -40,7 +40,6 @@ public class EditableLevelController extends LevelController {
         return true;
     }
 
-
     /**
      * Add a token to the unplaced tokens
      *
@@ -52,10 +51,9 @@ public class EditableLevelController extends LevelController {
     }
 
     /**
-     * Save the level
+     * Saves the current level by setting the placed tokens as unmovable and the unplaced tokens as movables
      *
-     * @return boolean - True if the level is saved, false otherwise
-     * @author Hugo Demule (s231675)
+     * @return True if the level was saved successfully
      */
     public boolean saveLevel() {
         ((EditableLevel) level).tokenManager().setPlacedTokensMovability(false);
@@ -63,12 +61,6 @@ public class EditableLevelController extends LevelController {
         return DataWriter.write(level, FilePaths.SANDBOX_LEVELS_PATH);
     }
 
-    /**
-     * Get the inventory
-     *
-     * @return Inventory - The inventory of the level
-     * @author Nathan Gromb (s231674)
-     */
     public Inventory getInventory() {
         return ((EditableLevel) level).tokenManager().getInventory();
     }

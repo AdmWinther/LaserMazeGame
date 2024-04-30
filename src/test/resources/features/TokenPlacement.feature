@@ -1,29 +1,85 @@
 Feature: Placing a token
 
-  Scenario: Successful placement
-    Given I have a level that contains an empty board
-    When I try to place a movable token at position (2, 2)
-    Then A token should be placed at position (2, 2)
-    And The board should reflect the change
+  Scenario Outline: Successful placement
+    Given I have a <width> by <height> level
+    And I add a unplaced mirror
+    And The level is built
+    When I try to place the unplaced mirror at position (<tokenX>, <tokenY>)
+    Then Cell (<tokenX>, <tokenY>) must be occupied by a token
+    Examples:
+      | width | height | tokenX | tokenY |
+      | 5     | 5      | 1      | 1      |
+      | 1     | 2      | 0      | 1      |
+      | 10    | 10     | 5      | 5      |
+      | 1     | 1      | 0      | 0      |
+      | 2     | 2      | 1      | 1      |
+      | 2     | 2      | 0      | 0      |
+      | 2     | 2      | 0      | 1      |
 
-  Scenario: Unsuccessful placement due to occupied position
-    Given I have a level that contains a board with an unmovable token placed at (2, 2)
-    When I try to place a movable token at position (2, 2)
-    Then the cell (2, 2) should be occupied by the unmovable token
+  Scenario Outline: Unsuccessful placement due to occupied position
+    Given I have a <width> by <height> level
+    And I add a placed mirror at position (<tokenX>, <tokenY>)
+    And I add a unplaced mirror
+    And The level is built
+    When I try to place the unplaced mirror at position (<tokenX>, <tokenY>)
+    Then Cell (<tokenX>, <tokenY>) must be occupied by a token
+    And The action should fail
+    Examples:
+      | width | height | tokenX | tokenY |
+      | 5     | 5      | 1      | 1      |
+      | 1     | 2      | 0      | 1      |
+      | 10    | 10     | 5      | 5      |
+      | 1     | 1      | 0      | 0      |
+      | 2     | 2      | 1      | 1      |
+      | 2     | 2      | 0      | 0      |
+      | 2     | 2      | 0      | 1      |
 
-  Scenario: Unsuccessful placement outside the board
-    Given I have a level that contains an empty board
-    When I try to place a movable token at position (100, 100)
-    Then the placement at (100, 100) should be rejected
+  Scenario Outline: Unsuccessful placement outside the board
+    Given I have a <width> by <height> level
+    And I add a unplaced mirror
+    And The level is built
+    When I try to place the unplaced mirror at position (<tokenX>, <tokenY>)
+    Then Cell (<tokenX>, <tokenY>) must be empty
+    And The action should fail
+    Examples:
+      | width | height | tokenX | tokenY |
+      | 5     | 5      | 5      | 5      |
+      | 1     | 2      | 100    | 100    |
+      | 10    | 10     | 10     | 9      |
+      | 1     | 1      | 0      | 1      |
+      | 2     | 2      | 1      | 2      |
+      | 2     | 2      | 3      | 0      |
+      | 2     | 2      | 1      | 2      |
 
-  Scenario: Trying to move an unmovable token
-    Given I have a level that contains a board with an unmovable token placed at (2, 2)
-    When I try to move the token from cell (2, 2) to (3, 3)
-    Then Cell (2, 2) must be occupied by the unmovable token
-    And Cell (3, 3) must be empty
+  Scenario Outline: Trying to move an unmovable token
+    Given I have a <width> by <height> level
+    And I add a placed unmovable mirror at position (<placedTokenX>, <placedTokenY>)
+    And The level is built
+    When I try to move the token from cell (<placedTokenX>, <placedTokenY>) to (<destX>, <destY>)
+    Then Cell (<placedTokenX>, <placedTokenX>) must be occupied by a token
+    And Cell (<destX>, <destY>) must be empty
+    And The action should fail
+    Examples:
+      | width | height | placedTokenX | placedTokenY | destX | destY |
+      | 5     | 5      | 1            | 1            | 2     | 2     |
+      | 1     | 2      | 0            | 1            | 0     | 0     |
+      | 10    | 10     | 5            | 5            | 4     | 5     |
+      | 2     | 2      | 1            | 1            | 0     | 1     |
+      | 2     | 2      | 0            | 0            | 0     | 1     |
+      | 2     | 2      | 0            | 1            | 0     | 0     |
 
-  Scenario: Trying to move a movable token
-    Given I have a level that contains a board with a movable token placed at (2, 2)
-    When I try to move the token from cell (2, 2) to (3, 3)
-    Then Cell (3, 3) must be occupied by the movable token
-    And Cell (2, 2) must be empty
+  Scenario Outline: Trying to move a movable token
+    Given I have a <width> by <height> level
+    And I add a placed mirror at position (<placedTokenX>, <placedTokenY>)
+    And The level is built
+    When I try to move the token from cell (<placedTokenX>, <placedTokenY>) to (<destX>, <destY>)
+    Then Cell (<destX>, <destY>) must be occupied by a token
+    And Cell (<placedTokenX>, <placedTokenX>) must be empty
+    Examples:
+      | width | height | placedTokenX | placedTokenY | destX | destY |
+      | 5     | 5      | 1            | 1            | 2     | 2     |
+      | 1     | 2      | 0            | 1            | 0     | 0     |
+      | 10    | 10     | 5            | 5            | 4     | 5     |
+      | 2     | 2      | 1            | 1            | 0     | 1     |
+      | 2     | 2      | 0            | 0            | 0     | 1     |
+      | 2     | 2      | 0            | 1            | 0     | 0     |

@@ -3,6 +3,7 @@ package Vue.Level.UILayers;
 import Controller.LevelController;
 import Model.Classes.Token.Token;
 import Vue.Interfaces.Drawable;
+import Vue.Level.EditableLevelPanel;
 import Vue.Level.LevelPanel;
 import Vue.SoundEffects.Sound;
 import Vue.Utils.Position;
@@ -192,6 +193,9 @@ public class ExtrasUI implements Drawable {
         Rectangle2D back = placedObjects.get("back");
         if (back.contains(pos.x(), pos.y())) {
             Sound.playButtonSound();
+            if (levelPanel instanceof EditableLevelPanel) {
+                ((EditableLevelPanel) levelPanel).saveLevel();
+            }
             levelPanel.exitLevel();
         }
     }
