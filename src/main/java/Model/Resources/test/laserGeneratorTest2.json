@@ -1,0 +1,29 @@
+{
+  "boardSize": {
+    "widthX": 3,
+    "heightY": 3
+  },
+  "unplacedTokens": [
+  ],
+  "name": "laserGeneratorTest1",
+  "placedTokens": [
+    {
+      "type": "LaserGun",
+      "tokenId": "LaserGun_1047087935",
+      "orientation": "RIGHT",
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "type": "DoubleSidedMirror",
+      "tokenId": "DoubleSidedMirror_1047087936",
+      "orientation": "DOWN",
+      "position": {
+        "x": 2,
+        "y": 0
+      }
+    }
+  ]
+}
