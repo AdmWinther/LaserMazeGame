@@ -186,7 +186,7 @@ public class ExtrasUI implements Drawable {
             if (levelPanel instanceof EditableLevelPanel) {
                 ((EditableLevelPanel) levelPanel).saveLevel();
                 FrameUtil.createSandboxMenuIfNotExists(levelPanel.getFrame(), levelPanel.getGameController(), levelPanel.getLoginController());
-                FrameUtil.refreshCampaignMenu(levelPanel.getFrame(), levelPanel.getGameController(), levelPanel.getLoginController());
+                FrameUtil.refreshSandboxMenu(levelPanel.getFrame(), levelPanel.getGameController(), levelPanel.getLoginController());
             }
             levelPanel.exitLevel();
         }
