@@ -4,7 +4,9 @@ import Model.Classes.Utils.Orientation;
 
 import java.util.HashSet;
 import java.util.Set;
-
+/**
+ * Class that represents a double-sided mirror token
+ */
 public class DoubleSidedMirror extends OrientedToken {
     public DoubleSidedMirror(boolean isMovable, Orientation orientation) {
         super(isMovable, orientation);
@@ -15,6 +17,12 @@ public class DoubleSidedMirror extends OrientedToken {
     The position // is considered LEFT and RIGHT
     The position \\ is considered UP and Down
     */
+    /**
+     * Propagates the laser. Gives the direction of the laser after hitting the token
+     * @return a set of Orientation as propagation of the laser
+     * @param incomingLaserOrientation the orientation of the incoming laser
+     * @author Adam Winther
+     */
     @Override
     public Set<Orientation> propagateLaser(Orientation incomingLaserOrientation) {
 
@@ -35,6 +43,12 @@ public class DoubleSidedMirror extends OrientedToken {
         return propagatedLaser;
     }
 
+    /**
+     * Method that returns a copy of the Double-Sided Mirror token
+     *
+     * @return a copy of the Double-Sided Mirror token
+     * @author Nathan Gromb
+     */
     @Override
     public Token copy() {
         return new DoubleSidedMirror(this.isMovable(), this.getOrientation());

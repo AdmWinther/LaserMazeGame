@@ -43,6 +43,7 @@ public class LaserManager {
             laser.incrementFragmentIndex();
         }
 
+        //Iterate over branches of the laser and generate the next fragment in each branch.
         while (laser.getLaserBranchCount() > 0) {
             for (int laserBranchNumber = 0; laserBranchNumber < laser.getLaserBranchCount(); laserBranchNumber++) {
 
@@ -58,6 +59,7 @@ public class LaserManager {
                     }
                 }
             }
+            //If a branch is discontinued, remove it from the list of branches.
             laser.refineBranches();
             laser.incrementFragmentIndex();
         }

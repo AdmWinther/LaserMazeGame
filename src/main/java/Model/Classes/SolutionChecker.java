@@ -18,6 +18,14 @@ public class SolutionChecker {
 	}
 
 
+	/**
+	 * Checks if the laser hits all the targets and passes through all checkpoints in the level
+	 *
+	 * @param tokenManager The token manager of the level
+	 * @param laser        The laser to check
+	 * @return True if the laser hits all the targets and checkpoints, false otherwise
+	 * @author
+	 */
 	public static Boolean check(TokenManager tokenManager, Laser laser) {
 		Set<Coordinate> targetPos = tokenManager.findTargetPosition();
 		Set<Coordinate> checkpointsPos = tokenManager.findCheckpointsPosition();
@@ -66,6 +74,13 @@ public class SolutionChecker {
 		return laserHitTarget && laserHitCheckpoint && areAllTokensUsed;
 	}
 
+	/**
+	 * Checks if the orientation of the laser is correct for the target
+	 *
+	 * @param targetOrientation The orientation of the target
+	 * @param laserOrientation  The orientation of the laser
+	 * @return True if the orientation of the laser is correct for the target, false otherwise
+	 */
 	private static boolean expectedOrientationTarget(Orientation targetOrientation, Orientation laserOrientation) {
 		return switch (targetOrientation) {
 			case UP -> Orientation.DOWN == laserOrientation;
@@ -75,6 +90,13 @@ public class SolutionChecker {
 		};
 	}
 
+	/**
+	 * Checks if the orientation of the laser is correct for the checkpoint
+	 *
+	 * @param checkOrientation  The orientation of the checkpoint
+	 * @param laserOrientation The orientation of the laser
+	 * @return True if the orientation of the laser is correct for the checkpoint, false otherwise
+	 */
 	private static boolean expectedOrientationCheck(Orientation checkOrientation, Orientation laserOrientation) {
 		// laser has to be parallel to the checkpoint
 		return switch (checkOrientation) {
