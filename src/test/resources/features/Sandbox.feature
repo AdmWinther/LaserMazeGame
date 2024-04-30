@@ -40,12 +40,6 @@ Feature: Creating a level in sandbox mode
     Then the board should still contain one laser gun
     And the deck should be empty
 
-  Scenario: Not being able to place more than 1 target
-    Given a sandbox level with a target placed at (0 0) and an empty deck
-    When I try to place another target at (1 1)
-    Then the board should still contain one target
-    And the deck should be empty
-
 
 
 

@@ -1,0 +1,39 @@
+{
+    "unplacedTokens": [
+        {
+            "orientation": "UP",
+            "tokenId": "OneSidedMirror_951050903",
+            "type": "OneSidedMirror"
+        },
+        {
+            "orientation": "UP",
+            "tokenId": "DoubleSidedMirror_1437654187",
+            "type": "DoubleSidedMirror"
+        }
+    ],
+    "boardSize": {
+        "widthX": 5,
+        "heightY": 5
+    },
+    "name": "dataWriterTestComplexLevel",
+    "placedTokens": [
+        {
+            "orientation": "UP",
+            "tokenId": "LaserGun_2079179914",
+            "position": {
+                "x": 0,
+                "y": 0
+            },
+            "type": "LaserGun"
+        },
+        {
+            "orientation": "DOWN",
+            "tokenId": "Target_20049680",
+            "position": {
+                "x": 4,
+                "y": 4
+            },
+            "type": "Target"
+        }
+    ]
+}

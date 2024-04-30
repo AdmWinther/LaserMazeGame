@@ -2,12 +2,13 @@ package Model.Classes.Level;
 
 import Model.Classes.Token.Token;
 import Model.Classes.Utils.DataReader;
+import Model.Constants.SandboxInventory;
 import Model.Interfaces.Builder;
 import Model.Interfaces.Inventory;
-import Model.constants.SandboxInventory;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -58,9 +59,15 @@ public class LevelBuilder implements Builder<Level> {
     public Level build(boolean editable) {
 
         if (id.equals(LevelID.NEW_LEVEL)) {
-            if (!editable) throw new IllegalArgumentException("Cannot build a new empty playable level.");
-            int count = DataReader.readSandboxLevelIDs().size() + 1;
-            return new EditableLevel("Sandbox Level " + count, new Token[7][7], new HashSet<>(), new SandboxInventory());
+            if (!editable)
+                throw new IllegalArgumentException("Cannot build a new empty playable level.");
+
+            // get current data and precise time
+            String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+            String currentTime = new SimpleDateFormat("HH:mm:ss").format(new Date());
+
+            String fileName = "Sandbox Level | " + currentDate + " " + currentTime;
+            return new EditableLevel(fileName, new Token[7][7], new HashSet<>(), new SandboxInventory());
         }
 
         try {

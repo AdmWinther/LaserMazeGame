@@ -1,0 +1,9 @@
+{
+    "unplacedTokens": [],
+    "boardSize": {
+        "widthX": 5,
+        "heightY": 5
+    },
+    "name": "dataWriterTestEmptyLevel",
+    "placedTokens": []
+}

@@ -17,94 +17,96 @@ import java.util.ArrayList;
  */
 public class AnimationsUI implements Drawable {
 
-    private static final int LEVEL_COMPLETED_DELAY = 100;
+	private static final int LEVEL_COMPLETED_DELAY = 100;
 
-    private LevelPanel levelPanel;
-    private ArrayList<Animation> activeAnimations;
-    private ArrayList<Animation> queue;
+	private final LevelPanel levelPanel;
+	private final ArrayList<Animation> activeAnimations;
+	private final ArrayList<Animation> queue;
 
-    private int delay = 0;
+	private int delay = 0;
 
-    public AnimationsUI(LevelPanel levelPanel) {
-        this.activeAnimations = new ArrayList<>();
-        this.queue = new ArrayList<>();
-        this.levelPanel = levelPanel;
-    }
+	/**
+	 * Constructor of the AnimationsUI
+	 *
+	 * @param levelPanel the panel of the level
+	 * @author Nathan Gromb
+	 */
+	public AnimationsUI(LevelPanel levelPanel) {
+		this.activeAnimations = new ArrayList<>();
+		this.queue = new ArrayList<>();
+		this.levelPanel = levelPanel;
+	}
 
-    @Override
-    public void draw(Graphics2D g2d) {
+	/**
+	 * Draws the animations.
+	 *
+	 * @param g2d object on which to draw
+	 * @author Nathan Gromb
+	 */
+	@Override
+	public void draw(Graphics2D g2d) {
 
-        for (Animation animation : queue) {
-            activeAnimations.add(animation);
-        }
-        queue.clear();
+		// Add all animations from the queue to the active animations
+		activeAnimations.addAll(queue);
+		queue.clear();
 
-        for (Animation animation : activeAnimations) {
-            animation.draw(g2d);
-        }
+		for (Animation animation : activeAnimations) {
+			animation.draw(g2d);
+		}
 
-        ArrayList<Animation> toRemove = new ArrayList<>();
-        for (Animation animation : activeAnimations) {
-            if (!animation.isRunning()) {
-                toRemove.add(animation);
-            }
-        }
-        activeAnimations.removeAll(toRemove);
+		// Remove all animations that are not running anymore
+		ArrayList<Animation> toRemove = new ArrayList<>();
+		for (Animation animation : activeAnimations) {
+			if (!animation.isRunning()) {
+				toRemove.add(animation);
+			}
+		}
+		activeAnimations.removeAll(toRemove);
 
-        delay += 1000 / levelPanel.getFPS();
-    }
+		// Increment the delay
+		delay += 1000 / levelPanel.getFPS();
+	}
 
-    /**
-     * Stop all animations
-     *
-     * @Author Nathan Gromb
-     */
-    public void stop() {
-        for (Animation animation : activeAnimations) {
-            animation.stop();
-        }
-    }
+	/**
+	 * Start the confetti animation
+	 *
+	 * @author Nathan Gromb
+	 */
+	public void confetti() {
+		Animation confetti = new ConfettiAnimation(levelPanel);
+		queue.add(confetti);
 
-    /**
-     * Start the confetti animation
-     *
-     * @Author Nathan Gromb
-     */
-    public void confetti() {
-        Animation confetti = new ConfettiAnimation(levelPanel);
-        queue.add(confetti);
+		confetti.start();
+	}
 
-        confetti.start();
-    }
+	/**
+	 * Start the circle animation
+	 *
+	 * @param color the color that fills the screen
+	 * @author Nathan Gromb
+	 */
+	public void circle(Color color) {
+		Animation circle = new CircleAnimation(levelPanel, color);
+		queue.add(circle);
 
-    /**
-     * Start the circle animation
-     *
-     * @param color the color that fills the screen
-     * @author Nathan Gromb
-     */
-    public void circle(Color color) {
-        Animation circle = new CircleAnimation(levelPanel, color);
-        queue.add(circle);
+		circle.start();
+	}
 
-        circle.start();
-    }
+	/**
+	 * Start the level completed animation
+	 *
+	 * @author Nathan Gromb
+	 */
+	public void levelCompleted() {
+		if (delay < LEVEL_COMPLETED_DELAY) {
+			return;
+		}
 
-    /**
-     * Start the level completed animation
-     *
-     * @author Nathan Gromb
-     */
-    public void levelCompleted() {
-        if (delay < LEVEL_COMPLETED_DELAY) {
-            return;
-        }
+		delay = 0;
 
-        delay = 0;
+		Animation levelCompleted = new LevelCompletedAnimation(this);
+		queue.add(levelCompleted);
 
-        Animation levelCompleted = new LevelCompletedAnimation(this);
-        queue.add(levelCompleted);
-
-        levelCompleted.start();
-    }
+		levelCompleted.start();
+	}
 }

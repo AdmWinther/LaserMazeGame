@@ -3,12 +3,12 @@ package Vue.Level;
 import Controller.EditableLevelController;
 import Controller.GameController;
 import Controller.LoginController;
-import Model.Classes.Utils.Pair;
 import Vue.Handlers.InventoryMouseHandler;
 import Vue.Level.UILayers.AnimationsUI;
 import Vue.Level.UILayers.ExtrasUI;
 import Vue.Level.UILayers.InventoryUI;
 import Vue.Level.UILayers.SandboxExtrasUI;
+import Vue.Utils.Position;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,7 +21,7 @@ public final class EditableLevelPanel extends LevelPanel {
 
     public EditableLevelPanel(JFrame frame, GameController gameController, EditableLevelController levelController, LoginController loginController) {
         super(frame, gameController, levelController, loginController);
-        
+
         inventoryUI = new InventoryUI(this, levelController);
         InventoryMouseHandler inventoryMouseHandler = new InventoryMouseHandler(levelController, inventoryUI);
         addMouseListener(inventoryMouseHandler);
@@ -41,14 +41,22 @@ public final class EditableLevelPanel extends LevelPanel {
         inventoryUI.draw(g2d);
         drawTokens(g2d);
         animationsUI.draw(g2d);
-
     }
 
     public ExtrasUI getExtrasUI() {
         return extrasUI;
     }
 
-    public Pair<Integer, Integer> getBinPosition() {
+    public Position getBinPosition() {
         return inventoryUI.getBinPosition();
+    }
+
+    /**
+     * Saves the current level
+     *
+     * @return True if the level was saved successfully
+     */
+    public boolean saveLevel() {
+        return ((EditableLevelController) levelController).saveLevel();
     }
 }

@@ -12,9 +12,12 @@ public class ImageUtil {
      * @param i     int - The width
      * @param i1    int - The height
      * @return BufferedImage - The resized image
-     * @Author Léonard Amsler - s231715
+     * @author Léonard Amsler - s231715
      */
     public static BufferedImage resizeImage(BufferedImage image, int i, int i1) {
+        if (image == null) {
+            return null;
+        }
         Image tmp = image.getScaledInstance(i, i1, Image.SCALE_SMOOTH);
         BufferedImage resized = new BufferedImage(i, i1, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = resized.createGraphics();

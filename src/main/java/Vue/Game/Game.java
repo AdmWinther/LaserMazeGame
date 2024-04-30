@@ -2,15 +2,16 @@ package Vue.Game;
 
 import Controller.GameController;
 import Controller.LoginController;
-import Vue.LoginMenu.LoginMenu;
-import Vue.SoundEffects.Sound;
+import Vue.Constants.JComponentsNames;
+import Vue.Constants.VueFilePaths;
+import Vue.MenuPanels.LoginMenu;
+import Vue.SoundEffects.SoundPaths;
+import Vue.SoundEffects.SoundPlayer;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-
-import static Vue.MainMenu.LevelPreparation.showPanel;
 
 /**
  * Main class of the UI
@@ -20,64 +21,97 @@ import static Vue.MainMenu.LevelPreparation.showPanel;
  */
 public class Game {
 
-    JFrame frame;
-    GameController gameController;
+	// find the OS max width and height for fullscreen
+	public final int INIT_HEIGHT = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.9);
+	public final int INIT_WIDTH = INIT_HEIGHT * 800 / 600;
 
 
-    public Game() {
-        frame = new JFrame();
-        frame.setLayout(new CardLayout());
-
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setResizable(true);
-        frame.setTitle("Laser Maze");
-        int INIT_WIDTH = 800;
-        int INIT_HEIGHT = 600;
-
-        frame.setPreferredSize(new java.awt.Dimension(INIT_WIDTH, INIT_HEIGHT));
-
-        ImageIcon img = new ImageIcon("./src/main/java/Vue/Resources/Tokens/icon.png");
-        frame.setIconImage(img.getImage());
-
-        gameController = new GameController();
-        LoginController loginController = new LoginController();
-        LoginMenu loginMenu = new LoginMenu(frame, loginController, gameController);
-        frame.add(loginMenu, "LoginMenu");
-        showPanel(frame, "LoginMenu");
-
-        double aspectRatio = INIT_WIDTH / (double) INIT_HEIGHT;
-        frame.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                frame.setSize(frame.getWidth(), (int) (frame.getWidth() / aspectRatio));
-            }
-        });
+	private final int TILE_WIDTH = INIT_WIDTH / 15;
+	private final int TILE_HEIGHT = INIT_WIDTH / 15;
+	JFrame frame;
+	GameController gameController;
+	SoundPlayer soundPlayer;
 
 
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-    }
+	public Game() {
+		frame = new JFrame();
+		frame.setLayout(new CardLayout());
 
-    /**
-     * Entry point of the application
-     * Create a new instance of the game and start it
-     *
-     * @param args Command line arguments (unused)
-     * @author Léonard Amsler - s231715
-     */
-    public static void main(String[] args) {
-        Game game = new Game();
-        game.start();
-    }
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setResizable(false);
+		frame.setTitle(JComponentsNames.Label.LASER_MAZE);
 
-    /**
-     * Start the game
-     * Display the main menu
-     *
-     * @author Léonard Amsler - s231715
-     */
-    public void start() {
-        frame.setVisible(true);
-        Sound.playMainMenuTheme();
-    }
+		frame.setPreferredSize(new java.awt.Dimension(INIT_WIDTH, INIT_HEIGHT));
+
+		ImageIcon img = new ImageIcon(VueFilePaths.GAME_ICON);
+		frame.setIconImage(img.getImage());
+
+		gameController = new GameController(this);
+		LoginController loginController = new LoginController();
+		LoginMenu loginMenu = new LoginMenu(frame, loginController, gameController);
+		frame.add(loginMenu, JComponentsNames.FrameID.LOGIN);
+		showPanel(frame, JComponentsNames.FrameID.LOGIN);
+
+		double aspectRatio = INIT_WIDTH / (double) INIT_HEIGHT;
+
+		frame.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				frame.setSize(frame.getWidth(), (int) (frame.getWidth() / aspectRatio));
+			}
+		});
+
+		frame.pack();
+
+		frame.setLocationRelativeTo(null);
+	}
+
+	/**
+	 * Shows a panel
+	 *
+	 * @param frame     The frame
+	 * @param panelName The panel name
+	 * @author Léonard Amsler - s231715
+	 */
+	public static void showPanel(JFrame frame, String panelName) {
+		CardLayout cardLayout = (CardLayout) frame.getContentPane().getLayout();
+		cardLayout.show(frame.getContentPane(), panelName);
+	}
+
+	/**
+	 * Entry point of the application
+	 * Create a new instance of the game and start it
+	 *
+	 * @param args Command line arguments (unused)
+	 * @author Léonard Amsler - s231715
+	 */
+	public static void main(String[] args) {
+		Game game = new Game();
+		game.start();
+	}
+
+	/**
+	 * Start the game
+	 * Display the main menu
+	 *
+	 * @author Léonard Amsler - s231715
+	 */
+	public void start() {
+		frame.setVisible(true);
+		SoundPlayer.play(SoundPaths.MAIN_MENU_MUSIC_PATH, true);
+	}
+
+	public Dimension getCurrentTileDimension() {
+		return new Dimension(TILE_WIDTH, TILE_HEIGHT);
+	}
+
+	/**
+	 * Get the current size of the frame
+	 *
+	 * @return The current size of the frame
+	 * @author Hugo Demule
+	 */
+	public Dimension getCurrentFrameDimension() {
+		return frame.getSize();
+	}
 }
