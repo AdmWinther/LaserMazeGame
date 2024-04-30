@@ -12,6 +12,7 @@ import Vue.Level.UILayers.LaserUI;
 import Vue.Level.UILayers.TilesUI;
 import Vue.Level.UILayers.TokensUI;
 import Vue.MenuPanels.CampaignPanel;
+import Vue.MenuPanels.SandboxPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -232,7 +233,7 @@ public abstract class LevelPanel extends JPanel implements Runnable {
         if (gameController.isInCampaignGameMode()) {
             displayCampaignMenu(frame);
         } else {
-            levelController.backToSandboxMenu();
+            displaySandboxMenu(frame);
         }
     }
 
@@ -241,6 +242,14 @@ public abstract class LevelPanel extends JPanel implements Runnable {
         CampaignPanel campaignPanel = new CampaignPanel(frame, gameController, loginController);
         frame.add(campaignPanel, JComponentsNames.FrameID.CAMPAIGN_LEVELS);
         showPanel(frame, JComponentsNames.FrameID.CAMPAIGN_LEVELS);
+        frame.pack();
+    }
+
+    public void displaySandboxMenu(JFrame frame) {
+        gameController.turnOffCampaignGameMode();
+        SandboxPanel sandboxPanel = new SandboxPanel(frame, gameController, loginController);
+        frame.add(sandboxPanel, JComponentsNames.FrameID.SANDBOX_LEVELS);
+        showPanel(frame, JComponentsNames.FrameID.SANDBOX_LEVELS);
         frame.pack();
     }
 

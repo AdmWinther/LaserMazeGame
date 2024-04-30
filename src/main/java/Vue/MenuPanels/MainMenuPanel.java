@@ -283,6 +283,7 @@ public class MainMenuPanel extends JPanel {
         } else if (frameID.equals(JComponentsNames.FrameID.SANDBOX_LEVELS)) {
             System.out.println("Creating sandbox panel");
             panel = new SandboxPanel(frame, gameController, loginController);
+            ((SandboxPanel) panel).refresh();
         }
         assert panel != null;
         frame.add(panel, frameID);
