@@ -13,14 +13,11 @@ import javax.swing.*;
 
 /**
  * This class has the responsibility to prepare the level to be displayed
- *
- * @author Léonard Amsler - s231715
- * @author Hugo Demule
  */
 public class LevelPreparation {
 
     /**
-     * Prepare the level
+     * Prepare the level to be played
      *
      * @param levelID        The level ID
      * @param frame          The frame
@@ -32,7 +29,7 @@ public class LevelPreparation {
     }
 
     /**
-     * Prepare the level
+     * Prepare a level (editable or playable)
      *
      * @param levelID         The level ID
      * @param frame           The frame
@@ -64,23 +61,23 @@ public class LevelPreparation {
     }
 
     /**
-     * Prepare a new empty editable level
+     * Prepare a new editable level
      *
      * @param frame          The frame
      * @param gameController The game controller
-     * @author Hugo Demule
+     * @author Hugo Demule (s231675)
      */
     public static void prepareNewEditableLevel(JFrame frame, GameController gameController) {
         prepareEditableLevel(LevelID.NEW_LEVEL, frame, gameController);
     }
 
     /**
-     * Prepare the level to be editable
+     * Prepare an editable level
      *
      * @param levelID        The level ID
      * @param frame          The frame
      * @param gameController The game controller
-     * @author Hugo Demule
+     * @author Hugo Demule (s231675)
      */
     public static void prepareEditableLevel(LevelID levelID, JFrame frame, GameController gameController) {
         prepareLevel(levelID, frame, gameController, true, null, JComponentsNames.FrameID.SANDBOX_LEVELS);
