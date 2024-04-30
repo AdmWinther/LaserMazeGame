@@ -2,13 +2,12 @@ package Vue.MenuPanels;
 
 import Controller.GameController;
 import Controller.LoginController;
-import Vue.Constants.JComponentsNames;
 import Vue.Constants.Style;
 import Vue.Constants.VueFilePaths;
-import Vue.Game.Game;
 import Vue.Handlers.ButtonHoverHandler;
 import Vue.SoundEffects.SoundPaths;
 import Vue.SoundEffects.SoundPlayer;
+import Vue.Utils.FrameUtil;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -88,13 +87,12 @@ public abstract class LevelMenuPanel extends JPanel {
         button.setVerticalAlignment(SwingConstants.CENTER);
 
         button.setBorder(BorderFactory.createEmptyBorder(Style.Padding.XXL, Style.Padding.XXL, Style.Padding.XXL, Style.Padding.XXL));
-        JPanel thisClass = this;
 
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent e) {
                 SoundPlayer.play(SoundPaths.BUTTON_CLICK);
-                frame.getContentPane().remove(thisClass);
-                Game.showPanel(frame, JComponentsNames.FrameID.MAIN_MENU);
+                FrameUtil.createMainMenuIfNotExists(frame, gameController, loginController);
+                FrameUtil.displayMainMenu(frame);
             }
         });
         button.addMouseListener(new ButtonHoverHandler());

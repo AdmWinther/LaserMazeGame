@@ -10,6 +10,7 @@ import Vue.Level.UILayers.ExtrasUI;
 import Vue.MenuPanels.MainMenuPanel;
 import Vue.SoundEffects.SoundPaths;
 import Vue.SoundEffects.SoundPlayer;
+import Vue.Utils.FrameUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +19,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import static Controller.LevelPreparation.preparePlayableLevel;
-import static Vue.Game.Game.showPanel;
 
 /**
  * This class has the responsibility to control the playable level panel and extends the functionalities of the level panel.
@@ -30,10 +30,10 @@ import static Vue.Game.Game.showPanel;
  */
 public final class PlayableLevelPanel extends LevelPanel {
 
-    private final AnimationsUI animationsUI;
-    private final ExtrasUI extrasUI;
-    private boolean areActionsForLevelComplitionStarted = false;
-    private Timer timer;
+	private final AnimationsUI animationsUI;
+	private final ExtrasUI extrasUI;
+	private boolean areActionsForLevelComplitionStarted = false;
+	private Timer timer;
 
 
     /**
@@ -60,37 +60,37 @@ public final class PlayableLevelPanel extends LevelPanel {
     @Override
     public void run() {
 
-        double delta = 0;
-        long lastTime = System.currentTimeMillis();
-        long currentTime;
+		double delta = 0;
+		long lastTime = System.currentTimeMillis();
+		long currentTime;
 
-        int count = 0;
-        int lastSecond = 0;
+		int count = 0;
+		int lastSecond = 0;
 
-        while (gameThread != null) {
-            currentTime = System.currentTimeMillis();
-            delta += (currentTime - lastTime) / (double) frameTime;
-            lastTime = currentTime;
+		while (gameThread != null) {
+			currentTime = System.currentTimeMillis();
+			delta += (currentTime - lastTime) / (double) frameTime;
+			lastTime = currentTime;
 
-            if (currentTime / 1000 != lastSecond) {
-                lastSecond = (int) (currentTime / 1000);
-                count = 0;
-            }
+			if (currentTime / 1000 != lastSecond) {
+				lastSecond = (int) (currentTime / 1000);
+				count = 0;
+			}
 
-            //Disable the mouse and keyboard listeners when the level is completed.
-            if (((PlayableLevelController) (this.levelController)).isLevelCompleted()) {
-                removeMouseListener(this.levelMouseHandler);
-                removeMouseListener(this.tokenMouseHandler);
-                removeKeyListener(this.tokenKeyboardHandler);
-            }
+			//Disable the mouse and keyboard listeners when the level is completed.
+			if (((PlayableLevelController) (this.levelController)).isLevelCompleted()) {
+				removeMouseListener(this.levelMouseHandler);
+				removeMouseListener(this.tokenMouseHandler);
+				removeKeyListener(this.tokenKeyboardHandler);
+			}
 
-            if (delta >= 1) {
-                repaint();
-                delta--;
-                count++;
-            }
-        }
-    }
+			if (delta >= 1) {
+				repaint();
+				delta--;
+				count++;
+			}
+		}
+	}
 
     /**
      * Paints the components of the level. In case the level is completed, it will display the bingo message and
@@ -130,33 +130,47 @@ public final class PlayableLevelPanel extends LevelPanel {
                     @Override
                     public void run() {
                         gameThread = null;
-                        if (gameController.isInCampaignGameMode()) {
 
-                            //if in the campaign mode, it should go to the next level.
-                            int campaignProgression = loginController.getCampaignProgress();
-                            LevelID currentLevel = gameController.getCurrentLevelID();
-                            LevelID campaignProgressionLevelID = DataReader.readCampaignLevelIDs().get(campaignProgression - 1);
-                            if (currentLevel.equals(campaignProgressionLevelID)) {
-                                loginController.incrementProgression();
-                            }
-                            List<LevelID> levelIDs = DataReader.readCampaignLevelIDs();
-                            int index = levelIDs.indexOf(currentLevel);
-                            LevelID nextLevelID = levelIDs.get(index + 1);
-                            preparePlayableLevel(nextLevelID, frame, gameController, loginController);
+						switch (gameController.getLevelType()) {
+							case CAMPAIGN:
+								//if in the campaign mode, it should go to the next level.
+								LevelID currentLevelID = gameController.getCurrentLevelID();
 
-                        } else {
-                            //if we are in Random level mode
-                            MainMenuPanel mainMenuPanel = new MainMenuPanel(frame, gameController, loginController);
-                            frame.add(mainMenuPanel, "MainMenu");
-                            showPanel(frame, "MainMenu");
-                            frame.pack();
-                        }
-                    }
+								List<LevelID> levelIDs = DataReader.readCampaignLevelIDs();
+								int currentLevelIndex = levelIDs.indexOf(currentLevelID);
+								if (currentLevelIndex >= levelIDs.size() - 1) {
+									FrameUtil.removeLevel(frame);
+									FrameUtil.createMainMenuIfNotExists(frame, gameController, loginController);
+									FrameUtil.displayMainMenu(frame);
+									break;
+								}
 
-                }, 4000);
-            }
-        }
-    }
+								LevelID campaignProgressionLevelID = levelIDs.get(currentLevelIndex + 1);
+								if (currentLevelID.equals(campaignProgressionLevelID)) {
+									loginController.incrementProgression();
+								}
+								int index = levelIDs.indexOf(currentLevelID);
+								LevelID nextLevelID = levelIDs.get(index + 1);
+
+								PlayableLevelPanel nextLevelPanel = preparePlayableLevel(nextLevelID, frame, gameController, loginController);
+								nextLevelPanel.getAnimationsUI().invertedCircle(Color.BLACK);
+								break;
+							case RANDOM:
+								FrameUtil.removeLevel(frame);
+								FrameUtil.createMainMenuIfNotExists(frame, gameController, loginController);
+								FrameUtil.displayMainMenu(frame);
+								break;
+							case SANDBOX:
+								FrameUtil.removeLevel(frame);
+								FrameUtil.createSandboxMenuIfNotExists(frame, gameController, loginController);
+								FrameUtil.displaySandboxMenu(frame);
+								break;
+						}
+					}
+				}, 3000);
+			}
+		}
+	}
 
     /**
      * Get the extra UI
@@ -167,4 +181,14 @@ public final class PlayableLevelPanel extends LevelPanel {
     public ExtrasUI getExtrasUI() {
         return extrasUI;
     }
+
+        /**
+         * Get the animation UI
+         *
+         * @return The animation UI
+         * @author Nathan Gromb
+         */
+	public AnimationsUI getAnimationsUI() {
+		return animationsUI;
+	}
 }

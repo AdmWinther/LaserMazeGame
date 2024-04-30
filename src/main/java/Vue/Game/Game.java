@@ -4,12 +4,14 @@ import Controller.GameController;
 import Controller.LoginController;
 import Vue.Constants.JComponentsNames;
 import Vue.Constants.VueFilePaths;
-import Vue.MenuPanels.LoginMenu;
 import Vue.SoundEffects.SoundPaths;
 import Vue.SoundEffects.SoundPlayer;
+import Vue.Utils.FrameUtil;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 /**
  * Main class of the UI
@@ -27,10 +29,9 @@ public class Game {
     public final int INIT_WIDTH = (int) (INIT_HEIGHT * SCREEN_RATIO);
 
 
-    public final int TILE_WIDTH = INIT_WIDTH / 15;
-    public final int TILE_HEIGHT = INIT_WIDTH / 15;
+    private final int TILE_WIDTH = INIT_WIDTH / 15;
+    private final int TILE_HEIGHT = INIT_WIDTH / 15;
     JFrame frame;
-    GameController gameController;
     SoundPlayer soundPlayer;
 
 
@@ -41,35 +42,29 @@ public class Game {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setTitle(JComponentsNames.Label.LASER_MAZE);
-
         frame.setPreferredSize(new java.awt.Dimension(INIT_WIDTH, INIT_HEIGHT));
+
+        double aspectRatio = INIT_WIDTH / (double) INIT_HEIGHT;
+        frame.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                frame.setSize(frame.getWidth(), (int) (frame.getWidth() / aspectRatio));
+            }
+        });
 
         ImageIcon img = new ImageIcon(VueFilePaths.GAME_ICON);
         frame.setIconImage(img.getImage());
 
-        gameController = new GameController(this);
+        GameController gameController = new GameController(this);
         LoginController loginController = new LoginController();
-        LoginMenu loginMenu = new LoginMenu(frame, loginController, gameController);
-        frame.add(loginMenu, JComponentsNames.FrameID.LOGIN);
-        showPanel(frame, JComponentsNames.FrameID.LOGIN);
 
+        FrameUtil.createLoginMenuIfNotExists(frame, loginController, gameController);
+        FrameUtil.displayLoginMenu(frame);
 
         frame.pack();
-
         frame.setLocationRelativeTo(null);
     }
 
-    /**
-     * Shows a panel
-     *
-     * @param frame     The frame
-     * @param panelName The panel name
-     * @author Léonard Amsler - s231715
-     */
-    public static void showPanel(JFrame frame, String panelName) {
-        CardLayout cardLayout = (CardLayout) frame.getContentPane().getLayout();
-        cardLayout.show(frame.getContentPane(), panelName);
-    }
 
     /**
      * Entry point of the application

@@ -1,7 +1,6 @@
 package Vue.MenuPanels;
 
 import Controller.GameController;
-import Controller.LevelPreparation;
 import Controller.LoginController;
 import Model.Classes.Level.LevelID;
 import Model.Classes.Utils.DataReader;
@@ -17,13 +16,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+import static Controller.LevelPreparation.preparePlayableLevel;
+
 /**
  * This class has the responsibility to display the campaign levels list.
  *
  * @author Léonard Amsler - s231715
  * @author Nathan Gromb - s231674
  */
-public class CampaignPanel extends LevelMenuPanel {
+public class CampaignMenuPanel extends LevelMenuPanel {
 
     /**
      * Constructor of the campaign panel class
@@ -33,7 +34,7 @@ public class CampaignPanel extends LevelMenuPanel {
      * @author Léonard Amsler - s231715
      * @author Nathan Gromb - s231674
      */
-    public CampaignPanel(JFrame frame, GameController gameController, LoginController loginController) {
+    public CampaignMenuPanel(JFrame frame, GameController gameController, LoginController loginController) {
         super(frame, gameController, loginController);
     }
 
@@ -110,8 +111,8 @@ public class CampaignPanel extends LevelMenuPanel {
                     return;
                 }
                 LevelID levelID = gameController.getCampaignLevelIDs().get(buttonNumber - 1);
-                frame.remove(CampaignPanel.this);
-                LevelPreparation.preparePlayableLevel(levelID, frame, gameController, loginController);
+                
+                preparePlayableLevel(levelID, frame, gameController, loginController);
             }
         });
         levelButton.addMouseListener(new ButtonHoverHandler());
