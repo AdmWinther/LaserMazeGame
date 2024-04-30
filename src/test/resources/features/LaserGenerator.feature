@@ -1,16 +1,21 @@
 Feature: Making Laser path
 
   Scenario: Checking generation of the first LaserFragment by LaserGun
-    Given I have the level with ID "5x5_LaseGun@(1,4)_Right"
+    Given To test LaserGenerator, I have the level with ID "laserGeneratorTest1"
     When I run generateLaser
     Then 3 LaserFragment must be generated
 
-  Scenario: Checking the reflection of laser by a oneSidedMirror
-    Given To test LaserGenerator, I have the level with ID "5x5_LG@(1,2)_Right_OSM@(3,2):UP"
+  Scenario: Checking the reflection of laser by a DoubleSidedMirror
+    Given To test LaserGenerator, I have the level with ID "laserGeneratorTest2"
     When I run generateLaser
     Then 4 LaserFragment must be generated
 
-  Scenario: Checking the reflection of laser by a 4 oneSidedMirror and ending at a block
-    Given To test LaserGenerator, I have the level with ID "5x5_LG@(0,1)_Right_4xOSM_square_Block@(3.0)"
+  Scenario: Checking the reflection of laser by a Splitter and a DoubleSidedMirror
+    Given To test LaserGenerator, I have the level with ID "laserGeneratorTest3"
     When I run generateLaser
-    Then 12 LaserFragment must be generated
+    Then 18 LaserFragment must be generated
+
+  Scenario: Checking a laser block immediately after the LaserGun
+    Given To test LaserGenerator, I have the level with ID "laserGeneratorTest4"
+    When I run generateLaser
+    Then 1 LaserFragment must be generated

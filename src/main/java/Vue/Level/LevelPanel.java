@@ -3,6 +3,7 @@ package Vue.Level;
 import Controller.GameController;
 import Controller.LevelController;
 import Controller.LoginController;
+import Vue.Constants.JComponentsNames;
 import Vue.Handlers.LevelMouseHandler;
 import Vue.Handlers.TokenKeyboardHandler;
 import Vue.Handlers.TokenMouseHandler;
@@ -10,7 +11,8 @@ import Vue.Level.UILayers.ExtrasUI;
 import Vue.Level.UILayers.LaserUI;
 import Vue.Level.UILayers.TilesUI;
 import Vue.Level.UILayers.TokensUI;
-import Vue.MainMenu.MainMenuPanel;
+import Vue.MenuPanels.CampaignPanel;
+import Vue.MenuPanels.SandboxPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +20,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.Timer;
 
-import static Vue.MainMenu.LevelPreparation.showPanel;
+import static Vue.Game.Game.showPanel;
 
 public abstract class LevelPanel extends JPanel implements Runnable {
 
@@ -32,6 +34,7 @@ public abstract class LevelPanel extends JPanel implements Runnable {
     // Performance settings
     final int fps = 60;
     final int frameTime = 1000 / fps;
+    private final boolean tadaPlayed = false;
     // Level configuration, screen size in tiles
     public int maxCol;
     public int maxRow;
@@ -62,7 +65,6 @@ public abstract class LevelPanel extends JPanel implements Runnable {
     Thread gameThread;
     JFrame frame;
     GameController gameController;
-    private boolean tadaPlayed = false;
     private Timer timer;
 
 
@@ -91,11 +93,11 @@ public abstract class LevelPanel extends JPanel implements Runnable {
         widthOffset = (this.screenWidth - boardWidth * tileWidth) / 2;
         heightOffset = (this.screenHeight - boardHeight * tileHeight) / 2;
 
-        tilesUI = new TilesUI(this, levelController);
+        tilesUI = new TilesUI(this);
         tokensUI = new TokensUI(this, levelController);
         laserUI = new LaserUI(this, levelController);
 
-        levelMouseHandler = new LevelMouseHandler(this, levelController);
+        levelMouseHandler = new LevelMouseHandler(this);
         addMouseListener(levelMouseHandler);
         tokenMouseHandler = new TokenMouseHandler(this, levelController, tokensUI);
         addMouseListener(tokenMouseHandler);
@@ -103,12 +105,12 @@ public abstract class LevelPanel extends JPanel implements Runnable {
         tokenKeyboardHandler = new TokenKeyboardHandler(levelController);
         addKeyListener(tokenKeyboardHandler);
 
+        this.loginController = loginController;
         this.frame = frame;
         this.gameController = gameController;
 
         setFocusable(true);
         requestFocus();
-
 
         start();
 
@@ -123,20 +125,47 @@ public abstract class LevelPanel extends JPanel implements Runnable {
     /**
      * Start the game thread
      *
-     * @Author Léonard Amsler - s231715
+     * @author Léonard Amsler - s231715
      */
     public void start() {
         gameThread = new Thread(this);
         gameThread.start();
     }
 
+    /**
+     * Resize the level panel
+     * This method is called when the window is resized
+     *
+     * @author Léonard Amsler - s231715
+     */
+    public void resize() {
+        // Get the size of the screen
+        Dimension screenSize = getSize();
+        screenWidth = screenSize.width;
+        screenHeight = screenSize.height;
+
+        // Calculate the new tile size
+        int newTileWidth = screenWidth / maxCol;
+        int newTileHeight = screenHeight / maxRow;
+
+        // Set the new tile size
+        tileWidth = newTileWidth;
+        tileHeight = newTileHeight;
+
+        // Calculate the new offsets
+        int boardWidth = levelController.getWidth();
+        int boardHeight = levelController.getHeight();
+
+        widthOffset = (maxCol - boardWidth) / 2 * tileWidth;
+        heightOffset = (maxRow - boardHeight) / 2 * tileHeight;
+    }
 
     /**
      * Run method of the game thread
      * It is the game engine, it will update the game state and repaint the screen at a fixed frame rate
      * It follows the delta time pattern: <a href="https://en.wikipedia.org/wiki/Delta_timing"> description of the pattern </a>
      *
-     * @Author Léonard Amsler - s231715
+     * @author Léonard Amsler - s231715
      */
     @Override
     public void run() {
@@ -170,7 +199,7 @@ public abstract class LevelPanel extends JPanel implements Runnable {
      * Paint the component
      *
      * @param g - The graphics object
-     * @Author Léonard Amsler - s231715
+     * @author Léonard Amsler - s231715
      */
     @Override
     public void paintComponent(Graphics g) {
@@ -192,34 +221,6 @@ public abstract class LevelPanel extends JPanel implements Runnable {
         tokensUI.draw(g2d);
     }
 
-    /**
-     * Resize the level panel
-     * This method is called when the window is resized
-     *
-     * @Author Léonard Amsler - s231715
-     */
-    public void resize() {
-        // Get the size of the screen
-        Dimension screenSize = getSize();
-        screenWidth = screenSize.width;
-        screenHeight = screenSize.height;
-
-        // Calculate the new tile size
-        int newTileWidth = screenWidth / maxCol;
-        int newTileHeight = screenHeight / maxRow;
-
-        // Set the new tile size
-        tileWidth = newTileWidth;
-        tileHeight = newTileHeight;
-
-        // Calculate the new offsets
-        int boardWidth = levelController.getWidth();
-        int boardHeight = levelController.getHeight();
-
-        widthOffset = (maxCol - boardWidth) / 2 * tileWidth;
-        heightOffset = (maxRow - boardHeight) / 2 * tileHeight;
-    }
-
     public int getFPS() {
         return fps;
     }
@@ -229,18 +230,29 @@ public abstract class LevelPanel extends JPanel implements Runnable {
     }
 
     public void exitLevel() {
-        gameThread = null;
-        MainMenuPanel mainMenuPanel = new MainMenuPanel(frame, gameController, loginController);
-        if (gameController.getCampaignGameMode()) {
-            //if in the campaign mode, it should go to the next level.
-            mainMenuPanel.displayCampaignLevels(frame);
+        if (gameController.isInCampaignGameMode()) {
+            displayCampaignMenu(frame);
         } else {
-            //if we are in Random level mode
-            frame.add(mainMenuPanel, "MainMenu");
-            showPanel(frame, "MainMenu");
-            frame.pack();
+            displaySandboxMenu(frame);
         }
     }
+
+    public void displayCampaignMenu(JFrame frame) {
+        gameController.turnOnCampaignGameMode();
+        CampaignPanel campaignPanel = new CampaignPanel(frame, gameController, loginController);
+        frame.add(campaignPanel, JComponentsNames.FrameID.CAMPAIGN_LEVELS);
+        showPanel(frame, JComponentsNames.FrameID.CAMPAIGN_LEVELS);
+        frame.pack();
+    }
+
+    public void displaySandboxMenu(JFrame frame) {
+        gameController.turnOffCampaignGameMode();
+        SandboxPanel sandboxPanel = new SandboxPanel(frame, gameController, loginController);
+        frame.add(sandboxPanel, JComponentsNames.FrameID.SANDBOX_LEVELS);
+        showPanel(frame, JComponentsNames.FrameID.SANDBOX_LEVELS);
+        frame.pack();
+    }
+
 }
 
 

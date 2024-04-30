@@ -1,104 +1,107 @@
 package step;
 
+import Model.Classes.Level.Level;
 import Model.Classes.Level.PlayableLevel;
-import Model.Classes.Token.Token;
+import Model.Classes.SolutionChecker;
+import Model.Classes.Token.*;
+import Model.Classes.Utils.Coordinate;
+import Model.Classes.Utils.Orientation;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TokenPlacementSteps {
-    PlayableLevel level;
+	Token[][] placed;
+	Set<Token> unplaced;
 
-    Token movableToken;
-    Token unmovableToken;
-    /*
+	Level level;
+	boolean result;
 
-    @Given("I have a level that contains an empty board")
-    public void iHaveALevelThatContainsAnEmptyBoard() {
-        board = new Board(5, 5);
-        level = new Level(board);
-        Printer printer = new Printer();
-        printer.draw(level);
-    }
+	@Given("I have a {int} by {int} level")
+	public void iHaveALevelThatContainsAnEmptyWidthByHeightBoard(int width, int height) {
+		placed = new Token[width][height];
+		unplaced = new HashSet<>();
+	}
 
-    @Given("I have a level that contains a board with a movable token placed at \\({int}, {int})")
-    public void iHaveALevelThatContainsABoardWithAMovableTokenPlacedAt(int x, int y) {
-        Coordinate coordinate = new Coordinate(x, y);
-        board = new Board(5, 5);
-        movableToken = new Block(true);
-        board.placeToken(movableToken, coordinate);
-        level = new Level(board);
-    }
+	@And("The level is built")
+	public void theLevelIsBuilt() {
+		level = new PlayableLevel("placementTest", placed, unplaced);
+	}
 
-    @Given("I have a level that contains a board with an unmovable token placed at \\({int}, {int})")
-    public void iHaveALevelThatContainsABoardWithAnUnmovableTokenPlacedAt(int x, int y) {
-        Coordinate coordinate = new Coordinate(x, y);
-        unmovableToken = new Block(false);
-        board = new Board(5, 5);
-        board.placeToken(unmovableToken, coordinate);
-        level = new Level(board);
-    }
+	@And("I add a unplaced mirror")
+	public void iAddAUnplacedMirror() {
+		unplaced.add(new OneSidedMirror(true, Orientation.RIGHT));
+	}
 
-    @And("I try to place a movable token at position \\({int}, {int})")
-    public void iTryToPlaceAMovableTokenAtPosition(int x, int y) {
-        movableToken = new Block(true);
-        Coordinate position = new Coordinate(x, y);
+	@And("I add a placed mirror at position \\({int}, {int})")
+	public void iAddAPlacedMirrorAtPosition(int tokenX, int tokenY) {
+		placed[tokenX][tokenY] = new OneSidedMirror(true, Orientation.RIGHT);
+	}
 
-        level.addToken(movableToken);
-        level.placeToken(movableToken, position);
-    }
+	@And("I add a placed unmovable mirror at position \\({int}, {int})")
+	public void iAddAPlacedUnmovableMirrorAtPosition(int placedTokenX, int placedTokenY) {
+		placed[placedTokenX][placedTokenY] = new OneSidedMirror(false, Orientation.RIGHT);
+	}
 
-    @And("The board should reflect the change")
-    public void theBoardShouldReflectTheChange() {
-        Printer printer = new Printer();
-        printer.draw(level);
-    }
+	@And("the level contains a laser gun at {int}, {int} with orientation {string}")
+	public void theLevelContainsALaserGunAtWithOrientation(int arg0, int arg1, String arg2) {
+		placed[arg0][arg1] = new LaserGun(false, Orientation.valueOf(arg2));
+	}
 
+	@And("the level contains a target at {int}, {int} with orientation {string}")
+	public void theLevelContainsATargetAtWithOrientation(int arg0, int arg1, String arg2) {
+		placed[arg0][arg1] = new Target(false, Orientation.valueOf(arg2));
+	}
 
-    @When("I select an unmovable token at position \\({int}, {int})")
-    public void iSelectAnUnmovableTokenAtPosition(int x, int y) {
-        Coordinate coordinate = new Coordinate(x, y);
-        unmovableToken = board.getTokenAt(coordinate);
-    }
+	@And("the level contains a mirror at {int}, {int} with orientation {string}")
+	public void theLevelContainsAMirrorAtMirror_xMirror_yWithOrientation(int arg0, int arg1, String arg2) {
+		placed[arg0][arg1] = new DoubleSidedMirror(false, Orientation.valueOf(arg2));
+	}
 
-    @When("I try to move the token from cell \\({int}, {int}) to \\({int}, {int})")
-    public void iTryToMoveTheTokenFromCellTo(int x1, int y1, int x2, int y2) {
-        Coordinate from = new Coordinate(x1, y1);
-        Coordinate to = new Coordinate(x2, y2);
-        level.moveTokenFromTo(from, to);
-    }
+	@When("I try to place the unplaced mirror at position \\({int}, {int})")
+	public void iTryToPlaceTheUnplacedMirrorAtPosition(int tokenX, int tokenY) {
+		Token token = level.tokenManager().getUnplacedTokens().iterator().next();
 
-    @Then("the placement at \\({int}, {int}) should be rejected")
-    public void thePlacementAtShouldBeRejected(int x, int y) {
-        Coordinate coordinate = new Coordinate(x, y);
-        assertFalse(level.placeToken(movableToken, coordinate));
-    }
+		result = level.tokenManager().transferTokenToPlacedTokens(token, new Coordinate(tokenX, tokenY));
+	}
 
-    @Then("A token should be placed at position \\({int}, {int})")
-    public void tokenShouldBePlacedAtPosition(int x, int y) {
-        //assertFalse(board.isPositionEmpty(new Coordinate(x, y)));
-    }
+	@When("I try to move the token from cell \\({int}, {int}) to \\({int}, {int})")
+	public void iTryToMoveTheTokenFromCellTo(int placedTokenX, int placedTokenY, int destX, int destY) {
+		result = level.tokenManager().moveToken(new Coordinate(placedTokenX, placedTokenY), new Coordinate(destX, destY));
+	}
 
-    @And("Cell \\({int}, {int}) must be empty")
-    public void cellMustBeEmpty(int x, int y) {
-        Coordinate coordinate = new Coordinate(x, y);
-        assertTrue(board.isPositionEmpty(coordinate));
-    }
+	@Then("Cell \\({int}, {int}) must be occupied by a token")
+	public void cellTokenXTokenYMustBeOccupiedByAToken(int tokenX, int tokenY) {
+		assert level.tokenManager().getTokenAt(new Coordinate(tokenX, tokenY)) != null;
+	}
 
-    @Then("Cell \\({int}, {int}) must be occupied by the unmovable token")
-    public void cellMustBeOccupiedByTheUnmovableToken(int x, int y) {
-        Coordinate coordinate = new Coordinate(x, y);
-        assertEquals(unmovableToken, board.getTokenAt(coordinate));
-    }
+	@Then("Cell \\({int}, {int}) must be empty")
+	public void cellTokenXTokenYMustBeEmpty(int tokenX, int tokenY) {
+		assert level.tokenManager().getTokenAt(new Coordinate(tokenX, tokenY)) == null;
+	}
 
-    @Then("Cell \\({int}, {int}) must be occupied by the movable token")
-    public void cellMustBeOccupiedByTheMovableToken(int x, int y) {
-        Coordinate coordinate = new Coordinate(x, y);
-        assertEquals(movableToken, board.getTokenAt(coordinate));
-    }
+	@Then("The action should fail")
+	public void theActionShouldFail() {
+		assert !result;
+	}
 
-    @Then("the cell \\({int}, {int}) should be occupied by the unmovable token")
-    public void theCellShouldBeOccupiedByTheUnmovableToken(int x, int y) {
-        Coordinate coordinate = new Coordinate(x, y);
-        assertEquals(unmovableToken, board.getTokenAt(coordinate));
-    }
-     */
+	@When("I start the level and check the solution")
+	public void iStartTheLevelAndCheckTheSolution() {
+		level = new PlayableLevel("solutionCheckTest", placed, unplaced);
+
+		result = SolutionChecker.check((PlayableLevel) level);
+	}
+
+	@And("The solution checker should return {string}")
+	public void theSolutionCheckerShouldReturn(String arg0) {
+		boolean expected = Boolean.parseBoolean(arg0);
+
+		assertEquals(expected, result);
+	}
 }
