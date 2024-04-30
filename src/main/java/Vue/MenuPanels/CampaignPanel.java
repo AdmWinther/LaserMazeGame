@@ -44,11 +44,12 @@ public class CampaignPanel extends LevelMenuPanel {
      * @return JPanel - The level buttons
      * @author Léonard Amsler - s231715
      * @author Nathan Gromb - s231674
+     * @author Adam Winther
      */
     @Override
     protected JPanel getLevelButtonsList() {
         int campaignProgression = loginController.getCampaignProgress();
-        campaignProgression += 1; // The user should be able to play the next level
+        //Campaign progression is the max level the user can play. It is initially set to 1 during the registration.
 
         JPanel levelButtonPanel = new JPanel();
         levelButtonPanel.setLayout(new GridLayout(Style.Grid.CampaignMenu.ROWS, Style.Grid.CampaignMenu.COLS, 0, 0));
@@ -109,12 +110,13 @@ public class CampaignPanel extends LevelMenuPanel {
                     return;
                 }
                 LevelID levelID = gameController.getCampaignLevelIDs().get(buttonNumber - 1);
+                frame.remove(CampaignPanel.this);
                 LevelPreparation.preparePlayableLevel(levelID, frame, gameController, loginController);
             }
         });
         levelButton.addMouseListener(new ButtonHoverHandler());
 
-        if (buttonNumber <= campaignProgression + 1) {
+        if (buttonNumber <= campaignProgression) {
             levelButton.setEnabled(true);
         } else {
             levelButton.setEnabled(false);

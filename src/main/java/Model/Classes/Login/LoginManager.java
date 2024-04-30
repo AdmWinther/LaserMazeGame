@@ -1,5 +1,7 @@
 package Model.Classes.Login;
 
+import Model.Classes.Game.CampaignProgression;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -79,6 +81,9 @@ public class LoginManager {
             }
 
             fileContent += username.username + ":" + password.hashed_password + "\n";
+
+            // Set the initial progression to 1
+            CampaignProgression.saveProgression(username.username,  1);
 
             is.close();
 

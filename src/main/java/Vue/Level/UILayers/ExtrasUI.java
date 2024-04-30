@@ -4,8 +4,7 @@ import Controller.LevelController;
 import Model.Classes.Token.Token;
 import Vue.Interfaces.Drawable;
 import Vue.Level.LevelPanel;
-import Vue.SoundEffects.SoundPaths;
-import Vue.SoundEffects.SoundPlayer;
+import Vue.SoundEffects.Sound;
 import Vue.Utils.Position;
 
 import javax.imageio.ImageIO;
@@ -69,10 +68,12 @@ public class ExtrasUI implements Drawable {
             BufferedImage chestImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Objects/chest.png")));
             BufferedImage resetImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Objects/reset.png")));
             BufferedImage backImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Objects/back.png")));
+            BufferedImage bingoImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Objects/bingo.png")));
 
             objectImages.put("chest", chestImage);
             objectImages.put("reset", resetImage);
             objectImages.put("back", backImage);
+            objectImages.put("bingo", bingoImage);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -111,6 +112,18 @@ public class ExtrasUI implements Drawable {
         int height = levelPanel.tileHeight;
 
         placedObjects.put(objectName, new Rectangle(x, y, width, height));
+    }
+
+    /**
+     * Draw the bingo object on the screen
+     *
+     * @param g2d The 2d graphics object
+     * @Author Adam
+     */
+    public void drawBingo(Graphics2D g2d) {
+        int x = Math.floorDiv((levelPanel.maxCol - 3) * levelPanel.tileWidth, 2);
+        int y = Math.floorDiv((levelPanel.maxRow - 1) * levelPanel.tileHeight, 2);
+        g2d.drawImage(objectImages.get("bingo"), x, y, 3 * levelPanel.tileWidth, levelPanel.tileHeight, null);
     }
 
     /**
@@ -172,14 +185,14 @@ public class ExtrasUI implements Drawable {
     public void handleClick(Position pos) {
         Rectangle2D reset = placedObjects.get("reset");
         if (reset.contains(pos.x(), pos.y())) {
-            SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
+            Sound.playButtonSound();
             levelPanel.levelController.resetLevel();
         }
 
         Rectangle2D back = placedObjects.get("back");
         if (back.contains(pos.x(), pos.y())) {
-            SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
-            levelPanel.levelController.backToMenu();
+            Sound.playButtonSound();
+            levelPanel.exitLevel();
         }
     }
 

@@ -13,8 +13,6 @@ import Vue.SoundEffects.SoundPlayer;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
@@ -183,14 +181,46 @@ public class MainMenuPanel extends JPanel {
         // Add action listeners to buttons
         campaignButton.addActionListener(e -> {
             SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
-            displayCampaignLevels(frame);
+            this.gameController.turnOnCampaignGameMode();
+
+            // If the campaign panel is already created, just display it
+            boolean panelAlreadyCreated = false;
+            for (Component component : frame.getContentPane().getComponents()) {
+                if (component.getName() != null && component.getName().equals(JComponentsNames.FrameID.CAMPAIGN_LEVELS)) {
+                    panelAlreadyCreated = true;
+                    break;
+                }
+            }
+
+            if (!panelAlreadyCreated) {
+                createPanel(frame, JComponentsNames.FrameID.CAMPAIGN_LEVELS);
+            }
+
+            showPanel(frame, JComponentsNames.FrameID.CAMPAIGN_LEVELS);
         });
         campaignButton.addMouseListener(new ButtonHoverHandler());
+
         sandboxButton.addActionListener(e -> {
             SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
-            displaySandboxLevels(frame);
+            this.gameController.turnOffCampaignGameMode();
+
+            // If the sandbox panel is already created, just display it
+            boolean panelAlreadyCreated = false;
+            for (Component component : frame.getContentPane().getComponents()) {
+                if (component.getName() != null && component.getName().equals(JComponentsNames.FrameID.SANDBOX_LEVELS)) {
+                    panelAlreadyCreated = true;
+                    break;
+                }
+            }
+
+            if (!panelAlreadyCreated) {
+                createPanel(frame, JComponentsNames.FrameID.SANDBOX_LEVELS);
+            }
+
+            showPanel(frame, JComponentsNames.FrameID.SANDBOX_LEVELS);
         });
         sandboxButton.addMouseListener(new ButtonHoverHandler());
+
         randomButton.addActionListener(e -> {
             SoundPlayer.play(SoundPaths.CAMPAIGN_BUTTON);
 
@@ -246,46 +276,15 @@ public class MainMenuPanel extends JPanel {
         return footerPanel;
     }
 
-    /**
-     * Display the campaign levels
-     *
-     * @param frame The frame
-     * @author Léonard Amsler s231715
-     * @author Nathan Gromb s231674
-     * @author Hussein (Adam)
-     */
-    public void displayCampaignLevels(JFrame frame) {
-        gameController.turnOnCampaignGameMode();
-        CampaignPanel campaignPanel = new CampaignPanel(frame, gameController, loginController);
-        frame.add(campaignPanel, JComponentsNames.FrameID.CAMPAIGN_LEVELS);
-        frame.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                campaignPanel.resize();
-            }
-        });
-
-        showPanel(frame, JComponentsNames.FrameID.CAMPAIGN_LEVELS);
-        frame.pack();
-    }
-
-    /**
-     * Display the sandbox levels
-     *
-     * @param frame the frame
-     * @author Hugo Demule
-     */
-    private void displaySandboxLevels(JFrame frame) {
-        SandboxPanel sandboxPanel = new SandboxPanel(frame, gameController, loginController);
-        frame.add(sandboxPanel, JComponentsNames.FrameID.SANDBOX_LEVELS);
-        frame.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                sandboxPanel.resize();
-            }
-        });
-
-        showPanel(frame, JComponentsNames.FrameID.SANDBOX_LEVELS);
-        frame.pack();
+    private void createPanel(JFrame frame, String frameID) {
+        JPanel panel = null;
+        if (frameID.equals(JComponentsNames.FrameID.CAMPAIGN_LEVELS)) {
+            panel = new CampaignPanel(frame, gameController, loginController);
+        } else if (frameID.equals(JComponentsNames.FrameID.SANDBOX_LEVELS)) {
+            System.out.println("Creating sandbox panel");
+            panel = new SandboxPanel(frame, gameController, loginController);
+        }
+        assert panel != null;
+        frame.add(panel, frameID);
     }
 }

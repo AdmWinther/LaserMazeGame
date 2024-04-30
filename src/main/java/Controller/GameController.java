@@ -15,7 +15,7 @@ public class GameController {
     private LevelBuilder levelBuilder;
     private LevelID currentLevelID;
     private Level currentLevel;
-    private boolean campaignGameMode = false;
+    private boolean isInCampaignGameMode = false;
 
     public GameController(Game game) {
         this.game = game;
@@ -41,15 +41,15 @@ public class GameController {
     }
 
     public void turnOnCampaignGameMode() {
-        this.campaignGameMode = true;
+        this.isInCampaignGameMode = true;
     }
 
     public void turnOffCampaignGameMode() {
-        this.campaignGameMode = false;
+        this.isInCampaignGameMode = false;
     }
 
-    public boolean getCampaignGameMode() {
-        return this.campaignGameMode;
+    public boolean isInCampaignGameMode() {
+        return this.isInCampaignGameMode;
     }
 
     /**

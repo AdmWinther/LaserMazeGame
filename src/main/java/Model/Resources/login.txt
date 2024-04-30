@@ -6,12 +6,5 @@ new2:96354
 new3:96354
  :32
 1:49
-<<<<<<< HEAD
 test10:48690
-=======
-hugo:3214005
-jean-michmich:96354
-2:50
-linepo:-1102671629
->>>>>>> origin/RefactorVueHugo
-3:49
+a:97

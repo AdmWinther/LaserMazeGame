@@ -24,6 +24,7 @@ public class CircleAnimation implements Animation {
 	private int duration = 0;
 	private int stillDuration = 0;
 
+
 	public CircleAnimation(LevelPanel levelPanel, Color color) {
 		this(levelPanel, color, DEFAULT_TIME_STILL);
 	}
