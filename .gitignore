@@ -12,6 +12,10 @@ out/
 .idea/.gitignore
 .idea/*
 .idea/
+out/*
+out/
+target/*
+target/
 *.iws
 *.iml
 *.ipr

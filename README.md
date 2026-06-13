@@ -1,31 +1,55 @@
-# Agile Programming Project - Group 3 - Lazer Maze
+# Laser Maze 🔦
 
-## Guide to run the project
+A desktop puzzle game built in **Java** with a **Swing GUI**, developed as a team project for the *Agile Object-Oriented Software Development* course at DTU. The player places mirrors, splitters, and other tokens on a grid to steer a laser beam from its source to the target(s).
 
-### 1. Clone the repository
+> **Team project (Group 3, 6 members):** Léonard Amsler, Amin Amajjan, Hugo Demule, Lina Mounan, Nathan Gromb, and Adam Winther. We worked collaboratively with pair programming, so most files have multiple authors. My contributions focused on the laser generation/propagation logic and the JSON persistence layer, alongside general refactoring across the codebase.
 
-```bash 
-git clone git@gitlab.gbar.dtu.dk:02160-f24/group-3.git
+## Features
+
+- **Campaign mode** with progressively harder levels
+- **Sandbox mode** — build, save, and replay your own mazes
+- **Login system** with per-player progress saving (passwords stored hashed)
+- **Laser propagation** through mirrors, double-sided mirrors, splitters, and checkpoints
+- **Solution checker** that validates the board state
+- Animations and sound effects
+
+## Architecture
+
+The project follows an **MVC** structure with clean separation of concerns:
+
+```
+src/main/java/
+├── Model/          # game logic — no UI dependencies
+│   ├── Classes/Laser/        # Laser, LaserBranch, LaserFragment, LaserManager
+│   ├── Classes/Token/        # Token hierarchy: mirrors, splitter, target, gun...
+│   ├── Classes/Level/         # Level, LevelBuilder, Playable/Editable levels
+│   ├── Classes/Login/         # LoginManager, hashed Password, UserName
+│   ├── Classes/TokenManager/  # Strict & Flexible token-placement strategies
+│   └── Classes/Utils/         # DataReader / DataWriter (JSON persistence)
+├── Vue/            # Swing GUI — panels, menus, handlers, animations, sound
+└── Controller/     # mediates between Model and Vue
 ```
 
-### 2. Open the project in IntelliJ IDEA
+Design highlights: token-manager strategy implementations, interface-driven abstractions (`LaserPropagator`, `Orientable`, `Builder`, `TokenManager`), and a persistence layer that reads and writes levels and player data as JSON.
 
-Open IntelliJ IDEA and select `File -> Open...` and navigate to the cloned repository.
+## Tech stack
 
-### 3. Set the project as a Maven project
+- **Java** + **Maven**
+- **Swing** for the GUI (custom-drawn tiles/tokens, `CardLayout` menu switching, custom game loop)
+- **JSON** (`org.json`) for level and progress persistence
+- **Cucumber (BDD)** for testing — feature files under `src/test/resources/features`
 
-Right-click on the `pom.xml` file and select `Add as Maven Project`.
-Right-click on the `pom.xml` file again and select `Maven -> Reload Project`.
+## How it was built
 
-### 4. Project configuration
+Developed over the course using agile practices: weekly in-person meetings, a Trello Kanban board, user stories, and BDD. The team started with a minimal terminal-based version to validate the core model, then evolved it into the full Swing application — a deliberate strategy to get a runnable model early and build confidence before adding the GUI.
 
-Open your project structure by pressing `Ctrl + Alt + Shift + S` and navigate to `File -> Project Structure`.
-Under `Project` set the `Project SDK` to a version containing `18` and set the `Project language level` to `18`.
-Under `Modules`, make sure to keep only the LazerMaze module and delete the other potential ones.
-Under `Modules` again set the `src/main/java` folder as `Sources`, the `src/test/java` folder as `Tests` as the `src/main/java/Vue/Resources` folder as `Resources`.
+## Running
 
-### 5. Run the project
+```bash
+mvn clean install
+mvn exec:java   # or run the main class from your IDE
+```
 
-Navigate to the `Game` class in the `src/main/java/Vue/Game` folder and run the `main` method.
+---
 
-### 6. Enjoy the game!
+*A DTU course project — built collaboratively by Group 3.*
